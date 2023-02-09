@@ -1,0 +1,85 @@
+{
+	"home": "Home",
+	
+	"sidenav.dashboard": "Dashboard",
+	"sidenav.dashboard.default": "Default",
+	"sidenav.dashboard.analytic": "Analytic",
+	"sidenav.dashboard.sales": "Sales",
+
+	"sidenav.apps": "Apps",
+	"sidenav.apps.mail": "Mail",
+	"sidenav.apps.chat": "Chat",
+	"sidenav.apps.calendar": "Calendar",
+	"sidenav.apps.project": "Project",
+	"sidenav.apps.project.list": "List",
+	"sidenav.apps.project.scrumboard": "Scrumboard",
+	"sidenav.apps.ecommerce": "E-Commerce",
+	"sidenav.apps.ecommerce.product": "Product",
+	"sidenav.apps.ecommerce.editProduct": "Edit Product",
+	"sidenav.apps.ecommerce.addProduct": "Add Product",
+	"sidenav.apps.ecommerce.productList": "Product List",
+	"sidenav.apps.ecommerce.orders": "Orders",
+
+	"sidenav.modules.posts":"Tin tức truyền thông",
+
+	"sidenav.apps.modules.myStudies": "Học & Thi",
+	"sidenav.apps.modules.myLesson": "Giáo án & Bài giảng",
+
+	"sidenav.apps.modules.myOffice": "Điều hành",
+	"sidenav.apps.modules.myOffice.management": "Điều hành",
+	"sidenav.apps.modules.attendance": "Điểm danh",
+	"sidenav.apps.modules.timetable": "Thời khóa biểu",
+	"sidenav.apps.modules.announcement": "Thông báo",
+	"sidenav.apps.modules.document": "Văn bản",
+
+	"sidenav.apps.modules.task": "Quản lý Công việc",
+	"sidenav.apps.modules.tasks.list": "Công việc",
+	"sidenav.apps.modules.tasks.project": "Dự án",
+	"sidenav.apps.modules.tasks.report": "Báo cáo",
+	"sidenav.apps.modules.tasks.dashboard": "Tổng quan",
+
+	"sidenav.apps.modules.lib_material": "Thư viện & Học liệu",
+	"sidenav.apps.modules.lib": "Thư viện số",
+	"sidenav.apps.modules.material": "Học liệu số",
+
+	"sidenav.apps.modules.mylesson.library": "Thư viện số",
+	"sidenav.apps.modules.mylesson.libraryCategory": "Danh mục Thư viện số",
+	"sidenav.apps.modules.mylesson.material": "Học liệu số",
+	"sidenav.apps.modules.mylesson.materialCategory": "Danh mục Học liệu số",
+	
+	"sidenav.apps.modules.assignment": "Học & Thi",
+	"sidenav.apps.modules.lessonplan": "Giáo án",
+	"sidenav.apps.modules.lessonplan.myplan": "Giáo án của tôi",
+	"sidenav.apps.modules.lessonplan.assignedplan": "Phê duyệt Giáo án",
+	"sidenav.apps.modules.course": "Tổ chức Học",
+	"sidenav.apps.modules.taskassigment": "Giao việc",
+	"sidenav.apps.modules.post": "Tin tức",
+	"sidenav.apps.modules.slide": "Giáo án",
+	"sidenav.apps.modules.system": "Hệ thống",
+
+	"sidenav.apps.modules.attendance.dashboard": "Tổng quan",
+	"sidenav.apps.modules.attendance.edit": "Điểm danh",
+
+	"sidenav.modules.assignments": "Tổ chức Thi",
+	"sidenav.apps.exam": "Kỳ thi",
+	"sidenav.apps.questionBank": "Ngân hàng câu hỏi",
+	"sidenav.apps.questionCatalog": "Bộ câu hỏi",
+	"sidenav.apps.questionList": "Câu hỏi",
+	"sidenav.apps.questionCategory": "Danh mục câu hỏi",
+	"sidenav.apps.examCategories": "Danh mục Kỳ thi",
+
+	"sidenav.modules.courses": "Tổ chức Học",
+	"sidenav.apps.courseCategories": "Danh mục Khóa học",
+	"sidenav.apps.courses": "Khóa học",
+	
+	"sidenav.apps.classes": "Lớp học",
+	"sidenav.apps.post": "Tin bài",
+	"sidenav.apps.postCategory": "Danh mục Tin bài",
+	
+	"sidenav.apps.dashboard": "Tổng quan",
+	"sidenav.apps.system": "Hệ thống",
+	"sidenav.apps.system.catalog": "Danh mục chung",
+	"sidenav.apps.system.user": "Người dùng",
+	"sidenav.apps.system.organization": "Đơn vị",
+	"sidenav.apps.system.setting": "Cấu hình hệ thống"
+}
