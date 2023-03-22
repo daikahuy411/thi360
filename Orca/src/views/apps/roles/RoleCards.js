@@ -1,11 +1,11 @@
 // ** React Imports
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
-import Link from '@mui/material/Link'
 import Table from '@mui/material/Table'
 import Button from '@mui/material/Button'
 import Avatar from '@mui/material/Avatar'
@@ -116,6 +116,7 @@ const RolesCards = () => {
                   href='/'
                   variant='body2'
                   component={Link}
+                  style={{textDecoration: 'none'}}
                   sx={{ color: 'primary.main' }}
                   onClick={e => {
                     e.preventDefault()
@@ -123,11 +124,11 @@ const RolesCards = () => {
                     setDialogTitle('Edit')
                   }}
                 >
-                  Edit Role
+                  Sửa Lớp học
                 </Typography>
               </Box>
               <IconButton sx={{ color: 'text.secondary' }}>
-                <Icon icon='mdi:content-copy' fontSize={20} />
+                <Icon icon='mdi:trash-outline' fontSize={20} />
               </IconButton>
             </Box>
           </CardContent>
@@ -137,15 +138,8 @@ const RolesCards = () => {
 
   return (
     <Grid container spacing={6} className='match-height'>
-      {renderCards()}
       <Grid item xs={12} sm={6} lg={4}>
-        <Card
-          sx={{ cursor: 'pointer' }}
-          onClick={() => {
-            handleClickOpen()
-            setDialogTitle('Add')
-          }}
-        >
+        <Card sx={{ cursor: 'pointer' }}>
           <Grid container sx={{ height: '100%' }}>
             <Grid item xs={5}>
               <Box sx={{ height: '100%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
@@ -156,22 +150,21 @@ const RolesCards = () => {
               <CardContent>
                 <Box sx={{ textAlign: 'right' }}>
                   <Button
+                    component={Link}
+                    href={`/apps/class/edit`}
                     variant='contained'
                     sx={{ mb: 3, whiteSpace: 'nowrap' }}
-                    onClick={() => {
-                      handleClickOpen()
-                      setDialogTitle('Add')
-                    }}
                   >
-                    Add Role
+                    Thêm
                   </Button>
-                  <Typography>Add role, if it doesn't exist.</Typography>
+                  <Typography>Tạo lớp mới.</Typography>
                 </Box>
               </CardContent>
             </Grid>
           </Grid>
         </Card>
       </Grid>
+      {renderCards()}
       <Dialog fullWidth maxWidth='md' scroll='body' onClose={handleClose} open={open}>
         <DialogTitle sx={{ textAlign: 'center' }}>
           <Typography variant='h5' component='span'>
@@ -182,109 +175,9 @@ const RolesCards = () => {
         <DialogContent sx={{ p: { xs: 6, sm: 12 } }}>
           <Box sx={{ my: 4 }}>
             <FormControl fullWidth>
-              <TextField label='Role Name' placeholder='Enter Role Name' />
+              <TextField label='Tên' placeholder='Tên lớp học' />
             </FormControl>
           </Box>
-          <Typography variant='h6'>Role Permissions</Typography>
-          <TableContainer>
-            <Table size='small'>
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ pl: '0 !important' }}>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        fontSize: '0.875rem',
-                        whiteSpace: 'nowrap',
-                        alignItems: 'center',
-                        textTransform: 'capitalize',
-                        '& svg': { ml: 1, cursor: 'pointer' }
-                      }}
-                    >
-                      Administrator Access
-                      <Tooltip placement='top' title='Allows a full access to the system'>
-                        <Box sx={{ display: 'flex' }}>
-                          <Icon icon='mdi:information-outline' fontSize='1rem' />
-                        </Box>
-                      </Tooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell colSpan={3}>
-                    <FormControlLabel
-                      label='Select All'
-                      sx={{ '& .MuiTypography-root': { textTransform: 'capitalize' } }}
-                      control={
-                        <Checkbox
-                          size='small'
-                          onChange={handleSelectAllCheckbox}
-                          indeterminate={isIndeterminateCheckbox}
-                          checked={selectedCheckbox.length === rolesArr.length * 3}
-                        />
-                      }
-                    />
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rolesArr.map((i, index) => {
-                  const id = i.toLowerCase().split(' ').join('-')
-
-                  return (
-                    <TableRow key={index} sx={{ '& .MuiTableCell-root:first-of-type': { pl: '0 !important' } }}>
-                      <TableCell
-                        sx={{
-                          fontWeight: 600,
-                          whiteSpace: 'nowrap',
-                          color: theme => `${theme.palette.text.primary} !important`
-                        }}
-                      >
-                        {i}
-                      </TableCell>
-                      <TableCell>
-                        <FormControlLabel
-                          label='Read'
-                          control={
-                            <Checkbox
-                              size='small'
-                              id={`${id}-read`}
-                              onChange={() => togglePermission(`${id}-read`)}
-                              checked={selectedCheckbox.includes(`${id}-read`)}
-                            />
-                          }
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <FormControlLabel
-                          label='Write'
-                          control={
-                            <Checkbox
-                              size='small'
-                              id={`${id}-write`}
-                              onChange={() => togglePermission(`${id}-write`)}
-                              checked={selectedCheckbox.includes(`${id}-write`)}
-                            />
-                          }
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <FormControlLabel
-                          label='Create'
-                          control={
-                            <Checkbox
-                              size='small'
-                              id={`${id}-create`}
-                              onChange={() => togglePermission(`${id}-create`)}
-                              checked={selectedCheckbox.includes(`${id}-create`)}
-                            />
-                          }
-                        />
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
         </DialogContent>
         <DialogActions sx={{ pt: 0, display: 'flex', justifyContent: 'center' }}>
           <Box className='demo-space-x'>

@@ -96,13 +96,13 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 }))
 
 const schema = yup.object().shape({
-  email: yup.string().email().required(),
+  email: yup.string().min(4).required(),
   password: yup.string().min(5).required()
 })
 
 const defaultValues = {
-  password: 'admin',
-  email: 'admin@materio.com'
+  password: '123@123a',
+  email: 'admin'
 }
 
 const LoginPage = () => {
@@ -132,10 +132,10 @@ const LoginPage = () => {
 
   const onSubmit = data => {
     const { email, password } = data
-    auth.login({ email, password, rememberMe }, () => {
+    auth.login({ Username: email, password, rememberMe }, () => {
       setError('email', {
         type: 'manual',
-        message: 'Email or Password is invalid'
+        message: 'Tên đăng nhập hoặc mật khẩu không hợp lệ.'
       })
     })
   }
@@ -269,12 +269,12 @@ const LoginPage = () => {
                   render={({ field: { value, onChange, onBlur } }) => (
                     <TextField
                       autoFocus
-                      label='Email'
+                      label='Tên đăng nhập'
                       value={value}
                       onBlur={onBlur}
                       onChange={onChange}
                       error={Boolean(errors.email)}
-                      placeholder='admin@materio.com'
+                      placeholder='Tên đăng nhập hoặc email'
                     />
                   )}
                 />
@@ -282,7 +282,7 @@ const LoginPage = () => {
               </FormControl>
               <FormControl fullWidth>
                 <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>
-                  Password
+                  Mật khẩu
                 </InputLabel>
                 <Controller
                   name='password'

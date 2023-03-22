@@ -44,6 +44,8 @@ import ReactHotToast from 'src/@core/styles/libs/react-hot-toast'
 // ** Utils Imports
 import { createEmotionCache } from 'src/@core/utils/create-emotion-cache'
 
+import Interceptor from "src/context/interceptor";
+
 // ** Prismjs Styles
 import 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'
@@ -95,6 +97,8 @@ const App = props => {
   const authGuard = Component.authGuard ?? true
   const guestGuard = Component.guestGuard ?? false
   const aclAbilities = Component.acl ?? defaultACLObj
+
+  new Interceptor().initialize();
 
   return (
     <Provider store={store}>
