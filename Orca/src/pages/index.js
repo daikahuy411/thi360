@@ -13,8 +13,8 @@ import { useAuth } from 'src/hooks/useAuth'
 /**
  *  Set Home URL based on User Roles
  */
-export const getHomeRoute = role => {
-  if (role === 'client') return '/acl'
+export const getHomeRoute = roles => {
+  if (roles.length === 0) return '/acl'
   else return '/dashboards/crm'
 }
 
@@ -23,8 +23,8 @@ const Home = () => {
   const auth = useAuth()
   const router = useRouter()
   useEffect(() => {
-    if (auth.user && auth.user.role) {
-      const homeRoute = getHomeRoute(auth.user.role)
+    if (auth.user && auth.user.roles) {
+      const homeRoute = getHomeRoute(auth.user.roles)
 
       // Redirect user to Home URL
       router.replace(homeRoute)

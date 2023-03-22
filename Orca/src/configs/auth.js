@@ -1,6 +1,8 @@
 export default {
+  baserUrl: 'http://beta.thi360.com',
+  baseApiUrl: 'http://beta.thi360.com/api/',
   meEndpoint: '/auth/me',
-  loginEndpoint: '/jwt/login',
+  loginEndpoint: 'users/authenticate',
   registerEndpoint: '/jwt/register',
   storageTokenKeyName: 'accessToken',
   onTokenExpiration: 'refreshToken' // logout | refreshToken

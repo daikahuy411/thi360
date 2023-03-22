@@ -10,6 +10,9 @@ const UserThemeOptions = () => {
   // ** To use core palette, uncomment the below line
   // const palette = corePalette(mode, skin, themeColor)
   return {
+    typography: {
+      fontFamily: '"Open Sans", sans-serif'
+    }
     /*
     palette:{
       primary: {
