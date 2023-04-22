@@ -57,77 +57,10 @@ const EditForm = () => {
     <form onSubmit={e => e.preventDefault()}>
       <Grid container spacing={5}>
         <Grid item xs={12}>
-          <TextField fullWidth size='small' label='Name' placeholder='Leonard Carter' />
+          <TextField fullWidth size='small' label='Tên' />
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            fullWidth
-            type='email'
-            size='small'
-            label='Email'
-            placeholder='carterleonard@gmail.com'
-            helperText='You can use letters, numbers & periods'
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControl fullWidth>
-            <InputLabel htmlFor='form-layouts-basic-password'>Password</InputLabel>
-            <OutlinedInput
-              size='small'
-              label='Password'
-              value={values.password}
-              id='form-layouts-basic-password'
-              onChange={handleChange('password')}
-              type={values.showPassword ? 'text' : 'password'}
-              aria-describedby='form-layouts-basic-password-helper'
-              endAdornment={
-                <InputAdornment position='end'>
-                  <IconButton
-                    edge='end'
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    aria-label='toggle password visibility'
-                  >
-                    <Icon icon={values.showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-            <FormHelperText id='form-layouts-basic-password-helper'>
-              Use 8 or more characters with a mix of letters, numbers & symbols
-            </FormHelperText>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControl fullWidth>
-            <InputLabel size='small' htmlFor='form-layouts-confirm-password'>
-              Confirm Password
-            </InputLabel>
-            <OutlinedInput
-              label='Confirm Password'
-              value={confirmPassValues.password}
-              id='form-layouts-confirm-password'
-              size='small'
-              onChange={handleConfirmPassChange('password')}
-              aria-describedby='form-layouts-confirm-password-helper'
-              type={confirmPassValues.showPassword ? 'text' : 'password'}
-              endAdornment={
-                <InputAdornment position='end'>
-                  <IconButton
-                    edge='end'
-                    onClick={handleClickConfirmPassShow}
-                    onMouseDown={handleMouseDownPassword}
-                    aria-label='toggle password visibility'
-                  >
-                    <Icon icon={confirmPassValues.showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-            <FormHelperText id='form-layouts-confirm-password-helper'>
-              Make sure to type the same password as above
-            </FormHelperText>
-          </FormControl>
+          <TextField multiline rows={3} fullWidth size='small' label='Mô tả' />
         </Grid>
       </Grid>
     </form>

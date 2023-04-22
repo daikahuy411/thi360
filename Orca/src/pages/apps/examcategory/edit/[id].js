@@ -1,62 +1,55 @@
-// ** React Imports
 import { Fragment, useEffect, useState } from 'react'
 import IconButton from '@mui/material/IconButton'
 import Stack from '@mui/material/Stack'
 import DeleteIcon from '@mui/icons-material/Delete'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
-// ** MUI Imports
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { Divider, Button, Card, CardContent } from '@mui/material'
-// ** Icon Imports
 import Icon from 'src/@core/components/icon'
-
-// ** Third Party Imports
-import axios from 'axios'
-
-// ** Demo Imports
+import { useRouter } from 'next/router'
 import EditHeader from './Header'
 import EditForm from './Form'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm, Controller } from 'react-hook-form'
+import { ExamCategoryApi } from 'src/api/catalog-api'
+
+const schema = yup.object().shape({
+  name: yup.string().required()
+})
 
 const EditPage = ({ apiData }) => {
-  // ** States
-  const [data, setData] = useState(null)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [activeTab, setActiveTab] = useState('payment')
-  useEffect(() => {
-    if (searchTerm !== '') {
-      axios.get('/pages/faqs', { params: { q: searchTerm } }).then(response => {
-        if (response.data.faqData && Object.values(response.data.faqData).length) {
-          setData(response.data)
+  const router = useRouter()
+  const { id } = router.query
 
-          // @ts-ignore
-          setActiveTab(Object.values(response.data.faqData)[0].id)
-        } else {
-          setData(null)
-        }
-      })
-    } else {
-      setData(apiData)
-    }
-  }, [apiData, searchTerm])
+  const [item, setItem] = useState(null)
 
-  const handleChange = (event, newValue) => {
-    setActiveTab(newValue)
+  const fetchData = () => {
+    ExamCategoryApi.get(id).then(response => {
+      setItem(response.data)
+    })
   }
+
+  useEffect(() => {
+    if (!id || id == 0) return
+    fetchData()
+  }, [id])
 
   return (
     <>
       <div style={{ padding: 0 }}>
         <div sx={{ py: 5.375 }} style={{ padding: 0 }}>
           <Fragment>
-            <EditHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            <EditHeader />
             <Box style={{ marginTop: 2 }}>
               <div className='grid-block vertical'>
                 <div className='title-bar' id='EntityHeadingTitleBar'>
                   <h3 className='title left'>
                     <span className='title__label'>
-                      <span>New Customer</span>
+                      {item && <span>{item.name}</span>}
+                      {!item && <span>New Customer {id}</span>}
                     </span>
                     <IconButton aria-label='delete'>
                       <HelpOutlineIcon />
@@ -90,10 +83,10 @@ const EditPage = ({ apiData }) => {
                       className='finger-tabs__tab flex-none tst_changeTabUsers disabled'
                       title='Users'
                     >
-                      Học viên
+                      Kỳ thi
                     </div>
                   </div>
-                  <div className='grid-block' style={{padding: 50}}>
+                  <div className='grid-block' style={{ padding: 50 }}>
                     <EditForm />
                   </div>
                 </div>
@@ -104,13 +97,6 @@ const EditPage = ({ apiData }) => {
       </div>
     </>
   )
-}
-
-export const getStaticProps = async () => {
-  return {
-    props: {
-    }
-  }
 }
 
 export default EditPage

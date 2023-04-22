@@ -59,8 +59,6 @@ import 'src/iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'
 
-const clientSideEmotionCache = createEmotionCache()
-
 // ** Pace Loader
 if (themeConfig.routingLoader) {
   Router.events.on('routeChangeStart', () => {
@@ -86,7 +84,7 @@ const Guard = ({ children, authGuard, guestGuard }) => {
 
 // ** Configure JSS & ClassName
 const App = props => {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
+  const { Component,   pageProps } = props
 
   // Variables
   const contentHeightFixed = Component.contentHeightFixed ?? false
@@ -102,7 +100,6 @@ const App = props => {
 
   return (
     <Provider store={store}>
-      <CacheProvider value={emotionCache}>
         <Head>
           <title>{`${themeConfig.templateName} - Material Design React Admin Template`}</title>
           <meta
@@ -135,7 +132,6 @@ const App = props => {
             </SettingsConsumer>
           </SettingsProvider>
         </AuthProvider>
-      </CacheProvider>
     </Provider>
   )
 }

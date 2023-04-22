@@ -6,12 +6,13 @@ import Typography from '@mui/material/Typography'
 import PageHeader from 'src/@core/components/page-header'
 
 // ** Demo Components Imports
-import Cards from 'src/pages/apps/class/list/Cards'
+import ClassTable from 'src/pages/apps/class/list'
+import EditHeader from './edit/Header'
 
 const RolesComponent = () => {
   return (
     <Grid container spacing={6}>
-      <PageHeader
+      {/* <PageHeader
         title={<Typography variant='h5'>Lớp học</Typography>}
         subtitle={
           <Typography variant='body2'>
@@ -19,9 +20,10 @@ const RolesComponent = () => {
             can have access to what he need
           </Typography>
         }
-      />
+      /> */}
       <Grid item xs={12} sx={{ mb: 4 }}>
-        <Cards />
+        <EditHeader />
+        <ClassTable />
       </Grid>
     </Grid>
   )

@@ -222,6 +222,7 @@ const VerticalNavGroup = props => {
             )}
             <MenuItemTextWrapper sx={{ ...menuGroupCollapsedStyles, ...(isSubToSub ? { ml: 9 } : {}) }}>
               <Typography
+                style={{ fontSize: 15 }}
                 {...((themeConfig.menuTextTruncate || (!themeConfig.menuTextTruncate && navCollapsed && !navHover)) && {
                   noWrap: true
                 })}

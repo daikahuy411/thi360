@@ -170,6 +170,7 @@ const HorizontalNavGroup = props => {
           <List component='div' sx={{ py: skin === 'bordered' ? 2.625 : 2.75 }}>
             <ListItem
               aria-haspopup='true'
+              style={{ fontSize: 15 }}
               {...(WrapperCondition ? {} : { onMouseEnter: handleGroupOpen })}
               className={clsx('menu-group', { 'Mui-selected': hasActiveChild(item, currentURL) })}
               {...(horizontalMenuToggle === 'click' ? { onClick: handleMenuToggleOnClick } : {})}
@@ -213,7 +214,7 @@ const HorizontalNavGroup = props => {
                     <UserIcon icon={icon} fontSize={icon === navSubItemIcon ? '0.875rem' : '1.375rem'} />
                   </ListItemIcon>
                   <Typography {...(menuTextTruncate && { noWrap: true })}>
-                    <Translations text={item.title} />
+                    <Translations text={item.title} style={{ fontSize: 15 }} />
                   </Typography>
                 </Box>
                 <Box sx={{ ml: 1.6, display: 'flex', alignItems: 'center', color: 'text.primary' }}>

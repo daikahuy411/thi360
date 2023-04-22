@@ -143,6 +143,7 @@ const VerticalNavLink = ({
             }}
           >
             <Typography
+              style={{ fontSize: 15 }}
               {...((themeConfig.menuTextTruncate || (!themeConfig.menuTextTruncate && navCollapsed && !navHover)) && {
                 noWrap: true
               })}

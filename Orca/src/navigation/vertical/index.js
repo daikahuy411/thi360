@@ -30,7 +30,7 @@ const navigation = () => {
         },
         {
           title: 'Danh mục Kỳ thi',
-          path: '/pages/wizard-examples/create-deal'
+          path: '/apps/examcategory'
         }
       ]
     },
