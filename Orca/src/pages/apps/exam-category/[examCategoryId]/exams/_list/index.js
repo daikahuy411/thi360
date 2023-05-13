@@ -6,8 +6,9 @@ import {
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Icon from 'src/@core/components/icon'
-import { QuestionCategoryApi } from 'src/api/catalog-api'
+import ExamApi from 'src/api/exam-api'
 
+import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
@@ -27,14 +28,12 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
-import TreeRow from './TreeRow'
-
-const CategoryTable = () => {
+const ExamTable = () => {
   const router = useRouter()
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const { questionCatalogId } = router.query
+  const { examCategoryId } = router.query
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -46,21 +45,21 @@ const CategoryTable = () => {
   }
 
   const fetchData = () => {
-    if (!questionCatalogId || questionCatalogId == 0) return
-    QuestionCategoryApi.getCategoriesByCatalogId(questionCatalogId).then(response => {
-      setData(response.data)
+    if (!examCategoryId || examCategoryId == 0) return
+    new ExamApi().searches({ CategoryId: examCategoryId }).then(response => {
+      setData(response.data.value)
     })
   }
 
   useEffect(() => {
     fetchData()
-  }, [questionCatalogId])
+  }, [examCategoryId])
 
   return (
     <>
       <Toolbar style={{ padding: 0 }}>
-        <Typography sx={{ flex: '1 1 100%' }} variant='h5' id='tableTitle' component='div'>
-          {data.length} Danh mục Câu hỏi
+        <Typography sx={{ flex: '1 1 50%' }} variant='h5' id='tableTitle' component='div'>
+          {data.length} Kỳ thi
         </Typography>
         &nbsp; &nbsp;
         <Tooltip title='Import'>
@@ -83,30 +82,31 @@ const CategoryTable = () => {
         &nbsp; &nbsp;
         <Button
           component={Link}
-          href={`/apps/question-catalog/${questionCatalogId}/categories/0`}
+          href={`/apps/user/0`}
           variant='contained'
-          style={{ width: 190 }}
+          style={{ width: 160 }}
           color='primary'
           startIcon={<Icon icon='mdi:plus' />}
         >
-          Danh mục
+          Kỳ thi
         </Button>
       </Toolbar>
       <Divider />
       <Grid container>
-        <Grid item md={2}>
+        <Grid item md={3} lg={3}>
           <IconButton aria-label='filter'>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
-        <Grid item md={4}>
+        <Grid item md={3} lg={3}>
           <TextField fullWidth placeholder='Tìm kiếm' size='small' />
         </Grid>
-        <Grid item md={6} alignContent={'right'}>
+        <Grid item md={6} lg={6} alignContent={'right'}>
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
+            labelRowsPerPage='Hiển thị'
             component='div'
-            count={10}
+            count={data.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -128,20 +128,50 @@ const CategoryTable = () => {
               </TableCell>
               <TableCell style={{ width: 30 }}>Sửa</TableCell>
               <TableCell>Tên</TableCell>
-              <TableCell align='right' style={{ width: 120 }}>
-                Số câu hỏi
-              </TableCell>
+              <TableCell style={{ width: 120 }}>Hình thức</TableCell>
+              <TableCell>Lượt thi</TableCell>
+              <TableCell>Học viên</TableCell>
+              <TableCell>Trạng thái</TableCell>
+              <TableCell>Ngày tạo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data && data.map(item => <TreeRow key={item.Id} item={item} excludedId={0} nodeId={item.Id} level={0} />)}
+            {data &&
+              data.map(row => (
+                <TableRow
+                  key={row.name}
+                  sx={{
+                    '&:last-of-type td, &:last-of-type th': {
+                      border: 0
+                    }
+                  }}
+                >
+                  <TableCell padding='checkbox'>
+                    <Checkbox />
+                  </TableCell>
+                  <TableCell component='th' scope='row'>
+                    <IconButton aria-label='filter' component={Link} href={`/apps/exam/${row.id}`}>
+                      <EditIcon />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell component='th' scope='row'>
+                    [{row.id}]-{row.name}
+                  </TableCell>
+                  <TableCell>{row.registrationTypeName}</TableCell>
+                  <TableCell>{row.examTypeName}</TableCell>
+                  <TableCell>{row.totalAttempt}</TableCell>
+                  <TableCell>{row.totalUser}</TableCell>
+                  <TableCell>{row.statusName}</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
-        count={10}
+        count={data.length}
+        labelRowsPerPage='Hiển thị'
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -151,4 +181,4 @@ const CategoryTable = () => {
   )
 }
 
-export default CategoryTable
+export default ExamTable

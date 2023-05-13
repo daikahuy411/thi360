@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import { classSlice } from './slices/classSlice'
+import { examCategorySlice } from './slices/examCategorySlice'
 import { examSlice } from './slices/examSlice'
 import { questionCatalogSlice } from './slices/questionCatalogSlice'
 import { testGroupSlice } from './slices/testGroupSlice'
@@ -13,6 +14,7 @@ export const store = configureStore({
     [examSlice.name]: examSlice.reducer,
     [testGroupSlice.name]: testGroupSlice.reducer,
     [questionCatalogSlice.name]: questionCatalogSlice.reducer,
+    [examCategorySlice.name]: examCategorySlice.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

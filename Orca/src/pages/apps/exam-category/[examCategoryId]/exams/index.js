@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import { selectedQuestionCatalog } from 'src/store/slices/questionCatalogSlice'
+import { selectedExamCategory } from 'src/store/slices/examCategorySlice'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
@@ -11,12 +11,12 @@ import IconButton from '@mui/material/IconButton'
 
 import TopNav from '../../_layout/_breadcrums'
 import Nav from '../../_layout/_tabs'
-import QuestionTable from './_list'
+import ExamTable from './_list'
 
-const QuestionsPage = () => {
+const ExamsList = () => {
   const router = useRouter()
-  const currentQuestionCatalog = useSelector(selectedQuestionCatalog)
-  const { questionCatalogId } = router.query
+  const { examCategoryId } = router.query
+  const currentExamCategory = useSelector(selectedExamCategory)
 
   return (
     <>
@@ -29,16 +29,16 @@ const QuestionsPage = () => {
                 <div className='title-bar' id='EntityHeadingTitleBar'>
                   <h3 className='title left'>
                     <span className='title__label'>
-                      {currentQuestionCatalog && currentQuestionCatalog.id > 0 && <span>{currentQuestionCatalog.name}</span>}
+                      {currentExamCategory && currentExamCategory.id > 0 && <span>{currentExamCategory.name}</span>}
                     </span>
-                    {currentQuestionCatalog && currentQuestionCatalog.id > 0 && (
+                    {currentExamCategory && currentExamCategory.id > 0 && (
                       <IconButton aria-label='delete'>
                         <HelpOutlineIcon />
                       </IconButton>
                     )}
                   </h3>
                   <span className='right'>
-                    <Button variant='outlined' component={Link} href={`/apps/question-catalog/${questionCatalogId}`}>
+                    <Button variant='outlined' component={Link} href={`/apps/exam-category/${examCategoryId}`}>
                       <ArrowBackIcon />
                       &nbsp;Quay lại
                     </Button>
@@ -48,7 +48,7 @@ const QuestionsPage = () => {
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                     <div style={{ width: '100%' }}>
-                      <QuestionTable />
+                      <ExamTable />
                     </div>
                   </div>
                 </div>
@@ -61,4 +61,4 @@ const QuestionsPage = () => {
   )
 }
 
-export default QuestionsPage
+export default ExamsList

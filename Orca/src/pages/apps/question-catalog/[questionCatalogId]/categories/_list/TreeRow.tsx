@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import DescriptionIcon from '@mui/icons-material/Description'
@@ -21,8 +22,9 @@ type TreeRowProps = {
 }
 
 export default function TreeRow(props: TreeRowProps) {
+  const router = useRouter()
   const { item } = props
-
+  const { questionCatalogId } = router.query
   const [isCollapsed, setIsCollapsed] = useState(true)
   const entityIcon = item.children.length > 0 ? isCollapsed ? <Folder /> : <FolderOpenIcon /> : <DescriptionIcon />
 
@@ -49,7 +51,11 @@ export default function TreeRow(props: TreeRowProps) {
           <Checkbox />
         </TableCell>
         <TableCell component='th' scope='row'>
-          <IconButton aria-label='filter' component={Link} href={`/apps/exam-category/edit/${item.key}`}>
+          <IconButton
+            aria-label='filter'
+            component={Link}
+            href={`/apps/question-catalog/${questionCatalogId}/categories/${item.key}`}
+          >
             <EditIcon />
           </IconButton>
         </TableCell>

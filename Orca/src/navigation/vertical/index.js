@@ -25,16 +25,16 @@ const navigation = () => {
           path: '/apps/exam'
         },
         {
+          title: 'Danh mục Kỳ thi',
+          path: '/apps/exam-category'
+        },
+        {
           title: 'Bộ Đề thi',
           path: '/apps/test-group'
         },
         {
           title: 'Bộ Câu hỏi',
           path: '/apps/question-catalog'
-        },
-        {
-          title: 'Danh mục Kỳ thi',
-          path: '/apps/exam-category'
         }
       ]
     },

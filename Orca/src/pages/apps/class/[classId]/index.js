@@ -69,14 +69,6 @@ const EditClassPage = () => {
   const onSubmit = data => {
     new OrganizationApi().save(data).then(response => {
       toast.success('Form Submitted')
-      // setSubmitLoading(false);
-      // if (item.id === 0) {
-      //   message.success(`Tạo mới thành công.`);
-      //   history.push(`/lms/modules/system/classes/edit/${response.data.id}`);
-      // }
-      // if (item.id > 0) {
-      //   message.success(`Cập nhật thành công.`);
-      // }
     })
   }
 
@@ -86,7 +78,6 @@ const EditClassPage = () => {
       return
     }
     new OrganizationApi().get(classId).then(response => {
-      // setItem(response.data)
       dispatch(selectClass(response.data))
     })
   }, [classId])
