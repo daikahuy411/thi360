@@ -17,7 +17,7 @@ const FooterContent = () => {
         </Box>
         {` by `}
         <Link target='_blank' href='https://mui.com/store/contributors/themeselection/'>
-          ThemeSelection
+          Thi360.com
         </Link>
       </Typography>
       {hidden ? null : (

@@ -22,15 +22,19 @@ const navigation = () => {
       children: [
         {
           title: 'Kỳ thi',
-          path: '/pages/wizard-examples/checkout'
+          path: '/apps/exam'
         },
         {
-          title: 'Ngân hàng Câu hỏi',
-          path: '/pages/wizard-examples/property-listing'
+          title: 'Bộ Đề thi',
+          path: '/apps/test-group'
+        },
+        {
+          title: 'Bộ Câu hỏi',
+          path: '/apps/question-catalog'
         },
         {
           title: 'Danh mục Kỳ thi',
-          path: '/apps/examcategory'
+          path: '/apps/exam-category'
         }
       ]
     },
@@ -44,7 +48,7 @@ const navigation = () => {
         },
         {
           title: 'Học viên',
-          path: '/apps/user/list'
+          path: '/apps/user'
         }
       ]
     }

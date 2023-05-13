@@ -26,7 +26,6 @@ code[class*='language-'] {
 .grid-block {
   display: -ms-flexbox;
   display: flex;
-  height: auto;
   position: relative;
   overflow: hidden;
   backface-visibility: hidden;
@@ -42,7 +41,6 @@ code[class*='language-'] {
   justify-content: flex-start;
   -ms-flex-order: 0;
   order: 0;
-  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
@@ -216,7 +214,7 @@ code[class*='language-'] {
 
 .title-bar {
   border-bottom: 1px solid rgba(58, 53, 65, 0.12);
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 0rem;
   padding-left: 0;
 }
 
@@ -359,6 +357,7 @@ code[class*='language-'] {
 }
 
 .finger-tabs__tabs {
+  cursor: pointer;
   width: 180px;
   min-width: 180px;
   max-width: 180px;
@@ -374,6 +373,7 @@ code[class*='language-'] {
   line-height: 1;
   margin: 0;
   padding: 1rem 1rem 1rem 1.5rem;
+  text-decoration: none;
 }
 .finger-tabs__tab.is-active {
   background-color: #edf2fe;

@@ -1,26 +1,24 @@
 // ** Next Imports
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+// ** Configs Import
+import themeConfig from 'src/configs/themeConfig'
+import CanViewNavLink from 'src/layouts/components/acl/CanViewNavLink'
+import Translations from 'src/layouts/components/Translations'
+// ** Custom Components Imports
+import UserIcon from 'src/layouts/components/UserIcon'
 
+import Box from '@mui/material/Box'
 // ** MUI Imports
 import Chip from '@mui/material/Chip'
 import ListItem from '@mui/material/ListItem'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import { styled, useTheme } from '@mui/material/styles'
 import ListItemButton from '@mui/material/ListItemButton'
-
-// ** Configs Import
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Custom Components Imports
-import UserIcon from 'src/layouts/components/UserIcon'
-import Translations from 'src/layouts/components/Translations'
-import CanViewNavLink from 'src/layouts/components/acl/CanViewNavLink'
-
-// ** Util Import
-import { handleURLQueries } from 'src/@core/layouts/utils'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 // ** Styled Components
 const MenuNavLink = styled(ListItemButton)(({ theme }) => ({
@@ -80,7 +78,7 @@ const VerticalNavLink = ({
   }
 
   const isNavLinkActive = () => {
-    if (router.pathname.indexOf(item.path) >= 0 || handleURLQueries(router, item.path)) {
+    if ((router.pathname + '/').indexOf(item.path + '/') >= 0) {
       return true
     } else {
       return false
