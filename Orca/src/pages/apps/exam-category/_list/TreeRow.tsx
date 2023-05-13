@@ -48,8 +48,14 @@ export default function TreeRow(props: TreeRowProps) {
         <TableCell padding='checkbox'>
           <Checkbox />
         </TableCell>
-        <TableCell component='th' scope='row'>
-          <IconButton aria-label='filter' component={Link} href={`/apps/exam-category/edit/${item.key}`}>
+        <TableCell
+          component='th'
+          scope='row'
+          onClick={event => {
+            event.preventDefault()
+          }}
+        >
+          <IconButton aria-label='filter' component={Link} href={`/apps/exam-category/${item.key}`}>
             <EditIcon />
           </IconButton>
         </TableCell>
@@ -65,7 +71,6 @@ export default function TreeRow(props: TreeRowProps) {
           </Stack>
         </TableCell>
         <TableCell align='right'>{item.totalUser}</TableCell>
-        <TableCell align='right'>{item.group}</TableCell>
       </TableRow>
       {!isCollapsed && <>{children}</>}
     </>

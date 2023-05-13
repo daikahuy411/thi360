@@ -35,7 +35,7 @@ const ClassUserList = () => {
                     )}
                   </h3>
                   <span className='right'>
-                    <Button variant='outlined' component={Link} href='/apps/class/'>
+                    <Button variant='outlined' component={Link} href='/apps/question-catalog/'>
                       <ArrowBackIcon />
                       &nbsp;Quay lại
                     </Button>

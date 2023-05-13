@@ -4,10 +4,10 @@ import {
   useState
 } from 'react'
 
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ExamCategoryApi } from 'src/api/catalog-api'
 import EntityInfoModal from 'src/pages/shared/entity-info-modal'
-import * as yup from 'yup'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -15,14 +15,10 @@ import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 
+import TopNav from '../_layout/_breadcrums'
 import EditForm from './Form'
-import EditHeader from './Header'
 
-const schema = yup.object().shape({
-  name: yup.string().required()
-})
-
-const EditPage = ({ apiData }) => {
+const ExamCategoryEditPage = () => {
   const router = useRouter()
   const { id } = router.query
 
@@ -44,7 +40,7 @@ const EditPage = ({ apiData }) => {
       <div style={{ padding: 0 }}>
         <div sx={{ py: 5.375 }} style={{ padding: 0 }}>
           <Fragment>
-            <EditHeader />
+            <TopNav />
             <Box style={{ marginTop: 2 }}>
               <div className='grid-block vertical'>
                 <div className='title-bar' id='EntityHeadingTitleBar'>
@@ -56,17 +52,26 @@ const EditPage = ({ apiData }) => {
                     {item && item.id > 0 && <EntityInfoModal entity={item} />}
                   </h3>
                   <span className='right'>
-                    <IconButton aria-label='delete'>
-                      <DeleteIcon />
-                    </IconButton>
-                    &nbsp;
-                    <Button variant='outlined'>
+                    {item && item.id > 0 && (
+                      <>
+                        <IconButton aria-label='delete'>
+                          <DeleteIcon />
+                        </IconButton>
+                        &nbsp;
+                      </>
+                    )}
+                    <Button variant='outlined' component={Link} href='/apps/exam-category/'>
                       <ArrowBackIcon />
-                      &nbsp; Back
+                      &nbsp;Quay lại
                     </Button>
                     &nbsp;
-                    <Button variant='contained'>Add New</Button>&nbsp;
-                    <Button variant='contained'>Save &amp; Add New</Button>
+                    <Button variant='contained'>Cập nhật</Button>
+                    {(!item || item.id == 0) && (
+                      <>
+                        &nbsp;
+                        <Button variant='contained'>Cập nhật &amp; Thêm mới</Button>
+                      </>
+                    )}
                   </span>
                 </div>
                 <div className='grid-block' style={{ height: '100vh' }}>
@@ -99,4 +104,4 @@ const EditPage = ({ apiData }) => {
   )
 }
 
-export default EditPage
+export default ExamCategoryEditPage

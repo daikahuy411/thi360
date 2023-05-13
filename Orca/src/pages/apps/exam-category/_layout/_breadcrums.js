@@ -9,7 +9,7 @@ const TopNav = props => {
       <Link underline='hover' color='inherit' href='/'>
         <HomeOutlinedIcon />
       </Link>
-      <Typography color='text.primary'>Bộ Câu hỏi</Typography>
+      <Typography color='text.primary'>Danh mục Kỳ thi</Typography>
     </Breadcrumbs>
   )
 }

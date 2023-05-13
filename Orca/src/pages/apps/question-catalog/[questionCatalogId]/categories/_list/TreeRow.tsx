@@ -65,7 +65,6 @@ export default function TreeRow(props: TreeRowProps) {
           </Stack>
         </TableCell>
         <TableCell align='right'>{item.totalUser}</TableCell>
-        <TableCell align='right'>{item.group}</TableCell>
       </TableRow>
       {!isCollapsed && <>{children}</>}
     </>

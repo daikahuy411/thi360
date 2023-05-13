@@ -80,7 +80,7 @@ const ExamCategoryTable = () => {
         &nbsp; &nbsp;
         <Button
           component={Link}
-          href={`/apps/exam-category/edit/0`}
+          href={`/apps/exam-category/0`}
           variant='contained'
           style={{ width: 190 }}
           color='primary'
@@ -126,10 +126,7 @@ const ExamCategoryTable = () => {
               <TableCell style={{ width: 30 }}>Sửa</TableCell>
               <TableCell>Tên</TableCell>
               <TableCell align='right' style={{ width: 120 }}>
-                Số học sinh
-              </TableCell>
-              <TableCell align='right' style={{ width: 80 }}>
-                Khối
+                Số Kỳ thi
               </TableCell>
             </TableRow>
           </TableHead>

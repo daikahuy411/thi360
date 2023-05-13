@@ -60,7 +60,7 @@ const CategoryTable = () => {
     <>
       <Toolbar style={{ padding: 0 }}>
         <Typography sx={{ flex: '1 1 100%' }} variant='h5' id='tableTitle' component='div'>
-          {data.length} Danh mục Kỳ thi
+          {data.length} Danh mục Câu hỏi
         </Typography>
         &nbsp; &nbsp;
         <Tooltip title='Import'>
@@ -129,10 +129,7 @@ const CategoryTable = () => {
               <TableCell style={{ width: 30 }}>Sửa</TableCell>
               <TableCell>Tên</TableCell>
               <TableCell align='right' style={{ width: 120 }}>
-                Số học sinh
-              </TableCell>
-              <TableCell align='right' style={{ width: 80 }}>
-                Khối
+                Số câu hỏi
               </TableCell>
             </TableRow>
           </TableHead>
