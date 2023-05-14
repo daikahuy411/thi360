@@ -1,35 +1,45 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import { selectedClass } from 'src/store/slices/classSlice'
+import { selectedTestGroup } from 'src/store/slices/testGroupSlice'
 
-const Nav = ({ children }) => {
+const Nav = () => {
   const router = useRouter()
-  const currentClass = useSelector(selectedClass)
-  const { classId } = router.query
+  const currentTestGroup = useSelector(selectedTestGroup)
+  const { testGroupId } = router.query
 
   return (
     <>
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
         <Link
           className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/class/${classId}/` ? 'is-active' : 'disabled'
+            router.asPath === `/apps/test-group/${testGroupId}/` ? 'is-active' : 'disabled'
           }`}
-          title='Học viên'
+          title='Chi tiết'
           component={Link}
-          href={`/apps/class/${classId}`}
+          href={`/apps/test-group/${testGroupId}`}
         >
           Chi tiết
         </Link>
         <Link
           className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
+            router.asPath === `/apps/test-group/${testGroupId}/configs/` ? 'is-active' : 'disabled'
           }`}
-          title='Học viên'
+          title='Cấu trúc đề thi'
           component={Link}
-          href={currentClass && currentClass.id > 0 ? `/apps/class/${classId}/users` : 'javascript:void(0)'}
+          href={currentTestGroup && currentTestGroup.id > 0 ? `/apps/test-group/${testGroupId}/configs` : 'javascript:void(0)'}
         >
-          Học viên
+          Cấu trúc đề thi
+        </Link>
+        <Link
+          className={`finger-tabs__tab flex-none ${
+            router.asPath === `/apps/test-group/${testGroupId}/tests/` ? 'is-active' : 'disabled'
+          }`}
+          title='Đề thi'
+          component={Link}
+          href={currentTestGroup && currentTestGroup.id > 0 ? `/apps/test-group/${testGroupId}/tests` : 'javascript:void(0)'}
+        >
+          Đề thi
         </Link>
       </div>
     </>

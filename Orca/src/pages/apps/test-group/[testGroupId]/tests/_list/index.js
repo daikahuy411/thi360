@@ -4,8 +4,9 @@ import {
 } from 'react'
 
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import Icon from 'src/@core/components/icon'
-import TestGroupApi from 'src/api/test-group-api'
+import TestApi from 'src/api/test-api'
 
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
@@ -27,10 +28,12 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
-const TestGroupTable = () => {
+const TestsTable = () => {
+  const router = useRouter()
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const { testGroupId } = router.query
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -42,17 +45,17 @@ const TestGroupTable = () => {
   }
 
   useEffect(() => {
-    new TestGroupApi().searches().then(response => {
-      setData(response.data.value)
+    if (!testGroupId || testGroupId == 0) return
+    new TestApi().getTests(testGroupId).then(response => {
+      setData(response.data)
     })
-  }, [])
+  }, [testGroupId])
 
   return (
     <>
-      <Divider />
       <Toolbar style={{ padding: 0 }}>
-        <Typography sx={{ flex: '1 1 100%' }} variant='h5' id='tableTitle' component='div'>
-          {data.length} Bộ Đề thi
+        <Typography sx={{ flex: '1 1 50%' }} variant='h5' id='tableTitle' component='div'>
+          {data.length} Đề thi
         </Typography>
         &nbsp; &nbsp;
         <Tooltip title='Import'>
@@ -73,30 +76,24 @@ const TestGroupTable = () => {
           </IconButton>
         </Tooltip>
         &nbsp; &nbsp;
-        <Button
-          component={Link}
-          href={`/apps/test-group/0`}
-          variant='contained'
-          style={{ width: 180 }}
-          color='primary'
-          startIcon={<Icon icon='mdi:plus' />}
-        >
-          Bộ Đề thi
+        <Button variant='contained' style={{ width: 160 }} color='primary' startIcon={<Icon icon='mdi:send' />}>
+          Sinh đề
         </Button>
       </Toolbar>
       <Divider />
       <Grid container>
-        <Grid item md={4}>
+        <Grid item md={3} lg={3}>
           <IconButton aria-label='filter'>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
-        <Grid item md={4}>
+        <Grid item md={3} lg={3}>
           <TextField fullWidth placeholder='Tìm kiếm' size='small' />
         </Grid>
-        <Grid item md={4} alignContent={'right'}>
+        <Grid item md={6} lg={6} alignContent={'right'}>
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
+            labelRowsPerPage='Hiển thị'
             component='div'
             count={data.length}
             rowsPerPage={rowsPerPage}
@@ -120,12 +117,7 @@ const TestGroupTable = () => {
               </TableCell>
               <TableCell style={{ width: 30 }}>Sửa</TableCell>
               <TableCell>Tên</TableCell>
-              <TableCell align='right' style={{ width: 120 }}>
-                Số học sinh
-              </TableCell>
-              <TableCell align='right' style={{ width: 80 }}>
-                Khối
-              </TableCell>
+              <TableCell style={{ width: 210 }}>Ngày tạo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -143,15 +135,14 @@ const TestGroupTable = () => {
                     <Checkbox />
                   </TableCell>
                   <TableCell component='th' scope='row'>
-                    <IconButton aria-label='filter' component={Link} href={`/apps/test-group/${row.id}`}>
+                    <IconButton aria-label='filter' component={Link} href={`/apps/class/${row.id}`}>
                       <EditIcon />
                     </IconButton>
                   </TableCell>
                   <TableCell component='th' scope='row'>
                     {row.name}
                   </TableCell>
-                  <TableCell align='right'>{row.totalUser}</TableCell>
-                  <TableCell align='right'>{row.group}</TableCell>
+                  <TableCell>{row.createdTime}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
@@ -161,6 +152,7 @@ const TestGroupTable = () => {
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
         count={data.length}
+        labelRowsPerPage='Hiển thị'
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -170,4 +162,4 @@ const TestGroupTable = () => {
   )
 }
 
-export default TestGroupTable
+export default TestsTable

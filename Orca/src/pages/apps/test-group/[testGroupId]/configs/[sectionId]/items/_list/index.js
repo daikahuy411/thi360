@@ -4,9 +4,10 @@ import {
 } from 'react'
 
 import Link from 'next/link'
-// ** Icon Imports
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 import Icon from 'src/@core/components/icon'
-import OrganizationApi from 'src/api/organization-api'
+import { selectedTestGroup } from 'src/store/slices/testGroupSlice'
 
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
@@ -15,7 +16,6 @@ import Checkbox from '@mui/material/Checkbox'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
-// ** MUI Imports
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -29,10 +29,13 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
-const UserTable = () => {
+const ItemsTable = () => {
+  const router = useRouter()
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const { testGroupId, sectionId } = router.query
+  const currentTestGroup = useSelector(selectedTestGroup)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -44,16 +47,18 @@ const UserTable = () => {
   }
 
   useEffect(() => {
-    new OrganizationApi().searchesClasses().then(response => {
-      setData(response.data)
-    })
-  }, [])
+    if (!testGroupId || testGroupId == 0) return
+    if (currentTestGroup && currentTestGroup.id > 0) {
+      var section = currentTestGroup.sections.find(x => x.id === parseInt(sectionId))
+      setData(section.items || [])
+    }
+  }, [testGroupId, sectionId])
 
   return (
     <>
       <Toolbar style={{ padding: 0 }}>
         <Typography sx={{ flex: '1 1 50%' }} variant='h5' id='tableTitle' component='div'>
-          {data.length} Học viên
+          {data.length} Cấu hình
         </Typography>
         &nbsp; &nbsp;
         <Tooltip title='Import'>
@@ -74,15 +79,8 @@ const UserTable = () => {
           </IconButton>
         </Tooltip>
         &nbsp; &nbsp;
-        <Button
-          component={Link}
-          href={`/apps/user/0`}
-          variant='contained'
-          style={{ width: 160 }}
-          color='primary'
-          startIcon={<Icon icon='mdi:plus' />}
-        >
-          Học viên
+        <Button variant='contained' style={{ width: 160 }} color='primary' startIcon={<Icon icon='mdi:plus' />}>
+          Cấu hình
         </Button>
       </Toolbar>
       <Divider />
@@ -98,7 +96,7 @@ const UserTable = () => {
         <Grid item md={6} lg={6} alignContent={'right'}>
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
-            labelRowsPerPage="Hiển thị"
+            labelRowsPerPage='Hiển thị'
             component='div'
             count={data.length}
             rowsPerPage={rowsPerPage}
@@ -122,12 +120,7 @@ const UserTable = () => {
               </TableCell>
               <TableCell style={{ width: 30 }}>Sửa</TableCell>
               <TableCell>Tên</TableCell>
-              <TableCell align='right' style={{ width: 120 }}>
-                Số học sinh
-              </TableCell>
-              <TableCell align='right' style={{ width: 80 }}>
-                Khối
-              </TableCell>
+              <TableCell style={{ width: 210 }}>Ngày tạo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -152,8 +145,7 @@ const UserTable = () => {
                   <TableCell component='th' scope='row'>
                     {row.name}
                   </TableCell>
-                  <TableCell align='right'>{row.totalUser}</TableCell>
-                  <TableCell align='right'>{row.group}</TableCell>
+                  <TableCell>{row.createdTime}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
@@ -163,7 +155,7 @@ const UserTable = () => {
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
         count={data.length}
-        labelRowsPerPage="Hiển thị"
+        labelRowsPerPage='Hiển thị'
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -173,4 +165,4 @@ const UserTable = () => {
   )
 }
 
-export default UserTable
+export default ItemsTable

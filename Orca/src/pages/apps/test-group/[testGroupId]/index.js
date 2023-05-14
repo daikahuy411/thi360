@@ -11,26 +11,23 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux'
-import OrganizationApi from 'src/api/organization-api'
+import TestGroupApi from 'src/api/test-group-api'
+import EntityInfoModal from 'src/pages/shared/entity-info-modal'
 import {
-  selectClass,
-  selectedClass
-} from 'src/store/slices/classSlice'
+  selectedTestGroup,
+  selectTestGroup
+} from 'src/store/slices/testGroupSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 
 import TopNav from '../_layout/_breadcrums'
@@ -41,11 +38,11 @@ const schema = yup.object().shape({
   group: yup.number().required('* bắt buộc').moreThan(0, '* bắt buộc')
 })
 
-const EditClassPage = () => {
+const EditTestGroupPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { classId } = router.query
-  const currentClass = useSelector(selectedClass)
+  const { testGroupId } = router.query
+  const currentTestGroup = useSelector(selectedTestGroup)
 
   const {
     control,
@@ -54,46 +51,37 @@ const EditClassPage = () => {
     reset,
     formState: { isValid, errors }
   } = useForm({
-    currentClass,
+    currentTestGroup,
     mode: 'onChange',
     resolver: yupResolver(schema)
   })
 
   const save = () => {
     const item = getValues()
-    new OrganizationApi().save(item).then(response => {
+    new TestGroupApi().save(item).then(response => {
       toast.success('Cập nhật thành công')
     })
   }
 
   const onSubmit = data => {
-    new OrganizationApi().save(data).then(response => {
+    new TestGroupApi().save(data).then(response => {
       toast.success('Form Submitted')
-      // setSubmitLoading(false);
-      // if (item.id === 0) {
-      //   message.success(`Tạo mới thành công.`);
-      //   history.push(`/lms/modules/system/classes/edit/${response.data.id}`);
-      // }
-      // if (item.id > 0) {
-      //   message.success(`Cập nhật thành công.`);
-      // }
     })
   }
 
   useEffect(() => {
-    if (!classId || classId == 0) {
-      dispatch(selectClass({ id: 0, name: '' }))
+    if (!testGroupId || testGroupId == 0) {
+      dispatch(selectTestGroup({ id: 0, name: '' }))
       return
     }
-    new OrganizationApi().get(classId).then(response => {
-      // setItem(response.data)
-      dispatch(selectClass(response.data))
+    new TestGroupApi().get(testGroupId).then(response => {
+      dispatch(selectTestGroup(response.data))
     })
-  }, [classId])
+  }, [testGroupId])
 
   useEffect(() => {
-    if (currentClass) reset(currentClass)
-  }, [currentClass])
+    if (currentTestGroup) reset(currentTestGroup)
+  }, [currentTestGroup])
 
   return (
     <>
@@ -106,17 +94,13 @@ const EditClassPage = () => {
                 <div className='title-bar' id='EntityHeadingTitleBar'>
                   <h3 className='title left'>
                     <span className='title__label'>
-                      {currentClass && currentClass.id > 0 && <span>{currentClass.name}</span>}
-                      {(!currentClass || currentClass.id == 0) && <span>Tạo mới Lớp học</span>}
+                      {currentTestGroup && currentTestGroup.id > 0 && <span>{currentTestGroup.name}</span>}
+                      {(!currentTestGroup || currentTestGroup.id == 0) && <span>Tạo mới Bộ đề thi</span>}
                     </span>
-                    {currentClass && currentClass.id > 0 && (
-                      <IconButton aria-label='delete'>
-                        <HelpOutlineIcon />
-                      </IconButton>
-                    )}
+                    {currentTestGroup && currentTestGroup.id > 0 && <EntityInfoModal entity={currentTestGroup} />}
                   </h3>
                   <span className='right'>
-                    {currentClass && currentClass.id > 0 && (
+                    {currentTestGroup && currentTestGroup.id > 0 && (
                       <>
                         <IconButton aria-label='delete'>
                           <DeleteIcon />
@@ -124,7 +108,7 @@ const EditClassPage = () => {
                         &nbsp;
                       </>
                     )}
-                    <Button variant='outlined' component={Link} href='/apps/class/'>
+                    <Button variant='outlined' component={Link} href='/apps/test-group/'>
                       <ArrowBackIcon />
                       &nbsp;Quay lại
                     </Button>
@@ -132,7 +116,7 @@ const EditClassPage = () => {
                     <Button disabled={!isValid} onClick={save} variant='contained'>
                       Cập nhật
                     </Button>
-                    {(!currentClass || currentClass.id == 0) && (
+                    {(!currentTestGroup || currentTestGroup.id == 0) && (
                       <>
                         &nbsp;
                         <Button disabled={!isValid} variant='contained'>
@@ -175,49 +159,6 @@ const EditClassPage = () => {
                         <Grid item xs={12}>
                           <TextField multiline rows={3} fullWidth label='Mô tả' />
                         </Grid>
-                        <Grid item xs={12}>
-                          <FormControl fullWidth>
-                            <Controller
-                              name='group'
-                              rules={{ required: true }}
-                              control={control}
-                              render={({ field: { value, onChange } }) => (
-                                <>
-                                  <InputLabel id='demo-simple-select-label' required>
-                                    Khối lớp
-                                  </InputLabel>
-                                  <Select
-                                    label='Khối lớp'
-                                    labelId='demo-simple-select-label'
-                                    aria-describedby='validation-schema-group'
-                                    error={Boolean(errors.group)}
-                                    value={value}
-                                    onChange={onChange}
-                                  >
-                                    <MenuItem value={0}>Chọn Khối lớp</MenuItem>
-                                    <MenuItem value={1}>Khối 1</MenuItem>
-                                    <MenuItem value={2}>Khối 2</MenuItem>
-                                    <MenuItem value={3}>Khối 3</MenuItem>
-                                    <MenuItem value={4}>Khối 4</MenuItem>
-                                    <MenuItem value={5}>Khối 5</MenuItem>
-                                    <MenuItem value={6}>Khối 6</MenuItem>
-                                    <MenuItem value={7}>Khối 7</MenuItem>
-                                    <MenuItem value={8}>Khối 8</MenuItem>
-                                    <MenuItem value={9}>Khối 9</MenuItem>
-                                    <MenuItem value={10}>Khối 10</MenuItem>
-                                    <MenuItem value={11}>Khối 11</MenuItem>
-                                    <MenuItem value={12}>Khối 12</MenuItem>
-                                  </Select>
-                                </>
-                              )}
-                            />
-                            {errors.group && (
-                              <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-group'>
-                                {errors.group.message}
-                              </FormHelperText>
-                            )}
-                          </FormControl>
-                        </Grid>
                       </Grid>
                     </form>
                   </div>
@@ -231,4 +172,4 @@ const EditClassPage = () => {
   )
 }
 
-export default EditClassPage
+export default EditTestGroupPage
