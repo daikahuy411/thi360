@@ -131,6 +131,7 @@ const QuestionTable = () => {
             {questionTypes.map(item => (
               <MenuItem
                 component={Link}
+                key={item.id}
                 href={`/apps/question-catalog/${questionCatalogId}/questions/add/${item.id}`}
               >
                 {item.name}

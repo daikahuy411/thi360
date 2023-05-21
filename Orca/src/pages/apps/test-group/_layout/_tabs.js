@@ -23,11 +23,11 @@ const Nav = () => {
         </Link>
         <Link
           className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/test-group/${testGroupId}/configs/` ? 'is-active' : 'disabled'
+            router.asPath === `/apps/test-group/${testGroupId}/sections/` ? 'is-active' : 'disabled'
           }`}
           title='Cấu trúc đề thi'
           component={Link}
-          href={currentTestGroup && currentTestGroup.id > 0 ? `/apps/test-group/${testGroupId}/configs` : 'javascript:void(0)'}
+          href={currentTestGroup && currentTestGroup.id > 0 ? `/apps/test-group/${testGroupId}/sections` : 'javascript:void(0)'}
         >
           Cấu trúc đề thi
         </Link>
