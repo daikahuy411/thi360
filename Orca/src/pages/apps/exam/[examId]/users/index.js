@@ -1,6 +1,7 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import { selectedClass } from 'src/store/slices/classSlice'
+import { selectedExam } from 'src/store/slices/examSlice'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
@@ -13,7 +14,9 @@ import Nav from '../../_layout/_tabs'
 import UserTable from './_list'
 
 const ClassUserList = () => {
-  const currentClass = useSelector(selectedClass)
+  const router = useRouter()
+  const currentExam = useSelector(selectedExam)
+  const { examId } = router.query
 
   return (
     <>
@@ -26,16 +29,16 @@ const ClassUserList = () => {
                 <div className='title-bar' id='EntityHeadingTitleBar'>
                   <h3 className='title left'>
                     <span className='title__label'>
-                      {currentClass && currentClass.id > 0 && <span>{currentClass.name}</span>}
+                      {currentExam && currentExam.id > 0 && <span>{currentExam.name}</span>}
                     </span>
-                    {currentClass && currentClass.id > 0 && (
+                    {currentExam && currentExam.id > 0 && (
                       <IconButton aria-label='delete'>
                         <HelpOutlineIcon />
                       </IconButton>
                     )}
                   </h3>
                   <span className='right'>
-                    <Button variant='outlined' component={Link} href='/apps/class/'>
+                    <Button variant='outlined' component={Link} href={`/apps/exams/${examId}`}>
                       <ArrowBackIcon />
                       &nbsp;Quay lại
                     </Button>

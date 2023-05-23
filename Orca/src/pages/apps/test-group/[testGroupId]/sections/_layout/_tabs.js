@@ -1,11 +1,8 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
-import { selectedClass } from 'src/store/slices/classSlice'
 
 const Nav = () => {
   const router = useRouter()
-  const currentClass = useSelector(selectedClass)
   const { testGroupId, sectionId } = router.query
 
   return (
@@ -23,11 +20,11 @@ const Nav = () => {
         </Link>
         <Link
           className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/test-group/${testGroupId}/sections/${sectionId}/items` ? 'is-active' : 'disabled'
+            router.asPath === `/apps/test-group/${testGroupId}/sections/${sectionId}/items/` ? 'is-active' : 'disabled'
           }`}
           title='Cấu hình'
           component={Link}
-          href={sectionId > 0 ? `/apps/test-group/${testGroupId}/sections/${sectionId}/items` : 'javascript:void(0)'}
+          href={sectionId > 0 ? `/apps/test-group/${testGroupId}/sections/${sectionId}/items/` : 'javascript:void(0)'}
         >
           Cấu hình
         </Link>
