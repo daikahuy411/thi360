@@ -4,20 +4,18 @@ import React, {
 } from 'react'
 
 import Icon from 'src/@core/components/icon'
-import QuestionCatalogApi from 'src/api/question-catalog-api'
+import TestGroupApi from 'src/api/test-group-api'
 import { makeStyles } from 'tss-react/mui'
 
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
+import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
 import Paper from '@mui/material/Paper'
+import Radio from '@mui/material/Radio'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -39,7 +37,7 @@ const useStyles = makeStyles()(theme => {
   }
 })
 
-export default function QuestionCatalogSelector({ onClose, onOk }) {
+export default function TestGroupSelector({ onClose, onOk }) {
   const { classes, cx } = useStyles()
   const [state, setState] = React.useState({
     top: false,
@@ -51,8 +49,11 @@ export default function QuestionCatalogSelector({ onClose, onOk }) {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [selectedData, setSelectedData] = useState([])
-  const [selectedUsers, setSelectedUsers] = useState([])
-  const [selectedTestGroup, setSelectedTestGroup] = useState(null)
+  const [selectedValue, setSelectedValue] = React.useState(null)
+
+  const handleChange = event => {
+    setSelectedValue(parseInt(event.target.value))
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -111,8 +112,8 @@ export default function QuestionCatalogSelector({ onClose, onOk }) {
   }
 
   useEffect(() => {
-    new QuestionCatalogApi().getAll().then(response => {
-      setData(response.data)
+    new TestGroupApi().searches().then(response => {
+      setData(response.data.value)
     })
   }, [])
 
@@ -133,7 +134,7 @@ export default function QuestionCatalogSelector({ onClose, onOk }) {
           }}
         >
           <Typography variant='h6' sx={{ fontWeight: 600, textTransform: 'uppercase' }}>
-            Chọn Bộ Câu hỏi
+            Chọn Bộ đề thi
           </Typography>
           <IconButton
             onClick={() => onClose()}
@@ -148,76 +149,81 @@ export default function QuestionCatalogSelector({ onClose, onOk }) {
             <Icon icon='mdi:close' fontSize={20} />
           </IconButton>
         </Box>
-        {!selectedTestGroup && (
-          <Grid container>
-            <Grid item md={4}>
-              <IconButton aria-label='filter'>
-                <FilterAltOutlinedIcon />
-              </IconButton>
-            </Grid>
-            <Grid item md={4}>
-              <TextField fullWidth placeholder='Tìm kiếm' size='small' />
-            </Grid>
-            <Grid item md={4} alignContent={'right'} alignItems={'right'}></Grid>
-            <Grid item xs={12}>
-              <Divider />
-              <TableContainer component={Paper} style={{ marginTop: 5 }}>
-                <Table sx={{}} aria-label='simple table'>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell style={{ width: 30 }}>STT </TableCell>
-                      <TableCell style={{ width: 60 }}>Chọn</TableCell>
-                      <TableCell>Tên</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {data &&
-                      data.map((item, index) => (
-                        <TableRow
-                          key={item.name}
-                          sx={{
-                            '&:last-of-type td, &:last-of-type th': {
-                              border: 0
-                            }
-                          }}
-                        >
-                          <TableCell>{index + 1}</TableCell>
-                          <TableCell>
-                            <IconButton
-                              onClick={() => {
-                                setSelectedTestGroup(item)
-                              }}
-                            >
-                              <ChevronRightIcon />
-                            </IconButton>
-                          </TableCell>
-                          <TableCell>{item.name}</TableCell>
-                        </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component='div'
-                count={data.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </Grid>
+
+        <Grid container>
+          <Grid item md={4}>
+            <IconButton aria-label='filter'>
+              <FilterAltOutlinedIcon />
+            </IconButton>
           </Grid>
-        )}
-        {selectedTestGroup && (
-          <>
-            <ListItem button onClick={() => setSelectedTestGroup(null)}>
-              <ListItemText primary='Back to main menu' />
-              <ChevronLeftIcon />
-            </ListItem>
-            <b>Show category of {selectedTestGroup.name}</b>
-          </>
-        )}
+          <Grid item md={4}>
+            <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+          </Grid>
+          <Grid item md={4} alignContent={'right'} alignItems={'right'}>
+            <Button
+              // disabled={selectedData.length == 0}
+              color='primary'
+              style={{ float: 'right' }}
+              type='submit'
+              variant='contained'
+              onClick={() => {
+                if (onOk) {
+                  onOk()
+                }
+              }}
+            >
+              Chọn
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+            <TableContainer component={Paper} style={{ marginTop: 5 }}>
+              <Table sx={{}} aria-label='simple table'>
+                <TableHead>
+                  <TableRow>
+                    <TableCell style={{ width: 30 }}>STT </TableCell>
+                    <TableCell style={{ width: 60 }}>Chọn</TableCell>
+                    <TableCell>Tên</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data &&
+                    data.map((item, index) => (
+                      <TableRow
+                        key={item.name}
+                        sx={{
+                          '&:last-of-type td, &:last-of-type th': {
+                            border: 0
+                          }
+                        }}
+                      >
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell>
+                          <Radio
+                            checked={selectedValue === item.id}
+                            onChange={handleChange}
+                            value={item.id}
+                            name='radio-buttons'
+                            inputProps={{ 'aria-label': 'A' }}
+                          />
+                        </TableCell>
+                        <TableCell>{item.name}</TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component='div'
+              count={data.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Grid>
+        </Grid>
       </div>
     </Drawer>
   )
