@@ -21,17 +21,21 @@ function CatalogDialog({ catalogType, open, onClose, excludedId = 0, onNodeSelec
 
   const handleNodeSelected = nodeId => {
     setSelectedNodeId(nodeId)
+    // console.log("nodeId:", nodeId)
   }
 
   const onOk = () => {
+
     if (onNodeSelected) {
       onNodeSelected(selectedNodeId)
       onClose()
     }
+
+    // console.log("selectedNodeId:", selectedNodeId)
   }
 
   return (
-    <Drawer anchor='right' onClose={onClose} open={open} variant='temporary'>
+    <Drawer anchor='right' onClose={onClose} open={open} variant='temporary' style={{ overflowY: 'unset' }} >
       <>
         <Box
           className='customizer-header'
@@ -69,7 +73,7 @@ function CatalogDialog({ catalogType, open, onClose, excludedId = 0, onNodeSelec
           </Grid>
           <Grid item md={4} alignContent={'right'} alignItems={'right'}>
             <Button
-              // disabled={selectedData.length == 0}
+              disabled={selectedNodeId == 0}
               color='primary'
               style={{ float: 'right' }}
               type='submit'
@@ -85,13 +89,15 @@ function CatalogDialog({ catalogType, open, onClose, excludedId = 0, onNodeSelec
           </Grid>
           <Grid item md={12} style={{ width: 360 }}>
             <Divider />
-            <Tree
-              acl={acl}
-              catalogType={catalogType}
-              excludedId={excludedId}
-              onNodeSelected={handleNodeSelected}
-              autoLoad={true}
-            />
+            <div style={{ overflowY: 'scroll', height: `calc(100vh - 130px)` }}>
+              <Tree
+                acl={acl}
+                catalogType={catalogType}
+                excludedId={excludedId}
+                onNodeSelected={handleNodeSelected}
+                autoLoad={true}
+              />
+            </div>
           </Grid>
         </Grid>
       </>

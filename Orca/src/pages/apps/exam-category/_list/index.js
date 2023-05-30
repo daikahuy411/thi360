@@ -9,7 +9,6 @@ import { ExamCategoryApi } from 'src/api/catalog-api'
 
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
-import Checkbox from '@mui/material/Checkbox'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
@@ -23,7 +22,6 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
-import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
 import TreeRow from './TreeRow'
@@ -60,7 +58,7 @@ const ExamCategoryTable = () => {
           {data.length} Danh mục Kỳ thi
         </Typography>
         &nbsp; &nbsp;
-        <Tooltip title='Import'>
+        {/* <Tooltip title='Import'>
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:upload' />
           </IconButton>
@@ -71,12 +69,12 @@ const ExamCategoryTable = () => {
             <Icon icon='mdi:download' />
           </IconButton>
         </Tooltip>
-        &nbsp; &nbsp;
-        <Tooltip title='Delete'>
+        &nbsp; &nbsp; */}
+        {/* <Tooltip title='Delete'>
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:delete-outline' />
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
         &nbsp; &nbsp;
         <Button
           component={Link}
@@ -115,15 +113,15 @@ const ExamCategoryTable = () => {
         <Table sx={{ minWidth: 650 }} aria-label='simple table'>
           <TableHead>
             <TableRow>
-              <TableCell padding='checkbox'>
+              {/* <TableCell padding='checkbox'>
                 <Checkbox
                   // onChange={onSelectAllClick}
                   // checked={rowCount > 0 && numSelected === rowCount}
                   inputProps={{ 'aria-label': 'select all desserts' }}
                   // indeterminate={numSelected > 0 && numSelected < rowCount}
                 />
-              </TableCell>
-              <TableCell style={{ width: 30 }}>Sửa</TableCell>
+              </TableCell> */}
+              <TableCell style={{ width: 120 }}>#</TableCell>
               <TableCell>Tên</TableCell>
               <TableCell align='right' style={{ width: 120 }}>
                 Số Kỳ thi
