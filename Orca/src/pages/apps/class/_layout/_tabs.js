@@ -15,7 +15,7 @@ const Nav = ({ children }) => {
           className={`finger-tabs__tab flex-none ${
             router.asPath === `/apps/class/${classId}/` ? 'is-active' : 'disabled'
           }`}
-          title='Học viên'
+          title='Chi tiết'
           component={Link}
           href={`/apps/class/${classId}`}
         >
@@ -27,7 +27,7 @@ const Nav = ({ children }) => {
           }`}
           title='Học viên'
           component={Link}
-          href={currentClass && currentClass.id > 0 ? `/apps/class/${classId}/users` : 'javascript:void(0)'}
+          href={currentClass && currentClass.id > 0 ? `/apps/class/${classId}/users` : '#'}
         >
           Học viên
         </Link>

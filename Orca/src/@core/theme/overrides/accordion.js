@@ -41,7 +41,7 @@ const Accordion = theme => {
             borderBottomRightRadius: 0
           },
           '& + .MuiCollapse-root': {
-            '& .MuiAccordionDetails-root:first-child': {
+            '& .MuiAccordionDetails-root:first-of-type': {
               paddingTop: 0
             }
           }
