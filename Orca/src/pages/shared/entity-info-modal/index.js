@@ -14,22 +14,12 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 
-const emails = ['username@gmail.com', 'user02@gmail.com']
-
 const EntityInfoModal = ({ entity }) => {
 
   // ** States
   const [open, setOpen] = useState(false)
-  const [selectedValue, setSelectedValue] = useState(emails[1])
   const handleClickOpen = () => setOpen(true)
   const handleDialogClose = () => setOpen(false)
-
-  const handleClose = value => {
-    setOpen(false)
-    setSelectedValue(value)
-  }
-
-  // const createdTime = entity.createdTime !== null ? format(entity.createdTime, 'MM/dd/yyyy') : ''
 
   return (
     <>

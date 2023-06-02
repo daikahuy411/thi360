@@ -8,29 +8,38 @@ const Nav = ({ children }) => {
   const currentClass = useSelector(selectedClass)
   const { classId } = router.query
 
+  const linkUser = currentClass && currentClass.id > 0 ? `/apps/class/${classId}/users` : 'javascript:void(0)'
+
   return (
     <>
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
         <Link
-          className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/class/${classId}/` ? 'is-active' : 'disabled'
-          }`}
+          className={`finger-tabs__tab flex-none ${router.asPath === `/apps/class/${classId}/` ? 'is-active' : 'disabled'
+            }`}
           title='Chi tiết'
           component={Link}
           href={`/apps/class/${classId}`}
         >
           Chi tiết
         </Link>
-        <Link
-          className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
-          }`}
-          title='Học viên'
-          component={Link}
-          href={currentClass && currentClass.id > 0 ? `/apps/class/${classId}/users` : '#'}
-        >
-          Học viên
-        </Link>
+        {currentClass && currentClass.id > 0 ?
+          <Link
+            className={`finger-tabs__tab flex-none ${router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
+              }`}
+            title='Học viên'
+            component={Link}
+            href={linkUser}
+          >
+            Học viên
+          </Link>
+          : <p
+            className={`finger-tabs__tab flex-none ${router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
+              }`}
+            title='Học viên'
+          >
+            Học viên
+          </p>
+        }
       </div>
     </>
   )

@@ -13,7 +13,6 @@ export default class OrganizationApi extends ApiBase {
   };
 
   searchesClasses = (request: any) => {
-    // const response = axios.get(`${this.baseApiUrl}/Classes`);
     const response = axios.post(`${this.baseApiUrl}/Classes`, request);
     return response;
   };
@@ -24,7 +23,7 @@ export default class OrganizationApi extends ApiBase {
   };
 
   deleteMultipleOrganization = (request: any) => {
-    const response = axios.post(`${this.baseApiUrl}/DeleteMutipleOrganization`, request);
+    const response = axios.delete(`${this.baseApiUrl}/batch`, { data: request })
     return response;
   };
 }

@@ -123,12 +123,13 @@ const ClassTable = () => {
   const handleCloseDelete = () => setOpenDelete(false);
   const handleDelete = () => {
     if (selected.length > 0) {
-      new OrganizationApi().deleteMultipleOrganization({LsId: selected})
+      new OrganizationApi().deleteMultipleOrganization(selected)
       .then((response) => {
         setOpenDelete(false)
         if(response.data.isSuccess){
           toast.success('Xóa dữ liệu thành công.')
           fetchData()
+          setSelected([])
         }
       })
       .catch((e) => {
