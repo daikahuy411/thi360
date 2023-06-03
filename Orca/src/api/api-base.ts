@@ -1,5 +1,6 @@
-import Configuration from "../configs/auth";
-import axios from "axios";
+import axios from 'axios'
+
+import Configuration from '../configs/auth'
 
 class ApiBase {
   baseApiUrl: string;

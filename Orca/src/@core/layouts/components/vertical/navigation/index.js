@@ -1,22 +1,27 @@
 // ** React Import
-import { useRef, useState } from 'react'
-
-// ** MUI Import
-import List from '@mui/material/List'
-import Box from '@mui/material/Box'
-import { styled, useTheme } from '@mui/material/styles'
+import {
+  useRef,
+  useState
+} from 'react'
 
 // ** Third Party Components
 import PerfectScrollbar from 'react-perfect-scrollbar'
+// ** Util Import
+import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
 import themeConfig from 'src/configs/themeConfig'
+
+import Box from '@mui/material/Box'
+// ** MUI Import
+import List from '@mui/material/List'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
 
 // ** Component Imports
 import Drawer from './Drawer'
-import VerticalNavItems from './VerticalNavItems'
 import VerticalNavHeader from './VerticalNavHeader'
-
-// ** Util Import
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
+import VerticalNavItems from './VerticalNavItems'
 
 const StyledBoxForShadow = styled(Box)(({ theme }) => ({
   top: 60,
@@ -139,7 +144,7 @@ const Navigation = props => {
               sx={{
                 pt: 0,
                 transition: 'padding .25s ease',
-                '& > :first-child': { mt: '0' },
+                '& > :first-of-type': { mt: '0' },
                 pr: !navCollapsed || (navCollapsed && navHover) ? 4.5 : 1.25
               }}
             >

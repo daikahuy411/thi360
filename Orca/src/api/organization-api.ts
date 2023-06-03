@@ -1,5 +1,6 @@
-import ApiBase from './api-base';
-import axios from 'axios';
+import axios from 'axios'
+
+import ApiBase from './api-base'
 
 export default class OrganizationApi extends ApiBase {
   constructor() {
@@ -11,13 +12,18 @@ export default class OrganizationApi extends ApiBase {
     return response;
   };
 
-  searchesClasses = () => {
-    const response = axios.get(`${this.baseApiUrl}/Classes`);
+  searchesClasses = (request: any) => {
+    const response = axios.post(`${this.baseApiUrl}/Classes`, request);
     return response;
   };
 
   getOrganizationTree = () => {
     const response = axios.get(`${this.baseApiUrl}/GetOrganizationTree`);
+    return response;
+  };
+
+  deleteMultipleOrganization = (request: any) => {
+    const response = axios.delete(`${this.baseApiUrl}/batch`, { data: request })
     return response;
   };
 }

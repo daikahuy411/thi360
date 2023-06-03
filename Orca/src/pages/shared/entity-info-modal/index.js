@@ -1,6 +1,9 @@
 // ** React Imports
 import { useState } from 'react'
 
+// import format from 'date-fns/format'
+import moment from 'moment'
+
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Dialog from '@mui/material/Dialog'
 import IconButton from '@mui/material/IconButton'
@@ -11,19 +14,12 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 
-const emails = ['username@gmail.com', 'user02@gmail.com']
-
 const EntityInfoModal = ({ entity }) => {
+
   // ** States
   const [open, setOpen] = useState(false)
-  const [selectedValue, setSelectedValue] = useState(emails[1])
   const handleClickOpen = () => setOpen(true)
   const handleDialogClose = () => setOpen(false)
-
-  const handleClose = value => {
-    setOpen(false)
-    setSelectedValue(value)
-  }
 
   return (
     <>
@@ -44,7 +40,7 @@ const EntityInfoModal = ({ entity }) => {
                   Ngày tạo
                 </TableCell>
                 <TableCell style={{ width: 160 }} align='right'>
-                  {entity.createdTime}
+                  {moment(entity.createdTime).format('DD/MM/YYYY hh:mm') }
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -52,7 +48,7 @@ const EntityInfoModal = ({ entity }) => {
                   Người tạo
                 </TableCell>
                 <TableCell style={{ width: 160 }} align='right'>
-                  {entity.createdTime}
+                  {entity.createdByName}
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -60,7 +56,7 @@ const EntityInfoModal = ({ entity }) => {
                   Sửa gần nhất
                 </TableCell>
                 <TableCell style={{ width: 160 }} align='right'>
-                  {entity.createdTime}
+                {moment(entity.lastModifiedTime).format('DD/MM/YYYY hh:mm') }
                 </TableCell>
               </TableRow>
             </TableBody>
