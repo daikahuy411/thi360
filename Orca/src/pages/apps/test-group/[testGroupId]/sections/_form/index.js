@@ -1,7 +1,13 @@
+import * as React from 'react'
 import { useEffect } from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Draggable from 'react-draggable'
+import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
 import {
   Controller,
   useForm
@@ -24,10 +30,16 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
+import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 
 import TopNav from '../_layout/_breadcrums'
@@ -35,8 +47,19 @@ import Nav from '../_layout/_tabs'
 
 const schema = yup.object().shape({
   name: yup.string().required('* bắt buộc'),
-  group: yup.number().required('* bắt buộc').moreThan(0, '* bắt buộc')
+  description: yup.string(),
 })
+
+function PaperComponent(props) {
+  return (
+    <Draggable
+      handle="#draggable-dialog-title"
+      cancel={'[class*="MuiDialogContent-root"]'}
+    >
+      <Paper {...props} />
+    </Draggable>
+  );
+}
 
 const SectionEditForm = () => {
   const router = useRouter()
@@ -56,22 +79,9 @@ const SectionEditForm = () => {
     resolver: yupResolver(schema)
   })
 
-  const save = () => {
-    const item = getValues()
-    new TestGroupSectionApi().save(item).then(response => {
-      toast.success('Cập nhật thành công')
-    })
-  }
-
-  const onSubmit = data => {
-    new TestGroupSectionApi().save(data).then(response => {
-      toast.success('Form Submitted')
-    })
-  }
-
   useEffect(() => {
     if (!sectionId || sectionId == 0) {
-      dispatch(selectTestGroupSection({ id: 0, name: '' }))
+      dispatch(selectTestGroupSection({ id: 0, name: '', description: '' }))
       return
     }
     new TestGroupSectionApi().get(sectionId).then(response => {
@@ -83,8 +93,66 @@ const SectionEditForm = () => {
     if (currentTestGroupSection) reset(currentTestGroupSection)
   }, [currentTestGroupSection])
 
+  /*
+  * handle save
+  */
+  const save = (code) => {
+    const item = getValues()
+    new TestGroupSectionApi().save({ ...item, testGroupId: testGroupId })
+      .then(response => {
+        toast.success('Cập nhật thành công')
+        if (code == 1) {
+          router.push(`/apps/test-group/${testGroupId}/sections`)
+        } else {
+          reset()
+        }
+      })
+      .catch(() => {
+        toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu.')
+      })
+  }
+
+  const onSubmit = data => {
+    new TestGroupSectionApi().save(data).then(response => {
+      toast.success('Form Submitted')
+    })
+  }
+  /*
+  * handle save
+  */
+
+  /*
+  * remove test-group-section
+  */
+  const [openDelete, setOpenDelete] = React.useState(false);
+  const handleClickOpenDelete = () => setOpenDelete(true);
+  const handleCloseDelete = () => setOpenDelete(false);
+  const handleDelete = () => {
+    if (!sectionId || sectionId > 0) {
+      new TestGroupSectionApi().delete({ id: sectionId })
+        .then((response) => {
+          setOpenDelete(false)
+          toast.success('Xóa dữ liệu thành công.')
+          router.push(`/apps/test-group/${testGroupId}/sections`)
+        })
+        .catch((e) => {
+          setOpenDelete(false)
+          toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
+        })
+    }
+  }
+  /*
+  * remove test-group-section
+  */
+
   return (
     <>
+    <HelmetProvider>
+        <Helmet>
+          <title>
+            {currentTestGroupSection && currentTestGroupSection.id > 0 ? currentTestGroupSection.name : 'Tạo mới Phần thi'}
+          </title>
+        </Helmet>
       <div style={{ padding: 0 }}>
         <div sx={{ py: 5.375 }} style={{ padding: 0 }}>
           <>
@@ -106,7 +174,7 @@ const SectionEditForm = () => {
                   <span className='right'>
                     {currentTestGroupSection && currentTestGroupSection.id > 0 && (
                       <>
-                        <IconButton aria-label='delete'>
+                        <IconButton aria-label='delete' onClick={handleClickOpenDelete}>
                           <DeleteIcon />
                         </IconButton>
                         &nbsp;
@@ -117,13 +185,13 @@ const SectionEditForm = () => {
                       &nbsp;Quay lại
                     </Button>
                     &nbsp;
-                    <Button disabled={!isValid} onClick={save} variant='contained'>
+                    <Button disabled={!isValid} onClick={() => save(1)} variant='contained'>
                       Cập nhật
                     </Button>
                     {(!currentTestGroupSection || currentTestGroupSection.id == 0) && (
                       <>
                         &nbsp;
-                        <Button disabled={!isValid} variant='contained'>
+                        <Button disabled={!isValid} onClick={() => save(2)} variant='contained'>
                           Cập nhật &amp; Thêm mới
                         </Button>
                       </>
@@ -143,7 +211,7 @@ const SectionEditForm = () => {
                               rules={{ required: true }}
                               render={({ field: { value, onChange } }) => (
                                 <TextField
-                                  value={value}
+                                  value={value ?? ''}
                                   label='Tên'
                                   InputLabelProps={{ shrink: true }}
                                   required
@@ -161,10 +229,47 @@ const SectionEditForm = () => {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12}>
-                          <TextField multiline rows={3} fullWidth label='Mô tả' />
+                          <FormControl fullWidth>
+                            <Controller
+                              name='description'
+                              control={control}
+                              rules={{ required: false }}
+                              render={({ field: { value, onChange } }) => (
+                                <TextField
+                                  multiline
+                                  rows={3}
+                                  fullWidth
+                                  value={value ?? ''}
+                                  label='Mô tả'
+                                  InputLabelProps={{ shrink: true }}
+                                  onChange={onChange}
+                                />
+                              )}
+                            />
+                          </FormControl>
                         </Grid>
                       </Grid>
                     </form>
+
+                    <Dialog
+                        open={openDelete}
+                        onClose={handleCloseDelete}
+                        PaperComponent={PaperComponent}
+                        aria-labelledby="draggable-dialog-title"
+                      >
+                        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+                          Xác nhận
+                        </DialogTitle>
+                        <DialogContent>
+                          <DialogContentText>
+                            Dữ liệu xóa sẽ không thể khôi phục lại. Bạn có muốn xóa Phần thi này không?
+                          </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
+                          <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+                        </DialogActions>
+                      </Dialog>
                   </div>
                 </div>
               </div>
@@ -172,6 +277,7 @@ const SectionEditForm = () => {
           </>
         </div>
       </div>
+      </HelmetProvider>
     </>
   )
 }

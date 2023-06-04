@@ -55,6 +55,11 @@ class ApiBase {
     const response = axios.delete(`${url}/${item.id}`);
     return response;
   };
+
+  deleteMultiple = (request: any) => {
+    const response = axios.delete(`${this.baseApiUrl}/batch`, { data: request })
+    return response;
+  };
 }
 
 export default ApiBase;
