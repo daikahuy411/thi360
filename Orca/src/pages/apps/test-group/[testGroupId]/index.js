@@ -5,6 +5,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Draggable from 'react-draggable'
 import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
+import {
   Controller,
   useForm
 } from 'react-hook-form'
@@ -143,107 +147,114 @@ const EditTestGroupPage = () => {
 
   return (
     <>
-      <div style={{ padding: 0 }}>
-        <div sx={{ py: 5.375 }} style={{ padding: 0 }}>
-          <>
-            <TopNav />
-            <Box style={{ marginTop: 2 }}>
-              <div className='grid-block vertical'>
-                <div className='title-bar' id='EntityHeadingTitleBar'>
-                  <h3 className='title left'>
-                    <span className='title__label'>
-                      {currentTestGroup && currentTestGroup.id > 0 && <span>{currentTestGroup.name}</span>}
-                      {(!currentTestGroup || currentTestGroup.id == 0) && <span>Tạo mới Bộ đề thi</span>}
+      <HelmetProvider>
+        <Helmet>
+          <title>
+            {currentTestGroup && currentTestGroup.id > 0 ? currentTestGroup.name : 'Tạo mới Bộ đề thi'}
+          </title>
+        </Helmet>
+        <div style={{ padding: 0 }}>
+          <div sx={{ py: 5.375 }} style={{ padding: 0 }}>
+            <>
+              <TopNav />
+              <Box style={{ marginTop: 2 }}>
+                <div className='grid-block vertical'>
+                  <div className='title-bar' id='EntityHeadingTitleBar'>
+                    <h3 className='title left'>
+                      <span className='title__label'>
+                        {currentTestGroup && currentTestGroup.id > 0 && <span>{currentTestGroup.name}</span>}
+                        {(!currentTestGroup || currentTestGroup.id == 0) && <span>Tạo mới Bộ đề thi</span>}
+                      </span>
+                      {currentTestGroup && currentTestGroup.id > 0 && <EntityInfoModal entity={currentTestGroup} />}
+                    </h3>
+                    <span className='right'>
+                      {currentTestGroup && currentTestGroup.id > 0 && (
+                        <>
+                          <IconButton aria-label='delete' onClick={handleClickOpenDelete}>
+                            <DeleteIcon />
+                          </IconButton>
+                          &nbsp;
+                        </>
+                      )}
+                      <Button variant='outlined' component={Link} href='/apps/test-group/'>
+                        <ArrowBackIcon />
+                        &nbsp;Quay lại
+                      </Button>
+                      &nbsp;
+                      <Button disabled={!isValid} onClick={() => save(1)} variant='contained'>
+                        Cập nhật
+                      </Button>
+                      {(!currentTestGroup || currentTestGroup.id == 0) && (
+                        <>
+                          &nbsp;
+                          <Button disabled={!isValid} onClick={() => save(2)} variant='contained' >
+                            Cập nhật &amp; Thêm mới
+                          </Button>
+                        </>
+                      )}
                     </span>
-                    {currentTestGroup && currentTestGroup.id > 0 && <EntityInfoModal entity={currentTestGroup} />}
-                  </h3>
-                  <span className='right'>
-                    {currentTestGroup && currentTestGroup.id > 0 && (
-                      <>
-                        <IconButton aria-label='delete' onClick={handleClickOpenDelete}>
-                          <DeleteIcon />
-                        </IconButton>
-                        &nbsp;
-                      </>
-                    )}
-                    <Button variant='outlined' component={Link} href='/apps/test-group/'>
-                      <ArrowBackIcon />
-                      &nbsp;Quay lại
-                    </Button>
-                    &nbsp;
-                    <Button disabled={!isValid} onClick={() => save(1)} variant='contained'>
-                      Cập nhật
-                    </Button>
-                    {(!currentTestGroup || currentTestGroup.id == 0) && (
-                      <>
-                        &nbsp;
-                        <Button disabled={!isValid} onClick={() => save(2)} variant='contained' >
-                          Cập nhật &amp; Thêm mới
-                        </Button>
-                      </>
-                    )}
-                  </span>
-                </div>
-                <div className='grid-block'>
-                  <Nav />
-                  <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
-                    <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', width: '100%', paddingTop: 10 }}>
-                      <Grid container spacing={5}>
-                        <Grid item xs={12} md={6}>
-                          <FormControl fullWidth>
-                            <Controller
-                              name='name'
-                              control={control}
-                              rules={{ required: true }}
-                              render={({ field: { value, onChange } }) => (
-                                <TextField
-                                  fullWidth
-                                  value={value ?? ''}
-                                  label='Tên'
-                                  InputLabelProps={{ shrink: true }}
-                                  required
-                                  onChange={onChange}
-                                  error={Boolean(errors.name)}
-                                  aria-describedby='validation-schema-name'
-                                />
+                  </div>
+                  <div className='grid-block'>
+                    <Nav />
+                    <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
+                      <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', width: '100%', paddingTop: 10 }}>
+                        <Grid container spacing={5}>
+                          <Grid item xs={12} md={6}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='name'
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field: { value, onChange } }) => (
+                                  <TextField
+                                    fullWidth
+                                    value={value ?? ''}
+                                    label='Tên'
+                                    InputLabelProps={{ shrink: true }}
+                                    required
+                                    onChange={onChange}
+                                    error={Boolean(errors.name)}
+                                    aria-describedby='validation-schema-name'
+                                  />
+                                )}
+                              />
+                              {errors.name && (
+                                <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
+                                  {errors.name.message}
+                                </FormHelperText>
                               )}
-                            />
-                            {errors.name && (
-                              <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
-                                {errors.name.message}
-                              </FormHelperText>
-                            )}
-                          </FormControl>
+                            </FormControl>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    </form>
+                      </form>
 
-                    <Dialog
-                      open={openDelete}
-                      onClose={handleCloseDelete}
-                      PaperComponent={PaperComponent}
-                      aria-labelledby="draggable-dialog-title"
-                    >
-                      <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-                        Xác nhận
-                      </DialogTitle>
-                      <DialogContent>
-                        <DialogContentText>
-                          Dữ liệu xóa sẽ không thể khôi phục lại. Bạn có muốn xóa bộ đề thi này không?
-                        </DialogContentText>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-                        <Button onClick={handleDelete} color='error'>Đồng ý</Button>
-                      </DialogActions>
-                    </Dialog>
+                      <Dialog
+                        open={openDelete}
+                        onClose={handleCloseDelete}
+                        PaperComponent={PaperComponent}
+                        aria-labelledby="draggable-dialog-title"
+                      >
+                        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+                          Xác nhận
+                        </DialogTitle>
+                        <DialogContent>
+                          <DialogContentText>
+                            Dữ liệu xóa sẽ không thể khôi phục lại. Bạn có muốn xóa bộ đề thi này không?
+                          </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
+                          <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+                        </DialogActions>
+                      </Dialog>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Box>
-          </>
+              </Box>
+            </>
+          </div>
         </div>
-      </div>
+      </HelmetProvider>
     </>
   )
 }
