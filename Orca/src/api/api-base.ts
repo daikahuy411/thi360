@@ -1,5 +1,6 @@
-import Configuration from "../configs/auth";
-import axios from "axios";
+import axios from 'axios'
+
+import Configuration from '../configs/auth'
 
 class ApiBase {
   baseApiUrl: string;
@@ -52,6 +53,11 @@ class ApiBase {
   delete = (item: any) => {
     const url = `${this.baseApiUrl}`;
     const response = axios.delete(`${url}/${item.id}`);
+    return response;
+  };
+
+  deleteMultiple = (request: any) => {
+    const response = axios.delete(`${this.baseApiUrl}/batch`, { data: request })
     return response;
   };
 }

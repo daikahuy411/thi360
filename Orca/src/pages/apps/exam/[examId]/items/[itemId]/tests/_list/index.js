@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Icon from 'src/@core/components/icon'
-import ExamItemApi from 'src/api/exam-item-api'
+import TestApi from 'src/api/test-api'
 
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
@@ -25,13 +28,12 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
-const ExamItemTable = () => {
+const TestsTable = () => {
   const router = useRouter()
-
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const { examId } = router.query
+  const { testGroupId } = router.query
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -43,17 +45,17 @@ const ExamItemTable = () => {
   }
 
   useEffect(() => {
-    if (!examId) return
-    new ExamItemApi().getByExamId(examId).then(response => {
+    if (!testGroupId || testGroupId == 0) return
+    new TestApi().getTests(testGroupId).then(response => {
       setData(response.data)
     })
-  }, [examId])
+  }, [testGroupId])
 
   return (
     <>
       <Toolbar style={{ padding: 0 }}>
         <Typography sx={{ flex: '1 1 50%' }} variant='h5' id='tableTitle' component='div'>
-          {data.length} Môn thi
+          {data.length} Đề thi
         </Typography>
         &nbsp; &nbsp;
         <Tooltip title='Import'>
@@ -74,15 +76,8 @@ const ExamItemTable = () => {
           </IconButton>
         </Tooltip>
         &nbsp; &nbsp;
-        <Button
-          component={Link}
-          href={`/apps/exam/${examId}/items/0`}
-          variant='contained'
-          style={{ width: 160 }}
-          color='primary'
-          startIcon={<Icon icon='mdi:plus' />}
-        >
-          Môn thi
+        <Button variant='contained' style={{ width: 160 }} color='primary' startIcon={<Icon icon='mdi:send' />}>
+          Sinh đề
         </Button>
       </Toolbar>
       <Divider />
@@ -122,9 +117,7 @@ const ExamItemTable = () => {
               </TableCell>
               <TableCell style={{ width: 30 }}>Sửa</TableCell>
               <TableCell>Tên</TableCell>
-              <TableCell align='right' style={{ width: 120 }}>
-                Số đề thi
-              </TableCell>
+              <TableCell style={{ width: 210 }}>Ngày tạo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -142,14 +135,14 @@ const ExamItemTable = () => {
                     <Checkbox />
                   </TableCell>
                   <TableCell component='th' scope='row'>
-                    <IconButton aria-label='filter' component={Link} href={`/apps/exam/${examId}/items/${row.id}`}>
+                    <IconButton aria-label='filter' component={Link} href={`/apps/class/${row.id}`}>
                       <EditIcon />
                     </IconButton>
                   </TableCell>
                   <TableCell component='th' scope='row'>
                     {row.name}
                   </TableCell>
-                  <TableCell align='right'>{row.totalUser}</TableCell>
+                  <TableCell>{row.createdTime}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
@@ -169,4 +162,4 @@ const ExamItemTable = () => {
   )
 }
 
-export default ExamItemTable
+export default TestsTable
