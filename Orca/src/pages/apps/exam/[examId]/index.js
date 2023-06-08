@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 
+import ExamApi from 'api/exam-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import EntityInfoModal from 'pages/shared/entity-info-modal'
 import {
   Controller,
   useForm
@@ -11,12 +13,10 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux'
-import ExamApi from 'src/api/exam-api'
-import EntityInfoModal from 'src/pages/shared/entity-info-modal'
 import {
   selectedExam,
   selectExam
-} from 'src/store/slices/examSlice'
+} from 'store/slices/examSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'

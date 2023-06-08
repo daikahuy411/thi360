@@ -1,14 +1,16 @@
 // ** React Imports
-import { createContext, useEffect, useState } from 'react'
-
-// ** Next Import
-import { useRouter } from 'next/router'
+import {
+  createContext,
+  useEffect,
+  useState
+} from 'react'
 
 // ** Axios
 import axios from 'axios'
-
 // ** Config
-import authConfig from 'src/configs/auth'
+import authConfig from 'configs/auth'
+// ** Next Import
+import { useRouter } from 'next/router'
 
 // ** Defaults
 const defaultProvider = {

@@ -1,8 +1,10 @@
 import * as React from 'react'
 import { useEffect } from 'react'
 
+import TestGroupSectionApi from 'api/test-group-section-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
 import {
   Helmet,
@@ -17,12 +19,10 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux'
-import TestGroupSectionApi from 'src/api/test-group-section-api'
-import EntityInfoModal from 'src/pages/shared/entity-info-modal'
 import {
   selectedTestGroupSection,
   selectTestGroupSection
-} from 'src/store/slices/testGroupSectionSlice'
+} from 'store/slices/testGroupSectionSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'

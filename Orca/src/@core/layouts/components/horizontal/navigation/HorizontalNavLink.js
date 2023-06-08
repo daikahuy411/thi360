@@ -1,33 +1,29 @@
 // ** React Imports
 import { Fragment } from 'react'
 
+// ** Third Party Imports
+import clsx from 'clsx'
+// ** Theme Config Import
+import themeConfig from 'configs/themeConfig'
+import CanViewNavLink from 'layouts/components/acl/CanViewNavLink'
+import Translations from 'layouts/components/Translations'
+// ** Custom Components Imports
+import UserIcon from 'layouts/components/UserIcon'
 // ** Next Imports
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
+import { handleURLQueries } from '@core/layouts/utils'
+// ** Util Imports
+import { hexToRGBA } from '@core/utils/hex-to-rgba'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
 import List from '@mui/material/List'
+import MuiListItem from '@mui/material/ListItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import MuiListItem from '@mui/material/ListItem'
-
-// ** Third Party Imports
-import clsx from 'clsx'
-
-// ** Theme Config Import
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Custom Components Imports
-import UserIcon from 'src/layouts/components/UserIcon'
-import Translations from 'src/layouts/components/Translations'
-import CanViewNavLink from 'src/layouts/components/acl/CanViewNavLink'
-
-// ** Util Imports
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
-import { handleURLQueries } from 'src/@core/layouts/utils'
 
 const ListItem = styled(MuiListItem)(({ theme }) => ({
   width: 'auto',

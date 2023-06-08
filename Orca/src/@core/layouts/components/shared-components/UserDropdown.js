@@ -1,24 +1,25 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
+import {
+  Fragment,
+  useState
+} from 'react'
 
+// ** Context
+import { useAuth } from 'hooks/useAuth'
 // ** Next Import
 import { useRouter } from 'next/router'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import Avatar from '@mui/material/Avatar'
+import Badge from '@mui/material/Badge'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Menu from '@mui/material/Menu'
-import Badge from '@mui/material/Badge'
-import Avatar from '@mui/material/Avatar'
 import Divider from '@mui/material/Divider'
+import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Context
-import { useAuth } from 'src/hooks/useAuth'
 
 // ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({

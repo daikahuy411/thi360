@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 
+import TestGroupApi from 'api/test-group-api'
 import { useRouter } from 'next/router'
 import {
   useDispatch,
   useSelector
 } from 'react-redux'
-import TestGroupApi from 'src/api/test-group-api'
 import {
   selectedTestGroup,
   selectTestGroup
-} from 'src/store/slices/testGroupSlice'
+} from 'store/slices/testGroupSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'

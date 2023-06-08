@@ -1,29 +1,29 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
-
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Badge from '@mui/material/Badge'
-import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
-import { styled } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import MuiMenu from '@mui/material/Menu'
-import MuiMenuItem from '@mui/material/MenuItem'
-import Typography from '@mui/material/Typography'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import {
+  Fragment,
+  useState
+} from 'react'
 
 // ** Third Party Components
 import PerfectScrollbarComponent from 'react-perfect-scrollbar'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import CustomAvatar from '@core/components/mui/avatar'
 // ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
-import CustomAvatar from 'src/@core/components/mui/avatar'
-
+import CustomChip from '@core/components/mui/chip'
 // ** Util Import
-import { getInitials } from 'src/@core/utils/get-initials'
+import { getInitials } from '@core/utils/get-initials'
+import Badge from '@mui/material/Badge'
+// ** MUI Imports
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import MuiMenu from '@mui/material/Menu'
+import MuiMenuItem from '@mui/material/MenuItem'
+import { styled } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 // ** Styled Menu component
 const Menu = styled(MuiMenu)(({ theme }) => ({

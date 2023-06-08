@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import { selectedExam } from 'src/store/slices/examSlice'
+import { selectedExam } from 'store/slices/examSlice'
 
 const Nav = () => {
   const router = useRouter()

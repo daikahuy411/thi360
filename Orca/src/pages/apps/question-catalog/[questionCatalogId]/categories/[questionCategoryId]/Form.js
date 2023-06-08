@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import CatalogDialog from 'src/pages/shared/catalog'
-import { CatalogType } from 'src/types/CatalogType'
+import CatalogDialog from 'pages/shared/catalog'
+import { CatalogType } from 'types/CatalogType'
 
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import FolderIcon from '@mui/icons-material/FolderOpen'

@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 
+import { ExamCategoryApi } from 'api/catalog-api'
 import { useRouter } from 'next/router'
 import {
   useDispatch,
   useSelector
 } from 'react-redux'
-import { ExamCategoryApi } from 'src/api/catalog-api'
 import {
   selectedExamCategory,
   selectExamCategory
-} from 'src/store/slices/examCategorySlice'
+} from 'store/slices/examCategorySlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'

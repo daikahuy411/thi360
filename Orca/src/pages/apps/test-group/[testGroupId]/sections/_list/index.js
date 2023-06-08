@@ -3,6 +3,7 @@ import {
   useState
 } from 'react'
 
+import TestGroupSectionApi from 'api/test-group-section-api'
 import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -12,9 +13,8 @@ import {
   HelmetProvider
 } from 'react-helmet-async'
 import toast from 'react-hot-toast'
-import Icon from 'src/@core/components/icon'
-import TestGroupSectionApi from 'src/api/test-group-section-api'
 
+import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'

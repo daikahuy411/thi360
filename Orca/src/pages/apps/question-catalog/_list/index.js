@@ -3,10 +3,10 @@ import {
   useState
 } from 'react'
 
+import QuestionCatalogApi from 'api/question-catalog-api'
 import Link from 'next/link'
-import Icon from 'src/@core/components/icon'
-import QuestionCatalogApi from 'src/api/question-catalog-api'
 
+import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'

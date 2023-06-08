@@ -1,29 +1,29 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
+import {
+  Fragment,
+  useState
+} from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
-
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import Divider from '@mui/material/Divider'
-import Tooltip from '@mui/material/Tooltip'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import MuiMenu from '@mui/material/Menu'
-import MuiMenuItem from '@mui/material/MenuItem'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
 // ** Third Party Components
 import PerfectScrollbarComponent from 'react-perfect-scrollbar'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** Custom Components Imports
-import CustomAvatar from 'src/@core/components/mui/avatar'
+import CustomAvatar from '@core/components/mui/avatar'
+// ** MUI Imports
+import Box from '@mui/material/Box'
+import Divider from '@mui/material/Divider'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import MuiMenu from '@mui/material/Menu'
+import MuiMenuItem from '@mui/material/MenuItem'
+import { styled } from '@mui/material/styles'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 // ** Styled Menu component
 const Menu = styled(MuiMenu)(({ theme }) => ({

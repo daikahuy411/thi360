@@ -1,8 +1,7 @@
+// ** Util Import
+import { hexToRGBA } from '@core/utils/hex-to-rgba'
 // ** MUI Imports
 import { useTheme } from '@mui/material/styles'
-
-// ** Util Import
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
 
 const UseBgColor = () => {
   // ** Hooks

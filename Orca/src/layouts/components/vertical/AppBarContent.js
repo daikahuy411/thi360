@@ -1,17 +1,13 @@
+// ** Components
+import Autocomplete from 'layouts/components/Autocomplete'
+
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import NotificationDropdown from '@core/layouts/components/shared-components/NotificationDropdown'
+import UserDropdown from '@core/layouts/components/shared-components/UserDropdown'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Components
-import Autocomplete from 'src/layouts/components/Autocomplete'
-import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
-import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
-import LanguageDropdown from 'src/@core/layouts/components/shared-components/LanguageDropdown'
-import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
-import ShortcutsDropdown from 'src/@core/layouts/components/shared-components/ShortcutsDropdown'
 
 const notifications = [
   {

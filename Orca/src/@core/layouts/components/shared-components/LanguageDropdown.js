@@ -1,11 +1,10 @@
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
 // ** Third Party Import
 import { useTranslation } from 'react-i18next'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** Custom Components Imports
-import OptionsMenu from 'src/@core/components/option-menu'
+import OptionsMenu from '@core/components/option-menu'
 
 const LanguageDropdown = ({ settings, saveSettings }) => {
   // ** Hook

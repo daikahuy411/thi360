@@ -1,23 +1,20 @@
-import useMediaQuery from '@mui/material/useMediaQuery'
+import HorizontalNavItems from 'navigation/horizontal'
+// ** Navigation Imports
+import VerticalNavItems from 'navigation/vertical'
 
+// ** Hook Import
+import { useSettings } from '@core/hooks/useSettings'
 // ** Layout Imports
 // !Do not remove this Layout import
-import Layout from 'src/@core/layouts/Layout'
+import Layout from '@core/layouts/Layout'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
-// ** Navigation Imports
-import VerticalNavItems from 'src/navigation/vertical'
-import HorizontalNavItems from 'src/navigation/horizontal'
-
+import HorizontalAppBarContent from './components/horizontal/AppBarContent'
 // ** Component Import
 // Uncomment the below line (according to the layout type) when using server-side menu
 // import ServerSideVerticalNavItems from './components/vertical/ServerSideNavItems'
 // import ServerSideHorizontalNavItems from './components/horizontal/ServerSideNavItems'
-
 import VerticalAppBarContent from './components/vertical/AppBarContent'
-import HorizontalAppBarContent from './components/horizontal/AppBarContent'
-
-// ** Hook Import
-import { useSettings } from 'src/@core/hooks/useSettings'
 
 const UserLayout = ({ children, contentHeightFixed }) => {
   // ** Hooks

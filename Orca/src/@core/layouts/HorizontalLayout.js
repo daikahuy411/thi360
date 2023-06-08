@@ -1,25 +1,23 @@
-// ** MUI Imports
-import Fab from '@mui/material/Fab'
-import AppBar from '@mui/material/AppBar'
-import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
-import MuiToolbar from '@mui/material/Toolbar'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
 // ** Theme Config Import
-import themeConfig from 'src/configs/themeConfig'
+import themeConfig from 'configs/themeConfig'
 
 // ** Components
-import Customizer from 'src/@core/components/customizer'
-import Footer from './components/shared-components/footer'
-import Navigation from './components/horizontal/navigation'
-import ScrollToTop from 'src/@core/components/scroll-to-top'
-import AppBarContent from './components/horizontal/app-bar-content'
-
+import Customizer from '@core/components/customizer'
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import ScrollToTop from '@core/components/scroll-to-top'
 // ** Util Import
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
+import { hexToRGBA } from '@core/utils/hex-to-rgba'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+// ** MUI Imports
+import Fab from '@mui/material/Fab'
+import { styled } from '@mui/material/styles'
+import MuiToolbar from '@mui/material/Toolbar'
+
+import AppBarContent from './components/horizontal/app-bar-content'
+import Navigation from './components/horizontal/navigation'
+import Footer from './components/shared-components/footer'
 
 const HorizontalLayoutWrapper = styled('div')({
   height: '100%',

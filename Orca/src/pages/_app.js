@@ -1,63 +1,53 @@
-// ** Next Imports
-import Head from 'next/head'
-import { Router } from 'next/router'
-
-// ** Store Imports
-import { store } from 'src/store'
-import { Provider } from 'react-redux'
-
-// ** Loader Import
-import NProgress from 'nprogress'
-
-// ** Emotion Imports
-import { CacheProvider } from '@emotion/react'
-
 // ** Config Imports
-import 'src/configs/i18n'
-import { defaultACLObj } from 'src/configs/acl'
-import themeConfig from 'src/configs/themeConfig'
-
+import 'configs/i18n'
 // ** Fake-DB Import
-import 'src/@fake-db'
-
-// ** Third Party Import
-import { Toaster } from 'react-hot-toast'
-
-// ** Component Imports
-import UserLayout from 'src/layouts/UserLayout'
-import AclGuard from 'src/@core/components/auth/AclGuard'
-import ThemeComponent from 'src/@core/theme/ThemeComponent'
-import AuthGuard from 'src/@core/components/auth/AuthGuard'
-import GuestGuard from 'src/@core/components/auth/GuestGuard'
-import WindowWrapper from 'src/@core/components/window-wrapper'
-
-// ** Spinner Import
-import Spinner from 'src/@core/components/spinner'
-
-// ** Contexts
-import { AuthProvider } from 'src/context/AuthContext'
-import { SettingsConsumer, SettingsProvider } from 'src/@core/context/settingsContext'
-
-// ** Styled Components
-import ReactHotToast from 'src/@core/styles/libs/react-hot-toast'
-
-// ** Utils Imports
-import { createEmotionCache } from 'src/@core/utils/create-emotion-cache'
-
-import Interceptor from "src/context/interceptor";
-
+import '@fake-db'
 // ** Prismjs Styles
 import 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'
 import 'prismjs/components/prism-jsx'
 import 'prismjs/components/prism-tsx'
-
 // ** React Perfect Scrollbar Style
 import 'react-perfect-scrollbar/dist/css/styles.css'
-import 'src/iconify-bundle/icons-bundle-react'
-
+import 'iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'
+
+import { defaultACLObj } from 'configs/acl'
+import themeConfig from 'configs/themeConfig'
+// ** Contexts
+import { AuthProvider } from 'context/AuthContext'
+import Interceptor from 'context/interceptor'
+// ** Component Imports
+import UserLayout from 'layouts/UserLayout'
+// ** Next Imports
+import Head from 'next/head'
+import { Router } from 'next/router'
+// ** Loader Import
+import NProgress from 'nprogress'
+// ** Third Party Import
+import { Toaster } from 'react-hot-toast'
+import { Provider } from 'react-redux'
+// ** Store Imports
+import { store } from 'store'
+
+import AclGuard from '@core/components/auth/AclGuard'
+import AuthGuard from '@core/components/auth/AuthGuard'
+import GuestGuard from '@core/components/auth/GuestGuard'
+// ** Spinner Import
+import Spinner from '@core/components/spinner'
+import WindowWrapper from '@core/components/window-wrapper'
+import {
+  SettingsConsumer,
+  SettingsProvider
+} from '@core/context/settingsContext'
+// ** Styled Components
+import ReactHotToast from '@core/styles/libs/react-hot-toast'
+import ThemeComponent from '@core/theme/ThemeComponent'
+// ** Utils Imports
+import { createEmotionCache } from '@core/utils/create-emotion-cache'
+// ** Emotion Imports
+import { CacheProvider } from '@emotion/react'
 
 const clientSideEmotionCache = createEmotionCache()
 

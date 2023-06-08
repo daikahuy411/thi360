@@ -3,11 +3,11 @@ import {
   useState
 } from 'react'
 
+import { QuestionCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Icon from 'src/@core/components/icon'
-import { QuestionCategoryApi } from 'src/api/catalog-api'
 
+import Icon from '@core/components/icon'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'

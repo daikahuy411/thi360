@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 
+import ExamApi from 'api/exam-api'
 import { useRouter } from 'next/router'
 import {
   useDispatch,
   useSelector
 } from 'react-redux'
-import ExamApi from 'src/api/exam-api'
 import {
   selectedExam,
   selectExam
-} from 'src/store/slices/examSlice'
+} from 'store/slices/examSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'

@@ -1,8 +1,7 @@
 // ** Hook Import
-import { useSettings } from 'src/@core/hooks/useSettings'
-
+import { useSettings } from '@core/hooks/useSettings'
 // ** Util Import
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
+import { hexToRGBA } from '@core/utils/hex-to-rgba'
 
 const GlobalStyles = theme => {
   // ** Hook & Var
