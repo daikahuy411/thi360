@@ -1,36 +1,41 @@
 // ** React Imports
-import { useEffect, Fragment } from 'react'
+import {
+  Fragment,
+  useEffect
+} from 'react'
 
+// ** Third Party Imports
+import clsx from 'clsx'
+// ** Configs Import
+import themeConfig from 'configs/themeConfig'
+import CanViewNavGroup from 'layouts/components/acl/CanViewNavGroup'
+import Translations from 'layouts/components/Translations'
+import UserIcon from 'layouts/components/UserIcon'
 // ** Next Import
 import { useRouter } from 'next/router'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Utils
+import {
+  hasActiveChild,
+  removeChildren
+} from '@core/layouts/utils'
+import Box from '@mui/material/Box'
 // ** MUI Imports
 import Chip from '@mui/material/Chip'
 import Collapse from '@mui/material/Collapse'
 import ListItem from '@mui/material/ListItem'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import { styled, useTheme } from '@mui/material/styles'
 import ListItemButton from '@mui/material/ListItemButton'
-
-// ** Third Party Imports
-import clsx from 'clsx'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Configs Import
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Utils
-import { hasActiveChild, removeChildren } from 'src/@core/layouts/utils'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 // ** Custom Components Imports
 import VerticalNavItems from './VerticalNavItems'
-import UserIcon from 'src/layouts/components/UserIcon'
-import Translations from 'src/layouts/components/Translations'
-import CanViewNavGroup from 'src/layouts/components/acl/CanViewNavGroup'
 
 const MenuItemTextWrapper = styled(Box)(() => ({
   width: '100%',

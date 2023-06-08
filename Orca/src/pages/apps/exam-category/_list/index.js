@@ -3,10 +3,10 @@ import {
   useState
 } from 'react'
 
+import { ExamCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
-import Icon from 'src/@core/components/icon'
-import { ExamCategoryApi } from 'src/api/catalog-api'
 
+import Icon from '@core/components/icon'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'

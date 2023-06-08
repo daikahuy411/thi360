@@ -4,18 +4,16 @@ import { useState } from 'react'
 // ** Next Import
 import Link from 'next/link'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Hook Import
+import { useSettings } from '@core/hooks/useSettings'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Menu from '@mui/material/Menu'
 import Divider from '@mui/material/Divider'
-import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Hook Import
-import { useSettings } from 'src/@core/hooks/useSettings'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 
 const MenuItemWrapper = ({ children, option }) => {
   if (option.href) {

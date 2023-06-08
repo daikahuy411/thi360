@@ -4,12 +4,12 @@ import {
   useState
 } from 'react'
 
+import themeConfig from 'configs/themeConfig'
 // ** Third Party Components
 import PerfectScrollbar from 'react-perfect-scrollbar'
-// ** Util Import
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
-import themeConfig from 'src/configs/themeConfig'
 
+// ** Util Import
+import { hexToRGBA } from '@core/utils/hex-to-rgba'
 import Box from '@mui/material/Box'
 // ** MUI Import
 import List from '@mui/material/List'

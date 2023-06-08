@@ -1,11 +1,13 @@
-// ** MUI Imports
-import { styled, useTheme } from '@mui/material/styles'
-import useScrollTrigger from '@mui/material/useScrollTrigger'
-import MuiAppBar from '@mui/material/AppBar'
-import MuiToolbar from '@mui/material/Toolbar'
-
 // ** Util Import
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
+import { hexToRGBA } from '@core/utils/hex-to-rgba'
+import MuiAppBar from '@mui/material/AppBar'
+// ** MUI Imports
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
+import MuiToolbar from '@mui/material/Toolbar'
+import useScrollTrigger from '@mui/material/useScrollTrigger'
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
   transition: 'none',

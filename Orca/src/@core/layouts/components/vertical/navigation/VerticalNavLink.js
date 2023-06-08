@@ -1,12 +1,12 @@
+// ** Configs Import
+import themeConfig from 'configs/themeConfig'
+import CanViewNavLink from 'layouts/components/acl/CanViewNavLink'
+import Translations from 'layouts/components/Translations'
+// ** Custom Components Imports
+import UserIcon from 'layouts/components/UserIcon'
 // ** Next Imports
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-// ** Configs Import
-import themeConfig from 'src/configs/themeConfig'
-import CanViewNavLink from 'src/layouts/components/acl/CanViewNavLink'
-import Translations from 'src/layouts/components/Translations'
-// ** Custom Components Imports
-import UserIcon from 'src/layouts/components/UserIcon'
 
 import Box from '@mui/material/Box'
 // ** MUI Imports

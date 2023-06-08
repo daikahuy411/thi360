@@ -1,13 +1,15 @@
+// ** Theme Config Import
+import themeConfig from 'configs/themeConfig'
 // ** Next Import
 import Link from 'next/link'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import { styled, useTheme } from '@mui/material/styles'
-
-// ** Theme Config Import
-import themeConfig from 'src/configs/themeConfig'
 
 const StyledLink = styled(Link)(({ theme }) => ({
   display: 'flex',

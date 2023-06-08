@@ -1,11 +1,10 @@
 // ** React Imports
 import { useEffect } from 'react'
 
+// ** Hooks Import
+import { useAuth } from 'hooks/useAuth'
 // ** Next Imports
 import { useRouter } from 'next/router'
-
-// ** Hooks Import
-import { useAuth } from 'src/hooks/useAuth'
 
 const GuestGuard = props => {
   const { children, fallback } = props

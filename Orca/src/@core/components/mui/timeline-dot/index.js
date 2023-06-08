@@ -1,12 +1,10 @@
+// ** Hooks Imports
+import useBgColor from '@core/hooks/useBgColor'
+// ** Util Import
+import { hexToRGBA } from '@core/utils/hex-to-rgba'
+import MuiTimelineDot from '@mui/lab/TimelineDot'
 // ** MUI Imports
 import { useTheme } from '@mui/material/styles'
-import MuiTimelineDot from '@mui/lab/TimelineDot'
-
-// ** Hooks Imports
-import useBgColor from 'src/@core/hooks/useBgColor'
-
-// ** Util Import
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
 
 const TimelineDot = props => {
   // ** Props

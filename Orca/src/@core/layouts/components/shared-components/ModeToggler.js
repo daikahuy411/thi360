@@ -1,8 +1,7 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Imports
 import IconButton from '@mui/material/IconButton'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
 
 const ModeToggler = props => {
   // ** Props

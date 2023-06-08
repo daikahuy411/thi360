@@ -1,40 +1,43 @@
 // ** React Imports
-import { useState, useEffect, Fragment } from 'react'
-
-// ** Next Import
-import { useRouter } from 'next/router'
-
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
-import Fade from '@mui/material/Fade'
-import List from '@mui/material/List'
-import Paper from '@mui/material/Paper'
-import Typography from '@mui/material/Typography'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import { styled, useTheme } from '@mui/material/styles'
-import ClickAwayListener from '@mui/material/ClickAwayListener'
-import MuiListItem from '@mui/material/ListItem'
+import {
+  Fragment,
+  useEffect,
+  useState
+} from 'react'
 
 // ** Third Party Imports
 import clsx from 'clsx'
+// ** Theme Config Import
+import themeConfig from 'configs/themeConfig'
+import CanViewNavGroup from 'layouts/components/acl/CanViewNavGroup'
+import Translations from 'layouts/components/Translations'
+import UserIcon from 'layouts/components/UserIcon'
+// ** Next Import
+import { useRouter } from 'next/router'
 import { usePopper } from 'react-popper'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Theme Config Import
-import themeConfig from 'src/configs/themeConfig'
+import Icon from '@core/components/icon'
+import { hasActiveChild } from '@core/layouts/utils'
+// ** Utils
+import { hexToRGBA } from '@core/utils/hex-to-rgba'
+// ** MUI Imports
+import Box from '@mui/material/Box'
+import Chip from '@mui/material/Chip'
+import ClickAwayListener from '@mui/material/ClickAwayListener'
+import Fade from '@mui/material/Fade'
+import List from '@mui/material/List'
+import MuiListItem from '@mui/material/ListItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import Paper from '@mui/material/Paper'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 // ** Custom Components Imports
 import HorizontalNavItems from './HorizontalNavItems'
-import UserIcon from 'src/layouts/components/UserIcon'
-import Translations from 'src/layouts/components/Translations'
-import CanViewNavGroup from 'src/layouts/components/acl/CanViewNavGroup'
-
-// ** Utils
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
-import { hasActiveChild } from 'src/@core/layouts/utils'
 
 // ** Styled Components
 const ListItem = styled(MuiListItem)(({ theme }) => ({

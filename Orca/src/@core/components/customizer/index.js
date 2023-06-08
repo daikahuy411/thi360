@@ -4,23 +4,21 @@ import { useState } from 'react'
 // ** Third Party Components
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Hook Import
+import { useSettings } from '@core/hooks/useSettings'
+import Box from '@mui/material/Box'
+import Divider from '@mui/material/Divider'
+import MuiDrawer from '@mui/material/Drawer'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import IconButton from '@mui/material/IconButton'
 // ** MUI Imports
 import Radio from '@mui/material/Radio'
-import Switch from '@mui/material/Switch'
-import Divider from '@mui/material/Divider'
-import { styled } from '@mui/material/styles'
-import IconButton from '@mui/material/IconButton'
 import RadioGroup from '@mui/material/RadioGroup'
+import { styled } from '@mui/material/styles'
+import Switch from '@mui/material/Switch'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import MuiDrawer from '@mui/material/Drawer'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Hook Import
-import { useSettings } from 'src/@core/hooks/useSettings'
 
 const Toggler = styled(Box)(({ theme }) => ({
   right: 0,

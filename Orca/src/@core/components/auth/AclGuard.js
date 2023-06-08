@@ -1,21 +1,18 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Config Import
+import { buildAbilityFor } from 'configs/acl'
+// ** Hooks
+import { useAuth } from 'hooks/useAuth'
+// ** Context Imports
+import { AbilityContext } from 'layouts/components/acl/Can'
 // ** Next Imports
 import { useRouter } from 'next/router'
-
-// ** Context Imports
-import { AbilityContext } from 'src/layouts/components/acl/Can'
-
-// ** Config Import
-import { buildAbilityFor } from 'src/configs/acl'
-
 // ** Component Import
-import NotAuthorized from 'src/pages/401'
-import BlankLayout from 'src/@core/layouts/BlankLayout'
+import NotAuthorized from 'pages/401'
 
-// ** Hooks
-import { useAuth } from 'src/hooks/useAuth'
+import BlankLayout from '@core/layouts/BlankLayout'
 
 const AclGuard = props => {
   // ** Props

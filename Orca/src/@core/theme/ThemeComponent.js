@@ -1,25 +1,26 @@
-// ** MUI Imports
-import { deepmerge } from '@mui/utils'
+// ** Theme Config
+import themeConfig from 'configs/themeConfig'
+// ** Direction component for LTR or RTL
+import Direction from 'layouts/components/Direction'
+import UserThemeOptions from 'layouts/UserThemeOptions'
+
 import CssBaseline from '@mui/material/CssBaseline'
 import GlobalStyles from '@mui/material/GlobalStyles'
-import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles'
-
-// ** Theme Config
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Direction component for LTR or RTL
-import Direction from 'src/layouts/components/Direction'
-
-// ** Theme Override Imports
-import overrides from './overrides'
-import typography from './typography'
-
-// ** Theme
-import themeOptions from './ThemeOptions'
-import UserThemeOptions from 'src/layouts/UserThemeOptions'
+import {
+  createTheme,
+  responsiveFontSizes,
+  ThemeProvider
+} from '@mui/material/styles'
+// ** MUI Imports
+import { deepmerge } from '@mui/utils'
 
 // ** Global Styles
 import GlobalStyling from './globalStyles'
+// ** Theme Override Imports
+import overrides from './overrides'
+// ** Theme
+import themeOptions from './ThemeOptions'
+import typography from './typography'
 
 const ThemeComponent = props => {
   // ** Props

@@ -1,11 +1,10 @@
+// ** Default AuthConfig
+import defaultAuthConfig from 'configs/auth'
 // ** JWT import
 import jwt from 'jsonwebtoken'
 
 // ** Mock Adapter
-import mock from 'src/@fake-db/mock'
-
-// ** Default AuthConfig
-import defaultAuthConfig from 'src/configs/auth'
+import mock from '@fake-db/mock'
 
 const users = [
   {
