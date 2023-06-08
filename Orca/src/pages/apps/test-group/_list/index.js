@@ -3,12 +3,12 @@ import {
   useState
 } from 'react'
 
+import TestGroupApi from 'api/test-group-api'
 import Link from 'next/link'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
-import Icon from 'src/@core/components/icon'
-import TestGroupApi from 'src/api/test-group-api'
 
+import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'

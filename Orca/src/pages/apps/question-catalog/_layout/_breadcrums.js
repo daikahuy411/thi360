@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 
+import QuestionCatalogApi from 'api/question-catalog-api'
 import { useRouter } from 'next/router'
 import {
   useDispatch,
   useSelector
 } from 'react-redux'
-import QuestionCatalogApi from 'src/api/question-catalog-api'
 import {
   selectedQuestionCatalog,
   selectQuestionCatalog
-} from 'src/store/slices/questionCatalogSlice'
+} from 'store/slices/questionCatalogSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'

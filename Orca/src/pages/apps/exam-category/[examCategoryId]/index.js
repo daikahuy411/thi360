@@ -4,9 +4,11 @@ import {
   useState
 } from 'react'
 
+import { ExamCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import CatalogDialog from 'pages/shared/catalog'
+import EntityInfoModal from 'pages/shared/entity-info-modal'
 import {
   Controller,
   useForm
@@ -16,13 +18,11 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux'
-import { ExamCategoryApi } from 'src/api/catalog-api'
-import EntityInfoModal from 'src/pages/shared/entity-info-modal'
 import {
   selectedExamCategory,
   selectExamCategory
-} from 'src/store/slices/examCategorySlice'
-import { CatalogType } from 'src/types/CatalogType'
+} from 'store/slices/examCategorySlice'
+import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'

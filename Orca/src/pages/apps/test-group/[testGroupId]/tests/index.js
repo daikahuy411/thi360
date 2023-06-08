@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import EntityInfoModal from 'pages/shared/entity-info-modal'
 import { useSelector } from 'react-redux'
-import EntityInfoModal from 'src/pages/shared/entity-info-modal'
-import { selectedTestGroup } from 'src/store/slices/testGroupSlice'
+import { selectedTestGroup } from 'store/slices/testGroupSlice'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { Button } from '@mui/material'

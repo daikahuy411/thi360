@@ -3,12 +3,12 @@ import {
   useState
 } from 'react'
 
+import OrganizationApi from 'api/organization-api'
 import Link from 'next/link'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
-import Icon from 'src/@core/components/icon'
-import OrganizationApi from 'src/api/organization-api'
 
+import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'

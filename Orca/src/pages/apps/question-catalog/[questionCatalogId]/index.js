@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 
+import QuestionCatalogApi from 'api/question-catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import EntityInfoModal from 'pages/shared/entity-info-modal'
 import {
   Controller,
   useForm
@@ -11,12 +13,10 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux'
-import QuestionCatalogApi from 'src/api/question-catalog-api'
-import EntityInfoModal from 'src/pages/shared/entity-info-modal'
 import {
   selectedQuestionCatalog,
   selectQuestionCatalog
-} from 'src/store/slices/questionCatalogSlice'
+} from 'store/slices/questionCatalogSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
 import PropTypes from 'prop-types'
-import Icon from 'src/@core/components/icon'
-import { CatalogType } from 'src/types/CatalogType'
+import { CatalogType } from 'types/CatalogType'
 
+import Icon from '@core/components/icon'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'

@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 
+import OrganizationApi from 'api/organization-api'
 import { useRouter } from 'next/router'
 import {
   useDispatch,
   useSelector
 } from 'react-redux'
-import OrganizationApi from 'src/api/organization-api'
 import {
   selectClass,
   selectedClass
-} from 'src/store/slices/classSlice'
+} from 'store/slices/classSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'

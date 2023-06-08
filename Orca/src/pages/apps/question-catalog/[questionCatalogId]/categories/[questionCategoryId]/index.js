@@ -4,10 +4,10 @@ import {
   useState
 } from 'react'
 
+import { QuestionCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { QuestionCategoryApi } from 'src/api/catalog-api'
-import EntityInfoModal from 'src/pages/shared/entity-info-modal'
+import EntityInfoModal from 'pages/shared/entity-info-modal'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
