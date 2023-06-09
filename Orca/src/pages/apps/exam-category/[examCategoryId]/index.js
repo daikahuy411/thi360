@@ -218,8 +218,10 @@ const ExamCategoryEditPage = () => {
                                     <InputLabel htmlFor='outlined-adornment-parent-category'>Danh mục cha</InputLabel>
                                     <OutlinedInput
                                       id='outlined-adornment-parent-category'
-                                      // disabled
-                                      InputProps={{ readOnly: true }}
+                                      inputprops={{
+                                        readOnly: true,
+                                        className: 'Mui-disabled',
+                                      }}
                                       value={parentSelected.parentName}
                                       endAdornment={
                                         <InputAdornment position='end'>
@@ -242,7 +244,6 @@ const ExamCategoryEditPage = () => {
                                   </>
                                 )}
                               />
-
                             </FormControl>
                           </Grid>
                           <Grid item xs={12}>
@@ -253,7 +254,7 @@ const ExamCategoryEditPage = () => {
                                 rules={{ required: true }}
                                 render={({ field: { value, onChange } }) => (
                                   <TextField
-                                    value={value}
+                                    value={value ?? ''}
                                     label='Tên'
                                     InputLabelProps={{ shrink: true }}
                                     required
@@ -278,9 +279,9 @@ const ExamCategoryEditPage = () => {
                                 rules={{ required: false }}
                                 render={({ field: { value, onChange } }) => (
                                   <TextField
-                                    // multiline
+                                    multiline
                                     rows={3}
-                                    value={value}
+                                    value={value ?? ''}
                                     label='Mô tả'
                                     InputLabelProps={{ shrink: true }}
                                     onChange={onChange}

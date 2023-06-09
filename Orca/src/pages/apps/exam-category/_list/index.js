@@ -5,6 +5,7 @@ import {
 
 import { ExamCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import Icon from '@core/components/icon'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
@@ -22,12 +23,16 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
+import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
 import TreeRow from './TreeRow'
 
 const ExamCategoryTable = () => {
+  const router = useRouter()
   const [data, setData] = useState([])
+  const [totalItem, setTotalItem] = useState(0)
+  const [totalParentItem, setTotalParentItem] = useState(0)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
@@ -36,29 +41,42 @@ const ExamCategoryTable = () => {
   }
 
   const handleChangeRowsPerPage = event => {
-    setRowsPerPage(+event.target.value)
+    setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
-  }
-
-  const fetchData = () => {
-    ExamCategoryApi.getAll().then(response => {
-      setData(response.data)
-    })
   }
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [page, rowsPerPage])
+
+  useEffect(() => {
+    router.prefetch('/apps/exam-category/')
+  }, [router])
+
+  const fetchData = () => {
+    const param = {
+      keyword: '',
+      page: page == 0 ? 1 : page + 1,
+      limit: rowsPerPage
+    }
+    ExamCategoryApi.searches(param)
+      .then(response => {
+        setData(response.data.value)
+        setTotalItem(response.data.totalItems)
+        setTotalParentItem(response.data.totalParentItems)
+      })
+      .catch((e) => console.log(e))
+  }
 
   return (
     <>
       <Divider />
       <Toolbar style={{ padding: 0 }}>
         <Typography sx={{ flex: '1 1 100%' }} variant='h5' id='tableTitle' component='div'>
-          {data.length} Danh mục Kỳ thi
+          {totalItem} Danh mục Kỳ thi
         </Typography>
         &nbsp; &nbsp;
-        {/* <Tooltip title='Import'>
+        <Tooltip title='Import'>
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:upload' />
           </IconButton>
@@ -69,12 +87,6 @@ const ExamCategoryTable = () => {
             <Icon icon='mdi:download' />
           </IconButton>
         </Tooltip>
-        &nbsp; &nbsp; */}
-        {/* <Tooltip title='Delete'>
-          <IconButton sx={{ color: 'text.secondary' }}>
-            <Icon icon='mdi:delete-outline' />
-          </IconButton>
-        </Tooltip> */}
         &nbsp; &nbsp;
         <Button
           component={Link}
@@ -99,9 +111,10 @@ const ExamCategoryTable = () => {
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
+            labelRowsPerPage='Số dòng/trang'
             rowsPerPageOptions={[10, 25, 100]}
             component='div'
-            count={10}
+            count={totalParentItem}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -113,14 +126,6 @@ const ExamCategoryTable = () => {
         <Table sx={{ minWidth: 650 }} aria-label='simple table'>
           <TableHead>
             <TableRow>
-              {/* <TableCell padding='checkbox'>
-                <Checkbox
-                  // onChange={onSelectAllClick}
-                  // checked={rowCount > 0 && numSelected === rowCount}
-                  inputProps={{ 'aria-label': 'select all desserts' }}
-                  // indeterminate={numSelected > 0 && numSelected < rowCount}
-                />
-              </TableCell> */}
               <TableCell style={{ width: 120 }}>#</TableCell>
               <TableCell>Tên</TableCell>
               <TableCell align='right' style={{ width: 120 }}>
@@ -130,16 +135,17 @@ const ExamCategoryTable = () => {
           </TableHead>
           <TableBody>
             {data &&
-              data.map(item => (
-                <TreeRow key={item.Id} item={item}  excludedId ={0} nodeId={item.Id} level={0} />
+              data.map((item, index) => (
+                <TreeRow key={index} item={item} excludedId={0} nodeId={item.Id} level={0} />
               ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
+        labelRowsPerPage='Số dòng/trang'
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
-        count={10}
+        count={totalParentItem}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

@@ -43,12 +43,12 @@ const TreeRow: React.FC<TreeRowProps> = (props: TreeRowProps) => {
     .filter((x: any) => {
       return x.id !== props.excludedId
     })
-    .map((child: any) => {
+    .map((child: any, index: number) => {
       return (
         <TreeRow
           level={props.level + 1}
           excludedId={props.excludedId}
-          key={child.id}
+          key={`${child.id}-${index}`}
           // nodeId={child.Id}
           item={child}
         />
@@ -68,23 +68,20 @@ const TreeRow: React.FC<TreeRowProps> = (props: TreeRowProps) => {
   }
   const handleCloseFormDelete = () => setOpenDelete(false)
   const handleDelete = (item: any) => {
-    console.log('item:', item);
     if (item) {
-      const param = {id: Number(item.key)}
+      const param = { id: Number(item.key) }
       ExamCategoryApi.delete(param)
-      .then(response => {
-        handleCloseFormDelete()
-        toast.success('Xóa dữ liệu thành công')
-        router.reload()
-        // router.replace('/apps/exam-category')
-        // router.prefetch('/apps/exam-category')
-      })
-      .catch((e) => {
-        handleCloseFormDelete()
-        toast.error(e.response.data)
-      })
+        .then(response => {
+          handleCloseFormDelete()
+          toast.success('Xóa dữ liệu thành công')
+          setTimeout(() => router.reload(), 1000)
+          
+        })
+        .catch((e) => {
+          handleCloseFormDelete()
+          toast.error(e.response.data)
+        })
     }
-
   }
   /*
   * end remove exam-category
@@ -92,10 +89,10 @@ const TreeRow: React.FC<TreeRowProps> = (props: TreeRowProps) => {
 
   return (
     <>
-      <TableRow onClick={() => setIsCollapsed(!isCollapsed)}>
-        {/* <TableCell padding='checkbox'>
-          <Checkbox />
-        </TableCell> */}
+      <TableRow
+        key={`${item.key}-row`}
+        onClick={() => setIsCollapsed(!isCollapsed)}
+      >
         <TableCell
           component='th'
           scope='row'
