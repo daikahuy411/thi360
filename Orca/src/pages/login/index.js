@@ -1,48 +1,48 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Configs
+import themeConfig from 'configs/themeConfig'
+// ** Hooks
+import { useAuth } from 'hooks/useAuth'
 // ** Next Imports
 import Link from 'next/link'
-
-// ** MUI Components
-import Alert from '@mui/material/Alert'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
-import TextField from '@mui/material/TextField'
-import InputLabel from '@mui/material/InputLabel'
-import IconButton from '@mui/material/IconButton'
-import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
-import FormHelperText from '@mui/material/FormHelperText'
-import InputAdornment from '@mui/material/InputAdornment'
-import Typography from '@mui/material/Typography'
-import MuiFormControlLabel from '@mui/material/FormControlLabel'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
+// ** Demo Imports
+import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
 // ** Third Party Imports
 import * as yup from 'yup'
-import { useForm, Controller } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
 
-// ** Hooks
-import { useAuth } from 'src/hooks/useAuth'
-import useBgColor from 'src/@core/hooks/useBgColor'
-import { useSettings } from 'src/@core/hooks/useSettings'
-
-// ** Configs
-import themeConfig from 'src/configs/themeConfig'
-
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import useBgColor from '@core/hooks/useBgColor'
+import { useSettings } from '@core/hooks/useSettings'
 // ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
-
-// ** Demo Imports
-import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
+import BlankLayout from '@core/layouts/BlankLayout'
+import { yupResolver } from '@hookform/resolvers/yup'
+// ** MUI Components
+import Alert from '@mui/material/Alert'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
+import Divider from '@mui/material/Divider'
+import FormControl from '@mui/material/FormControl'
+import MuiFormControlLabel from '@mui/material/FormControlLabel'
+import FormHelperText from '@mui/material/FormHelperText'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 // ** Styled Components
 const LoginIllustrationWrapper = styled(Box)(({ theme }) => ({
