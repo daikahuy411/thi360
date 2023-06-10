@@ -1,4 +1,4 @@
-import UserTable from 'src/pages/apps/user/_list'
+import UserTable from 'pages/apps/user/_list'
 
 import Grid from '@mui/material/Grid'
 
