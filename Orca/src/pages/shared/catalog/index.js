@@ -21,7 +21,6 @@ function CatalogDialog({ catalogType, open, onClose, excludedId = 0, onNodeSelec
 
   const handleNodeSelected = nodeId => {
     setSelectedNodeId(nodeId)
-    // console.log("nodeId:", nodeId)
   }
 
   const onOk = () => {
@@ -30,8 +29,6 @@ function CatalogDialog({ catalogType, open, onClose, excludedId = 0, onNodeSelec
       onNodeSelected(selectedNodeId)
       onClose()
     }
-
-    // console.log("selectedNodeId:", selectedNodeId)
   }
 
   return (

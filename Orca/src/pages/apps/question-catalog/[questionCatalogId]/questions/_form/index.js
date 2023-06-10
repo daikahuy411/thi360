@@ -1,7 +1,10 @@
 import { useEffect } from 'react'
 
+import OrganizationApi from 'api/organization-api'
+import QuestionApi from 'api/question-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import EntityInfoModal from 'pages/shared/entity-info-modal'
 import {
   Controller,
   useForm
@@ -11,13 +14,10 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux'
-import OrganizationApi from 'src/api/organization-api'
-import QuestionApi from 'src/api/question-api'
-import EntityInfoModal from 'src/pages/shared/entity-info-modal'
 import {
   selectClass,
   selectedClass
-} from 'src/store/slices/classSlice'
+} from 'store/slices/classSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'

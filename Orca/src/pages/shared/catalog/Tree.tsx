@@ -1,11 +1,15 @@
+import React from 'react'
+
+import OrganizationApi from 'api/organization-api'
+
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import TreeView from '@mui/lab/TreeView'
-import React from 'react'
+
 import CatalogApi from '../../../api/catalog-api'
-import { CatalogType } from "../../../types/CatalogType";
-import TreeNode from './TreeNode'
 import Catalog from '../../../interfaces/Catalog'
+import { CatalogType } from '../../../types/CatalogType'
+import TreeNode from './TreeNode'
 
 export interface Props {
   onNodeSelected: (nodeIds: string) => void
@@ -44,9 +48,15 @@ export default class CatalogTree extends React.Component<Props, States> {
   }
 
   fetchData = () => {
-    new CatalogApi(this.props.catalogType).getAll().then((response: any) => {
-      this.setState({ data: response.data })
-    })
+    if(this.props.catalogType === CatalogType.DOCUMENT_ORGANIZATION ){
+      new OrganizationApi().getOrganizationTree().then((response: any) => {
+        this.setState({ data: response.data })
+    });
+    }else{
+      new CatalogApi(this.props.catalogType).getAll().then((response: any) => {
+        this.setState({ data: response.data })
+      })
+    }    
   }
 
   componentDidMount = () => {
