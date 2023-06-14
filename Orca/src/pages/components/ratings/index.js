@@ -1,19 +1,17 @@
+import RatingsBasic from 'views/components/ratings/RatingsBasic'
+import RatingsCustomized from 'views/components/ratings/RatingsCustomized'
+// ** Demo Components Imports
+import RatingsHalf from 'views/components/ratings/RatingsHalf'
+import RatingsHoverFeedback from 'views/components/ratings/RatingsHoverFeedback'
+import RatingsSizes from 'views/components/ratings/RatingsSizes'
+// ** Source code imports
+import * as source from 'views/components/ratings/RatingsSourceCode'
+
+// ** Custom Components Imports
+import CardSnippet from '@core/components/card-snippet'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-
-// ** Custom Components Imports
-import CardSnippet from 'src/@core/components/card-snippet'
-
-// ** Demo Components Imports
-import RatingsHalf from 'src/views/components/ratings/RatingsHalf'
-import RatingsBasic from 'src/views/components/ratings/RatingsBasic'
-import RatingsSizes from 'src/views/components/ratings/RatingsSizes'
-import RatingsCustomized from 'src/views/components/ratings/RatingsCustomized'
-import RatingsHoverFeedback from 'src/views/components/ratings/RatingsHoverFeedback'
-
-// ** Source code imports
-import * as source from 'src/views/components/ratings/RatingsSourceCode'
 
 const Ratings = () => {
   return (

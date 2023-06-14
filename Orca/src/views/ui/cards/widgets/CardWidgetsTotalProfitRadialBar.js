@@ -1,14 +1,13 @@
+// ** Custom Components Imports
+import CustomChip from '@core/components/mui/chip'
+import OptionsMenu from '@core/components/option-menu'
+import ReactApexcharts from '@core/components/react-apexcharts'
 // ** MUI Imports
 import Card from '@mui/material/Card'
-import { useTheme } from '@mui/material/styles'
-import CardHeader from '@mui/material/CardHeader'
-import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-
-// ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
-import OptionsMenu from 'src/@core/components/option-menu'
-import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import CardHeader from '@mui/material/CardHeader'
+import { useTheme } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 const CardWidgetsTotalProfitRadialBar = () => {
   // ** Hook

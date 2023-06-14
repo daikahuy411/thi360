@@ -1,13 +1,15 @@
 // ** React Imports
-import { Fragment, useState } from 'react'
-
-// ** MUI Imports
-import Button from '@mui/material/Button'
-import Snackbar from '@mui/material/Snackbar'
-import IconButton from '@mui/material/IconButton'
+import {
+  Fragment,
+  useState
+} from 'react'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
+// ** MUI Imports
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import Snackbar from '@mui/material/Snackbar'
 
 const SnackbarSimple = () => {
   // ** State

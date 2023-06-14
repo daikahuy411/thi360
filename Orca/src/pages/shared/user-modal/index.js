@@ -3,11 +3,11 @@ import React, {
   useState
 } from 'react'
 
+import UserApi from 'api/user-api'
 import PropTypes from 'prop-types'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import Icon from 'src/@core/components/icon'
-import UserApi from 'src/api/user-api'
 
+import Icon from '@core/components/icon'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'

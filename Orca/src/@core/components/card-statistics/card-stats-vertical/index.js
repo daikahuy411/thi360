@@ -1,12 +1,11 @@
+// ** Custom Components Imports
+import CustomAvatar from '@core/components/mui/avatar'
+import OptionsMenu from '@core/components/option-menu'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-
-// ** Custom Components Imports
-import CustomAvatar from 'src/@core/components/mui/avatar'
-import OptionsMenu from 'src/@core/components/option-menu'
+import Typography from '@mui/material/Typography'
 
 const CardStatsVertical = props => {
   // ** Props

@@ -1,24 +1,22 @@
+import ListDense from 'views/components/list/ListDense'
+import ListItemSelected from 'views/components/list/ListItemSelected'
+import ListNested from 'views/components/list/ListNested'
+import ListProgress from 'views/components/list/ListProgress'
+import ListSecondary from 'views/components/list/ListSecondary'
+import ListSimple from 'views/components/list/ListSimple'
+// ** Source code imports
+import * as source from 'views/components/list/ListSourceCode'
+import ListStickySubheader from 'views/components/list/ListStickySubheader'
+// ** Demo Components Imports
+import ListUsers from 'views/components/list/ListUsers'
+import ListWithCheckbox from 'views/components/list/ListWithCheckbox'
+import ListWithSwitch from 'views/components/list/ListWithSwitch'
+
+// ** Custom Components Imports
+import CardSnippet from '@core/components/card-snippet'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-
-// ** Custom Components Imports
-import CardSnippet from 'src/@core/components/card-snippet'
-
-// ** Demo Components Imports
-import ListUsers from 'src/views/components/list/ListUsers'
-import ListDense from 'src/views/components/list/ListDense'
-import ListSimple from 'src/views/components/list/ListSimple'
-import ListNested from 'src/views/components/list/ListNested'
-import ListProgress from 'src/views/components/list/ListProgress'
-import ListSecondary from 'src/views/components/list/ListSecondary'
-import ListWithSwitch from 'src/views/components/list/ListWithSwitch'
-import ListItemSelected from 'src/views/components/list/ListItemSelected'
-import ListWithCheckbox from 'src/views/components/list/ListWithCheckbox'
-import ListStickySubheader from 'src/views/components/list/ListStickySubheader'
-
-// ** Source code imports
-import * as source from 'src/views/components/list/ListSourceCode'
 
 const Lists = () => {
   return (

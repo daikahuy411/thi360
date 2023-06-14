@@ -1,16 +1,15 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Imports
 import Button from '@mui/material/Button'
-import { styled } from '@mui/material/styles'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import MuiMenu from '@mui/material/Menu'
 import MuiMenuItem from '@mui/material/MenuItem'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import { styled } from '@mui/material/styles'
 
 // Styled Menu component
 const Menu = styled(MuiMenu)(({ theme }) => ({

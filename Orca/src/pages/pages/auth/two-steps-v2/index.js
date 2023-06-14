@@ -1,38 +1,38 @@
+// ** Styles
+import 'cleave.js/dist/addons/cleave-phone.us'
+
 // ** React Imports
 import { useState } from 'react'
 
-// ** MUI Components
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { styled, useTheme } from '@mui/material/styles'
-import FormHelperText from '@mui/material/FormHelperText'
-
 // ** Third Party Imports
 import Cleave from 'cleave.js/react'
-import { useForm, Controller } from 'react-hook-form'
-
 // ** Configs
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
+import themeConfig from 'configs/themeConfig'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
+// ** Demo Imports
+import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
 
 // ** Hooks
-import { useSettings } from 'src/@core/hooks/useSettings'
-
-// ** Demo Imports
-import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
-
+import { useSettings } from '@core/hooks/useSettings'
+// ** Layout Import
+import BlankLayout from '@core/layouts/BlankLayout'
 // ** Custom Styled Component
-import CleaveWrapper from 'src/@core/styles/libs/react-cleave'
-
+import CleaveWrapper from '@core/styles/libs/react-cleave'
 // ** Util Import
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
-
-// ** Styles
-import 'cleave.js/dist/addons/cleave-phone.us'
+import { hexToRGBA } from '@core/utils/hex-to-rgba'
+import Box from '@mui/material/Box'
+// ** MUI Components
+import Button from '@mui/material/Button'
+import FormHelperText from '@mui/material/FormHelperText'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 // ** Styled Components
 const TwoStepsIllustrationWrapper = styled(Box)(({ theme }) => ({

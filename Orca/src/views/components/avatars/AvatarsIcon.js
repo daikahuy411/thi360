@@ -1,12 +1,10 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Custom Components Imports
+import CustomAvatar from '@core/components/mui/avatar'
+import Avatar from '@mui/material/Avatar'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Avatar from '@mui/material/Avatar'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Custom Components Imports
-import CustomAvatar from 'src/@core/components/mui/avatar'
 
 const AvatarsIcon = () => {
   return (

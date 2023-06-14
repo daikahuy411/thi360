@@ -1,21 +1,19 @@
+import BadgesAlignment from 'views/components/badges/BadgesAlignment'
+import BadgesBasic from 'views/components/badges/BadgesBasic'
+// ** Demo Components Imports
+import BadgesDot from 'views/components/badges/BadgesDot'
+import BadgesLight from 'views/components/badges/BadgesLight'
+import BadgesMaxValue from 'views/components/badges/BadgesMaxValue'
+import BadgesOverlap from 'views/components/badges/BadgesOverlap'
+// ** Source code imports
+import * as source from 'views/components/badges/BadgesSourceCode'
+import BadgesVisibility from 'views/components/badges/BadgesVisibility'
+
+// ** Custom Components Imports
+import CardSnippet from '@core/components/card-snippet'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-
-// ** Custom Components Imports
-import CardSnippet from 'src/@core/components/card-snippet'
-
-// ** Demo Components Imports
-import BadgesDot from 'src/views/components/badges/BadgesDot'
-import BadgesBasic from 'src/views/components/badges/BadgesBasic'
-import BadgesLight from 'src/views/components/badges/BadgesLight'
-import BadgesOverlap from 'src/views/components/badges/BadgesOverlap'
-import BadgesMaxValue from 'src/views/components/badges/BadgesMaxValue'
-import BadgesAlignment from 'src/views/components/badges/BadgesAlignment'
-import BadgesVisibility from 'src/views/components/badges/BadgesVisibility'
-
-// ** Source code imports
-import * as source from 'src/views/components/badges/BadgesSourceCode'
 
 const Pagination = () => {
   return (

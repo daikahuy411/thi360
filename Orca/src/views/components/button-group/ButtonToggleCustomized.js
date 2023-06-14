@@ -1,15 +1,14 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import { styled } from '@mui/material/styles'
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import MuiToggleButton from '@mui/material/ToggleButton'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
 // Styled ToggleButton component
 const ToggleButton = styled(MuiToggleButton)(({ theme }) => ({

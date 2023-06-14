@@ -1,18 +1,16 @@
+import AccordionActions from 'views/components/accordion/AccordionActions'
+import AccordionControlled from 'views/components/accordion/AccordionControlled'
+import AccordionCustomized from 'views/components/accordion/AccordionCustomized'
+// ** Demo Components Imports
+import AccordionSimple from 'views/components/accordion/AccordionSimple'
+// ** Source code imports
+import * as source from 'views/components/accordion/AccordionSourceCode'
+
+// ** Custom Components Imports
+import CardSnippet from '@core/components/card-snippet'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-
-// ** Custom Components Imports
-import CardSnippet from 'src/@core/components/card-snippet'
-
-// ** Demo Components Imports
-import AccordionSimple from 'src/views/components/accordion/AccordionSimple'
-import AccordionActions from 'src/views/components/accordion/AccordionActions'
-import AccordionControlled from 'src/views/components/accordion/AccordionControlled'
-import AccordionCustomized from 'src/views/components/accordion/AccordionCustomized'
-
-// ** Source code imports
-import * as source from 'src/views/components/accordion/AccordionSourceCode'
 
 const Accordion = () => {
   return (

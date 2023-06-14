@@ -1,46 +1,49 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
-
-// ** Next Imports
-import Link from 'next/link'
-
-// ** MUI Components
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
-import TextField from '@mui/material/TextField'
-import InputLabel from '@mui/material/InputLabel'
-import IconButton from '@mui/material/IconButton'
-import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
-import FormHelperText from '@mui/material/FormHelperText'
-import InputAdornment from '@mui/material/InputAdornment'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Typography from '@mui/material/Typography'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Third Party Imports
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm, Controller } from 'react-hook-form'
+import {
+  Fragment,
+  useState
+} from 'react'
 
 // ** Configs
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
-
+import themeConfig from 'configs/themeConfig'
 // ** Hooks
-import { useAuth } from 'src/hooks/useAuth'
-import { useSettings } from 'src/@core/hooks/useSettings'
-
+import { useAuth } from 'hooks/useAuth'
+// ** Next Imports
+import Link from 'next/link'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 // ** Demo Imports
-import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
+import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
+// ** Third Party Imports
+import * as yup from 'yup'
+
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import { useSettings } from '@core/hooks/useSettings'
+// ** Layout Import
+import BlankLayout from '@core/layouts/BlankLayout'
+import { yupResolver } from '@hookform/resolvers/yup'
+import Box from '@mui/material/Box'
+// ** MUI Components
+import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
+import Divider from '@mui/material/Divider'
+import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormHelperText from '@mui/material/FormHelperText'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const defaultValues = {
   email: '',

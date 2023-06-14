@@ -9,7 +9,7 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // Styled component for Accordion component
 const Accordion = styled(MuiAccordion)(({ theme }) => ({
@@ -138,7 +138,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import AccordionDetails from '@mui/material/AccordionDetails'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const AccordionActions = () => {
   // ** State
@@ -232,7 +232,7 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const AccordionControlled = () => {
   // ** State
@@ -305,7 +305,7 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const AccordionSimple = () => {
   return (

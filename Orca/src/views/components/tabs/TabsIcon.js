@@ -1,15 +1,14 @@
 // ** React Imports
 import { useState } from 'react'
 
-// ** MUI Imports
-import Tab from '@mui/material/Tab'
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import TabContext from '@mui/lab/TabContext'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
-import TabContext from '@mui/lab/TabContext'
+// ** MUI Imports
+import Tab from '@mui/material/Tab'
 import Typography from '@mui/material/Typography'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
 
 const TabsIcon = () => {
   // ** State

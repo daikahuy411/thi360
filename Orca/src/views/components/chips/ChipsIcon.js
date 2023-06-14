@@ -2,7 +2,7 @@
 import Chip from '@mui/material/Chip'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ChipsIcon = () => {
   return (

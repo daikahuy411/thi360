@@ -1,16 +1,15 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import Accordion from '@mui/material/Accordion'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import AccordionSummary from '@mui/material/AccordionSummary'
 // ** MUI Imports
 import Checkbox from '@mui/material/Checkbox'
-import Accordion from '@mui/material/Accordion'
-import Typography from '@mui/material/Typography'
-import AccordionSummary from '@mui/material/AccordionSummary'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import AccordionDetails from '@mui/material/AccordionDetails'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Typography from '@mui/material/Typography'
 
 const AccordionActions = () => {
   // ** State

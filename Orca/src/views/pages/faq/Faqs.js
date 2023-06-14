@@ -1,20 +1,18 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Custom Components Imports
+import CustomAvatar from '@core/components/mui/avatar'
+import TabContext from '@mui/lab/TabContext'
+import MuiTabList from '@mui/lab/TabList'
+import TabPanel from '@mui/lab/TabPanel'
+import Accordion from '@mui/material/Accordion'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import Box from '@mui/material/Box'
+import { styled } from '@mui/material/styles'
 // ** MUI Imports
 import Tab from '@mui/material/Tab'
-import TabPanel from '@mui/lab/TabPanel'
-import TabContext from '@mui/lab/TabContext'
-import { styled } from '@mui/material/styles'
-import Accordion from '@mui/material/Accordion'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import MuiTabList from '@mui/lab/TabList'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import AccordionDetails from '@mui/material/AccordionDetails'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Custom Components Imports
-import CustomAvatar from 'src/@core/components/mui/avatar'
 
 // Styled TabList component
 const MuiBox = styled(Box)(({ theme }) => ({

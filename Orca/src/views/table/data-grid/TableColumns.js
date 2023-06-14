@@ -1,26 +1,23 @@
 // ** React Imports
 import { useState } from 'react'
 
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import CardHeader from '@mui/material/CardHeader'
-import { DataGrid } from '@mui/x-data-grid'
-
 // ** Third Party Components
 import toast from 'react-hot-toast'
-
-// ** Custom Components
-import CustomChip from 'src/@core/components/mui/chip'
-import CustomAvatar from 'src/@core/components/mui/avatar'
-
-// ** Utils Import
-import { getInitials } from 'src/@core/utils/get-initials'
-
 // ** Data Import
 import { rows } from 'src/@fake-db/table/static-data'
+
+import CustomAvatar from '@core/components/mui/avatar'
+// ** Custom Components
+import CustomChip from '@core/components/mui/chip'
+// ** Utils Import
+import { getInitials } from '@core/utils/get-initials'
+// ** MUI Imports
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import Typography from '@mui/material/Typography'
+import { DataGrid } from '@mui/x-data-grid'
 
 // ** renders client column
 const renderClient = params => {

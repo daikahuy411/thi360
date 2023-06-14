@@ -1,12 +1,11 @@
+// ** Hook
+import { useSettings } from '@core/hooks/useSettings'
+import Button from '@mui/material/Button'
 // ** MUI Imports
 import Card from '@mui/material/Card'
-import Button from '@mui/material/Button'
+import CardContent from '@mui/material/CardContent'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
-
-// ** Hook
-import { useSettings } from 'src/@core/hooks/useSettings'
 
 // Styled component for the triangle shaped background image
 const TriangleImg = styled('img')(({ theme }) => ({

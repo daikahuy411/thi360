@@ -1,4 +1,7 @@
-import { AbilityBuilder, Ability } from '@casl/ability'
+import {
+  Ability,
+  AbilityBuilder
+} from '@casl/ability'
 
 export const AppAbility = Ability
 
@@ -9,13 +12,14 @@ export const AppAbility = Ability
  */
 const defineRulesFor = (roles, subject) => {
   const { can, rules } = new AbilityBuilder(AppAbility)
-  if (roles.length > 0) {
-    can('manage', 'all')
-  } else if (role === 'client') {
-    can(['read'], 'acl-page')
-  } else {
-    can(['read', 'create', 'update', 'delete'], subject)
-  }
+  can('manage', 'all')
+  // if (roles.length > 0) {
+  //   can('manage', 'all')
+  // } else if (roles === 'client') {
+  //   can(['read'], 'acl-page')
+  // } else {
+  //   can(['read', 'create', 'update', 'delete'], subject)
+  // }
 
   return rules
 }

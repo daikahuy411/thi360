@@ -1,18 +1,16 @@
 // ** Next Imports
 import Link from 'next/link'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import CustomAvatar from '@core/components/mui/avatar'
+// ** Custom Components Imports
+import CustomChip from '@core/components/mui/chip'
+import Box from '@mui/material/Box'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
-import CustomAvatar from 'src/@core/components/mui/avatar'
 
 // Styled Box component
 const StyledBox1 = styled(Box)(({ theme }) => ({

@@ -101,59 +101,51 @@ const ShortcutsDropdown = props => {
           sx={{ cursor: 'default', userSelect: 'auto', backgroundColor: 'transparent !important' }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <Typography sx={{ fontSize: '1.125rem', color: 'text.secondary', fontWeight: 600 }}>Shortcuts</Typography>
-            <Tooltip title='Add Shortcut' placement='top'>
+            <Typography sx={{ fontSize: '1.125rem', color: 'text.secondary', fontWeight: 600 }}>Chương trình</Typography>
+            {/* <Tooltip title='Add Shortcut' placement='top'>
               <IconButton disableRipple>
                 <Icon icon='mdi:plus-circle-outline' />
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
           </Box>
         </MenuItem>
         <Divider sx={{ my: '0 !important' }} />
-        <ScrollWrapper hidden={hidden}>
-          <Grid
-            container
-            spacing={0}
-            sx={{
-              '& .MuiGrid-root': {
-                borderBottom: theme => `1px solid ${theme.palette.divider}`,
-                '&:nth-of-type(odd)': { borderRight: theme => `1px solid ${theme.palette.divider}` }
-              }
-            }}
-          >
-            {shortcuts.map(shortcut => (
-              <Grid
-                item
-                xs={6}
-                key={shortcut.title}
-                onClick={handleDropdownClose}
-                sx={{ cursor: 'pointer', '&:hover': { backgroundColor: 'action.hover' } }}
+        <Grid
+          container
+          spacing={0}
+          sx={{
+            '& .MuiGrid-root': {
+              borderBottom: theme => `1px solid ${theme.palette.divider}`,
+              '&:nth-of-type(odd)': { borderRight: theme => `1px solid ${theme.palette.divider}` }
+            }
+          }}
+        >
+          {shortcuts.map(shortcut => (
+            <Grid
+              item
+              xs={6}
+              key={shortcut.title}
+              onClick={handleDropdownClose}
+              sx={{ cursor: 'pointer', '&:hover': { backgroundColor: 'action.hover' } }}
+            >
+              <Box
+                component={Link}
+                href={shortcut.url}
+                sx={{
+                  p: 4,
+                  display: 'flex',
+                  textAlign: 'center',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  flexDirection: 'column',
+                  justifyContent: 'center'
+                }}
               >
-                <Box
-                  component={Link}
-                  href={shortcut.url}
-                  sx={{
-                    p: 6,
-                    display: 'flex',
-                    textAlign: 'center',
-                    alignItems: 'center',
-                    textDecoration: 'none',
-                    flexDirection: 'column',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <CustomAvatar skin='light' color='secondary' sx={{ mb: 2, width: 50, height: 50 }}>
-                    <Icon icon={shortcut.icon} />
-                  </CustomAvatar>
-                  <Typography sx={{ fontWeight: 600, color: 'text.secondary' }}>{shortcut.title}</Typography>
-                  <Typography variant='body2' sx={{ color: 'text.disabled' }}>
-                    {shortcut.subtitle}
-                  </Typography>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </ScrollWrapper>
+                <Typography sx={{ fontWeight: 600, color: 'text.secondary' }}>{shortcut.title}</Typography>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
       </Menu>
     </Fragment>
   )

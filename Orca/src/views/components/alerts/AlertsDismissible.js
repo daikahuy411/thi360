@@ -1,18 +1,17 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import Alert from '@mui/material/Alert'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Fade from '@mui/material/Fade'
-import Grow from '@mui/material/Grow'
-import Alert from '@mui/material/Alert'
-import Slide from '@mui/material/Slide'
 import Button from '@mui/material/Button'
 import Collapse from '@mui/material/Collapse'
+import Fade from '@mui/material/Fade'
+import Grow from '@mui/material/Grow'
 import IconButton from '@mui/material/IconButton'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Slide from '@mui/material/Slide'
 
 const AlertsDismissible = () => {
   // ** States

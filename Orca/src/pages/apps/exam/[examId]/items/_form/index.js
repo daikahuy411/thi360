@@ -3,8 +3,11 @@ import {
   useState
 } from 'react'
 
+import ExamItemApi from 'api/exam-item-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import EntityInfoModal from 'pages/shared/entity-info-modal'
+import TestGroupSelector from 'pages/shared/test-group-selector'
 import {
   Controller,
   useForm
@@ -14,13 +17,10 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux'
-import ExamItemApi from 'src/api/exam-item-api'
-import EntityInfoModal from 'src/pages/shared/entity-info-modal'
-import TestGroupSelector from 'src/pages/shared/test-group-selector'
 import {
   selectedExamItem,
   selectExamItem
-} from 'src/store/slices/examItemSlice'
+} from 'store/slices/examItemSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'

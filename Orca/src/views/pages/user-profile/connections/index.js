@@ -1,21 +1,19 @@
 // ** Next Imports
 import Link from 'next/link'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Custom Components Imports
+import CustomChip from '@core/components/mui/chip'
+import OptionsMenu from '@core/components/option-menu'
+import Avatar from '@mui/material/Avatar'
 // ** MUI Components
 import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
-import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
+import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
-import OptionsMenu from 'src/@core/components/option-menu'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 
 const Connections = ({ data }) => {
   return (

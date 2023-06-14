@@ -1,15 +1,13 @@
+// ** Icon Import
+import Icon from '@core/components/icon'
+// ** Custom Component Import
+import CustomChip from '@core/components/mui/chip'
 // ** MUI Imports
 import Box from '@mui/material/Box'
+import InputLabel from '@mui/material/InputLabel'
 import Switch from '@mui/material/Switch'
 import Typography from '@mui/material/Typography'
-import InputLabel from '@mui/material/InputLabel'
 import useMediaQuery from '@mui/material/useMediaQuery'
-
-// ** Icon Import
-import Icon from 'src/@core/components/icon'
-
-// ** Custom Component Import
-import CustomChip from 'src/@core/components/mui/chip'
 
 const PricingHeader = props => {
   // ** Props

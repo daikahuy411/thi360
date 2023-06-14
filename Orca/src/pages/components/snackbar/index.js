@@ -1,20 +1,18 @@
+// ** Demo Components Imports
+import SnackbarAlert from 'views/components/snackbar/SnackbarAlert'
+import SnackbarConsecutive from 'views/components/snackbar/SnackbarConsecutive'
+import SnackbarControlSlideDirection from 'views/components/snackbar/SnackbarControlSlideDirection'
+import SnackbarPositioned from 'views/components/snackbar/SnackbarPositioned'
+import SnackbarSimple from 'views/components/snackbar/SnackbarSimple'
+// ** Source code imports
+import * as source from 'views/components/snackbar/SnackbarSourceCode'
+import SnackbarTransition from 'views/components/snackbar/SnackbarTransition'
+
+// ** Custom Components Imports
+import CardSnippet from '@core/components/card-snippet'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-
-// ** Custom Components Imports
-import CardSnippet from 'src/@core/components/card-snippet'
-
-// ** Demo Components Imports
-import SnackbarAlert from 'src/views/components/snackbar/SnackbarAlert'
-import SnackbarSimple from 'src/views/components/snackbar/SnackbarSimple'
-import SnackbarPositioned from 'src/views/components/snackbar/SnackbarPositioned'
-import SnackbarTransition from 'src/views/components/snackbar/SnackbarTransition'
-import SnackbarConsecutive from 'src/views/components/snackbar/SnackbarConsecutive'
-import SnackbarControlSlideDirection from 'src/views/components/snackbar/SnackbarControlSlideDirection'
-
-// ** Source code imports
-import * as source from 'src/views/components/snackbar/SnackbarSourceCode'
 
 const Snackbar = () => {
   return (

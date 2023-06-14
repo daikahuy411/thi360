@@ -3,12 +3,12 @@ import {
   useState
 } from 'react'
 
+import ExamUserApi from 'api/exam-user-api'
 import { useRouter } from 'next/router'
+import UserModal from 'pages/shared/user-modal'
 import toast from 'react-hot-toast'
-import Icon from 'src/@core/components/icon'
-import ExamUserApi from 'src/api/exam-user-api'
-import UserModal from 'src/pages/shared/user-modal'
 
+import Icon from '@core/components/icon'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'

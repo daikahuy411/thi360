@@ -3,7 +3,7 @@ import Chip from '@mui/material/Chip'
 import Avatar from '@mui/material/Avatar'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ChipsAvatar = () => {
   return (
@@ -122,7 +122,7 @@ export const ChipsIconJSXCode = (<pre className='language-jsx'><code className='
 import Chip from '@mui/material/Chip'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ChipsIcon = () => {
   return (
@@ -142,7 +142,7 @@ export default ChipsIcon
 `}</code></pre>) 
 
 export const ChipsLightJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
+import CustomChip from '@core/components/mui/chip'
 
 const ChipsCustomized = () => {
   return (
@@ -168,7 +168,7 @@ import Chip from '@mui/material/Chip'
 import Typography from '@mui/material/Typography'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ChipsOnDelete = () => {
   const handleDelete = () => {
@@ -202,7 +202,7 @@ export default ChipsOnDelete
 `}</code></pre>) 
 
 export const ChipsRoundedJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
+import CustomChip from '@core/components/mui/chip'
 
 const ChipsRounded = () => {
   return (

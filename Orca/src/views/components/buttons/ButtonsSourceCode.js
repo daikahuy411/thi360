@@ -119,7 +119,7 @@ import Fab from '@mui/material/Fab'
 import Typography from '@mui/material/Typography'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ButtonsFab = () => {
   return (
@@ -197,7 +197,7 @@ export const ButtonsIconsJSXCode = (<pre className='language-jsx'><code classNam
 import IconButton from '@mui/material/IconButton'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ButtonsIcons = () => {
   return (
@@ -251,7 +251,7 @@ import { Fragment } from 'react'
 import Fab from '@mui/material/Fab'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ButtonsFabSizes = () => {
   return (
@@ -319,7 +319,7 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ButtonsSizes = () => {
   return (
@@ -405,7 +405,7 @@ export const ButtonsWithIconAndLabelJSXCode = (<pre className='language-jsx'><co
 import Button from '@mui/material/Button'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ButtonsWithIconAndLabel = () => {
   return (

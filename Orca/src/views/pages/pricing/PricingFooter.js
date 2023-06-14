@@ -1,16 +1,15 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import MuiAccordion from '@mui/material/Accordion'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import AccordionSummary from '@mui/material/AccordionSummary'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import AccordionDetails from '@mui/material/AccordionDetails'
-import MuiAccordion from '@mui/material/Accordion'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
 
 const Accordion = styled(MuiAccordion)(({ theme }) => ({
   '&:before': { display: 'none' },

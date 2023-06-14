@@ -1,9 +1,8 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import TreeItem from '@mui/lab/TreeItem'
 // ** MUI Imports
 import TreeView from '@mui/lab/TreeView'
-import TreeItem from '@mui/lab/TreeItem'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
 
 const TreeViewMultiSelection = ({ direction }) => {
   const ExpandIcon = direction === 'rtl' ? 'mdi:chevron-left' : 'mdi:chevron-right'

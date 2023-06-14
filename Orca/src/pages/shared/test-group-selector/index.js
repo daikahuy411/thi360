@@ -3,10 +3,10 @@ import React, {
   useState
 } from 'react'
 
-import Icon from 'src/@core/components/icon'
-import TestGroupApi from 'src/api/test-group-api'
+import TestGroupApi from 'api/test-group-api'
 import { makeStyles } from 'tss-react/mui'
 
+import Icon from '@core/components/icon'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'

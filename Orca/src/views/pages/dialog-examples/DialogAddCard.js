@@ -1,37 +1,41 @@
-// ** React Imports
-import { useState, forwardRef } from 'react'
+// ** Styles Import
+import 'react-credit-cards/es/styles-compiled.css'
 
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import Switch from '@mui/material/Switch'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
-import Fade from '@mui/material/Fade'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
-import FormControlLabel from '@mui/material/FormControlLabel'
+// ** React Imports
+import {
+  forwardRef,
+  useState
+} from 'react'
 
 // ** Third Party Imports
 import Payment from 'payment'
 import Cards from 'react-credit-cards'
 
-// ** Util Import
-import { formatCVC, formatExpirationDate, formatCreditCardNumber } from 'src/@core/utils/format'
-
-// ** Styled Component Imports
-import CardWrapper from 'src/@core/styles/libs/react-credit-cards'
-
-// ** Styles Import
-import 'react-credit-cards/es/styles-compiled.css'
-
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
+// ** Styled Component Imports
+import CardWrapper from '@core/styles/libs/react-credit-cards'
+// ** Util Import
+import {
+  formatCreditCardNumber,
+  formatCVC,
+  formatExpirationDate
+} from '@core/utils/format'
+// ** MUI Imports
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import Fade from '@mui/material/Fade'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import Switch from '@mui/material/Switch'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Fade ref={ref} {...props} />

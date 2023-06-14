@@ -1,18 +1,17 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import Avatar from '@mui/material/Avatar'
+import IconButton from '@mui/material/IconButton'
 // ** MUI Imports
 import List from '@mui/material/List'
-import Avatar from '@mui/material/Avatar'
 import ListItem from '@mui/material/ListItem'
-import IconButton from '@mui/material/IconButton'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemButton from '@mui/material/ListItemButton'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
+import ListItemButton from '@mui/material/ListItemButton'
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import ListItemText from '@mui/material/ListItemText'
 
 const ListItemSelected = () => {
   // ** State

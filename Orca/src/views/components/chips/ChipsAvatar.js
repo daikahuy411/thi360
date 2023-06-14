@@ -1,9 +1,8 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import Avatar from '@mui/material/Avatar'
 // ** MUI Imports
 import Chip from '@mui/material/Chip'
-import Avatar from '@mui/material/Avatar'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
 
 const ChipsAvatar = () => {
   return (

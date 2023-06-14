@@ -1,30 +1,31 @@
 // ** React Imports
-import { useState, useEffect } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
-
-// ** MUI Components
-import Tab from '@mui/material/Tab'
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import TabPanel from '@mui/lab/TabPanel'
-import TabContext from '@mui/lab/TabContext'
-import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import MuiTabList from '@mui/lab/TabList'
-import CircularProgress from '@mui/material/CircularProgress'
+import Connections from 'views/pages/user-profile/connections'
+import Profile from 'views/pages/user-profile/profile'
+import Projects from 'views/pages/user-profile/projects'
+// ** Demo Components
+import Teams from 'views/pages/user-profile/teams'
+import UserProfileHeader from 'views/pages/user-profile/UserProfileHeader'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Demo Components
-import Teams from 'src/views/pages/user-profile/teams'
-import Profile from 'src/views/pages/user-profile/profile'
-import Projects from 'src/views/pages/user-profile/projects'
-import Connections from 'src/views/pages/user-profile/connections'
-import UserProfileHeader from 'src/views/pages/user-profile/UserProfileHeader'
+import Icon from '@core/components/icon'
+import TabContext from '@mui/lab/TabContext'
+import MuiTabList from '@mui/lab/TabList'
+import TabPanel from '@mui/lab/TabPanel'
+import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
+import Grid from '@mui/material/Grid'
+import { styled } from '@mui/material/styles'
+// ** MUI Components
+import Tab from '@mui/material/Tab'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const TabList = styled(MuiTabList)(({ theme }) => ({
   '& .MuiTabs-indicator': {

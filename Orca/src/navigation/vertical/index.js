@@ -1,12 +1,14 @@
 const navigation = () => {
   return [
-    // {
-    //   sectionTitle: 'Apps & Pages'
-    // },
     {
       icon: 'mdi:home-outline',
       title: 'Trang chủ',
-      path: '/dashboards/crm'
+      path: '/home'
+    },
+    {
+      icon: 'mdi:home-outline',
+      title: 'Ôn luyện',
+      path: '/program'
     },
     {
       title: 'Thời khóa biểu',

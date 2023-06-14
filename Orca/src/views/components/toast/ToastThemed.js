@@ -1,14 +1,13 @@
+// ** Third Party Components
+import toast from 'react-hot-toast'
+
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Third Party Components
-import toast from 'react-hot-toast'
 
 const ToastThemed = () => {
   // ** Hook

@@ -1,9 +1,8 @@
+// ** Hooks Imports
+import useBgColor from '@core/hooks/useBgColor'
+import Box from '@mui/material/Box'
 // ** MUI imports
 import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
-
-// ** Hooks Imports
-import useBgColor from 'src/@core/hooks/useBgColor'
 
 const StepperWrapper = styled(Box)(({ theme }) => {
   // ** Hook

@@ -1,19 +1,18 @@
+// ** Data Imports
+import componentData from '@fake-db/components/data'
+import Alert from '@mui/material/Alert'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
 import Link from '@mui/material/Link'
-import Alert from '@mui/material/Alert'
 import Table from '@mui/material/Table'
-import TableRow from '@mui/material/TableRow'
-import TableHead from '@mui/material/TableHead'
-import TableCell from '@mui/material/TableCell'
 import TableBody from '@mui/material/TableBody'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
+import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-
-// ** Data Imports
-import componentData from 'src/@fake-db/components/data'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
 
 const Misc = () => {
   return (

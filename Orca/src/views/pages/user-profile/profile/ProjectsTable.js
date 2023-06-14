@@ -1,25 +1,26 @@
 // ** React Imports
-import { useState, useEffect } from 'react'
-
-// ** MUI Components
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import { DataGrid } from '@mui/x-data-grid'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import CardHeader from '@mui/material/CardHeader'
-import AvatarGroup from '@mui/material/AvatarGroup'
-import LinearProgress from '@mui/material/LinearProgress'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 // ** Third Party Imports
 import axios from 'axios'
 
+import CustomAvatar from '@core/components/mui/avatar'
 // ** Custom Components Imports
-import OptionsMenu from 'src/@core/components/option-menu'
-import CustomAvatar from 'src/@core/components/mui/avatar'
-
+import OptionsMenu from '@core/components/option-menu'
 // ** Utils Import
-import { getInitials } from 'src/@core/utils/get-initials'
+import { getInitials } from '@core/utils/get-initials'
+import AvatarGroup from '@mui/material/AvatarGroup'
+// ** MUI Components
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import LinearProgress from '@mui/material/LinearProgress'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import { DataGrid } from '@mui/x-data-grid'
 
 // ** renders name column
 const renderName = row => {

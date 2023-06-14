@@ -1,16 +1,14 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Custom Components Imports
+import CustomAvatar from '@core/components/mui/avatar'
+import OptionsMenu from '@core/components/option-menu'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import Typography from '@mui/material/Typography'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Custom Components Imports
-import CustomAvatar from 'src/@core/components/mui/avatar'
-import OptionsMenu from 'src/@core/components/option-menu'
+import CardHeader from '@mui/material/CardHeader'
+import Typography from '@mui/material/Typography'
 
 const data = [
   {

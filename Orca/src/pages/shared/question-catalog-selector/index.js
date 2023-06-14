@@ -3,10 +3,10 @@ import React, {
   useState
 } from 'react'
 
-import Icon from 'src/@core/components/icon'
-import QuestionCatalogApi from 'src/api/question-catalog-api'
+import QuestionCatalogApi from 'api/question-catalog-api'
 import { makeStyles } from 'tss-react/mui'
 
+import Icon from '@core/components/icon'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'

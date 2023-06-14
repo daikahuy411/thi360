@@ -1,35 +1,33 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Configs
+import themeConfig from 'configs/themeConfig'
 // ** Next Imports
 import Link from 'next/link'
-
-// ** MUI Components
-import Button from '@mui/material/Button'
-import InputLabel from '@mui/material/InputLabel'
-import IconButton from '@mui/material/IconButton'
-import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
-import InputAdornment from '@mui/material/InputAdornment'
-import Typography from '@mui/material/Typography'
+// ** Demo Imports
+import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Configs
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
-
+import Icon from '@core/components/icon'
 // ** Hooks
-import { useSettings } from 'src/@core/hooks/useSettings'
-
-// ** Demo Imports
-import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
+import { useSettings } from '@core/hooks/useSettings'
+// ** Layout Import
+import BlankLayout from '@core/layouts/BlankLayout'
+import Box from '@mui/material/Box'
+// ** MUI Components
+import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 // ** Styled Components
 const ResetPasswordIllustrationWrapper = styled(Box)(({ theme }) => ({

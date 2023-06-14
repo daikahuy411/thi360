@@ -1,45 +1,46 @@
+// ** Styles Import
+import 'react-credit-cards/es/styles-compiled.css'
+
 // ** React Imports
 import { useState } from 'react'
-
-// ** MUI Imports
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import Radio from '@mui/material/Radio'
-import Button from '@mui/material/Button'
-import Select from '@mui/material/Select'
-import Switch from '@mui/material/Switch'
-import Dialog from '@mui/material/Dialog'
-import MenuItem from '@mui/material/MenuItem'
-import { styled } from '@mui/material/styles'
-import TextField from '@mui/material/TextField'
-import RadioGroup from '@mui/material/RadioGroup'
-import Typography from '@mui/material/Typography'
-import InputLabel from '@mui/material/InputLabel'
-import Box from '@mui/material/Box'
-import CardHeader from '@mui/material/CardHeader'
-import DialogTitle from '@mui/material/DialogTitle'
-import CardContent from '@mui/material/CardContent'
-import FormControl from '@mui/material/FormControl'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import DialogContentText from '@mui/material/DialogContentText'
 
 // ** Third Party Imports
 import Payment from 'payment'
 import Cards from 'react-credit-cards'
 
 // ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
-
+import CustomChip from '@core/components/mui/chip'
 // ** Styled Component Imports
-import CardWrapper from 'src/@core/styles/libs/react-credit-cards'
-
+import CardWrapper from '@core/styles/libs/react-credit-cards'
 // ** Util Import
-import { formatCVC, formatExpirationDate, formatCreditCardNumber } from 'src/@core/utils/format'
-
-// ** Styles Import
-import 'react-credit-cards/es/styles-compiled.css'
+import {
+  formatCreditCardNumber,
+  formatCVC,
+  formatExpirationDate
+} from '@core/utils/format'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+// ** MUI Imports
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Grid from '@mui/material/Grid'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import Select from '@mui/material/Select'
+import { styled } from '@mui/material/styles'
+import Switch from '@mui/material/Switch'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
 const CreditCardWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',

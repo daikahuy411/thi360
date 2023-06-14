@@ -1,9 +1,8 @@
+// ** Custom Components Imports
+import CustomAvatar from '@core/components/mui/avatar'
+import MuiAvatar from '@mui/material/Avatar'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import MuiAvatar from '@mui/material/Avatar'
-
-// ** Custom Components Imports
-import CustomAvatar from 'src/@core/components/mui/avatar'
 
 const AvatarsLetter = () => {
   return (
