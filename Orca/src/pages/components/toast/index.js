@@ -1,25 +1,23 @@
+// ** Demo Components
+import ToastBlank from 'views/components/toast/ToastBlank'
+import ToastCustom from 'views/components/toast/ToastCustom'
+import ToastCustomPosition from 'views/components/toast/ToastCustomPosition'
+import ToastEmoji from 'views/components/toast/ToastEmoji'
+import ToastError from 'views/components/toast/ToastError'
+import ToastMultiLine from 'views/components/toast/ToastMultiLine'
+import ToastPromise from 'views/components/toast/ToastPromise'
+// ** Source code imports
+import * as source from 'views/components/toast/ToastSourceCode'
+import ToastSuccess from 'views/components/toast/ToastSuccess'
+import ToastThemed from 'views/components/toast/ToastThemed'
+
+import CardSnippet from '@core/components/card-snippet'
+// ** Custom Components Imports
+import PageHeader from '@core/components/page-header'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
-
-// ** Custom Components Imports
-import PageHeader from 'src/@core/components/page-header'
-import CardSnippet from 'src/@core/components/card-snippet'
-
-// ** Demo Components
-import ToastBlank from 'src/views/components/toast/ToastBlank'
-import ToastError from 'src/views/components/toast/ToastError'
-import ToastEmoji from 'src/views/components/toast/ToastEmoji'
-import ToastThemed from 'src/views/components/toast/ToastThemed'
-import ToastCustom from 'src/views/components/toast/ToastCustom'
-import ToastSuccess from 'src/views/components/toast/ToastSuccess'
-import ToastPromise from 'src/views/components/toast/ToastPromise'
-import ToastMultiLine from 'src/views/components/toast/ToastMultiLine'
-import ToastCustomPosition from 'src/views/components/toast/ToastCustomPosition'
-
-// ** Source code imports
-import * as source from 'src/views/components/toast/ToastSourceCode'
 
 const ReactHotToasts = () => {
   return (

@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import Icon from 'src/@core/components/icon'
-import { selectedTestGroup } from 'src/store/slices/testGroupSlice'
+import { selectedTestGroup } from 'store/slices/testGroupSlice'
 
+import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'

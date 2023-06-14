@@ -1,28 +1,26 @@
+// ** Configs
+import themeConfig from 'configs/themeConfig'
 // ** Next Imports
 import Link from 'next/link'
-
-// ** MUI Components
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import Box from '@mui/material/Box'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { styled, useTheme } from '@mui/material/styles'
-import Typography from '@mui/material/Typography'
+// ** Demo Imports
+import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Configs
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
-
+import Icon from '@core/components/icon'
 // ** Hooks
-import { useSettings } from 'src/@core/hooks/useSettings'
-
-// ** Demo Imports
-import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
+import { useSettings } from '@core/hooks/useSettings'
+// ** Layout Import
+import BlankLayout from '@core/layouts/BlankLayout'
+import Box from '@mui/material/Box'
+// ** MUI Components
+import Button from '@mui/material/Button'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 // Styled Components
 const ForgotPasswordIllustrationWrapper = styled(Box)(({ theme }) => ({

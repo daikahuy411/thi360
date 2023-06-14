@@ -1,30 +1,37 @@
 // ** React Imports
-import { useState, useEffect, forwardRef, useCallback, Fragment } from 'react'
-
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Drawer from '@mui/material/Drawer'
-import Select from '@mui/material/Select'
-import Switch from '@mui/material/Switch'
-import Button from '@mui/material/Button'
-import MenuItem from '@mui/material/MenuItem'
-import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
-import InputLabel from '@mui/material/InputLabel'
-import Typography from '@mui/material/Typography'
-import FormControl from '@mui/material/FormControl'
-import FormHelperText from '@mui/material/FormHelperText'
-import FormControlLabel from '@mui/material/FormControlLabel'
+import {
+  forwardRef,
+  Fragment,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 
 // ** Third Party Imports
 import DatePicker from 'react-datepicker'
-import { useForm, Controller } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
+import Icon from '@core/components/icon'
 // ** Styled Components
-import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
+import DatePickerWrapper from '@core/styles/libs/react-datepicker'
+// ** MUI Imports
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Drawer from '@mui/material/Drawer'
+import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormHelperText from '@mui/material/FormHelperText'
+import IconButton from '@mui/material/IconButton'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import Switch from '@mui/material/Switch'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
 const capitalize = string => string && string[0].toUpperCase() + string.slice(1)
 

@@ -1,23 +1,21 @@
+import PaginationButtons from 'views/components/pagination/PaginationButtons'
+import PaginationControlled from 'views/components/pagination/PaginationControlled'
+import PaginationDisabled from 'views/components/pagination/PaginationDisabled'
+import PaginationOutlined from 'views/components/pagination/PaginationOutlined'
+import PaginationRanges from 'views/components/pagination/PaginationRanges'
+import PaginationRounded from 'views/components/pagination/PaginationRounded'
+import PaginationSimple from 'views/components/pagination/PaginationSimple'
+// ** Demo Components Imports
+import PaginationSizes from 'views/components/pagination/PaginationSizes'
+// ** Source code imports
+import * as source from 'views/components/pagination/PaginationSourceCode'
+
+// ** Custom Components Imports
+import CardSnippet from '@core/components/card-snippet'
+import Grid from '@mui/material/Grid'
 // ** MUI Imports
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import Grid from '@mui/material/Grid'
-
-// ** Custom Components Imports
-import CardSnippet from 'src/@core/components/card-snippet'
-
-// ** Demo Components Imports
-import PaginationSizes from 'src/views/components/pagination/PaginationSizes'
-import PaginationSimple from 'src/views/components/pagination/PaginationSimple'
-import PaginationRanges from 'src/views/components/pagination/PaginationRanges'
-import PaginationRounded from 'src/views/components/pagination/PaginationRounded'
-import PaginationButtons from 'src/views/components/pagination/PaginationButtons'
-import PaginationOutlined from 'src/views/components/pagination/PaginationOutlined'
-import PaginationDisabled from 'src/views/components/pagination/PaginationDisabled'
-import PaginationControlled from 'src/views/components/pagination/PaginationControlled'
-
-// ** Source code imports
-import * as source from 'src/views/components/pagination/PaginationSourceCode'
 
 // Styled component for Grid container
 const GridContainer = styled(Grid)(({ theme }) => ({

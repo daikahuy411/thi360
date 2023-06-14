@@ -1,10 +1,12 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Imports
 import TreeItem from '@mui/lab/TreeItem'
-import { alpha, styled } from '@mui/material/styles'
 import MuiTreeView from '@mui/lab/TreeView'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import {
+  alpha,
+  styled
+} from '@mui/material/styles'
 
 // Styled TreeView component
 const TreeView = styled(MuiTreeView)(({ theme }) => ({

@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // ** Third Party Components
 import toast from 'react-hot-toast'
@@ -33,7 +33,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // ** Third Party Components
 import toast from 'react-hot-toast'
@@ -70,7 +70,7 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // ** Third Party Components
 import toast from 'react-hot-toast'
@@ -123,7 +123,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // ** Third Party Components
 import toast from 'react-hot-toast'
@@ -152,7 +152,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // ** Third Party Components
 import toast from 'react-hot-toast'
@@ -187,7 +187,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // ** Third Party Components
 import toast from 'react-hot-toast'
@@ -234,7 +234,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // ** Third Party Components
 import toast from 'react-hot-toast'
@@ -263,7 +263,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // ** Third Party Components
 import toast from 'react-hot-toast'
@@ -293,7 +293,7 @@ import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // ** Third Party Components
 import toast from 'react-hot-toast'

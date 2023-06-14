@@ -1,17 +1,19 @@
 // ** React Imports
-import { Fragment, useState } from 'react'
-
-// ** MUI Imports
-import List from '@mui/material/List'
-import Divider from '@mui/material/Divider'
-import ListItem from '@mui/material/ListItem'
-import Collapse from '@mui/material/Collapse'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemButton from '@mui/material/ListItemButton'
+import {
+  Fragment,
+  useState
+} from 'react'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
+import Collapse from '@mui/material/Collapse'
+import Divider from '@mui/material/Divider'
+// ** MUI Imports
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
 
 const ListNested = () => {
   // ** State

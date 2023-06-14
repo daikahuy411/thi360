@@ -1,14 +1,13 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Typography from '@mui/material/Typography'
 
 const ButtonToggleEnforceValue = () => {
   // ** States

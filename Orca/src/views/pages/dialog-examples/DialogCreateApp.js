@@ -1,33 +1,34 @@
 // ** React Imports
-import { useState, forwardRef } from 'react'
+import {
+  forwardRef,
+  useState
+} from 'react'
 
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Tab from '@mui/material/Tab'
-import Card from '@mui/material/Card'
+import DialogTabBilling from 'views/pages/dialog-examples/create-app-tabs/DialogTabBilling'
+import DialogTabDatabase from 'views/pages/dialog-examples/create-app-tabs/DialogTabDatabase'
+// ** Tab Content Imports
+import DialogTabDetails from 'views/pages/dialog-examples/create-app-tabs/DialogTabDetails'
+import DialogTabFramework from 'views/pages/dialog-examples/create-app-tabs/DialogTabFramework'
+
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Hook Imports
+import { useSettings } from '@core/hooks/useSettings'
+import TabContext from '@mui/lab/TabContext'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import Avatar from '@mui/material/Avatar'
-import Dialog from '@mui/material/Dialog'
+// ** MUI Imports
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import TabContext from '@mui/lab/TabContext'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
+import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import Fade from '@mui/material/Fade'
+import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Hook Imports
-import { useSettings } from 'src/@core/hooks/useSettings'
-
-// ** Tab Content Imports
-import DialogTabDetails from 'src/views/pages/dialog-examples/create-app-tabs/DialogTabDetails'
-import DialogTabBilling from 'src/views/pages/dialog-examples/create-app-tabs/DialogTabBilling'
-import DialogTabDatabase from 'src/views/pages/dialog-examples/create-app-tabs/DialogTabDatabase'
-import DialogTabFramework from 'src/views/pages/dialog-examples/create-app-tabs/DialogTabFramework'
+import Fade from '@mui/material/Fade'
+import IconButton from '@mui/material/IconButton'
+import Tab from '@mui/material/Tab'
+import Typography from '@mui/material/Typography'
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Fade ref={ref} {...props} />

@@ -1,12 +1,11 @@
+// ** Custom Icon Import
+import Icon from '@core/components/icon'
+import TreeItem from '@mui/lab/TreeItem'
+import TreeView from '@mui/lab/TreeView'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import TreeView from '@mui/lab/TreeView'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import TreeItem from '@mui/lab/TreeItem'
-
-// ** Custom Icon Import
-import Icon from 'src/@core/components/icon'
 
 // Styled TreeItem component
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({

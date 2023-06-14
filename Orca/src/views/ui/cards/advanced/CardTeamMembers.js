@@ -1,20 +1,19 @@
+// ** Custom Components Imports
+import CustomChip from '@core/components/mui/chip'
+import OptionsMenu from '@core/components/option-menu'
+import Avatar from '@mui/material/Avatar'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import Table from '@mui/material/Table'
-import Avatar from '@mui/material/Avatar'
-import TableRow from '@mui/material/TableRow'
-import TableBody from '@mui/material/TableBody'
-import TableHead from '@mui/material/TableHead'
-import TableCell from '@mui/material/TableCell'
-import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
-import TableContainer from '@mui/material/TableContainer'
 import CircularProgress from '@mui/material/CircularProgress'
-
-// ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
-import OptionsMenu from 'src/@core/components/option-menu'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
 
 const data = [
   {

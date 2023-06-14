@@ -1,8 +1,8 @@
-// ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
-
 // ** Component Import
-import Error500 from 'src/pages/500'
+import Error500 from 'pages/500'
+
+// ** Layout Import
+import BlankLayout from '@core/layouts/BlankLayout'
 
 const Error = () => <Error500 />
 Error.getLayout = page => <BlankLayout>{page}</BlankLayout>

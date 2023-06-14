@@ -1,37 +1,39 @@
 // ** React Imports
-import { useState, forwardRef, Fragment } from 'react'
-
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import List from '@mui/material/List'
-import Menu from '@mui/material/Menu'
-import Avatar from '@mui/material/Avatar'
-import Dialog from '@mui/material/Dialog'
-import Button from '@mui/material/Button'
-import ListItem from '@mui/material/ListItem'
-import MenuItem from '@mui/material/MenuItem'
-import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
-import InputLabel from '@mui/material/InputLabel'
-import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
-import Fade from '@mui/material/Fade'
-import ListItemText from '@mui/material/ListItemText'
-import Autocomplete from '@mui/material/Autocomplete'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import DialogContent from '@mui/material/DialogContent'
-import ListItemAvatar from '@mui/material/ListItemAvatar'
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import {
+  forwardRef,
+  Fragment,
+  useState
+} from 'react'
 
 // ** Configs Imports
-import themeConfig from 'src/configs/themeConfig'
+import themeConfig from 'configs/themeConfig'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** Hooks Imports
-import { useSettings } from 'src/@core/hooks/useSettings'
+import { useSettings } from '@core/hooks/useSettings'
+import Autocomplete from '@mui/material/Autocomplete'
+import Avatar from '@mui/material/Avatar'
+// ** MUI Imports
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
+import Fade from '@mui/material/Fade'
+import IconButton from '@mui/material/IconButton'
+import InputLabel from '@mui/material/InputLabel'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
+import ListItemText from '@mui/material/ListItemText'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Fade ref={ref} {...props} />

@@ -1,16 +1,14 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Custom Components Imports
+import CustomAvatar from '@core/components/mui/avatar'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import Divider from '@mui/material/Divider'
-import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Custom Components Imports
-import CustomAvatar from 'src/@core/components/mui/avatar'
+import CardMedia from '@mui/material/CardMedia'
+import Divider from '@mui/material/Divider'
+import Typography from '@mui/material/Typography'
 
 const CardDeveloperMeetup = () => {
   return (

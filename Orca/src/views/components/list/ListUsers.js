@@ -1,17 +1,16 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import Avatar from '@mui/material/Avatar'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
-import ListItem from '@mui/material/ListItem'
-import { styled } from '@mui/material/styles'
-import Typography from '@mui/material/Typography'
 import List from '@mui/material/List'
-import ListItemText from '@mui/material/ListItemText'
+import ListItem from '@mui/material/ListItem'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import ListItemText from '@mui/material/ListItemText'
+import { styled } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 const StyledList = styled(List)(({ theme }) => ({
   '& .MuiListItem-container': {

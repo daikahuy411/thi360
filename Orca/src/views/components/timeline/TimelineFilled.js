@@ -1,19 +1,18 @@
-// ** MUI Import
-import Box from '@mui/material/Box'
-import Avatar from '@mui/material/Avatar'
-import Divider from '@mui/material/Divider'
-import { styled } from '@mui/material/styles'
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import MuiTimeline from '@mui/lab/Timeline'
+import TimelineConnector from '@mui/lab/TimelineConnector'
+import TimelineContent from '@mui/lab/TimelineContent'
 import TimelineDot from '@mui/lab/TimelineDot'
 import TimelineItem from '@mui/lab/TimelineItem'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import TimelineContent from '@mui/lab/TimelineContent'
 import TimelineSeparator from '@mui/lab/TimelineSeparator'
-import TimelineConnector from '@mui/lab/TimelineConnector'
-import MuiTimeline from '@mui/lab/Timeline'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Avatar from '@mui/material/Avatar'
+// ** MUI Import
+import Box from '@mui/material/Box'
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import { styled } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 // Styled Timeline component
 const Timeline = styled(MuiTimeline)({

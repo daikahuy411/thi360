@@ -1,17 +1,18 @@
+// ** Configs
+import themeConfig from 'configs/themeConfig'
 // ** Next Import
 import Link from 'next/link'
 
+// ** Hook
+import { useSettings } from '@core/hooks/useSettings'
 // ** MUI Imports
 import AppBar from '@mui/material/AppBar'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import { styled, useTheme } from '@mui/material/styles'
-
-// ** Configs
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Hook
-import { useSettings } from 'src/@core/hooks/useSettings'
 
 const StyledLink = styled(Link)(({ theme }) => ({
   display: 'flex',

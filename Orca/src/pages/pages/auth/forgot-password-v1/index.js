@@ -1,26 +1,25 @@
+// ** Configs
+import themeConfig from 'configs/themeConfig'
 // ** Next Imports
 import Link from 'next/link'
+// ** Demo Imports
+import FooterIllustrationsV1 from 'views/pages/auth/FooterIllustrationsV1'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Layout Import
+import BlankLayout from '@core/layouts/BlankLayout'
 // ** MUI Components
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import MuiCard from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
-import { styled, useTheme } from '@mui/material/styles'
-import MuiCard from '@mui/material/Card'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Configs
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
-
-// ** Demo Imports
-import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustrationsV1'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({

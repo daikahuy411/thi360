@@ -41,7 +41,7 @@ import Typography from '@mui/material/Typography'
 import Rating from '@mui/material/Rating'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const customIcons = {
   1: {

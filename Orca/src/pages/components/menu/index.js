@@ -1,21 +1,19 @@
+// ** Demo Components Imports
+import MenuBasic from 'views/components/menu/MenuBasic'
+import MenuComposition from 'views/components/menu/MenuComposition'
+import MenuContext from 'views/components/menu/MenuContext'
+import MenuCustomized from 'views/components/menu/MenuCustomized'
+import MenuMaxHeight from 'views/components/menu/MenuMaxHeight'
+import MenuSelected from 'views/components/menu/MenuSelected'
+// ** Source code imports
+import * as source from 'views/components/menu/MenuSourceCode'
+import MenuTransition from 'views/components/menu/MenuTransition'
+
+// ** Custom Components Imports
+import CardSnippet from '@core/components/card-snippet'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-
-// ** Custom Components Imports
-import CardSnippet from 'src/@core/components/card-snippet'
-
-// ** Demo Components Imports
-import MenuBasic from 'src/views/components/menu/MenuBasic'
-import MenuContext from 'src/views/components/menu/MenuContext'
-import MenuSelected from 'src/views/components/menu/MenuSelected'
-import MenuMaxHeight from 'src/views/components/menu/MenuMaxHeight'
-import MenuCustomized from 'src/views/components/menu/MenuCustomized'
-import MenuTransition from 'src/views/components/menu/MenuTransition'
-import MenuComposition from 'src/views/components/menu/MenuComposition'
-
-// ** Source code imports
-import * as source from 'src/views/components/menu/MenuSourceCode'
 
 const Menus = () => {
   return (

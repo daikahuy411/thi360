@@ -1,16 +1,15 @@
 // ** React Imports
 import { useState } from 'react'
 
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Badge from '@mui/material/Badge'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
 // ** Third Party Components
 import clsx from 'clsx'
 import { useKeenSlider } from 'keen-slider/react'
+
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import Badge from '@mui/material/Badge'
+// ** MUI Imports
+import Box from '@mui/material/Box'
 
 const SwiperControls = ({ direction }) => {
   // ** States

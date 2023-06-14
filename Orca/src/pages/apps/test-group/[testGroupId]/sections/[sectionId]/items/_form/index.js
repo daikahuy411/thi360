@@ -3,8 +3,11 @@ import {
   useState
 } from 'react'
 
+import OrganizationApi from 'api/organization-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import EntityInfoModal from 'pages/shared/entity-info-modal'
+import QuestionCatalogSelector from 'pages/shared/question-catalog-selector'
 import {
   Controller,
   useForm
@@ -14,10 +17,7 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux'
-import OrganizationApi from 'src/api/organization-api'
-import EntityInfoModal from 'src/pages/shared/entity-info-modal'
-import QuestionCatalogSelector from 'src/pages/shared/question-catalog-selector'
-import { selectedClass } from 'src/store/slices/classSlice'
+import { selectedClass } from 'store/slices/examCategorySlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'

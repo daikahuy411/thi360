@@ -1,20 +1,18 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import CustomAvatar from '@core/components/mui/avatar'
+// ** Custom Components Imports
+import CustomChip from '@core/components/mui/chip'
+import MuiAvatar from '@mui/material/Avatar'
+import AvatarGroup from '@mui/material/AvatarGroup'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import MuiAvatar from '@mui/material/Avatar'
-import Typography from '@mui/material/Typography'
-import CardHeader from '@mui/material/CardHeader'
-import AvatarGroup from '@mui/material/AvatarGroup'
 import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
+import Grid from '@mui/material/Grid'
 import LinearProgress from '@mui/material/LinearProgress'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
-import CustomAvatar from 'src/@core/components/mui/avatar'
+import Typography from '@mui/material/Typography'
 
 const CardFinanceSummary = () => {
   return (

@@ -1,11 +1,9 @@
+// ** Custom Components Imports
+import CardStatisticsHorizontal from '@core/components/card-statistics/card-stats-horizontal'
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Import
 import Grid from '@mui/material/Grid'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Custom Components Imports
-import CardStatisticsHorizontal from 'src/@core/components/card-statistics/card-stats-horizontal'
 
 const CardStatsHorizontal = ({ data }) => {
   if (data) {

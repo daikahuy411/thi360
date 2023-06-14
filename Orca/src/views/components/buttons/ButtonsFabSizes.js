@@ -1,11 +1,10 @@
 // ** React Imports
 import { Fragment } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Imports
 import Fab from '@mui/material/Fab'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
 
 const ButtonsFabSizes = () => {
   return (

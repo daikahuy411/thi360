@@ -1,32 +1,30 @@
 // ** React Imports
 import { useState } from 'react'
 
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import Alert from '@mui/material/Alert'
-import Button from '@mui/material/Button'
-import Switch from '@mui/material/Switch'
-import Dialog from '@mui/material/Dialog'
-import AlertTitle from '@mui/material/AlertTitle'
-import Typography from '@mui/material/Typography'
-import InputLabel from '@mui/material/InputLabel'
-import IconButton from '@mui/material/IconButton'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
-import LinearProgress from '@mui/material/LinearProgress'
+// ** Component Import
+import PricingPlans from 'views/pages/pricing/PricingPlans'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
+import Icon from '@core/components/icon'
 // ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
-
-// ** Component Import
-import PricingPlans from 'src/views/pages/pricing/PricingPlans'
+import CustomChip from '@core/components/mui/chip'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
+// ** MUI Imports
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import InputLabel from '@mui/material/InputLabel'
+import LinearProgress from '@mui/material/LinearProgress'
+import Switch from '@mui/material/Switch'
+import Typography from '@mui/material/Typography'
 
 const CurrentPlanCard = ({ data }) => {
   // ** State

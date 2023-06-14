@@ -1,23 +1,21 @@
+import AvatarsGrouped from 'views/components/avatars/AvatarsGrouped'
+import AvatarsGroupedPullUp from 'views/components/avatars/AvatarsGroupedPullUp'
+import AvatarsGroupedPullUpWithTooltip from 'views/components/avatars/AvatarsGroupedPullUpWithTooltip'
+// ** Demo Components Imports
+import AvatarsIcon from 'views/components/avatars/AvatarsIcon'
+import AvatarsImage from 'views/components/avatars/AvatarsImage'
+import AvatarsLetter from 'views/components/avatars/AvatarsLetter'
+import AvatarsSizes from 'views/components/avatars/AvatarsSizes'
+// ** Source code imports
+import * as source from 'views/components/avatars/AvatarsSourceCode'
+import AvatarsVariants from 'views/components/avatars/AvatarsVariants'
+import AvatarsWithBadge from 'views/components/avatars/AvatarsWithBadge'
+
+// ** Custom Components Imports
+import CardSnippet from '@core/components/card-snippet'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-
-// ** Custom Components Imports
-import CardSnippet from 'src/@core/components/card-snippet'
-
-// ** Demo Components Imports
-import AvatarsIcon from 'src/views/components/avatars/AvatarsIcon'
-import AvatarsImage from 'src/views/components/avatars/AvatarsImage'
-import AvatarsSizes from 'src/views/components/avatars/AvatarsSizes'
-import AvatarsLetter from 'src/views/components/avatars/AvatarsLetter'
-import AvatarsGrouped from 'src/views/components/avatars/AvatarsGrouped'
-import AvatarsVariants from 'src/views/components/avatars/AvatarsVariants'
-import AvatarsWithBadge from 'src/views/components/avatars/AvatarsWithBadge'
-import AvatarsGroupedPullUp from 'src/views/components/avatars/AvatarsGroupedPullUp'
-import AvatarsGroupedPullUpWithTooltip from 'src/views/components/avatars/AvatarsGroupedPullUpWithTooltip'
-
-// ** Source code imports
-import * as source from 'src/views/components/avatars/AvatarsSourceCode'
 
 const Avatars = () => {
   return (

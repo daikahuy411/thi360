@@ -87,10 +87,10 @@ import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // ** Custom Components Imports
-import CustomAvatar from 'src/@core/components/mui/avatar'
+import CustomAvatar from '@core/components/mui/avatar'
 
 const AvatarsIcon = () => {
   return (
@@ -116,7 +116,7 @@ import Box from '@mui/material/Box'
 import MuiAvatar from '@mui/material/Avatar'
 
 // ** Custom Components Imports
-import CustomAvatar from 'src/@core/components/mui/avatar'
+import CustomAvatar from '@core/components/mui/avatar'
 
 const AvatarsLetter = () => {
   return (
@@ -140,10 +140,10 @@ export const AvatarsVariantsJSXCode = (<pre className='language-jsx'><code class
 import Box from '@mui/material/Box'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // ** Custom Components Imports
-import CustomAvatar from 'src/@core/components/mui/avatar'
+import CustomAvatar from '@core/components/mui/avatar'
 
 const AvatarsVariants = () => {
   return (

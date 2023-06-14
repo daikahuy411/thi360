@@ -1,26 +1,23 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Custom Components Imports
+import OptionsMenu from '@core/components/option-menu'
+// ** Hooks Imports
+import useBgColor from '@core/hooks/useBgColor'
+import Avatar from '@mui/material/Avatar'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import Link from '@mui/material/Link'
-import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import FormControl from '@mui/material/FormControl'
-import CardContent from '@mui/material/CardContent'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Custom Components Imports
-import OptionsMenu from 'src/@core/components/option-menu'
-
-// ** Hooks Imports
-import useBgColor from 'src/@core/hooks/useBgColor'
+import Link from '@mui/material/Link'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
 const CardPlanUpgrade = () => {
   // ** States

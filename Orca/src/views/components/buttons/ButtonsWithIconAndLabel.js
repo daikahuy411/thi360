@@ -1,8 +1,7 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Imports
 import Button from '@mui/material/Button'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
 
 const ButtonsWithIconAndLabel = () => {
   return (

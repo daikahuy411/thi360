@@ -3,7 +3,7 @@ import TreeView from '@mui/lab/TreeView'
 import TreeItem from '@mui/lab/TreeItem'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const TreeViewBasic = ({ direction }) => {
   const ExpandIcon = direction === 'rtl' ? 'mdi:chevron-left' : 'mdi:chevron-right'
@@ -43,7 +43,7 @@ import TreeView from '@mui/lab/TreeView'
 import TreeItem from '@mui/lab/TreeItem'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const TreeViewControlled = ({ direction }) => {
   // ** States
@@ -98,7 +98,7 @@ import Typography from '@mui/material/Typography'
 import TreeItem from '@mui/lab/TreeItem'
 
 // ** Custom Icon Import
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // Styled TreeItem component
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
@@ -180,7 +180,7 @@ import { alpha, styled } from '@mui/material/styles'
 import MuiTreeView from '@mui/lab/TreeView'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // Styled TreeView component
 const TreeView = styled(MuiTreeView)(({ theme }) => ({
@@ -229,7 +229,7 @@ import TreeView from '@mui/lab/TreeView'
 import TreeItem from '@mui/lab/TreeItem'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const TreeViewMultiSelection = ({ direction }) => {
   const ExpandIcon = direction === 'rtl' ? 'mdi:chevron-left' : 'mdi:chevron-right'
@@ -267,7 +267,7 @@ import TreeView from '@mui/lab/TreeView'
 import TreeItem from '@mui/lab/TreeItem'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const data = {
   id: 'root',

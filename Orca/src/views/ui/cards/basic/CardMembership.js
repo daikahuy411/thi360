@@ -1,15 +1,14 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 // ** MUI Imports
 import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import Button from '@mui/material/Button'
+import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
+import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import CardContent from '@mui/material/CardContent'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
 
 // Styled Box component
 const StyledBox = styled(Box)(({ theme }) => ({

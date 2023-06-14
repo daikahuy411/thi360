@@ -1,27 +1,26 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Table from '@mui/material/Table'
-import Paper from '@mui/material/Paper'
-import Toolbar from '@mui/material/Toolbar'
-import Tooltip from '@mui/material/Tooltip'
-import { visuallyHidden } from '@mui/utils'
-import { alpha } from '@mui/material/styles'
 import Checkbox from '@mui/material/Checkbox'
-import TableRow from '@mui/material/TableRow'
+import IconButton from '@mui/material/IconButton'
+import Paper from '@mui/material/Paper'
+import { alpha } from '@mui/material/styles'
+import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
-import TableHead from '@mui/material/TableHead'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
-import TableSortLabel from '@mui/material/TableSortLabel'
+import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import TableRow from '@mui/material/TableRow'
+import TableSortLabel from '@mui/material/TableSortLabel'
+import Toolbar from '@mui/material/Toolbar'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
+import { visuallyHidden } from '@mui/utils'
 
 const createData = (name, calories, fat, carbs, protein) => {
   return { name, calories, fat, carbs, protein }

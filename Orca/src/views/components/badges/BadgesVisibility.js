@@ -1,17 +1,19 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
-
-// ** MUI Imports
-import Badge from '@mui/material/Badge'
-import Switch from '@mui/material/Switch'
-import Button from '@mui/material/Button'
-import Avatar from '@mui/material/Avatar'
-import { styled } from '@mui/material/styles'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
+import {
+  Fragment,
+  useState
+} from 'react'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
+import Avatar from '@mui/material/Avatar'
+// ** MUI Imports
+import Badge from '@mui/material/Badge'
+import Button from '@mui/material/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import { styled } from '@mui/material/styles'
+import Switch from '@mui/material/Switch'
 
 // Styled component for a wrapper
 const Wrapper = styled('div')(({ theme }) => ({
