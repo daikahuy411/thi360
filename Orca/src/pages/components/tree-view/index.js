@@ -1,23 +1,20 @@
+// ** Demo Components Imports
+import TreeViewBasic from 'views/components/tree-view/TreeViewBasic'
+import TreeViewControlled from 'views/components/tree-view/TreeViewControlled'
+import TreeViewCustomized from 'views/components/tree-view/TreeViewCustomized'
+import TreeViewGmailClone from 'views/components/tree-view/TreeViewGmailClone'
+import TreeViewMultiSelection from 'views/components/tree-view/TreeViewMultiSelection'
+import TreeViewRichObject from 'views/components/tree-view/TreeViewRichObject'
+// ** Source code imports
+import * as source from 'views/components/tree-view/TreeViewSourceCode'
+
+// ** Custom Components Imports
+import CardSnippet from '@core/components/card-snippet'
+// ** Hooks Imports
+import { useSettings } from '@core/hooks/useSettings'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-
-// ** Custom Components Imports
-import CardSnippet from 'src/@core/components/card-snippet'
-
-// ** Hooks Imports
-import { useSettings } from 'src/@core/hooks/useSettings'
-
-// ** Demo Components Imports
-import TreeViewBasic from 'src/views/components/tree-view/TreeViewBasic'
-import TreeViewControlled from 'src/views/components/tree-view/TreeViewControlled'
-import TreeViewRichObject from 'src/views/components/tree-view/TreeViewRichObject'
-import TreeViewCustomized from 'src/views/components/tree-view/TreeViewCustomized'
-import TreeViewGmailClone from 'src/views/components/tree-view/TreeViewGmailClone'
-import TreeViewMultiSelection from 'src/views/components/tree-view/TreeViewMultiSelection'
-
-// ** Source code imports
-import * as source from 'src/views/components/tree-view/TreeViewSourceCode'
 
 const TreeView = () => {
   // ** Hooks

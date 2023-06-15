@@ -1,17 +1,16 @@
+// ** Custom Components Imports
+import OptionsMenu from '@core/components/option-menu'
 // ** MUI Import
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import Chip from '@mui/material/Chip'
 import Button from '@mui/material/Button'
-import Rating from '@mui/material/Rating'
-import Divider from '@mui/material/Divider'
-import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
+import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
-
-// ** Custom Components Imports
-import OptionsMenu from 'src/@core/components/option-menu'
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
+import Chip from '@mui/material/Chip'
+import Divider from '@mui/material/Divider'
+import Rating from '@mui/material/Rating'
+import Typography from '@mui/material/Typography'
 
 const CardCafe = () => {
   return (

@@ -1,17 +1,16 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Imports
 import List from '@mui/material/List'
-import Switch from '@mui/material/Switch'
 import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import ListSubheader from '@mui/material/ListSubheader'
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import ListItemText from '@mui/material/ListItemText'
+import ListSubheader from '@mui/material/ListSubheader'
+import Switch from '@mui/material/Switch'
 
 const ListWithSwitch = () => {
   // ** State

@@ -1,12 +1,11 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Components
 import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
-import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 
 const renderList = arr => {
   if (arr && arr.length) {

@@ -1,24 +1,26 @@
 // ** React Imports
-import { useState, forwardRef } from 'react'
-
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import Switch from '@mui/material/Switch'
-import Dialog from '@mui/material/Dialog'
-import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import InputLabel from '@mui/material/InputLabel'
-import CardContent from '@mui/material/CardContent'
-import Fade from '@mui/material/Fade'
-import DialogContent from '@mui/material/DialogContent'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import {
+  forwardRef,
+  useState
+} from 'react'
 
 // ** Component Import
-import PricingPlans from 'src/views/pages/pricing/PricingPlans'
+import PricingPlans from 'views/pages/pricing/PricingPlans'
+
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** MUI Imports
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
+import Fade from '@mui/material/Fade'
+import IconButton from '@mui/material/IconButton'
+import InputLabel from '@mui/material/InputLabel'
+import Switch from '@mui/material/Switch'
+import Typography from '@mui/material/Typography'
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Fade ref={ref} {...props} />

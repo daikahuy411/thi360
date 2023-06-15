@@ -119,7 +119,7 @@ import Snackbar from '@mui/material/Snackbar'
 import IconButton from '@mui/material/IconButton'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const SnackbarSimple = () => {
   // ** State

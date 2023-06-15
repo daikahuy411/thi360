@@ -1,12 +1,11 @@
+// ** Custom Components Imports
+import CustomChip from '@core/components/mui/chip'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
-
-// ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
 
 // ** Styled component for the image
 const Img = styled('img')({

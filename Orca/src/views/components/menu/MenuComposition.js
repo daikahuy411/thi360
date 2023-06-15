@@ -1,17 +1,20 @@
 // ** React Imports
-import { useEffect, useRef, useState } from 'react'
-
-// ** MUI Imports
-import Grow from '@mui/material/Grow'
-import Paper from '@mui/material/Paper'
-import Button from '@mui/material/Button'
-import Popper from '@mui/material/Popper'
-import MenuList from '@mui/material/MenuList'
-import MenuItem from '@mui/material/MenuItem'
-import ClickAwayListener from '@mui/material/ClickAwayListener'
+import {
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 
 // ** Hook Import
-import { useSettings } from 'src/@core/hooks/useSettings'
+import { useSettings } from '@core/hooks/useSettings'
+import Button from '@mui/material/Button'
+import ClickAwayListener from '@mui/material/ClickAwayListener'
+// ** MUI Imports
+import Grow from '@mui/material/Grow'
+import MenuItem from '@mui/material/MenuItem'
+import MenuList from '@mui/material/MenuList'
+import Paper from '@mui/material/Paper'
+import Popper from '@mui/material/Popper'
 
 const MenuComposition = () => {
   // ** States

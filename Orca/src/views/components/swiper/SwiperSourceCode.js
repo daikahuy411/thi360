@@ -118,7 +118,7 @@ import Box from '@mui/material/Box'
 import Badge from '@mui/material/Badge'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // ** Third Party Components
 import clsx from 'clsx'

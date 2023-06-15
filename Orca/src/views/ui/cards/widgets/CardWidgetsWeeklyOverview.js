@@ -1,15 +1,14 @@
+// ** Custom Components Imports
+import OptionsMenu from '@core/components/option-menu'
+import ReactApexcharts from '@core/components/react-apexcharts'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
 import Button from '@mui/material/Button'
-import { useTheme } from '@mui/material/styles'
-import CardHeader from '@mui/material/CardHeader'
-import Typography from '@mui/material/Typography'
+import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-
-// ** Custom Components Imports
-import OptionsMenu from 'src/@core/components/option-menu'
-import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import CardHeader from '@mui/material/CardHeader'
+import { useTheme } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 const CardWidgetsWeeklyOverview = () => {
   // ** Hook

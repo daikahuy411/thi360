@@ -3,11 +3,11 @@ import {
   useState
 } from 'react'
 
+import ExamApi from 'api/exam-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Icon from 'src/@core/components/icon'
-import ExamApi from 'src/api/exam-api'
 
+import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'

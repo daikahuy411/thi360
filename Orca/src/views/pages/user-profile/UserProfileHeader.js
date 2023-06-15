@@ -1,20 +1,22 @@
 // ** React Imports
-import { useState, useEffect } from 'react'
-
-// ** MUI Components
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import Button from '@mui/material/Button'
-import { styled } from '@mui/material/styles'
-import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 // ** Third Party Imports
 import axios from 'axios'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
+// ** MUI Components
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
+import { styled } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 const ProfilePicture = styled('img')(({ theme }) => ({
   width: 120,

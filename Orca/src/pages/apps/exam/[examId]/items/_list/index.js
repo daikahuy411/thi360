@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
+import ExamItemApi from 'api/exam-item-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Icon from 'src/@core/components/icon'
-import ExamItemApi from 'src/api/exam-item-api'
 
+import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'

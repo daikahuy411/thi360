@@ -1,12 +1,11 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Imports
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
 
 const ButtonToggleSizes = () => {
   // ** State

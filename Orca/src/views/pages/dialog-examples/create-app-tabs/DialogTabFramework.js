@@ -1,16 +1,14 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Custom Avatar Component
+import CustomAvatar from '@core/components/mui/avatar'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Radio from '@mui/material/Radio'
 import Typography from '@mui/material/Typography'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Custom Avatar Component
-import CustomAvatar from 'src/@core/components/mui/avatar'
 
 const TabFramework = () => {
   const [value, setValue] = useState('react')

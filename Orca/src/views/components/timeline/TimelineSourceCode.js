@@ -13,7 +13,7 @@ import TimelineConnector from '@mui/lab/TimelineConnector'
 import MuiTimeline from '@mui/lab/Timeline'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // Styled Timeline component
 const Timeline = styled(MuiTimeline)({
@@ -200,11 +200,11 @@ import TimelineConnector from '@mui/lab/TimelineConnector'
 import MuiTimeline from '@mui/lab/Timeline'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
-import CustomTimelineDot from 'src/@core/components/mui/timeline-dot'
+import CustomChip from '@core/components/mui/chip'
+import CustomTimelineDot from '@core/components/mui/timeline-dot'
 
 // Styled Timeline component
 const Timeline = styled(MuiTimeline)(({ theme }) => ({
@@ -500,7 +500,7 @@ import TimelineConnector from '@mui/lab/TimelineConnector'
 import MuiTimeline from '@mui/lab/Timeline'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 // Styled Timeline component
 const Timeline = styled(MuiTimeline)({

@@ -11,7 +11,7 @@ import ListItemText from '@mui/material/ListItemText'
 import ListItemButton from '@mui/material/ListItemButton'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ListNested = () => {
   // ** State
@@ -92,7 +92,7 @@ import ListItemText from '@mui/material/ListItemText'
 import ListItemButton from '@mui/material/ListItemButton'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ListDense = () => {
   return (
@@ -151,7 +151,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ListSecondary = () => {
   return (
@@ -206,10 +206,10 @@ import ListItemAvatar from '@mui/material/ListItemAvatar'
 import LinearProgress from '@mui/material/LinearProgress'
 
 // ** Custom Components Imports
-import CustomAvatar from 'src/@core/components/mui/avatar'
+import CustomAvatar from '@core/components/mui/avatar'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const StyledList = styled(List)(({ theme }) => ({
   '& .MuiListItem-root': {
@@ -313,7 +313,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ListItemSelected = () => {
   // ** State
@@ -383,7 +383,7 @@ import ListItemText from '@mui/material/ListItemText'
 import ListItemButton from '@mui/material/ListItemButton'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ListSimple = () => {
   return (
@@ -474,7 +474,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const StyledList = styled(List)(({ theme }) => ({
   '& .MuiListItem-container': {
@@ -706,7 +706,7 @@ import ListSubheader from '@mui/material/ListSubheader'
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
 
 const ListWithSwitch = () => {
   // ** State

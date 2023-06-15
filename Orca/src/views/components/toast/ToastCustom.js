@@ -1,15 +1,14 @@
+// ** Third Party Components
+import toast from 'react-hot-toast'
+
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import Avatar from '@mui/material/Avatar'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Third Party Components
-import toast from 'react-hot-toast'
 
 const ToastCustom = () => {
   const handleClick = () => {

@@ -1,20 +1,19 @@
 // ** React Imports
 import { useState } from 'react'
 
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
 import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Collapse from '@mui/material/Collapse'
-import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import CardContent from '@mui/material/CardContent'
+import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
+import Collapse from '@mui/material/Collapse'
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
 
 const CardWithCollapse = () => {
   // ** State

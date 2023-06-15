@@ -1,18 +1,21 @@
 // ** React Imports
-import { useRef, useState, Fragment } from 'react'
-
-// ** MUI Imports
-import Grow from '@mui/material/Grow'
-import Paper from '@mui/material/Paper'
-import Button from '@mui/material/Button'
-import Popper from '@mui/material/Popper'
-import MenuItem from '@mui/material/MenuItem'
-import MenuList from '@mui/material/MenuList'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import ClickAwayListener from '@mui/material/ClickAwayListener'
+import {
+  Fragment,
+  useRef,
+  useState
+} from 'react'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
+import Button from '@mui/material/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
+import ClickAwayListener from '@mui/material/ClickAwayListener'
+// ** MUI Imports
+import Grow from '@mui/material/Grow'
+import MenuItem from '@mui/material/MenuItem'
+import MenuList from '@mui/material/MenuList'
+import Paper from '@mui/material/Paper'
+import Popper from '@mui/material/Popper'
 
 const options = ['Create a merge commit', 'Squash and merge', 'Rebase and merge']
 

@@ -1,11 +1,9 @@
+// ** Demo Components Imports
+import CardStatisticsVertical from '@core/components/card-statistics/card-stats-vertical'
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Import
 import Grid from '@mui/material/Grid'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Demo Components Imports
-import CardStatisticsVertical from 'src/@core/components/card-statistics/card-stats-vertical'
 
 const CardStatsVertical = ({ data }) => {
   if (data) {

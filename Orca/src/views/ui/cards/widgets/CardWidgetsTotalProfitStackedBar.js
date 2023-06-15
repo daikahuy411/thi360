@@ -1,20 +1,21 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
+import CustomAvatar from '@core/components/mui/avatar'
+// ** Custom Components Imports
+import OptionsMenu from '@core/components/option-menu'
+import ReactApexcharts from '@core/components/react-apexcharts'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
 import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import CardHeader from '@mui/material/CardHeader'
+import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
 import Grid from '@mui/material/Grid'
-import { styled, useTheme } from '@mui/material/styles'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Custom Components Imports
-import OptionsMenu from 'src/@core/components/option-menu'
-import CustomAvatar from 'src/@core/components/mui/avatar'
-import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 const data = [
   {

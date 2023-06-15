@@ -1,10 +1,9 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import Rating from '@mui/material/Rating'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Typography from '@mui/material/Typography'
 
 const customIcons = {
   1: {

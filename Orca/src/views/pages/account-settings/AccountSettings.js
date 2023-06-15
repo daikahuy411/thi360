@@ -1,30 +1,31 @@
 // ** React Imports
-import { useState, useEffect } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
-
-// ** MUI Imports
-import Tab from '@mui/material/Tab'
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import TabPanel from '@mui/lab/TabPanel'
-import TabContext from '@mui/lab/TabContext'
-import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import MuiTabList from '@mui/lab/TabList'
-import CircularProgress from '@mui/material/CircularProgress'
+// ** Demo Tabs Imports
+import TabAccount from 'views/pages/account-settings/TabAccount'
+import TabBilling from 'views/pages/account-settings/TabBilling'
+import TabConnections from 'views/pages/account-settings/TabConnections'
+import TabNotifications from 'views/pages/account-settings/TabNotifications'
+import TabSecurity from 'views/pages/account-settings/TabSecurity'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Demo Tabs Imports
-import TabAccount from 'src/views/pages/account-settings/TabAccount'
-import TabBilling from 'src/views/pages/account-settings/TabBilling'
-import TabSecurity from 'src/views/pages/account-settings/TabSecurity'
-import TabConnections from 'src/views/pages/account-settings/TabConnections'
-import TabNotifications from 'src/views/pages/account-settings/TabNotifications'
+import Icon from '@core/components/icon'
+import TabContext from '@mui/lab/TabContext'
+import MuiTabList from '@mui/lab/TabList'
+import TabPanel from '@mui/lab/TabPanel'
+import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
+import Grid from '@mui/material/Grid'
+import { styled } from '@mui/material/styles'
+// ** MUI Imports
+import Tab from '@mui/material/Tab'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const TabList = styled(MuiTabList)(({ theme }) => ({
   '& .MuiTabs-indicator': {

@@ -1,36 +1,37 @@
+// ** Styles
+import 'cleave.js/dist/addons/cleave-phone.us'
+
 // ** React Imports
 import { useState } from 'react'
 
+// ** Third Party Imports
+import Cleave from 'cleave.js/react'
+// ** Configs
+import themeConfig from 'configs/themeConfig'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
+// ** Demo Imports
+import FooterIllustrationsV1 from 'views/pages/auth/FooterIllustrationsV1'
+
+// ** Layout Import
+import BlankLayout from '@core/layouts/BlankLayout'
+// ** Custom Styled Component
+import CleaveWrapper from '@core/styles/libs/react-cleave'
+// ** Util Import
+import { hexToRGBA } from '@core/utils/hex-to-rgba'
 // ** MUI Components
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
-import { styled, useTheme } from '@mui/material/styles'
 import MuiCard from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
 import FormHelperText from '@mui/material/FormHelperText'
-
-// ** Third Party Imports
-import Cleave from 'cleave.js/react'
-import { useForm, Controller } from 'react-hook-form'
-
-// ** Configs
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
-
-// ** Demo Imports
-import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustrationsV1'
-
-// ** Custom Styled Component
-import CleaveWrapper from 'src/@core/styles/libs/react-cleave'
-
-// ** Util Import
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
-
-// ** Styles
-import 'cleave.js/dist/addons/cleave-phone.us'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({

@@ -1,17 +1,15 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Custom Components Imports
+import OptionsMenu from '@core/components/option-menu'
+import ReactApexcharts from '@core/components/react-apexcharts'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
-import { useTheme } from '@mui/material/styles'
-import CardHeader from '@mui/material/CardHeader'
-import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
-
-// ** Custom Components Imports
-import OptionsMenu from 'src/@core/components/option-menu'
-import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import CardHeader from '@mui/material/CardHeader'
+import { useTheme } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 const series = [
   {

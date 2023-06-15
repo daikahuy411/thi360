@@ -1,21 +1,21 @@
-// ** MUI Components
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { styled, useTheme } from '@mui/material/styles'
-
 // ** Configs
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
+import themeConfig from 'configs/themeConfig'
+// ** Demo Imports
+import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
 
 // ** Hooks
-import { useSettings } from 'src/@core/hooks/useSettings'
-
-// ** Demo Imports
-import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
+import { useSettings } from '@core/hooks/useSettings'
+// ** Layout Import
+import BlankLayout from '@core/layouts/BlankLayout'
+import Box from '@mui/material/Box'
+// ** MUI Components
+import Button from '@mui/material/Button'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 // ** Styled Components
 const VerifyEmailIllustrationWrapper = styled(Box)(({ theme }) => ({

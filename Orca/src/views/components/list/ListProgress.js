@@ -1,17 +1,15 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Custom Components Imports
+import CustomAvatar from '@core/components/mui/avatar'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import { styled } from '@mui/material/styles'
-import ListItem from '@mui/material/ListItem'
-import List from '@mui/material/List'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemAvatar from '@mui/material/ListItemAvatar'
 import LinearProgress from '@mui/material/LinearProgress'
-
-// ** Custom Components Imports
-import CustomAvatar from 'src/@core/components/mui/avatar'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import ListItemText from '@mui/material/ListItemText'
+import { styled } from '@mui/material/styles'
 
 const StyledList = styled(List)(({ theme }) => ({
   '& .MuiListItem-root': {

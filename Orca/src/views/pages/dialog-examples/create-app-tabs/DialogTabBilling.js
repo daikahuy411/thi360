@@ -1,24 +1,26 @@
+// ** Styles Import
+import 'react-credit-cards/es/styles-compiled.css'
+
 // ** React Imports
 import { useState } from 'react'
-
-// ** MUI Imports
-import Grid from '@mui/material/Grid'
-import Switch from '@mui/material/Switch'
-import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
 
 // ** Third Party Imports
 import Payment from 'payment'
 import Cards from 'react-credit-cards'
 
-// ** Util Import
-import { formatCVC, formatExpirationDate, formatCreditCardNumber } from 'src/@core/utils/format'
-
 // ** Styled Component Imports
-import CardWrapper from 'src/@core/styles/libs/react-credit-cards'
-
-// ** Styles Import
-import 'react-credit-cards/es/styles-compiled.css'
+import CardWrapper from '@core/styles/libs/react-credit-cards'
+// ** Util Import
+import {
+  formatCreditCardNumber,
+  formatCVC,
+  formatExpirationDate
+} from '@core/utils/format'
+import FormControlLabel from '@mui/material/FormControlLabel'
+// ** MUI Imports
+import Grid from '@mui/material/Grid'
+import Switch from '@mui/material/Switch'
+import TextField from '@mui/material/TextField'
 
 const TabBilling = () => {
   // ** States

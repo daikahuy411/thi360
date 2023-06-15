@@ -1,15 +1,17 @@
 // ** React Import
-import { useEffect, useRef } from 'react'
-
-// ** Full Calendar & it's Plugins
-import FullCalendar from '@fullcalendar/react'
-import listPlugin from '@fullcalendar/list'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import {
+  useEffect,
+  useRef
+} from 'react'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '@core/components/icon'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import listPlugin from '@fullcalendar/list'
+// ** Full Calendar & it's Plugins
+import FullCalendar from '@fullcalendar/react'
+import timeGridPlugin from '@fullcalendar/timegrid'
 
 const blankEvent = {
   title: '',

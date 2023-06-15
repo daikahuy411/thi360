@@ -1,19 +1,20 @@
+// ** Configs
+import themeConfig from 'configs/themeConfig'
+// ** Demo Imports
+import FooterIllustrationsV1 from 'views/pages/auth/FooterIllustrationsV1'
+
+// ** Layout Import
+import BlankLayout from '@core/layouts/BlankLayout'
 // ** MUI Components
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
-import { styled, useTheme } from '@mui/material/styles'
 import MuiCard from '@mui/material/Card'
-
-// ** Configs
-import themeConfig from 'src/configs/themeConfig'
-
-// ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
-
-// ** Demo Imports
-import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustrationsV1'
+import CardContent from '@mui/material/CardContent'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({

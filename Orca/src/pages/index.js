@@ -1,4 +1,3 @@
-// ** React Imports
 import { useEffect } from 'react'
 
 // ** Hook Imports
@@ -13,8 +12,9 @@ import Spinner from '@core/components/spinner'
  *  Set Home URL based on User Roles
  */
 export const getHomeRoute = roles => {
-  if (roles.length === 0) return '/acl'
-  else return '/dashboards/crm'
+  // if (roles.length === 0) return '/acl'
+  // else return '/home'
+  return '/home'
 }
 
 const Home = () => {
@@ -22,12 +22,15 @@ const Home = () => {
   const auth = useAuth()
   const router = useRouter()
   useEffect(() => {
-    if (auth.user && auth.user.roles) {
-      const homeRoute = getHomeRoute(auth.user.roles)
+    const homeRoute = getHomeRoute(auth.user.roles)
+    // Redirect user to Home URL
+    router.replace(homeRoute)
+    // if (auth.user && auth.user.roles) {
+    //   const homeRoute = getHomeRoute(auth.user.roles)
 
-      // Redirect user to Home URL
-      router.replace(homeRoute)
-    }
+    //   // Redirect user to Home URL
+    //   router.replace(homeRoute)
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
-import { selectedClass } from 'src/store/slices/classSlice'
+import { selectedClass } from 'store/slices/examCategorySlice'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
