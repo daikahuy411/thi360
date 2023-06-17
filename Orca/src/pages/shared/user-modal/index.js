@@ -4,6 +4,7 @@ import React, {
 } from 'react'
 
 import UserApi from 'api/user-api'
+import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
@@ -41,11 +42,15 @@ const Drawer = styled(MuiDrawer)(({ theme }) => ({
 }))
 
 function UserModal({ onClose, onOk }) {
+  const router = useRouter()
+  const { examId } = router.query
   const [data, setData] = useState([])
+  const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [selectedData, setSelectedData] = useState([])
   const [selectedUsers, setSelectedUsers] = useState([])
+  const [keyword, setKeyword] = useState('')
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -57,15 +62,25 @@ function UserModal({ onClose, onOk }) {
   }
 
   const fetchData = () => {
-    new UserApi().searches({ organizationId: 0 }).then(response => {
-      setData(response.data.value)
-    })
+    new UserApi()
+      .searchesUserNotInExam({
+        Page: page + 1,
+        Limit: rowsPerPage,
+        Keyword: keyword,
+        ExamId: Number(examId),
+        organizationId: 0
+      })
+      .then(response => {
+        if (response.data.isSuccess) {
+          setData(response.data.value)
+          setTotalItem(response.data.totalItems)
+        }
+      })
   }
 
   useEffect(() => {
-    // loadOrg();
     fetchData()
-  }, [])
+  }, [page, rowsPerPage])
 
   const handleSelectAll = event => {
     const selected = event.target.checked ? data.map(t => t.id) : []
@@ -154,6 +169,7 @@ function UserModal({ onClose, onOk }) {
                 onClick={() => {
                   if (onOk) {
                     onOk(selectedUsers)
+                    onClose()
                   }
                 }}
               >
@@ -185,7 +201,7 @@ function UserModal({ onClose, onOk }) {
                     {data &&
                       data.map(item => (
                         <TableRow
-                          key={item.name}
+                          key={item.id}
                           sx={{
                             '&:last-of-type td, &:last-of-type th': {
                               border: 0
@@ -212,9 +228,10 @@ function UserModal({ onClose, onOk }) {
                 </Table>
               </TableContainer>
               <TablePagination
+                labelRowsPerPage={"Số dòng/trang:"}
                 rowsPerPageOptions={[10, 25, 100]}
                 component='div'
-                count={data.length}
+                count={totalItem}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

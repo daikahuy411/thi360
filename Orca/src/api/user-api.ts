@@ -1,5 +1,6 @@
-import ApiBase from './api-base';
-import axios from "axios";
+import axios from 'axios'
+
+import ApiBase from './api-base'
 
 export default class UserApi extends ApiBase {
   constructor() {
@@ -28,5 +29,10 @@ export default class UserApi extends ApiBase {
 
   importFile = (fileUrl: string) => {
     return axios.post(this.baseApiUrl + "/import", { fileUrl: fileUrl });
+  };
+
+  searchesUserNotInExam = (query: any) => {
+    const response = axios.post(`${this.baseApiUrl}/SearchesUserNotInExam`, query);
+    return response;
   };
 }
