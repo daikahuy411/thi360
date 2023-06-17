@@ -1,13 +1,12 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import EntityInfoModal from 'pages/shared/entity-info-modal'
 import { useSelector } from 'react-redux'
 import { selectedExam } from 'store/slices/examSlice'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
 
 import TopNav from '../../_layout/_breadcrums'
 import Nav from '../../_layout/_tabs'
@@ -31,14 +30,10 @@ const ClassUserList = () => {
                     <span className='title__label'>
                       {currentExam && currentExam.id > 0 && <span>{currentExam.name}</span>}
                     </span>
-                    {currentExam && currentExam.id > 0 && (
-                      <IconButton aria-label='delete'>
-                        <HelpOutlineIcon />
-                      </IconButton>
-                    )}
+                    {currentExam && currentExam.id > 0 && <EntityInfoModal entity={currentExam} />}
                   </h3>
                   <span className='right'>
-                    <Button variant='outlined' component={Link} href={`/apps/exams/${examId}`}>
+                    <Button variant='outlined' component={Link} href={`/apps/exam/${examId}`}>
                       <ArrowBackIcon />
                       &nbsp;Quay lại
                     </Button>
