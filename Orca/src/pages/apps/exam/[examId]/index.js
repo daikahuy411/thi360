@@ -68,12 +68,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
 
-// dayjs.extend(utc);
-// dayjs.extend(timezone);
-// dayjs.tz.setDefault('Asia/Ho_Chi_Minh');
-
-// dayjs.locale("vi");
-// moment.tz.setDefault('Asia/Ho_Chi_Minh');
 moment.tz.setDefault();
 moment().format("DD/MM/YYYY hh:mm");
 
@@ -215,14 +209,6 @@ const EditExamPage = () => {
       setValue('startDate', null)
       setValue('endDate', null)
     }
-    // else {
-    //   const item = getValues()
-    //   if (!item.startDate)
-    //     setValue('startDate', '')
-    //   if (!item.endDate)
-    //     setValue('endDate', '')
-    //   console.log(getValues())
-    // }
   }
 
   /*
@@ -591,7 +577,7 @@ const EditExamPage = () => {
                                       readOnly: true,
                                       className: 'Mui-disabled',
                                     }}
-                                    value={organizationSelected.organizationName ?? 0}
+                                    value={organizationSelected.organizationName ?? ''}
                                     endAdornment={
                                       <InputAdornment position='end'>
                                         <IconButton aria-label='toggle password visibility' edge='end' onClick={cleanOrganization}>

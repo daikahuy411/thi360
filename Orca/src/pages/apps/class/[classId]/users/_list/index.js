@@ -6,12 +6,19 @@ import {
 import UserApi from 'api/user-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Draggable from 'react-draggable'
+import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
@@ -28,12 +35,25 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
+function PaperComponent(props) {
+  return (
+    <Draggable
+      handle="#draggable-dialog-title"
+      cancel={'[class*="MuiDialogContent-root"]'}
+    >
+      <Paper {...props} />
+    </Draggable>
+  );
+}
+
 const UserTable = () => {
   const router = useRouter()
   const [data, setData] = useState([])
+  const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const { classId } = router.query
+  const [keyword, setKeyword] = useState('')
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -46,20 +66,91 @@ const UserTable = () => {
 
   const fetchData = () => {
     if (!classId || classId == 0) return
-    new UserApi().searches({ organizationId: classId }).then(response => {
-      setData(response.data.value)
-    })
+    new UserApi()
+      .searches({
+        Page: page + 1,
+        Limit: rowsPerPage,
+        Keyword: keyword,
+        organizationId: classId
+      })
+      .then(response => {
+        if (response.data.isSuccess) {
+          setData(response.data.value)
+          setTotalItem(response.data.totalItems)
+        }
+      })
   }
 
   useEffect(() => {
     fetchData()
-  }, [classId])
+  }, [classId, page, rowsPerPage])
+
+  /*
+  * handle checkbox
+  */
+  const [selected, setSelected] = useState([])
+  const isSelected = name => selected.indexOf(name) !== -1
+
+  const handleSelectAllClick = event => {
+    if (event.target.checked) {
+      const newSelecteds = data.map(n => n.id)
+      setSelected(newSelecteds)
+
+      return
+    }
+    setSelected([])
+  }
+
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name)
+    let newSelected = []
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name)
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1))
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1))
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1))
+    }
+    setSelected(newSelected)
+  }
+  /*
+  * end handle checkbox
+  */
+
+  /*
+  * handle remove user-class
+  */
+  const [openDelete, setOpenDelete] = useState(false);
+  const handleClickOpenDelete = () => setOpenDelete(true);
+  const handleCloseDelete = () => setOpenDelete(false);
+  const handleDelete = () => {
+    if (selected.length > 0) {
+      new UserApi().removeUserInClass(selected)
+        .then((response) => {
+          setOpenDelete(false)
+          if (response.data.isSuccess) {
+            toast.success('Xóa dữ liệu thành công.')
+            fetchData()
+            setSelected([])
+          }
+        })
+        .catch((e) => {
+          setOpenDelete(false)
+          toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
+        })
+    }
+  }
+  /*
+  * handle remove user-class
+  */
 
   return (
     <>
       <Toolbar style={{ padding: 0 }}>
         <Typography sx={{ flex: '1 1 50%' }} variant='h5' id='tableTitle' component='div'>
-          {data.length} Học viên
+          {totalItem} Học viên
         </Typography>
         &nbsp; &nbsp;
         <Tooltip title='Import'>
@@ -74,10 +165,12 @@ const UserTable = () => {
           </IconButton>
         </Tooltip>
         &nbsp; &nbsp;
-        <Tooltip title='Delete'>
-          <IconButton sx={{ color: 'text.secondary' }}>
-            <Icon icon='mdi:delete-outline' />
-          </IconButton>
+        <Tooltip title='Xóa học viên khỏi lớp'>
+          <span>
+            <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete} disabled={selected.length > 0 ? false : true}>
+              <Icon icon='mdi:delete-outline' />
+            </IconButton>
+          </span>
         </Tooltip>
         &nbsp; &nbsp;
         <Button
@@ -106,7 +199,7 @@ const UserTable = () => {
             rowsPerPageOptions={[10, 25, 100]}
             labelRowsPerPage='Hiển thị'
             component='div'
-            count={data.length}
+            count={totalItem}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -120,10 +213,10 @@ const UserTable = () => {
             <TableRow>
               <TableCell padding='checkbox'>
                 <Checkbox
-                  // onChange={onSelectAllClick}
-                  // checked={rowCount > 0 && numSelected === rowCount}
+                  onChange={handleSelectAllClick}
+                  checked={data.length > 0 && selected.length === data.length}
+                  indeterminate={selected.length > 0 && selected.length < data.length}
                   inputProps={{ 'aria-label': 'select all desserts' }}
-                  // indeterminate={numSelected > 0 && numSelected < rowCount}
                 />
               </TableCell>
               <TableCell style={{ width: 30 }}>Sửa</TableCell>
@@ -135,44 +228,73 @@ const UserTable = () => {
           </TableHead>
           <TableBody>
             {data &&
-              data.map(row => (
-                <TableRow
-                  key={row.name}
-                  sx={{
-                    '&:last-of-type td, &:last-of-type th': {
-                      border: 0
-                    }
-                  }}
-                >
-                  <TableCell padding='checkbox'>
-                    <Checkbox />
-                  </TableCell>
-                  <TableCell component='th' scope='row'>
-                    <IconButton aria-label='filter' component={Link} href={`/apps/user/${row.id}`}>
-                      <EditIcon />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell component='th' scope='row'>
-                    {row.userName}
-                  </TableCell>
-                  <TableCell>{row.fullName}</TableCell>
-                  <TableCell>{row.genderName}</TableCell>
-                  <TableCell>{row.organizationName}</TableCell>
-                </TableRow>
-              ))}
+              data.map((row, index) => {
+                const isItemSelected = isSelected(row.id)
+                const labelId = `enhanced-table-checkbox-${index}`
+                return (
+                  <TableRow
+                    hover
+                    tabIndex={-1}
+                    role='checkbox'
+                    key={row.id}
+                    selected={isItemSelected}
+                    aria-checked={isItemSelected}
+                    sx={{
+                      '&:last-of-type td, &:last-of-type th': {
+                        border: 0
+                      }
+                    }}
+                  >
+                    <TableCell padding='checkbox'>
+                      <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleClick(event, row.id)} />
+                    </TableCell>
+                    <TableCell component='th' scope='row'>
+                      <IconButton aria-label='filter' component={Link} href={`/apps/user/${row.id}`}>
+                        <EditIcon />
+                      </IconButton>
+                    </TableCell>
+                    <TableCell component='th' scope='row'>
+                      {row.userName}
+                    </TableCell>
+                    <TableCell>{row.fullName}</TableCell>
+                    <TableCell>{row.genderName}</TableCell>
+                    <TableCell>{row.organizationName}</TableCell>
+                  </TableRow>
+                )
+              })}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
-        count={data.length}
+        count={totalItem}
         labelRowsPerPage='Hiển thị'
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+
+      <Dialog
+        open={openDelete}
+        onClose={handleCloseDelete}
+        PaperComponent={PaperComponent}
+        aria-labelledby="draggable-dialog-title"
+      >
+        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          Xác nhận
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Dữ liệu xóa sẽ không thể khôi phục lại. Bạn có muốn xóa Học viên đã chọn khỏi lớp không?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
+          <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }

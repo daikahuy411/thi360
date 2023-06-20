@@ -124,18 +124,18 @@ const ClassTable = () => {
   const handleDelete = () => {
     if (selected.length > 0) {
       new OrganizationApi().deleteMultipleOrganization(selected)
-      .then((response) => {
-        setOpenDelete(false)
-        if(response.data.isSuccess){
-          toast.success('Xóa dữ liệu thành công.')
-          fetchData()
-          setSelected([])
-        }
-      })
-      .catch((e) => {
-        setOpenDelete(false)
-        toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
-      })      
+        .then((response) => {
+          setOpenDelete(false)
+          if (response.data.isSuccess) {
+            toast.success('Xóa dữ liệu thành công.')
+            fetchData()
+            setSelected([])
+          }
+        })
+        .catch((e) => {
+          setOpenDelete(false)
+          toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
+        })
     }
   }
   /*
@@ -161,13 +161,13 @@ const ClassTable = () => {
           </IconButton>
         </Tooltip>
         &nbsp; &nbsp;
-        {selected.length > 0 ? (
-          <Tooltip title='Xóa lớp học'>
-            <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete}>
+        <Tooltip title='Xóa lớp học'>
+          <span>
+            <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete} disabled={selected.length > 0 ? false : true}>
               <Icon icon='mdi:delete-outline' />
             </IconButton>
-          </Tooltip>
-        ) : null}
+          </span>
+        </Tooltip>
         &nbsp; &nbsp;
         <Button
           component={Link}
@@ -239,8 +239,7 @@ const ClassTable = () => {
                     role='checkbox'
                     key={row.id}
                     selected={isItemSelected}
-                    aria-checked={isItemSelected}
-                    onClick={event => handleClick(event, row.id)}
+                    aria-checked={isItemSelected}                    
                     sx={{
                       '&:last-of-type td, &:last-of-type th': {
                         border: 0
@@ -248,7 +247,7 @@ const ClassTable = () => {
                     }}
                   >
                     <TableCell padding='checkbox'>
-                      <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
+                      <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleClick(event, row.id)}/>
                     </TableCell>
                     <TableCell component='th' scope='row'>
                       <IconButton aria-label='filter' component={Link} href={`/apps/class/${row.id}`}>
