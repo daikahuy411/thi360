@@ -6,15 +6,15 @@ const navigation = () => {
       path: '/home'
     },
     {
-      icon: 'mdi:home-outline',
+      icon: 'mdi:school-outline',
       title: 'Ôn luyện',
       path: '/program'
     },
-    {
-      title: 'Thời khóa biểu',
-      icon: 'mdi:calendar-blank-outline',
-      path: '/apps/calendar'
-    },
+    // {
+    //   title: 'Thời khóa biểu',
+    //   icon: 'mdi:calendar-blank-outline',
+    //   path: '/apps/calendar'
+    // },
     {
       sectionTitle: 'LMS'
     },

@@ -35,7 +35,6 @@ import {
 } from 'store/slices/examSlice'
 import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
-
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'

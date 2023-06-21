@@ -34,7 +34,6 @@ const Program = () => {
       container
       spacing={2}
     >
-
       {program && (
         <>
           <Grid item xs={12}>

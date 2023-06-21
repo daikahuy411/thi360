@@ -120,7 +120,7 @@ const SubjectPage = () => {
       setProgram(response.data)
     })
 
-    new V1Api().getSubjectCatalog(subjectId[0]).then(response => {
+    new V1Api().getSubjectCatalog(programId, subjectId[0]).then(response => {
       setSubject(response.data)
     })
 
@@ -161,7 +161,6 @@ const SubjectPage = () => {
               color="inherit"
               href={`/program/${programId}`}
             >
-              <WhatshotIcon sx={{ mr: 0.5 }} fontSize="inherit" />
               {program.name}
             </Link>
           )}
@@ -204,15 +203,15 @@ const SubjectPage = () => {
       </Grid>
       <Grid item md={8} alignContent={"center"}>
         <Grid container padding={2} spacing={2}>
-          {exams && exams.map((item) => (
+          {exams && exams.map((item, index) => (
             <Grid item md={8} key={item.id}>
               <Card  >
                 <CardContent>
                   <Typography
                     component={NavLink}
                     href={`/exam/${item.id}`}
-                    sx={{ fontSize: 16 }} color="text.secondary" gutterBottom>
-                    {item.name}
+                    sx={{ fontSize: 16, textDecoration: 'none' }} color="text.secondary" gutterBottom>
+                    {index + 1}.&nbsp;{item.name}
                   </Typography>
                   {item.curriculum && (
                     <Typography>

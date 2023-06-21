@@ -92,7 +92,7 @@ const ExamPage = () => {
                   {exam.curriculum.name}
                 </Link>
               )}
-            {exam.curriculum.children.map((item) => (
+            {exam.curriculum && exam.curriculum.children && exam.curriculum.children.map((item) => (
               <Link
                 underline="hover"
                 key={item.id}
@@ -121,7 +121,7 @@ const ExamPage = () => {
                   <TableRow>
                     <TableCell style={{ width: 50 }}>STT</TableCell>
                     <TableCell >Tên</TableCell>
-                    <TableCell style={{ width: 390 }}>Thao tác</TableCell>
+                    <TableCell style={{ width: 280 }}>Thao tác</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -138,10 +138,6 @@ const ExamPage = () => {
                         <Button variant="contained" size='small'>Thi thử</Button>
                         &nbsp;
                         <Button variant="outlined" size='small'>Luyện tập</Button>
-                        &nbsp;
-                        <Button variant="outlined" size='small'>
-                          <HistoryIcon />&nbsp;
-                        </Button>
                         &nbsp;
                         <IconButton
                           aria-label="more"

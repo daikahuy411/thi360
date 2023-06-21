@@ -5,6 +5,7 @@ import V1Api from 'api/v1-api'
 import NavLink from 'next/link'
 
 import Card from '@mui/material/Card'
+import Box from '@mui/material/Box'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
@@ -19,9 +20,10 @@ const ProgamPage = () => {
   }, [])
 
   return <>
-    <Grid container spacing={2}>
+    <br />
+    <Grid container spacing={8}>
       {programs.map((item) => (
-        <Grid item md={2} key={item.id}>
+        <Grid item md={3} key={item.id}>
           <Card variant="outlined" style={{ minHeight: 88 }}>
             <CardContent>
               <Typography
