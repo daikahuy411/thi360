@@ -178,13 +178,13 @@ const ExamTable = () => {
             </IconButton>
           </Tooltip>
           &nbsp; &nbsp;
-          {selected.length > 0 ? (
-            <Tooltip title='Delete'>
-              <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete}>
+          <Tooltip title='Xóa kỳ thi'>
+            <span>
+              <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete} disabled={selected.length > 0 ? false : true}>
                 <Icon icon='mdi:delete-outline' />
               </IconButton>
-            </Tooltip>
-          ) : null}
+            </span>
+          </Tooltip>
           &nbsp; &nbsp;
           <Button
             component={Link}
@@ -255,7 +255,6 @@ const ExamTable = () => {
                       key={row.id}
                       selected={isItemSelected}
                       aria-checked={isItemSelected}
-                      onClick={event => handleClick(event, row.id)}
                       sx={{
                         '&:last-of-type td, &:last-of-type th': {
                           border: 0
@@ -263,7 +262,7 @@ const ExamTable = () => {
                       }}
                     >
                       <TableCell padding='checkbox'>
-                        <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
+                        <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleClick(event, row.id)} />
                       </TableCell>
                       <TableCell component='th' scope='row'>
                         <IconButton aria-label='filter' component={Link} href={`/apps/exam/${row.id}`}>
@@ -272,7 +271,7 @@ const ExamTable = () => {
                       </TableCell>
                       <TableCell component='th' scope='row'>
                         [{row.id}]-{row.name}
-                        <br/> <i>{row.registrationTypeName}</i>
+                        <br /> <i>{row.registrationTypeName}</i>
                       </TableCell>
                       <TableCell>
                         <CustomChip

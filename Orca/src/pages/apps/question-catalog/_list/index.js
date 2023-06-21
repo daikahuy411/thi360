@@ -117,7 +117,7 @@ const QuestionCatalogTable = () => {
   */
 
   /*
-  * handle remove class
+  * handle remove question-catalog
   */
   const [openDelete, setOpenDelete] = useState(false);
   const handleClickOpenDelete = () => setOpenDelete(true);
@@ -140,7 +140,7 @@ const QuestionCatalogTable = () => {
     }
   }
   /*
-  * handle remove class
+  * handle remove question-catalog
   */
 
   return (
@@ -163,13 +163,13 @@ const QuestionCatalogTable = () => {
           </IconButton>
         </Tooltip>
         &nbsp; &nbsp;
-        {selected.length > 0 ? (
-          <Tooltip title='Delete'>
-            <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete}>
+        <Tooltip title='Delete'>
+          <span>
+            <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete} disabled={selected.length > 0 ? false : true}>
               <Icon icon='mdi:delete-outline' />
             </IconButton>
-          </Tooltip>
-        ) : null}
+          </span>
+        </Tooltip>
         &nbsp; &nbsp;
         <Button
           component={Link}
@@ -237,7 +237,6 @@ const QuestionCatalogTable = () => {
                     key={item.id}
                     selected={isItemSelected}
                     aria-checked={isItemSelected}
-                    onClick={event => handleClick(event, item.id)}
                     sx={{
                       '&:last-of-type td, &:last-of-type th': {
                         border: 0
@@ -245,7 +244,7 @@ const QuestionCatalogTable = () => {
                     }}
                   >
                     <TableCell padding='checkbox'>
-                      <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
+                      <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleClick(event, item.id)}/>
                     </TableCell>
                     <TableCell component='th' scope='row'>
                       <IconButton aria-label='filter' component={Link} href={`/apps/question-catalog/${item.id}`}>

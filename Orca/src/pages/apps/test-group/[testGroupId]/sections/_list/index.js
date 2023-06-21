@@ -127,7 +127,7 @@ const SectionsTable = ({ testGroup }) => {
   */
 
   /*
-  * handle remove class
+  * handle remove test-group-section
   */
   const [openDelete, setOpenDelete] = useState(false);
   const handleClickOpenDelete = () => setOpenDelete(true);
@@ -150,7 +150,7 @@ const SectionsTable = ({ testGroup }) => {
     }
   }
   /*
-  * handle remove class
+  * handle remove test-group-section
   */
 
   return (
@@ -178,13 +178,13 @@ const SectionsTable = ({ testGroup }) => {
                 </IconButton>
               </Tooltip>
               &nbsp; &nbsp;
-              {selected.length > 0 ? (
-                <Tooltip title='Delete'>
-                  <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete}>
+              <Tooltip title='Xóa phần thi'>
+                <span>
+                  <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete} disabled={selected.length > 0 ? false : true}>
                     <Icon icon='mdi:delete-outline' />
                   </IconButton>
-                </Tooltip>
-              ) : null}
+                </span>
+              </Tooltip>
               &nbsp; &nbsp;
               <Button
                 component={Link}
@@ -250,8 +250,7 @@ const SectionsTable = ({ testGroup }) => {
                           role='checkbox'
                           key={row.id}
                           selected={isItemSelected}
-                          aria-checked={isItemSelected}
-                          onClick={event => handleClick(event, row.id)}
+                          aria-checked={isItemSelected}                          
                           sx={{
                             '&:last-of-type td, &:last-of-type th': {
                               border: 0
@@ -259,7 +258,7 @@ const SectionsTable = ({ testGroup }) => {
                           }}
                         >
                           <TableCell padding='checkbox'>
-                            <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
+                            <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleClick(event, row.id)}/>
                           </TableCell>
                           <TableCell component='th' scope='row'>
                             <IconButton

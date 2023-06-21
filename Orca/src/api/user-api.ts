@@ -35,4 +35,9 @@ export default class UserApi extends ApiBase {
     const response = axios.post(`${this.baseApiUrl}/SearchesUserNotInExam`, query);
     return response;
   };
+
+  removeUserInClass = (request: any) => {
+    const response = axios.delete(`${this.baseApiUrl}/RemoveUserInClass`, { data: request })
+    return response;
+  };
 }
