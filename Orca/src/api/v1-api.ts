@@ -19,8 +19,8 @@ class V1Api extends ApiBase {
     return response;
   };
 
-  getSubjectCatalog = (id: number) => {
-    const url = `${this.baseApiUrl}/subjectcatalogs/${id}`;
+  getSubjectCatalog = (programId: number, id: number) => {
+    const url = `${this.baseApiUrl}/subjectcatalogs/${programId}/${id}`;
     const response = axios.get(url);
     return response;
   };
