@@ -128,7 +128,7 @@ const ExamTable = () => {
   */
 
   /*
-  * handle remove class
+  * handle remove exam
   */
   const [openDelete, setOpenDelete] = useState(false);
   const handleClickOpenDelete = () => setOpenDelete(true);
@@ -151,7 +151,7 @@ const ExamTable = () => {
     }
   }
   /*
-  * handle remove class
+  * handle remove exam
   */
 
   return (

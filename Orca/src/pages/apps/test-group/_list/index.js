@@ -191,6 +191,7 @@ const TestGroupTable = () => {
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
+            labelRowsPerPage={"Số dòng/trang:"}
             rowsPerPageOptions={[10, 25, 100]}
             component='div'
             count={totalItem}
@@ -230,7 +231,7 @@ const TestGroupTable = () => {
                     role='checkbox'
                     key={row.id}
                     selected={isItemSelected}
-                    aria-checked={isItemSelected}                    
+                    aria-checked={isItemSelected}
                     sx={{
                       '&:last-of-type td, &:last-of-type th': {
                         border: 0
@@ -238,7 +239,7 @@ const TestGroupTable = () => {
                     }}
                   >
                     <TableCell padding='checkbox'>
-                      <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleClick(event, row.id)}/>
+                      <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleClick(event, row.id)} />
                     </TableCell>
                     <TableCell component='th' scope='row'>
                       <IconButton aria-label='filter' component={Link} href={`/apps/test-group/${row.id}`}>
@@ -257,6 +258,7 @@ const TestGroupTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
+        labelRowsPerPage={"Số dòng/trang:"}
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
         count={totalItem}
