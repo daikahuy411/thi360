@@ -37,7 +37,7 @@ const useStyles = makeStyles()(theme => {
   }
 })
 
-export default function TestGroupSelector({ onClose, onOk }) {
+export default function TestGroupSelector({ onClose, onNodeSelected = null }) {
   const { classes, cx } = useStyles()
   const [state, setState] = React.useState({
     top: false,
@@ -46,9 +46,10 @@ export default function TestGroupSelector({ onClose, onOk }) {
     right: false
   })
   const [data, setData] = useState([])
+  const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [selectedData, setSelectedData] = useState([])
+  // const [selectedData, setSelectedData] = useState()
   const [selectedValue, setSelectedValue] = React.useState(null)
 
   const handleChange = event => {
@@ -64,58 +65,73 @@ export default function TestGroupSelector({ onClose, onOk }) {
     setPage(0)
   }
 
-  const toggleDrawer = (anchor, open) => event => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return
-    }
+  // const toggleDrawer = (anchor, open) => event => {
+  //   if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+  //     return
+  //   }
 
-    setState({ ...state, [anchor]: open })
-  }
+  //   setState({ ...state, [anchor]: open })
+  // }
 
-  const handleSelectAll = event => {
-    const selected = event.target.checked ? data.map(t => t.id) : []
-    setSelectedData(selected)
-    if (event.target.checked) {
-      var newSelected = selectedUsers
-      newSelected.push(...data)
-      setSelectedUsers(newSelected)
-    } else {
-      setSelectedUsers([])
-    }
-  }
+  // const handleSelectAll = event => {
+  //   const selected = event.target.checked ? data.map(t => t.id) : []
+  //   setSelectedData(selected)
+  //   if (event.target.checked) {
+  //     var newSelected = selectedUsers
+  //     newSelected.push(...data)
+  //     setSelectedUsers(newSelected)
+  //   } else {
+  //     setSelectedUsers([])
+  //   }
+  // }
 
-  const handleSelectOne = (event, user) => {
-    const id = user.id
-    const selectedIndex = selectedData.indexOf(id)
-    let newSelectedData = []
-    if (selectedIndex === -1) {
-      newSelectedData = newSelectedData.concat(selectedData, id)
-    } else if (selectedIndex === 0) {
-      newSelectedData = newSelectedData.concat(selectedData.slice(1))
-    } else if (selectedIndex === selectedData.length - 1) {
-      newSelectedData = newSelectedData.concat(selectedData.slice(0, -1))
-    } else if (selectedIndex > 0) {
-      newSelectedData = newSelectedData.concat(
-        selectedData.slice(0, selectedIndex),
-        selectedData.slice(selectedIndex + 1)
-      )
-    }
-    setSelectedData(newSelectedData)
+  // const handleSelectOne = (event, user) => {
+  //   const id = user.id
+  //   const selectedIndex = selectedData.indexOf(id)
+  //   let newSelectedData = []
+  //   if (selectedIndex === -1) {
+  //     newSelectedData = newSelectedData.concat(selectedData, id)
+  //   } else if (selectedIndex === 0) {
+  //     newSelectedData = newSelectedData.concat(selectedData.slice(1))
+  //   } else if (selectedIndex === selectedData.length - 1) {
+  //     newSelectedData = newSelectedData.concat(selectedData.slice(0, -1))
+  //   } else if (selectedIndex > 0) {
+  //     newSelectedData = newSelectedData.concat(
+  //       selectedData.slice(0, selectedIndex),
+  //       selectedData.slice(selectedIndex + 1)
+  //     )
+  //   }
+  //   setSelectedData(newSelectedData)
 
-    var newSelectedUsers = selectedUsers
-    if (selectedIndex === -1) {
-      newSelectedUsers.push(user)
-    } else {
-      newSelectedUsers = newSelectedUsers.filter(x => x.id != id)
-    }
-    setSelectedUsers(newSelectedUsers)
-  }
+  //   var newSelectedUsers = selectedUsers
+  //   if (selectedIndex === -1) {
+  //     newSelectedUsers.push(user)
+  //   } else {
+  //     newSelectedUsers = newSelectedUsers.filter(x => x.id != id)
+  //   }
+  //   setSelectedUsers(newSelectedUsers)
+  // }
 
   useEffect(() => {
-    new TestGroupApi().searches().then(response => {
-      setData(response.data.value)
-    })
-  }, [])
+    fetchData()
+  }, [page, rowsPerPage])
+
+  const fetchData = () => {
+    new TestGroupApi().searches({ page: page + 1, limit: rowsPerPage })
+      .then(response => {
+        if (response.data.isSuccess) {
+          setData(response.data.value)
+          setTotalItem(response.data.totalItems)
+        }
+      })
+  }
+
+  const onOk = () => {
+    if (selectedValue) {
+      onNodeSelected(selectedValue)
+      onClose()
+    }
+  }
 
   return (
     <Drawer onClose={onClose} anchor={'right'} open={true}>
@@ -161,7 +177,7 @@ export default function TestGroupSelector({ onClose, onOk }) {
           </Grid>
           <Grid item md={4} alignContent={'right'} alignItems={'right'}>
             <Button
-              // disabled={selectedData.length == 0}
+              disabled={selectedValue ? false : true}
               color='primary'
               style={{ float: 'right' }}
               type='submit'
@@ -169,6 +185,7 @@ export default function TestGroupSelector({ onClose, onOk }) {
               onClick={() => {
                 if (onOk) {
                   onOk()
+                  onClose()
                 }
               }}
             >
@@ -207,16 +224,17 @@ export default function TestGroupSelector({ onClose, onOk }) {
                             inputProps={{ 'aria-label': 'A' }}
                           />
                         </TableCell>
-                        <TableCell>{item.name}</TableCell>
+                        <TableCell>{item.name} - {item.id}</TableCell>
                       </TableRow>
                     ))}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
+              labelRowsPerPage={"Số dòng/trang:"}
               rowsPerPageOptions={[10, 25, 100]}
               component='div'
-              count={data.length}
+              count={totalItem}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
