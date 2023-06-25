@@ -46,12 +46,12 @@ const Program = () => {
             <br />
           </Grid>
           {program.subjectCatalogs.map((item) => (
-            <Grid item md={2} key={item.id}>
+            <Grid item md={4} key={item.id}>
               <Card variant="outlined" style={{ minHeight: 88 }} >
                 <CardContent>
                   <Typography
                     component={NavLink} href={`/program/${programId}/subject/${item.oldId}`}
-                    sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    sx={{ fontSize: 14, color: '#1a2c47', fontWeight: 'bold', textDecoration: 'none' }} color="text.secondary" gutterBottom>
                     {item.name}
                   </Typography>
                 </CardContent>

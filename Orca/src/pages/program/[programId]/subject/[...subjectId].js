@@ -14,7 +14,6 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import ArticleIcon from '@mui/icons-material/Article'
 import FolderIcon from '@mui/icons-material/Folder'
 import HomeIcon from '@mui/icons-material/Home'
-import WhatshotIcon from '@mui/icons-material/Whatshot'
 import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem'
 import TreeView from '@mui/lab/TreeView'
 import Box from '@mui/material/Box'
@@ -23,6 +22,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
+import Pagination from '@mui/material/Pagination'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
@@ -107,6 +107,7 @@ const SubjectPage = () => {
   const [selected, setSelected] = React.useState([]);
   const [exams, setExams] = useState([]);
   const [curriculumId, setCurriculumId] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
     if (!programId || programId == 0) {
@@ -129,6 +130,7 @@ const SubjectPage = () => {
       // subjectId: subjectId[0], programId: programId,
       new V1Api().searchExams({ subjectId: subjectId[0], curriculumId: id, programId: programId }).then(response => {
         setExams(response.data.value)
+        setTotalItems(response.data.totalItems)
       })
     }
   }, [programId, subjectId])
@@ -137,6 +139,7 @@ const SubjectPage = () => {
     setSelected(nodeIds);
     new V1Api().searchExams({ curriculumId: nodeIds }).then(response => {
       setExams(response.data.value)
+      setTotalItems(response.data.totalItems)
     })
   };
 
@@ -203,6 +206,9 @@ const SubjectPage = () => {
       </Grid>
       <Grid item md={8} alignContent={"center"}>
         <Grid container padding={2} spacing={2}>
+          <Grid item md={8} alignContent={"center"}>
+            <span style={{ color: 'gray' }}>Tổng số {totalItems} kỳ thi</span>
+          </Grid>
           {exams && exams.map((item, index) => (
             <Grid item md={8} key={item.id}>
               <Card  >
@@ -210,7 +216,7 @@ const SubjectPage = () => {
                   <Typography
                     component={NavLink}
                     href={`/exam/${item.id}`}
-                    sx={{ fontSize: 16, textDecoration: 'none' }} color="text.secondary" gutterBottom>
+                    sx={{ fontSize: 16, color: '#1a2c47', textDecoration: 'none' }} color="text.secondary" gutterBottom>
                     {index + 1}.&nbsp;{item.name}
                   </Typography>
                   {item.curriculum && (
@@ -222,6 +228,14 @@ const SubjectPage = () => {
               </Card>
             </Grid>
           ))}
+          <Grid item md={8} alignContent={"center"}>
+            <br />
+            <Pagination count={totalItems}
+              rowsPerPageOptions={[10, 25, 100]}
+              component='div'
+              rowsPerPage={10}
+              shape='rounded' color='primary' />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
