@@ -1,8 +1,9 @@
 export enum QuestionType {
-  SA = 1,
-  MC = 2,
-  SC = 5,
-  GQ = 3,
-  TF = 4,
-  FB = 6,
+  SA = 4,
+  MC = 8,
+  SC = 12,
+  GQ = 9,
+  TF = 13,
+  FB = 19,
+  ST = 7,
 }
