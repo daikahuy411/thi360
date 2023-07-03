@@ -27,6 +27,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
+import TestingApi from 'api/testing-api'
 
 const ExamPage = () => {
   const router = useRouter()
@@ -34,11 +35,23 @@ const ExamPage = () => {
   const [exam, setExam] = useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const createExamAttempt = (examItemId, testId) => {
+    new TestingApi().CreateExamAttempt(
+      parseInt(examId),
+      examItemId,
+      testId
+    ).then(response => {
+      router.push(`/testing/${response.data.value.token}`)
+    })
   };
 
   useEffect(() => {
@@ -135,7 +148,11 @@ const ExamPage = () => {
                         {row.name}
                       </TableCell>
                       <TableCell>
-                        <Button variant="contained" size='small'>Thi thử</Button>
+                        <Button variant="contained" size='small'
+                          onClick={() => {
+                            createExamAttempt(exam.examItems[0].id, row.id);
+                          }}
+                        >Thi thử</Button>
                         &nbsp;
                         <Button variant="outlined" size='small'>Luyện tập</Button>
                         &nbsp;
