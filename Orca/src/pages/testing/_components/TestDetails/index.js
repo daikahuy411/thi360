@@ -809,20 +809,20 @@ class TestDetails extends React.Component {
                       this.state.userExamAttemptTracking.questionSubmitteds
                         .length >
                       0 && (
-                      <div className="red mt2 flex tc">
-                        {" "}
-                        Bạn đang còn{" "}
-                        {this.state.examAttempt.testGroup.questionMaps.length -
-                          this.state.userExamAttemptTracking.questionSubmitteds
-                            .length}{" "}
-                        chưa trả lời &amp;{" "}
-                        {
-                          this.state.userExamAttemptTracking.questionBookmarkeds
-                            .length
-                        }{" "}
-                        đánh dấu để xem câu hỏi.
-                      </div>
-                    )}
+                        <div className="red mt2 flex tc">
+                          {" "}
+                          Bạn đang còn{" "}
+                          {this.state.examAttempt.testGroup.questionMaps.length -
+                            this.state.userExamAttemptTracking.questionSubmitteds
+                              .length}{" "}
+                          chưa trả lời &amp;{" "}
+                          {
+                            this.state.userExamAttemptTracking.questionBookmarkeds
+                              .length
+                          }{" "}
+                          đánh dấu để xem câu hỏi.
+                        </div>
+                      )}
                     <div className="flex flex mt3">
                       <div
                         onClick={() => {
@@ -889,298 +889,298 @@ class TestDetails extends React.Component {
                               {/* Câu hỏi chính phụ */}
                               {this.state.currentQuestion.questionTypeId ==
                                 QuestionType.GQ && (
-                                <>
-                                  <div className="flex flex-column flex-auto  flex-row-l">
-                                    <span className="overflow-y-auto-l overflow-unset mb4 mb0-l mr0 mr3-l pr0 pr3-l w-50-l w-100 bn br-l b--moon-gray gray dn du-l">
-                                      <QuestionContent
-                                        question={this.state.currentQuestion}
-                                      />
-                                    </span>
-                                    <div className="relative dn-l mb4">
-                                      <div
-                                        className="overflow-hidden "
-                                        style={{
-                                          maxHeight: "6.4rem",
-                                          lineHeight: "1.6rem",
-                                        }}
-                                      >
+                                  <>
+                                    <div className="flex flex-column flex-auto  flex-row-l">
+                                      <span className="overflow-y-auto-l overflow-unset mb4 mb0-l mr0 mr3-l pr0 pr3-l w-50-l w-100 bn br-l b--moon-gray gray dn du-l">
                                         <QuestionContent
                                           question={this.state.currentQuestion}
                                         />
+                                      </span>
+                                      <div className="relative dn-l mb4">
+                                        <div
+                                          className="overflow-hidden "
+                                          style={{
+                                            maxHeight: "6.4rem",
+                                            lineHeight: "1.6rem",
+                                          }}
+                                        >
+                                          <QuestionContent
+                                            question={this.state.currentQuestion}
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="flex flex-column overflow-y-auto-l overflow-unset w-50-l w-100">
+                                        {this.state.currentQuestion.children.map(
+                                          (question) => (
+                                            <div key={`q-${question.id}`}>
+                                              {this.state.currentQuestionId ==
+                                                question.id && (
+                                                  <>
+                                                    <b>Câu: {question.order}</b>
+                                                    <span className="gray mb2 flex-shrink-0">
+                                                      <QuestionContent
+                                                        question={question}
+                                                      />
+                                                    </span>
+                                                    <div className="flex flex-column">
+                                                      {question.answers.map(
+                                                        (item) => (
+                                                          <div
+                                                            key={`a-{item.id}`}
+                                                            className="flex items-center mb2 pa3 br2 flex-shrink-0 ques-option pointer"
+                                                          >
+                                                            <div className="flex pointer mr3 items-center ">
+                                                              <span className="w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--silver pointer mr3"></span>
+                                                            </div>
+                                                            <div className="pointer">
+                                                              {item.content}
+                                                            </div>
+                                                          </div>
+                                                        )
+                                                      )}
+                                                    </div>
+                                                  </>
+                                                )}
+                                            </div>
+                                          )
+                                        )}
                                       </div>
                                     </div>
-                                    <div className="flex flex-column overflow-y-auto-l overflow-unset w-50-l w-100">
-                                      {this.state.currentQuestion.children.map(
-                                        (question) => (
-                                          <div key={`q-${question.id}`}>
-                                            {this.state.currentQuestionId ==
-                                              question.id && (
-                                              <>
-                                                <b>Câu: {question.order}</b>
-                                                <span className="gray mb2 flex-shrink-0">
-                                                  <QuestionContent
-                                                    question={question}
-                                                  />
-                                                </span>
-                                                <div className="flex flex-column">
-                                                  {question.answers.map(
-                                                    (item) => (
-                                                      <div
-                                                        key={`a-{item.id}`}
-                                                        className="flex items-center mb2 pa3 br2 flex-shrink-0 ques-option pointer"
-                                                      >
-                                                        <div className="flex pointer mr3 items-center ">
-                                                          <span className="w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--silver pointer mr3"></span>
-                                                        </div>
-                                                        <div className="pointer">
-                                                          {item.content}
-                                                        </div>
-                                                      </div>
-                                                    )
-                                                  )}
-                                                </div>
-                                              </>
-                                            )}
-                                          </div>
-                                        )
-                                      )}
-                                    </div>
-                                  </div>
-                                </>
-                              )}
+                                  </>
+                                )}
                               {/* Câu hỏi thông thường */}
                               {this.state.currentQuestion.questionTypeId !==
                                 QuestionType.GQ && (
-                                <>
-                                  <div className="flex flex-column flex-auto  overflow-y-auto-l overflow-unset">
-                                    <span className="mb4 w-100 gray dn du-l">
-                                      <QuestionContent
-                                        question={this.state.currentQuestion}
-                                      />
-                                    </span>
-                                    <div className="relative dn-l mb4">
-                                      <div
-                                        className="overflow-hidden "
-                                        style={{
-                                          maxHeight: "6.4rem",
-                                          lineHeight: "1.6rem",
-                                        }}
-                                      >
+                                  <>
+                                    <div className="flex flex-column flex-auto  overflow-y-auto-l overflow-unset">
+                                      <span className="mb4 w-100 gray dn du-l">
                                         <QuestionContent
                                           question={this.state.currentQuestion}
                                         />
+                                      </span>
+                                      <div className="relative dn-l mb4">
+                                        <div
+                                          className="overflow-hidden "
+                                          style={{
+                                            maxHeight: "6.4rem",
+                                            lineHeight: "1.6rem",
+                                          }}
+                                        >
+                                          <QuestionContent
+                                            question={this.state.currentQuestion}
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="flex flex-column w-100">
+                                        {this.state.userExamAttemptTracking.questionSubmitteds.indexOf(
+                                          this.state.currentQuestion.id
+                                        ) < 0 &&
+                                          this.state.mode !== 2 && (
+                                            <>
+                                              <div className="flex flex-column">
+                                                {this.state.currentQuestion.answers.map(
+                                                  (answer) => (
+                                                    <div
+                                                      onClick={() => {
+                                                        this.onQuestionAttempted(
+                                                          this.state
+                                                            .currentQuestion,
+                                                          answer.id
+                                                        );
+                                                      }}
+                                                      key={`answer-block1-${answer.id}`}
+                                                      className="flex items-center mb2 pa3 br2 flex-shrink-0 ques-option pointer"
+                                                    >
+                                                      <div className="flex pointer mr3 items-center ">
+                                                        {this.isSelectedAnswer(
+                                                          this.state
+                                                            .currentQuestion.id,
+                                                          answer.id
+                                                        ) && (
+                                                            <span
+                                                              className={
+                                                                this.state
+                                                                  .currentQuestion
+                                                                  .questionTypeId !=
+                                                                  QuestionType.MC
+                                                                  ? "w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--sky-blue pointer mr3"
+                                                                  : "w1-5 h1-5 pa1 border-box flex items-center justify-center ba b--sky-blue pointer mr3"
+                                                              }
+                                                            >
+                                                              <span
+                                                                className={
+                                                                  this.state
+                                                                    .currentQuestion
+                                                                    .questionTypeId !=
+                                                                    QuestionType.MC
+                                                                    ? "db w-100 h-100 border-box bg-sky-blue br-100"
+                                                                    : "db w-100 h-100 border-box bg-sky-blue"
+                                                                }
+                                                              ></span>
+                                                            </span>
+                                                          )}
+                                                        {!this.isSelectedAnswer(
+                                                          this.state
+                                                            .currentQuestion.id,
+                                                          answer.id
+                                                        ) && (
+                                                            <span
+                                                              className={
+                                                                this.state
+                                                                  .currentQuestion
+                                                                  .questionTypeId !=
+                                                                  QuestionType.MC
+                                                                  ? "w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--silver pointer mr3"
+                                                                  : "w1-5 h1-5 pa1 border-box flex items-center justify-center  ba b--silver pointer mr3"
+                                                              }
+                                                            ></span>
+                                                          )}
+                                                      </div>
+                                                      <div className="pointer">
+                                                        {ReactHtmlParser(
+                                                          answer.content
+                                                        )}
+                                                      </div>
+                                                    </div>
+                                                  )
+                                                )}
+                                              </div>
+                                              <QuestionExplain
+                                                explain={
+                                                  this.state.currentQuestion
+                                                    .explain
+                                                }
+                                              />
+                                            </>
+                                          )}
+                                        {(this.state.userExamAttemptTracking.questionSubmitteds.indexOf(
+                                          this.state.currentQuestion.id
+                                        ) >= 0 ||
+                                          this.state.mode == 2) && (
+                                            <>
+                                              <div className="flex flex-column">
+                                                {this.state.currentQuestion.answers.map(
+                                                  (answer) => (
+                                                    <>
+                                                      {this.state.userExamAttemptTracking.answerCorrects.indexOf(
+                                                        answer.id
+                                                      ) < 0 &&
+                                                        answer.isCorrect == false &&
+                                                        this.state.userExamAttemptTracking.answerIncorrects.indexOf(
+                                                          answer.id
+                                                        ) < 0 && (
+                                                          <div
+                                                            className="flex items-center mb2 pa3 br2 flex-shrink-0 "
+                                                            key={`answer-block2-${answer.id}`}
+                                                          >
+                                                            <div className="flex  mr3 items-center ">
+                                                              <span className="w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-white mr3"></span>
+                                                            </div>
+                                                            <div>
+                                                              <span>
+                                                                {ReactHtmlParser(
+                                                                  answer.content
+                                                                )}
+                                                              </span>
+                                                            </div>
+                                                          </div>
+                                                        )}
+                                                      {(this.state.userExamAttemptTracking.answerCorrects.indexOf(
+                                                        answer.id
+                                                      ) >= 0 ||
+                                                        answer.isCorrect) && (
+                                                          <div
+                                                            className="flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-green"
+                                                            key={`answer-block3-${answer.id}`}
+                                                          >
+                                                            <div className="flex  mr3 items-center ">
+                                                              <span className="w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-green b--green mr3">
+                                                                <svg
+                                                                  className="db bg-green ba b--green br-100 svg-s-white svg-fn"
+                                                                  viewBox="0 0 32 24"
+                                                                  version="1.1"
+                                                                  xmlns="http://www.w3.org/2000/svg"
+                                                                  width="12px"
+                                                                  height="12px"
+                                                                  style={{
+                                                                    strokeWidth:
+                                                                      "5px",
+                                                                  }}
+                                                                >
+                                                                  <polyline points="2.6 13.4 11.3 21.4 29.7 2.9"></polyline>
+                                                                </svg>
+                                                              </span>
+                                                            </div>
+                                                            <div>
+                                                              <span>
+                                                                {ReactHtmlParser(
+                                                                  answer.content
+                                                                )}
+                                                              </span>
+                                                            </div>
+                                                          </div>
+                                                        )}
+
+                                                      {this.state.userExamAttemptTracking.answerIncorrects.indexOf(
+                                                        answer.id
+                                                      ) >= 0 && (
+                                                          <div
+                                                            key={`answer-block4-${answer.id}`}
+                                                            className="flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-red"
+                                                          >
+                                                            <div className="flex  mr3 items-center ">
+                                                              <span className="w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-red b--red mr3">
+                                                                <svg
+                                                                  className="svg-s-white"
+                                                                  viewBox="0 0 24 24"
+                                                                  version="1.1"
+                                                                  xmlns="http://www.w3.org/2000/svg"
+                                                                  width="12px"
+                                                                  height="12px"
+                                                                  style={{
+                                                                    strokeWidth:
+                                                                      "4px",
+                                                                  }}
+                                                                >
+                                                                  <line
+                                                                    x1="2.5"
+                                                                    y1="2.9"
+                                                                    x2="21.5"
+                                                                    y2="21.9"
+                                                                  ></line>
+                                                                  <line
+                                                                    x1="21.5"
+                                                                    y1="2.9"
+                                                                    x2="2.5"
+                                                                    y2="21.9"
+                                                                  ></line>
+                                                                </svg>
+                                                              </span>
+                                                            </div>
+                                                            <div>
+                                                              <span>
+                                                                {ReactHtmlParser(
+                                                                  answer.content
+                                                                )}
+                                                              </span>
+                                                            </div>
+                                                          </div>
+                                                        )}
+                                                    </>
+                                                  )
+                                                )}
+                                              </div>
+                                              <QuestionExplain
+                                                explain={
+                                                  this.state.currentQuestion.explain
+                                                }
+                                              />
+                                            </>
+                                          )}
                                       </div>
                                     </div>
-                                    <div className="flex flex-column w-100">
-                                      {this.state.userExamAttemptTracking.questionSubmitteds.indexOf(
-                                        this.state.currentQuestion.id
-                                      ) < 0 &&
-                                        this.state.mode !== 2 && (
-                                          <>
-                                            <div className="flex flex-column">
-                                              {this.state.currentQuestion.answers.map(
-                                                (answer) => (
-                                                  <div
-                                                    onClick={() => {
-                                                      this.onQuestionAttempted(
-                                                        this.state
-                                                          .currentQuestion,
-                                                        answer.id
-                                                      );
-                                                    }}
-                                                    key={`answer-block1-${answer.id}`}
-                                                    className="flex items-center mb2 pa3 br2 flex-shrink-0 ques-option pointer"
-                                                  >
-                                                    <div className="flex pointer mr3 items-center ">
-                                                      {this.isSelectedAnswer(
-                                                        this.state
-                                                          .currentQuestion.id,
-                                                        answer.id
-                                                      ) && (
-                                                        <span
-                                                          className={
-                                                            this.state
-                                                              .currentQuestion
-                                                              .questionTypeId !=
-                                                            QuestionType.MC
-                                                              ? "w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--sky-blue pointer mr3"
-                                                              : "w1-5 h1-5 pa1 border-box flex items-center justify-center ba b--sky-blue pointer mr3"
-                                                          }
-                                                        >
-                                                          <span
-                                                            className={
-                                                              this.state
-                                                                .currentQuestion
-                                                                .questionTypeId !=
-                                                              QuestionType.MC
-                                                                ? "db w-100 h-100 border-box bg-sky-blue br-100"
-                                                                : "db w-100 h-100 border-box bg-sky-blue"
-                                                            }
-                                                          ></span>
-                                                        </span>
-                                                      )}
-                                                      {!this.isSelectedAnswer(
-                                                        this.state
-                                                          .currentQuestion.id,
-                                                        answer.id
-                                                      ) && (
-                                                        <span
-                                                          className={
-                                                            this.state
-                                                              .currentQuestion
-                                                              .questionTypeId !=
-                                                            QuestionType.MC
-                                                              ? "w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--silver pointer mr3"
-                                                              : "w1-5 h1-5 pa1 border-box flex items-center justify-center  ba b--silver pointer mr3"
-                                                          }
-                                                        ></span>
-                                                      )}
-                                                    </div>
-                                                    <div className="pointer">
-                                                      {ReactHtmlParser(
-                                                        answer.content
-                                                      )}
-                                                    </div>
-                                                  </div>
-                                                )
-                                              )}
-                                            </div>
-                                            <QuestionExplain
-                                              explain={
-                                                this.state.currentQuestion
-                                                  .explain
-                                              }
-                                            />
-                                          </>
-                                        )}
-                                      {(this.state.userExamAttemptTracking.questionSubmitteds.indexOf(
-                                        this.state.currentQuestion.id
-                                      ) >= 0 ||
-                                        this.state.mode == 2) && (
-                                        <>
-                                          <div className="flex flex-column">
-                                            {this.state.currentQuestion.answers.map(
-                                              (answer) => (
-                                                <>
-                                                  {this.state.userExamAttemptTracking.answerCorrects.indexOf(
-                                                    answer.id
-                                                  ) < 0 &&
-                                                    answer.isCorrect == false &&
-                                                    this.state.userExamAttemptTracking.answerIncorrects.indexOf(
-                                                      answer.id
-                                                    ) < 0 && (
-                                                      <div
-                                                        className="flex items-center mb2 pa3 br2 flex-shrink-0 "
-                                                        key={`answer-block2-${answer.id}`}
-                                                      >
-                                                        <div className="flex  mr3 items-center ">
-                                                          <span className="w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-white mr3"></span>
-                                                        </div>
-                                                        <div>
-                                                          <span>
-                                                            {ReactHtmlParser(
-                                                              answer.content
-                                                            )}
-                                                          </span>
-                                                        </div>
-                                                      </div>
-                                                    )}
-                                                  {(this.state.userExamAttemptTracking.answerCorrects.indexOf(
-                                                    answer.id
-                                                  ) >= 0 ||
-                                                    answer.isCorrect) && (
-                                                    <div
-                                                      className="flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-green"
-                                                      key={`answer-block3-${answer.id}`}
-                                                    >
-                                                      <div className="flex  mr3 items-center ">
-                                                        <span className="w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-green b--green mr3">
-                                                          <svg
-                                                            className="db bg-green ba b--green br-100 svg-s-white svg-fn"
-                                                            viewBox="0 0 32 24"
-                                                            version="1.1"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="12px"
-                                                            height="12px"
-                                                            style={{
-                                                              strokeWidth:
-                                                                "5px",
-                                                            }}
-                                                          >
-                                                            <polyline points="2.6 13.4 11.3 21.4 29.7 2.9"></polyline>
-                                                          </svg>
-                                                        </span>
-                                                      </div>
-                                                      <div>
-                                                        <span>
-                                                          {ReactHtmlParser(
-                                                            answer.content
-                                                          )}
-                                                        </span>
-                                                      </div>
-                                                    </div>
-                                                  )}
-
-                                                  {this.state.userExamAttemptTracking.answerIncorrects.indexOf(
-                                                    answer.id
-                                                  ) >= 0 && (
-                                                    <div
-                                                      key={`answer-block4-${answer.id}`}
-                                                      className="flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-red"
-                                                    >
-                                                      <div className="flex  mr3 items-center ">
-                                                        <span className="w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-red b--red mr3">
-                                                          <svg
-                                                            className="svg-s-white"
-                                                            viewBox="0 0 24 24"
-                                                            version="1.1"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="12px"
-                                                            height="12px"
-                                                            style={{
-                                                              strokeWidth:
-                                                                "4px",
-                                                            }}
-                                                          >
-                                                            <line
-                                                              x1="2.5"
-                                                              y1="2.9"
-                                                              x2="21.5"
-                                                              y2="21.9"
-                                                            ></line>
-                                                            <line
-                                                              x1="21.5"
-                                                              y1="2.9"
-                                                              x2="2.5"
-                                                              y2="21.9"
-                                                            ></line>
-                                                          </svg>
-                                                        </span>
-                                                      </div>
-                                                      <div>
-                                                        <span>
-                                                          {ReactHtmlParser(
-                                                            answer.content
-                                                          )}
-                                                        </span>
-                                                      </div>
-                                                    </div>
-                                                  )}
-                                                </>
-                                              )
-                                            )}
-                                          </div>
-                                          <QuestionExplain
-                                            explain={
-                                              this.state.currentQuestion.explain
-                                            }
-                                          />
-                                        </>
-                                      )}
-                                    </div>
-                                  </div>
-                                </>
-                              )}
+                                  </>
+                                )}
                             </>
                           )}
                         </div>
@@ -1262,48 +1262,42 @@ class TestDetails extends React.Component {
                         {this.state.examAttempt.testGroup.sections.map(
                           (section) => (
                             <div key={`section-panel-${section.id}`}>
-                              {this.state.currentQuestion.testGroupSectionId ==
-                                section.id && (
-                                <>
-                                  <div className="flex pv2 ph3 f6 overflow-ellipsis flex-shrink-0 bg-light-sky-blue darkest-blue">
-                                    {/* <span>Phần:</span> */}
-                                    <span className="ml1 overflow-ellipsis">
-                                      {section.name}
-                                    </span>
-                                  </div>
-                                  <div className="flex flex-column pa3 flex-grow-1 overflow-auto">
-                                    <p className="ma0 f6 darkest-blue">
-                                      CÂU HỎI
-                                    </p>
-                                    <div className="flex flex-wrap mv3">
-                                      {section.items.map((item) => (
-                                        <>
-                                          {item.questions.map((question) => (
-                                            <>
+                              <>
+                                <div className="flex pv2 ph3 f6 overflow-ellipsis flex-shrink-0 bg-light-sky-blue darkest-blue">
+                                  <span className="ml1 overflow-ellipsis">
+                                    {section.name}
+                                  </span>
+                                </div>
+                                <div className="flex flex-column flex-grow-1 overflow-auto">
+                                  <div className="flex flex-wrap mv3">
+                                    {section.items.map((item, index) => (
+                                      <>
+                                        {item.questions.map((question) => (
+                                          <>
+                                            <div
+                                              key={`question-panel-${item.id}`}
+                                              onClick={() => {
+                                                this.viewQuestion(
+                                                  question.id,
+                                                  question.parentId,
+                                                  question.testGroupSectionItemId,
+                                                  section.id
+                                                );
+                                              }}
+                                              className="flex items-center justify-center mb3 relative"
+                                              style={{ flexBasis: "20%" }}
+                                            >
                                               <div
-                                                key={`question-panel-${item.id}`}
-                                                onClick={() => {
-                                                  this.viewQuestion(
-                                                    question.id,
-                                                    question.parentId,
-                                                    question.testGroupSectionItemId,
-                                                    section.id
-                                                  );
-                                                }}
-                                                className="flex items-center justify-center mb3 relative"
-                                                style={{ flexBasis: "20%" }}
+                                                className={this.questionClassName(
+                                                  question.id
+                                                )}
                                               >
-                                                <div
-                                                  className={this.questionClassName(
-                                                    question.id
-                                                  )}
-                                                >
-                                                  <span className="f6 z-1">
-                                                    {question.order}
-                                                  </span>
-                                                  {this.state.userExamAttemptTracking.questionBookmarkeds.indexOf(
-                                                    question.id
-                                                  ) >= 0 && (
+                                                <span className="f6 z-1">
+                                                  {++index}
+                                                </span>
+                                                {this.state.userExamAttemptTracking.questionBookmarkeds.indexOf(
+                                                  question.id
+                                                ) >= 0 && (
                                                     <span
                                                       className="ba bw1 b--white w1 h1 br-100 bg-white absolute flex items-center justify-center"
                                                       style={{
@@ -1325,9 +1319,9 @@ class TestDetails extends React.Component {
                                                       </svg>
                                                     </span>
                                                   )}
-                                                </div>
-                                                {this.state.currentQuestion
-                                                  .id === question.id && (
+                                              </div>
+                                              {this.state.currentQuestion
+                                                .id === question.id && (
                                                   <span
                                                     className="w2 bg-sky-blue absolute left-0"
                                                     style={{
@@ -1339,15 +1333,14 @@ class TestDetails extends React.Component {
                                                     }}
                                                   ></span>
                                                 )}
-                                              </div>
-                                            </>
-                                          ))}
-                                        </>
-                                      ))}
-                                    </div>
+                                            </div>
+                                          </>
+                                        ))}
+                                      </>
+                                    ))}
                                   </div>
-                                </>
-                              )}
+                                </div>
+                              </>
                             </div>
                           )
                         )}

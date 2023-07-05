@@ -93,6 +93,30 @@
           --navy-blue: #0c192f;
       }
 
+      *,
+      body,
+      button,
+      html,
+      input,
+      input[type="text"],
+      p,
+      a,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      span,
+      select,
+      table,
+      thead,
+      th,
+      tbody,
+      textarea {
+        font-family: "Open Sans";
+      }
+
       .mainContainer {
           overflow: auto;
       }
