@@ -48,6 +48,7 @@ import { createEmotionCache } from '@core/utils/create-emotion-cache'
 // ** Emotion Imports
 import { CacheProvider } from '@emotion/react'
 import TestingLayout from 'layouts/testing'
+import { useEffect } from 'react'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -92,17 +93,12 @@ const App = props => {
 
   return (
     <>
-      {Component.PageLayout && Component.PageLayout.name === "TestingLayout" && (
-        <>
-          <Head>
-            <link href="/css/test.css" rel="stylesheet" />
-          </Head>
-          <TestingLayout>
-            <Component {...pageProps} />
-          </TestingLayout>
-        </>
+      {getLayout && getLayout().type.name === "TestingLayout" && (
+        <TestingLayout>
+          <Component {...pageProps} />
+        </TestingLayout>
       )}
-      {(!Component.PageLayout || Component.PageLayout.name !== "TestingLayout") && (
+      {(!Component.PageLayout || getLayout().type.name !== "TestingLayout") && (
         <Provider store={store}>
           <CacheProvider value={emotionCache}>
             <Head>
