@@ -95,7 +95,7 @@ const MenuComposition = () => {
             style={{ transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom' }}
           >
             <Paper
-              elevation={skin === 'bordered' ? 0 : 6}
+              elevation={skin === 'bordered' ? 0 : 3}
               sx={skin === 'bordered' ? { border: theme => `1px solid ${theme.palette.divider}` } : {}}
             >
               <ClickAwayListener onClickAway={() => setOpen(false)}>

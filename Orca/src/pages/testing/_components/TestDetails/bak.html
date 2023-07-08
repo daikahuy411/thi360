@@ -1,0 +1,92 @@
+<!-- {this.state.examAttempt.testGroup.sections.map(
+  (section) => (
+    <div key={`section-panel-${section.id}`}>
+      {this.state.currentQuestion.testGroupSectionId ==
+        section.id && (
+          <>
+            <div className="flex pv2 ph3 f6 overflow-ellipsis flex-shrink-0 bg-light-sky-blue darkest-blue">
+              {/* <span>Phần:</span> */}
+              <span className="ml1 overflow-ellipsis">
+                {section.name}
+              </span>
+            </div>
+            <div className="flex flex-column pa3 flex-grow-1 overflow-auto">
+              <p className="ma0 f6 darkest-blue">
+                CÂU HỎI
+              </p>
+              <div className="flex flex-wrap mv3">
+                {section.items.map((item) => (
+                  <>
+                    {item.questions.map((question) => (
+                      <>
+                        <div
+                          key={`question-panel-${item.id}`}
+                          onClick={() => {
+                            this.viewQuestion(
+                              question.id,
+                              question.parentId,
+                              question.testGroupSectionItemId,
+                              section.id
+                            );
+                          }}
+                          className="flex items-center justify-center mb3 relative"
+                          style={{ flexBasis: "20%" }}
+                        >
+                          <div
+                            className={this.questionClassName(
+                              question.id
+                            )}
+                          >
+                            <span className="f6 z-1">
+                              {question.order}
+                            </span>
+                            {this.state.userExamAttemptTracking.questionBookmarkeds.indexOf(
+                              question.id
+                            ) >= 0 && (
+                                <span
+                                  className="ba bw1 b--white w1 h1 br-100 bg-white absolute flex items-center justify-center"
+                                  style={{
+                                    top: "-8px",
+                                    right: "-8px",
+                                  }}
+                                >
+                                  <svg
+                                    className="db svg-f-gold"
+                                    viewBox="0 0 32 32"
+                                    version="1.1"
+                                    width="14"
+                                    height="14"
+                                  >
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M15.702 24.058L6.79 28.724l1.702-9.884-7.21-7 9.963-1.441 4.456-8.993 4.455 8.993 9.963 1.442-7.209 7 1.702 9.883z"
+                                    ></path>
+                                  </svg>
+                                </span>
+                              )}
+                          </div>
+                          {this.state.currentQuestion
+                            .id === question.id && (
+                              <span
+                                className="w2 bg-sky-blue absolute left-0"
+                                style={{
+                                  height: "2px",
+                                  bottom: "-10px",
+                                  left: "50%",
+                                  transform:
+                                    "translateX(-50%)",
+                                }}
+                              ></span>
+                            )}
+                        </div>
+                      </>
+                    ))}
+                  </>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+    </div>
+  )
+)} -->
