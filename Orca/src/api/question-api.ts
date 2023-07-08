@@ -1,9 +1,10 @@
-import ApiBase from "./api-base";
-import Answer from "../interfaces/Answer";
-import Question from "../interfaces/Question";
-import QuestionType from "../interfaces/QuestionType";
-import axios from "axios";
-import { QuestionType as QuestionTypeEnum } from "../types/QuestionType";
+import axios from 'axios'
+
+import Answer from '../interfaces/Answer'
+import Question from '../interfaces/Question'
+import QuestionType from '../interfaces/QuestionType'
+import { QuestionType as QuestionTypeEnum } from '../types/QuestionType'
+import ApiBase from './api-base'
 
 export default class QuestionApi extends ApiBase {
   constructor() {
@@ -111,7 +112,7 @@ export default class QuestionApi extends ApiBase {
         questionTypeName: typeName,
         categoryId: 0,
         answers: [
-          this.createAnswer(-1, 1, "", false),
+          this.createAnswer(-1, 1, "", true),
           this.createAnswer(-2, 2, "", false),
           this.createAnswer(-3, 3, "", false),
           this.createAnswer(-4, 4, "", false),
