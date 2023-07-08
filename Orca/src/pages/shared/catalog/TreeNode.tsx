@@ -1,5 +1,6 @@
-import TreeItem, { TreeItemProps } from '@mui/lab/TreeItem'
 import React from 'react'
+
+import TreeItem, { TreeItemProps } from '@mui/lab/TreeItem'
 
 type TreeNodeProps = TreeItemProps & {
   item: any
@@ -13,12 +14,12 @@ export default function TreeNode(props: TreeNodeProps) {
     .filter((x: any) => {
       return x.key !== props.excludedId
     })
-    .map((child: any) => {
-      return <TreeNode excludedId={props.excludedId} key={child.key} nodeId={child.key} item={child} />
+    .map((child: any, index: number) => {
+      return <TreeNode excludedId={props.excludedId} key={`child-${index}`} nodeId={child.key} item={child} />
     })
 
   return (
-    <TreeItem key={item.key} nodeId={item.key} label={item.title}>
+    <TreeItem key={`tree-item-${item.key}`} nodeId={item.key} label={item.title}>
       {children}
     </TreeItem>
   )
