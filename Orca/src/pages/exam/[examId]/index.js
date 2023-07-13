@@ -134,6 +134,8 @@ const ExamPage = () => {
                   <TableRow>
                     <TableCell style={{ width: 50 }}>STT</TableCell>
                     <TableCell >Tên</TableCell>
+                    <TableCell style={{ width: 120 }} >Số câu hỏi</TableCell>
+                    <TableCell style={{ width: 120 }}>Loại đề thi</TableCell>
                     <TableCell style={{ width: 280 }}>Thao tác</TableCell>
                   </TableRow>
                 </TableHead>
@@ -146,6 +148,12 @@ const ExamPage = () => {
                       <TableCell>{index + 1}</TableCell>
                       <TableCell component="th" scope="row">
                         {row.name}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.totalQuestion}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.testTypeName}
                       </TableCell>
                       <TableCell>
                         <Button variant="contained" size='small'

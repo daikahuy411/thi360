@@ -126,38 +126,13 @@ const UserDropdown = props => {
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/user-profile/profile')}>
           <Box sx={styles}>
             <Icon icon='mdi:account-outline' />
-            Profile
+            Thông tin
           </Box>
         </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/email')}>
-          <Box sx={styles}>
-            <Icon icon='mdi:email-outline' />
-            Inbox
-          </Box>
-        </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/chat')}>
-          <Box sx={styles}>
-            <Icon icon='mdi:message-outline' />
-            Chat
-          </Box>
-        </MenuItem>
-        <Divider />
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/account-settings/account')}>
           <Box sx={styles}>
             <Icon icon='mdi:cog-outline' />
-            Settings
-          </Box>
-        </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/pricing')}>
-          <Box sx={styles}>
-            <Icon icon='mdi:currency-usd' />
-            Pricing
-          </Box>
-        </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/faq')}>
-          <Box sx={styles}>
-            <Icon icon='mdi:help-circle-outline' />
-            FAQ
+            Cấu hình
           </Box>
         </MenuItem>
         <Divider />
@@ -166,7 +141,7 @@ const UserDropdown = props => {
           sx={{ py: 2, '& svg': { mr: 2, fontSize: '1.375rem', color: 'text.primary' } }}
         >
           <Icon icon='mdi:logout-variant' />
-          Logout
+          Thoát
         </MenuItem>
       </Menu>
     </Fragment>
