@@ -188,12 +188,14 @@ const SubjectPage = () => {
           {curriculums && curriculums.map((item) =>
           (
             <>
-              <StyledTreeItem key={item.id.toString()} nodeId={item.id.toString()} labelText={item.name} labelIcon={FolderIcon} >
+              <StyledTreeItem key={item.id.toString()} nodeId={item.id.toString()}
+                labelText={`${item.name}`}
+                labelIcon={FolderIcon} >
                 {item.children.map((child) => (
                   <StyledTreeItem
                     nodeId={child.id.toString()}
                     key={child.id}
-                    labelText={child.name}
+                    labelText={`${child.name}`}
                     labelIcon={ArticleIcon}
                     color="#1a73e8"
                     bgColor="#e8f0fe"
@@ -231,9 +233,10 @@ const SubjectPage = () => {
           <Grid item md={8} alignContent={"center"}>
             <br />
             <Pagination count={totalItems}
-              rowsPerPageOptions={[10, 25, 100]}
+              rowsPerPageOptions={[20, 50, 100]}
               component='div'
-              rowsPerPage={10}
+              page={1}
+              rowsPerPage={20}
               shape='rounded' color='primary' />
           </Grid>
         </Grid>

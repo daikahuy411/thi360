@@ -10,6 +10,11 @@ const navigation = () => {
       title: 'Ôn luyện',
       path: '/program'
     },
+    {
+      icon: 'mdi:help-circle-outline',
+      title: 'Hướng dẫn',
+      path: '/help'
+    },
     // {
     //   title: 'Thời khóa biểu',
     //   icon: 'mdi:calendar-blank-outline',

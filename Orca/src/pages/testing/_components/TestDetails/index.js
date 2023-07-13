@@ -600,7 +600,7 @@ class TestDetails extends React.Component {
                     </span>
                   </div>
                   <span className="flex-l dn">
-                    <b> {this.state.examAttempt.testGroup.name}</b>
+                    <b> {this.state.examAttempt.name}</b>
                   </span>
                   <span className="flex ml3 ml0-l">
                     <div className="flex pointer br2 ba bg-transparent silver b--silver f6-l f7 ph2 ph3-l pv2 mr3-l mr1">
@@ -913,34 +913,31 @@ class TestDetails extends React.Component {
                                         {this.state.currentQuestion.children.map(
                                           (question) => (
                                             <div key={`q-${question.id}`}>
-                                              {this.state.currentQuestionId ==
-                                                question.id && (
-                                                  <>
-                                                    <b>Câu: {question.order}</b>
-                                                    <span className="gray mb2 flex-shrink-0">
-                                                      <QuestionContent
-                                                        question={question}
-                                                      />
-                                                    </span>
-                                                    <div className="flex flex-column">
-                                                      {question.answers.map(
-                                                        (item) => (
-                                                          <div
-                                                            key={`a-{item.id}`}
-                                                            className="flex items-center mb2 pa3 br2 flex-shrink-0 ques-option pointer"
-                                                          >
-                                                            <div className="flex pointer mr3 items-center ">
-                                                              <span className="w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--silver pointer mr3"></span>
-                                                            </div>
-                                                            <div className="pointer">
-                                                              {item.content}
-                                                            </div>
-                                                          </div>
-                                                        )
-                                                      )}
-                                                    </div>
-                                                  </>
-                                                )}
+                                              <>
+                                                <b>Câu: {question.order}</b>
+                                                <span className="gray mb2 flex-shrink-0">
+                                                  <QuestionContent
+                                                    question={question}
+                                                  />
+                                                </span>
+                                                <div className="flex flex-column">
+                                                  {question.answers.map(
+                                                    (item) => (
+                                                      <div
+                                                        key={`a-{item.id}`}
+                                                        className="flex items-center mb2 pa3 br2 flex-shrink-0 ques-option pointer"
+                                                      >
+                                                        <div className="flex pointer mr3 items-center ">
+                                                          <span className="w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--silver pointer mr3"></span>
+                                                        </div>
+                                                        <div className="pointer">
+                                                          {item.content}
+                                                        </div>
+                                                      </div>
+                                                    )
+                                                  )}
+                                                </div>
+                                              </>
                                             </div>
                                           )
                                         )}
@@ -1259,91 +1256,88 @@ class TestDetails extends React.Component {
                             }}
                           ></div>
                         </div>
-                        {this.state.examAttempt.testGroup.sections.map(
-                          (section) => (
-                            <div key={`section-panel-${section.id}`}>
-                              <>
-                                <div className="flex pv2 ph3 f6 overflow-ellipsis flex-shrink-0 bg-light-sky-blue darkest-blue">
-                                  <span className="ml1 overflow-ellipsis">
-                                    {section.name}
-                                  </span>
-                                </div>
-                                <div className="flex flex-column flex-grow-1 overflow-auto">
-                                  <div className="flex flex-wrap mv3">
-                                    {section.items.map((item, index) => (
-                                      <>
-                                        {item.questions.map((question) => (
-                                          <>
+                        <div style={{ overflowY: "auto" }}>
+                          {this.state.examAttempt.testGroup.sections.map(
+                            (section) => (
+                              <div key={`section-panel-${section.id}`}>
+                                <>
+                                  <div className="flex pv2 ph3 f6 overflow-ellipsis flex-shrink-0 bg-light-sky-blue darkest-blue">
+                                    <span className="ml1 overflow-ellipsis">
+                                      {section.name}
+                                    </span>
+                                  </div>
+                                  <div className="flex flex-column flex-grow-1 overflow-auto">
+                                    <div className="flex flex-wrap mv3">
+                                      {section.questionMaps.map((question, index) => (
+                                        <>
+                                          <div
+                                            key={`question-panel-${section.id}`}
+                                            onClick={() => {
+                                              this.viewQuestion(
+                                                question.id,
+                                                question.parentId,
+                                                question.itemId,
+                                                section.id
+                                              );
+                                            }}
+                                            className="flex items-center justify-center mb3 relative"
+                                            style={{ flexBasis: "20%" }}
+                                          >
                                             <div
-                                              key={`question-panel-${item.id}`}
-                                              onClick={() => {
-                                                this.viewQuestion(
-                                                  question.id,
-                                                  question.parentId,
-                                                  question.testGroupSectionItemId,
-                                                  section.id
-                                                );
-                                              }}
-                                              className="flex items-center justify-center mb3 relative"
-                                              style={{ flexBasis: "20%" }}
+                                              className={this.questionClassName(
+                                                question.id
+                                              )}
                                             >
-                                              <div
-                                                className={this.questionClassName(
-                                                  question.id
-                                                )}
-                                              >
-                                                <span className="f6 z-1">
-                                                  {++index}
-                                                </span>
-                                                {this.state.userExamAttemptTracking.questionBookmarkeds.indexOf(
-                                                  question.id
-                                                ) >= 0 && (
-                                                    <span
-                                                      className="ba bw1 b--white w1 h1 br-100 bg-white absolute flex items-center justify-center"
-                                                      style={{
-                                                        top: "-8px",
-                                                        right: "-8px",
-                                                      }}
-                                                    >
-                                                      <svg
-                                                        className="db svg-f-gold"
-                                                        viewBox="0 0 32 32"
-                                                        version="1.1"
-                                                        width="14"
-                                                        height="14"
-                                                      >
-                                                        <path
-                                                          fillRule="evenodd"
-                                                          d="M15.702 24.058L6.79 28.724l1.702-9.884-7.21-7 9.963-1.441 4.456-8.993 4.455 8.993 9.963 1.442-7.209 7 1.702 9.883z"
-                                                        ></path>
-                                                      </svg>
-                                                    </span>
-                                                  )}
-                                              </div>
-                                              {this.state.currentQuestion
-                                                .id === question.id && (
+                                              <span className="f6 z-1">
+                                                {question.order}
+                                              </span>
+                                              {this.state.userExamAttemptTracking.questionBookmarkeds.indexOf(
+                                                question.id
+                                              ) >= 0 && (
                                                   <span
-                                                    className="w2 bg-sky-blue absolute left-0"
+                                                    className="ba bw1 b--white w1 h1 br-100 bg-white absolute flex items-center justify-center"
                                                     style={{
-                                                      height: "2px",
-                                                      bottom: "-10px",
-                                                      left: "50%",
-                                                      transform:
-                                                        "translateX(-50%)",
+                                                      top: "-8px",
+                                                      right: "-8px",
                                                     }}
-                                                  ></span>
+                                                  >
+                                                    <svg
+                                                      className="db svg-f-gold"
+                                                      viewBox="0 0 32 32"
+                                                      version="1.1"
+                                                      width="14"
+                                                      height="14"
+                                                    >
+                                                      <path
+                                                        fillRule="evenodd"
+                                                        d="M15.702 24.058L6.79 28.724l1.702-9.884-7.21-7 9.963-1.441 4.456-8.993 4.455 8.993 9.963 1.442-7.209 7 1.702 9.883z"
+                                                      ></path>
+                                                    </svg>
+                                                  </span>
                                                 )}
                                             </div>
-                                          </>
-                                        ))}
-                                      </>
-                                    ))}
+                                            {this.state.currentQuestion.id === question.id && (
+                                              <span
+                                                className="w2 bg-sky-blue absolute left-0"
+                                                style={{
+                                                  height: "2px",
+                                                  bottom: "-10px",
+                                                  left: "50%",
+                                                  transform:
+                                                    "translateX(-50%)",
+                                                }}
+                                              ></span>
+                                            )}
+                                          </div>
+                                        </>
+                                      ))}
+                                    </div>
                                   </div>
-                                </div>
-                              </>
-                            </div>
-                          )
-                        )}
+                                </>
+                              </div>
+                            )
+                          )}
+                        </div>
                         {this.state.mode == 1 && (
                           <div className="flex flex-wrap flex-shrink-0 pa3">
                             <div className="flex w-50 items-center mb3">
