@@ -132,7 +132,7 @@ const QuestionEditForm = () => {
         //   return
         // })
         setAnwser(Object.values(data.answers))
-        
+
       })
   }
   useEffect(() => {
@@ -516,135 +516,138 @@ const QuestionEditForm = () => {
                             </FormControl>
                           </Grid>
                         </Grid>
-
-                        <Grid container spacing={5} style={{ paddingBottom: '20px', paddingTop: '10px' }}>
-                          <Grid item xs={12}>
-                            <Divider variant='left' textAlign='left'> <b>Đáp án </b></Divider>
-                          </Grid>
-                        </Grid>
-                        <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
-                          <Grid item xs={12}>
-                            <TableContainer component={Paper} style={{ marginTop: 5 }} className=''>
-                              <Table sx={{ minWidth: 650 }} aria-label='simple table' className={styles.answer_table}>
-                                <TableHead>
-                                  <TableRow>
-                                    <TableCell padding='checkbox'>
-                                      #
-                                    </TableCell>
-                                    <TableCell style={{ width: 120 }}>Đáp án đúng</TableCell>
-                                    <TableCell>Nội dung</TableCell>
-                                    <TableCell style={{ width: 30 }}></TableCell>
-                                  </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                  {anwser &&
-                                    anwser.map((anwser, index) => {
-                                      return (
-                                        <TableRow
-                                          hover
-                                          key={`anwser-${anwser.id}`}
-                                          sx={{
-                                            '&:last-of-type td, &:last-of-type th': {
-                                              border: 0
-                                            }
-                                          }}
-                                        >
-                                          <TableCell padding='checkbox' style={{ textAlign: 'center' }}>
-                                            {index + 1}
-                                          </TableCell>
-                                          <TableCell scope='row' style={{ textAlign: 'center' }}>
-                                            {currentQuestion.questionTypeId === QuestionType.MC && (
-                                              <Checkbox
-                                                checked={anwser.isCorrect}
-                                                value={anwser.isCorrect}
-                                                name={`chk-ans-content-${anwser.id}`}
-                                                onChange={(event) => {
-                                                  handleChangeAnwser(anwser.id, 'checkbox', event.target.checked)
-                                                }}
-                                              />
-                                            )}
-                                            {(currentQuestion.questionTypeId === QuestionType.SC ||
-                                              currentQuestion.questionTypeId === QuestionType.TF) && (
-                                                <Radio
-                                                  checked={anwser.isCorrect}
-                                                  value={anwser.isCorrect}
-                                                  name={`rdb-ans-content-${anwser.id}`}
-                                                  onChange={(event) => {
-                                                    handleChangeAnwser(anwser.id, '')
-                                                  }}
-                                                />
-                                              )}
-                                          </TableCell>
-                                          <TableCell scope='row'>
-                                            <FormControl fullWidth>
-                                              <Controller
-                                                name={`anws-content-${anwser.id}`}
-                                                control={control}
-                                                rules={{ required: true }}
-                                                render={({ field: { value, onChange } }) => (
-                                                  <TextField
-                                                    multiline
-                                                    rows={currentQuestion.questionTypeId == QuestionType.TF ? 1 : 3}
-                                                    fullWidth
-                                                    disabled={currentQuestion.questionTypeId == QuestionType.TF ? true : false}
-                                                    value={value ?? anwser.content ?? ''}
-                                                    label='Nội dung'
-                                                    InputLabelProps={{ shrink: true }}
-                                                    required
-                                                    onChange={(value) => {
-                                                      onChange(value)
-                                                      checkValidate(anwser.id)
+                        {currentQuestion && currentQuestion.questionTypeId !== QuestionType.SA && (
+                          <>
+                            <Grid container spacing={5} style={{ paddingBottom: '20px', paddingTop: '10px' }}>
+                              <Grid item xs={12}>
+                                <Divider variant='left' textAlign='left'> <b>Đáp án </b></Divider>
+                              </Grid>
+                            </Grid>
+                            <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
+                              <Grid item xs={12}>
+                                <TableContainer component={Paper} style={{ marginTop: 5 }} className=''>
+                                  <Table sx={{ minWidth: 650 }} aria-label='simple table' className={styles.answer_table}>
+                                    <TableHead>
+                                      <TableRow>
+                                        <TableCell padding='checkbox'>
+                                          #
+                                        </TableCell>
+                                        <TableCell style={{ width: 120 }}>Đáp án đúng</TableCell>
+                                        <TableCell>Nội dung</TableCell>
+                                        <TableCell style={{ width: 30 }}></TableCell>
+                                      </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                      {anwser &&
+                                        anwser.map((anwser, index) => {
+                                          return (
+                                            <TableRow
+                                              hover
+                                              key={`anwser-${anwser.id}`}
+                                              sx={{
+                                                '&:last-of-type td, &:last-of-type th': {
+                                                  border: 0
+                                                }
+                                              }}
+                                            >
+                                              <TableCell padding='checkbox' style={{ textAlign: 'center' }}>
+                                                {index + 1}
+                                              </TableCell>
+                                              <TableCell scope='row' style={{ textAlign: 'center' }}>
+                                                {currentQuestion.questionTypeId === QuestionType.MC && (
+                                                  <Checkbox
+                                                    checked={anwser.isCorrect}
+                                                    value={anwser.isCorrect}
+                                                    name={`chk-ans-content-${anwser.id}`}
+                                                    onChange={(event) => {
+                                                      handleChangeAnwser(anwser.id, 'checkbox', event.target.checked)
                                                     }}
-                                                    error={Boolean(anwser.errors?.isError)}
-                                                    aria-describedby='validation-schema-name'
                                                   />
                                                 )}
-                                              />
+                                                {(currentQuestion.questionTypeId === QuestionType.SC ||
+                                                  currentQuestion.questionTypeId === QuestionType.TF) && (
+                                                    <Radio
+                                                      checked={anwser.isCorrect}
+                                                      value={anwser.isCorrect}
+                                                      name={`rdb-ans-content-${anwser.id}`}
+                                                      onChange={(event) => {
+                                                        handleChangeAnwser(anwser.id, '')
+                                                      }}
+                                                    />
+                                                  )}
+                                              </TableCell>
+                                              <TableCell scope='row'>
+                                                <FormControl fullWidth>
+                                                  <Controller
+                                                    name={`anws-content-${anwser.id}`}
+                                                    control={control}
+                                                    rules={{ required: true }}
+                                                    render={({ field: { value, onChange } }) => (
+                                                      <TextField
+                                                        multiline
+                                                        rows={currentQuestion.questionTypeId == QuestionType.TF ? 1 : 3}
+                                                        fullWidth
+                                                        disabled={currentQuestion.questionTypeId == QuestionType.TF ? true : false}
+                                                        value={value ?? anwser.content ?? ''}
+                                                        label='Nội dung'
+                                                        InputLabelProps={{ shrink: true }}
+                                                        required
+                                                        onChange={(value) => {
+                                                          onChange(value)
+                                                          checkValidate(anwser.id)
+                                                        }}
+                                                        error={Boolean(anwser.errors?.isError)}
+                                                        aria-describedby='validation-schema-name'
+                                                      />
+                                                    )}
+                                                  />
 
-                                              <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
-                                                {anwser.errors?.message}
-                                              </FormHelperText>
-                                            </FormControl>
-                                          </TableCell>
-                                          <TableCell>
-                                            {currentQuestion.questionTypeId !== QuestionType.TF && (
-                                              <Tooltip title='Xóa đáp án'>
-                                                <span>
-                                                  <IconButton aria-label='Xóa đáp án' onClick={() => removeAnswer(anwser.id)}>
-                                                    <DeleteIcon color='warning' />
-                                                  </IconButton>
-                                                </span>
-                                              </Tooltip>
-                                            )}
+                                                  <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
+                                                    {anwser.errors?.message}
+                                                  </FormHelperText>
+                                                </FormControl>
+                                              </TableCell>
+                                              <TableCell>
+                                                {currentQuestion.questionTypeId !== QuestionType.TF && (
+                                                  <Tooltip title='Xóa đáp án'>
+                                                    <span>
+                                                      <IconButton aria-label='Xóa đáp án' onClick={() => removeAnswer(anwser.id)}>
+                                                        <DeleteIcon color='warning' />
+                                                      </IconButton>
+                                                    </span>
+                                                  </Tooltip>
+                                                )}
+                                              </TableCell>
+                                            </TableRow>
+                                          )
+                                        })
+                                      }
+
+                                      {currentQuestion && currentQuestion.questionTypeId !== QuestionType.TF && (
+                                        <TableRow
+                                          key={`add-anwser`}
+                                        >
+                                          <TableCell padding='checkbox' colSpan={4} style={{ textAlign: 'center' }}>
+                                            <Button
+                                              variant='outlined'
+                                              style={{ width: 250, margin: '20px' }}
+                                              color='success'
+                                              startIcon={<Icon icon='mdi:plus' />}
+                                              onClick={() => addAnswer()}
+                                            >
+                                              Thêm đáp án
+                                            </Button>
                                           </TableCell>
                                         </TableRow>
-                                      )
-                                    })
-                                  }
+                                      )}
+                                    </TableBody>
+                                  </Table>
+                                </TableContainer>
 
-                                  {currentQuestion && currentQuestion.questionTypeId !== QuestionType.TF && (
-                                    <TableRow
-                                      key={`add-anwser`}
-                                    >
-                                      <TableCell padding='checkbox' colSpan={4} style={{ textAlign: 'center' }}>
-                                        <Button
-                                          variant='outlined'
-                                          style={{ width: 250, margin: '20px' }}
-                                          color='success'
-                                          startIcon={<Icon icon='mdi:plus' />}
-                                          onClick={() => addAnswer()}
-                                        >
-                                          Thêm đáp án
-                                        </Button>
-                                      </TableCell>
-                                    </TableRow>
-                                  )}
-                                </TableBody>
-                              </Table>
-                            </TableContainer>
-
-                          </Grid>
-                        </Grid>
+                              </Grid>
+                            </Grid>
+                          </>
+                        )}
                       </form>
                     </div>
                   </div>

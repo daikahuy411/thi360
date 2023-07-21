@@ -299,6 +299,8 @@ const QuestionTable = () => {
                       </IconButton>
                     </TableCell>
                     <TableCell component='th' scope='row'>
+                      <strong>{row.name}</strong>
+                      <br/>
                       {row.shortContent}
                     </TableCell>
                     <TableCell>
