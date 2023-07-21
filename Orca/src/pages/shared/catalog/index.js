@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 import PropTypes from 'prop-types'
-import { CatalogType } from 'types/CatalogType'
 
 import Icon from '@core/components/icon'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
@@ -103,7 +102,7 @@ function CatalogDialog({ catalogType, open, onClose, excludedId = 0, onNodeSelec
 }
 
 CatalogDialog.propTypes = {
-  type: CatalogType,
+  // type: CatalogType,
   className: PropTypes.string,
   onClose: PropTypes.func,
   onFilter: PropTypes.func,

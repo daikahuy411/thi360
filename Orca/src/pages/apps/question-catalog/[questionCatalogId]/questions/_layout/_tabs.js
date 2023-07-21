@@ -12,25 +12,33 @@ const Nav = ({ children }) => {
     <>
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
         <Link
-          className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/class/${classId}/` ? 'is-active' : 'disabled'
-          }`}
+          className={`finger-tabs__tab flex-none ${router.asPath === `/apps/class/${classId}/` ? 'is-active' : 'disabled'
+            }`}
           title='Chi tiết'
           component={Link}
           href={`/apps/question-catalog/${classId}/questions/`}
         >
           Chi tiết
         </Link>
-        <Link
-          className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
-          }`}
-          title='Cấu hình'
-          component={Link}
-          href={currentClass && currentClass.id > 0 ? `/apps/class/${classId}/users` : 'javascript:void(0)'}
-        >
-          Cấu hình
-        </Link>
+        {currentClass && currentClass.id > 0 ?
+          <Link
+            className={`finger-tabs__tab flex-none ${router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
+              }`}
+            title='Cấu hình'
+            component={Link}
+            href={currentClass && currentClass.id > 0 ? `/apps/class/${classId}/users` : 'javascript:void(0)'}
+          >
+            Cấu hình
+          </Link>
+          : <p
+            className={`finger-tabs__tab flex-none ${router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
+              }`}
+            title='Cấu hình'
+          >
+            Cấu hình
+          </p>
+        }
+
       </div>
     </>
   )

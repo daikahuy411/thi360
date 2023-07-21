@@ -1,9 +1,10 @@
-import ApiBase from "./api-base";
-import Answer from "../interfaces/Answer";
-import Question from "../interfaces/Question";
-import QuestionType from "../interfaces/QuestionType";
-import axios from "axios";
-import { QuestionType as QuestionTypeEnum } from "../types/QuestionType";
+import axios from 'axios'
+
+import Answer from '../interfaces/Answer'
+import Question from '../interfaces/Question'
+import QuestionType from '../interfaces/QuestionType'
+import { QuestionType as QuestionTypeEnum } from '../types/QuestionType'
+import ApiBase from './api-base'
 
 export default class QuestionApi extends ApiBase {
   constructor() {
@@ -32,6 +33,7 @@ export default class QuestionApi extends ApiBase {
         code: "SA",
         order: 0,
         id: 1,
+        typeId: 4,
         name: "Câu hỏi Trả lời ngắn",
         files: null,
         createdBy: 1,
@@ -43,6 +45,7 @@ export default class QuestionApi extends ApiBase {
         code: "MC",
         order: 1,
         id: 2,
+        typeId: 8,
         name: "Câu hỏi Nhiều lựa chọn",
         files: null,
         createdBy: 1,
@@ -54,6 +57,7 @@ export default class QuestionApi extends ApiBase {
         code: "GQ",
         order: 2,
         id: 3,
+        typeId: 9,
         name: "Câu hỏi Chính phụ",
         files: null,
         createdBy: 1,
@@ -65,6 +69,7 @@ export default class QuestionApi extends ApiBase {
         code: "TF",
         order: 3,
         id: 4,
+        typeId: 13,
         name: "Câu hỏi Đúng/Sai",
         files: null,
         createdBy: 1,
@@ -76,6 +81,7 @@ export default class QuestionApi extends ApiBase {
         code: "SC",
         order: 4,
         id: 5,
+        typeId: 12,
         name: "Câu hỏi Một lựa chọn",
         files: null,
         createdBy: 1,
@@ -87,6 +93,7 @@ export default class QuestionApi extends ApiBase {
         code: "FB",
         order: 5,
         id: 6,
+        typeId: 19,
         name: "Câu hỏi Điền từ vào chỗ trống",
         files: null,
         createdBy: 1,
@@ -94,8 +101,25 @@ export default class QuestionApi extends ApiBase {
         createdTime: "2022-05-06T08:52:43.3007901",
         lastModifiedTime: "2022-05-06T08:52:43.3007902",
       },
+      {
+        code: "ORDER",
+        order: 8,
+        id: 8,
+        typeId: 21,
+        name: "Câu hỏi Sắp xếp",
+        files: null,
+        createdBy: 1,
+        lastModifiedBy: 1,
+        createdTime: "2022-05-06T08:52:43.3007901",
+        lastModifiedTime: "2022-05-06T08:52:43.3007902",
+      },
     ];
-    typeName = allTypes.find((x) => x.id === type.id)?.name ?? "";
+    typeName = allTypes.find((x) => x.typeId === type.id)?.name ?? "";
+
+    const errors = {
+      isError: false,
+      message: ""
+    }
 
     if (type.id == QuestionTypeEnum.SC || type.id == QuestionTypeEnum.MC) {
       return {
@@ -111,10 +135,10 @@ export default class QuestionApi extends ApiBase {
         questionTypeName: typeName,
         categoryId: 0,
         answers: [
-          this.createAnswer(-1, 1, "", false),
-          this.createAnswer(-2, 2, "", false),
-          this.createAnswer(-3, 3, "", false),
-          this.createAnswer(-4, 4, "", false),
+          this.createAnswer(-1, 1, "", true, errors),
+          this.createAnswer(-2, 2, "", false, errors),
+          this.createAnswer(-3, 3, "", false, errors),
+          this.createAnswer(-4, 4, "", false, errors),
         ],
       };
     }
@@ -133,8 +157,8 @@ export default class QuestionApi extends ApiBase {
         questionTypeName: typeName,
         categoryId: 0,
         answers: [
-          this.createAnswer(-1, 1, "Đúng", true),
-          this.createAnswer(-2, 2, "Sai", false),
+          this.createAnswer(-1, 1, "Đúng", true, errors),
+          this.createAnswer(-2, 2, "Sai", false, errors),
         ],
       };
     }
@@ -196,7 +220,8 @@ export default class QuestionApi extends ApiBase {
     id: number,
     order: number,
     content: string,
-    isCorrect: boolean
+    isCorrect: boolean,
+    errors: any
   ): Answer => {
     return {
       id: id,
@@ -207,6 +232,7 @@ export default class QuestionApi extends ApiBase {
       parentQuestionId: 0,
       name: "",
       explain: "",
+      errors: errors
     };
   };
 }

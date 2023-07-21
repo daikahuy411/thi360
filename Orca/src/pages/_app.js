@@ -10,13 +10,15 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 import 'iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'
-// import '../../styles/test.css'
+import '../../styles/main.scss'
 
+// import '../../styles/test.css'
 import { defaultACLObj } from 'configs/acl'
 import themeConfig from 'configs/themeConfig'
 // ** Contexts
 import { AuthProvider } from 'context/AuthContext'
 import Interceptor from 'context/interceptor'
+import TestingLayout from 'layouts/testing'
 // ** Component Imports
 import UserLayout from 'layouts/UserLayout'
 // ** Next Imports
@@ -47,8 +49,6 @@ import ThemeComponent from '@core/theme/ThemeComponent'
 import { createEmotionCache } from '@core/utils/create-emotion-cache'
 // ** Emotion Imports
 import { CacheProvider } from '@emotion/react'
-import TestingLayout from 'layouts/testing'
-import { useEffect } from 'react'
 
 const clientSideEmotionCache = createEmotionCache()
 

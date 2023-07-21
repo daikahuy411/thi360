@@ -68,6 +68,8 @@ export default class CatalogTree extends React.Component<Props, States> {
   render() {
     return (
       <TreeView
+        key={'tree-view'}
+        className='tree-view-ssss'
         style={{ flexGrow: 1, maxWidth: '400' }}
         onNodeSelect={this.handleSelect}
         onNodeToggle={this.handleToggle}
@@ -78,8 +80,8 @@ export default class CatalogTree extends React.Component<Props, States> {
         {this.state.data &&
           this.state.data
             .filter(x => x.id !== this.state.excludedId)
-            .map((item: any) => (
-              <TreeNode excludedId={this.state.excludedId} key={item.id} item={item} nodeId={item.id} />
+            .map((item: any, index: number) => (
+              <TreeNode excludedId={this.state.excludedId} key={index} item={item} nodeId={item.id} />
             ))}
       </TreeView>
     )
