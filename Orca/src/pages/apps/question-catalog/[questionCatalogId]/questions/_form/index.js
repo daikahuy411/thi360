@@ -65,6 +65,7 @@ import Tooltip from '@mui/material/Tooltip'
 
 import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
+import styles from './question-form.module.scss'
 
 function PaperComponent(props) {
   return (
@@ -86,10 +87,8 @@ const QuestionEditForm = () => {
   const [anwser, setAnwser] = useState([])
   const [questionTypeName, setQuestionTypeName] = useState('');
   const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
+  const [isValidAnswer, setIsValidAnswer] = useState(false)
 
-  let dynamic = {
-    // content: yup.string().required('* lkafjl sfjsl dlksfjlkj salkfjdsl fjlksfj')
-  }
   let schema = yup.object().shape({
     name: yup.string().required('* bắt buộc'),
     content: yup.string().required('* bắt buộc')
@@ -98,8 +97,10 @@ const QuestionEditForm = () => {
   const {
     control,
     handleSubmit,
+    setValue,
     getValues,
     reset,
+    unregister,
     formState: { isValid, errors }
   } = useForm({
     currentQuestion,
@@ -126,7 +127,12 @@ const QuestionEditForm = () => {
 
         setCategorySelected({ categoryId: response.data.categoryId, categoryName: response.data.categoryName })
 
+        // data.answers.map((x) => {
+        //   setValue(`anws-content-${x.id}`, x.content)
+        //   return
+        // })
         setAnwser(Object.values(data.answers))
+        
       })
   }
   useEffect(() => {
@@ -142,26 +148,83 @@ const QuestionEditForm = () => {
     item.catalogId = Number(questionCatalogId)
     setQuestionTypeName(item.questionTypeName)
     dispatch(selectQuestion(item))
-    setAnwser(Object.values(item.answers))
+    setAnwser(item.answers)
     console.log('type:', type)
+    console.log('item:', item)
   }
 
   useEffect(() => {
     if (currentQuestion) reset(currentQuestion)
   }, [currentQuestion])
 
+  const checkValidate = (id) => {
+    let anwserArr = []
+    anwser.forEach(element => {
+      anwserArr.push(Object.assign({}, element))
+    })
+
+    anwserArr.map((x) => {
+      console.log('enswer-anwser:', x)
+      console.log('getValues():', getValues(`anws-content-${x.id}`))
+
+      if (x.id == id) {
+        console.log('getValues:', getValues(`anws-content-${x.id}`))
+        if (!getValues(`anws-content-${x.id}`)) {
+          console.log('getValues-áhjhdakjdhkajs:', getValues(`anws-content-${x.id}`))
+          let errorObj = {
+            isError: true,
+            message: "* Bắt buộc"
+          }
+          x.errors = errorObj
+        } else {
+          let errorObj = {
+            isError: false,
+            message: ""
+          }
+          x.errors = errorObj
+        }
+      }
+    })
+    setAnwser([...anwserArr])
+
+    console.log('isValid:', isValid)
+    console.log('isValidAnswer:', isValidAnswer)
+    checkIsvalidAnswer(true)
+  }
+
+  const checkIsvalidAnswer = (isFormField = false) => {
+    let answers = [...anwser]
+    console.log(`anwser`, isFormField)
+    console.log(`getValues`, getValues())
+    let check = true
+    answers.forEach(elm => {
+      let content = getValues(`anws-content-${elm.id}`)
+      // const contentObj = elm.content
+
+      if (!content)
+        content = elm.content
+
+      if (!content || content === '') {
+        check = false
+        return
+      }
+    })
+
+    setIsValidAnswer(check)
+  }
+
   const save = (code) => {
     const itemValue = getValues()
     let param = Object.assign({}, currentQuestion)
     param.name = itemValue.name
     param.content = itemValue.content
+    param.explain = itemValue.explain
     param.categoryId = categorySelected.categoryId
-
 
     let answerArr = []
     anwser.forEach(elm => {
       answerArr.push(Object.assign({}, elm))
-    });
+    })
 
     console.log('itemValue:', itemValue)
 
@@ -171,7 +234,7 @@ const QuestionEditForm = () => {
       if (content)
         elm.content = content
 
-    });
+    })
     param.answers = answerArr
     console.log('param:', param)
 
@@ -218,6 +281,10 @@ const QuestionEditForm = () => {
   * end handle category
   */
 
+  useEffect(() => {
+    checkIsvalidAnswer(true)
+  }, [anwser])
+
   const addAnswer = () => {
     const newAnswer = new QuestionApi().createAnswer(
       -(anwser.length + 1),
@@ -227,29 +294,14 @@ const QuestionEditForm = () => {
     )
     anwser.push(newAnswer)
     setAnwser([...anwser])
-
-
-    // const itemValidate = { name: yup.string().required('* Bắt buộc') }
-    // dynamic['name'] = yup.string().required('* Bắt buộc')
-    dynamic['name-1'] = yup.string().required('* lkafjl sfjsl dlksfjlkj salkfjdsl fjlksfj')
-
-    console.log('dynamic:', dynamic)
-    // schema = [{ ...schema }]
-
-
-    const requiredSchema = yup.string().required();
-    const emailSchemaObject = yup.object({
-      ...dynamic
-    })
-    schema = schema.concat(emailSchemaObject)
-
-    console.log(schema)
   };
 
   const removeAnswer = (id) => {
     let answers = [...anwser]
     answers = answers.filter((x) => x.id !== id)
-    setAnwser([...answers])
+
+    setAnwser(answers)
+    unregister(`anws-content-${id}`)
   };
 
   const handleChangeAnwser = (id, field, checked = false) => {
@@ -277,7 +329,7 @@ const QuestionEditForm = () => {
   };
 
   /*
-  * handle remove exam-item
+  * handle remove question-answer
   */
   const [openDelete, setOpenDelete] = useState(false);
   const handleClickOpenDelete = () => setOpenDelete(true);
@@ -297,7 +349,7 @@ const QuestionEditForm = () => {
     }
   }
   /*
-  * handle remove exam-item
+  * handle remove question-answer
   */
 
   return (
@@ -335,13 +387,13 @@ const QuestionEditForm = () => {
                         &nbsp;Quay lại
                       </Button>
                       &nbsp;
-                      <Button disabled={!isValid} onClick={() => save(1)} variant='contained'>
+                      <Button disabled={!isValid || !isValidAnswer} onClick={() => save(1)} variant='contained'>
                         Cập nhật
                       </Button>
                       {(!currentQuestion || currentQuestion.id == 0) && (
                         <>
                           &nbsp;
-                          <Button disabled={!isValid} onClick={() => save(2)} variant='contained'>
+                          <Button disabled={(!isValid || !isValidAnswer)} onClick={() => save(2)} variant='contained'>
                             Cập nhật &amp; Thêm mới
                           </Button>
                         </>
@@ -355,7 +407,7 @@ const QuestionEditForm = () => {
                       <form onSubmit={handleSubmit(onSubmit)} style={{ height: 'auto', width: '100%', paddingTop: 10 }}>
                         <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
                           <Grid item xs={12}>
-                            <b>Loại câu hỏi: <Chip label={questionTypeName} color="info" variant="outlined" /></b>
+                            <b>Loại câu hỏi: <Chip icon={<Icon icon='mdi:category' />} label={questionTypeName} color="info" variant="outlined" className='chip-square' /></b>
                           </Grid>
                         </Grid>
                         <Grid container spacing={5}>
@@ -472,8 +524,8 @@ const QuestionEditForm = () => {
                         </Grid>
                         <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
                           <Grid item xs={12}>
-                            <TableContainer component={Paper} style={{ marginTop: 5 }}>
-                              <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                            <TableContainer component={Paper} style={{ marginTop: 5 }} className=''>
+                              <Table sx={{ minWidth: 650 }} aria-label='simple table' className={styles.answer_table}>
                                 <TableHead>
                                   <TableRow>
                                     <TableCell padding='checkbox'>
@@ -500,7 +552,7 @@ const QuestionEditForm = () => {
                                           <TableCell padding='checkbox' style={{ textAlign: 'center' }}>
                                             {index + 1}
                                           </TableCell>
-                                          <TableCell component='th' scope='row' style={{ textAlign: 'center' }}>
+                                          <TableCell scope='row' style={{ textAlign: 'center' }}>
                                             {currentQuestion.questionTypeId === QuestionType.MC && (
                                               <Checkbox
                                                 checked={anwser.isCorrect}
@@ -523,7 +575,7 @@ const QuestionEditForm = () => {
                                                 />
                                               )}
                                           </TableCell>
-                                          <TableCell component='th' scope='row'>
+                                          <TableCell scope='row'>
                                             <FormControl fullWidth>
                                               <Controller
                                                 name={`anws-content-${anwser.id}`}
@@ -539,19 +591,30 @@ const QuestionEditForm = () => {
                                                     label='Nội dung'
                                                     InputLabelProps={{ shrink: true }}
                                                     required
-                                                    onChange={onChange}
-                                                    error={true}
+                                                    onChange={(value) => {
+                                                      onChange(value)
+                                                      checkValidate(anwser.id)
+                                                    }}
+                                                    error={Boolean(anwser.errors?.isError)}
                                                     aria-describedby='validation-schema-name'
                                                   />
                                                 )}
                                               />
+
+                                              <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
+                                                {anwser.errors?.message}
+                                              </FormHelperText>
                                             </FormControl>
                                           </TableCell>
                                           <TableCell>
                                             {currentQuestion.questionTypeId !== QuestionType.TF && (
-                                              <IconButton aria-label='Xóa đáp án' onClick={() => removeAnswer(anwser.id)}>
-                                                <DeleteIcon color='warning' />
-                                              </IconButton>
+                                              <Tooltip title='Xóa đáp án'>
+                                                <span>
+                                                  <IconButton aria-label='Xóa đáp án' onClick={() => removeAnswer(anwser.id)}>
+                                                    <DeleteIcon color='warning' />
+                                                  </IconButton>
+                                                </span>
+                                              </Tooltip>
                                             )}
                                           </TableCell>
                                         </TableRow>

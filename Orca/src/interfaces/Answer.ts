@@ -1,4 +1,4 @@
-import EntityBase from './EntityBase';
+import EntityBase from './EntityBase'
 
 export default interface Answer extends EntityBase {
   isCorrect: boolean;
@@ -7,4 +7,5 @@ export default interface Answer extends EntityBase {
   questionId: number;
   parentQuestionId: number;
   explain: string;
+  errors?: any;
 };

@@ -6,4 +6,5 @@ export enum QuestionType {
   TF = 13,
   FB = 19,
   ST = 7,
+  ORDER = 21,
 }

@@ -14,6 +14,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
+import Chip from '@mui/material/Chip'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
@@ -216,7 +217,7 @@ const QuestionTable = () => {
               <MenuItem
                 component={Link}
                 key={item.id}
-                href={`/apps/question-catalog/${questionCatalogId}/questions/add/${item.id}`}
+                href={`/apps/question-catalog/${questionCatalogId}/questions/add/${item.typeId}`}
               >
                 {item.name}
               </MenuItem>
@@ -300,8 +301,12 @@ const QuestionTable = () => {
                     <TableCell component='th' scope='row'>
                       {row.shortContent}
                     </TableCell>
-                    <TableCell>{row.questionTypeName}</TableCell>
-                    <TableCell>{row.categoryName}</TableCell>
+                    <TableCell>
+                      {row.questionTypeName ? (<Chip icon={<Icon icon='mdi:category' />} label={row.questionTypeName} color="info" variant="outlined" className='chip-square'/>) : null}
+                    </TableCell>
+                    <TableCell>
+                      {row.categoryName ? (<Chip icon={<Icon icon='mdi:tag' />} label={row.categoryName} color="primary" variant="outlined" />) : null}
+                    </TableCell>
                   </TableRow>
                 )
               })}
