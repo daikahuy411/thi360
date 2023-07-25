@@ -1,6 +1,6 @@
 export default interface EntityBase{
     id: number;
-    name: string;
+    name?: string;
     createdTime?: Date;
     lastModifiedTime?: Date;
 }

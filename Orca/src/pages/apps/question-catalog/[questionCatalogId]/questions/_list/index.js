@@ -6,6 +6,7 @@ import {
 import QuestionApi from 'api/question-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import TableLoading from 'pages/shared/loading/TableLoading'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
 
@@ -59,6 +60,7 @@ const QuestionTable = () => {
   const [questionTypes, setQuestionTypes] = useState(null)
   const [catalog, setCatalog] = useState(null)
   const [totalItems, setTotalItems] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const { questionCatalogId } = router.query
 
@@ -81,6 +83,7 @@ const QuestionTable = () => {
   const searchQuestion = () => {
     if (!questionCatalogId || questionCatalogId == 0) return
 
+    setLoading(true)
     new QuestionApi()
       .searches({
         catalogId: questionCatalogId,
@@ -94,6 +97,7 @@ const QuestionTable = () => {
         if (response.data.isSuccess) {
           setData(response.data.value)
           setTotalItems(response.data.totalItems)
+          setLoading(false)
         }
       })
   }
@@ -300,11 +304,11 @@ const QuestionTable = () => {
                     </TableCell>
                     <TableCell component='th' scope='row'>
                       <strong>{row.name}</strong>
-                      <br/>
+                      <br />
                       {row.shortContent}
                     </TableCell>
                     <TableCell>
-                      {row.questionTypeName ? (<Chip icon={<Icon icon='mdi:category' />} label={row.questionTypeName} color="info" variant="outlined" className='chip-square'/>) : null}
+                      {row.questionTypeName ? (<Chip icon={<Icon icon='mdi:category' />} label={row.questionTypeName} color="info" variant="outlined" className='chip-square' />) : null}
                     </TableCell>
                     <TableCell>
                       {row.categoryName ? (<Chip icon={<Icon icon='mdi:tag' />} label={row.categoryName} color="primary" variant="outlined" />) : null}
@@ -312,6 +316,9 @@ const QuestionTable = () => {
                   </TableRow>
                 )
               })}
+
+            <TableLoading isOpen={loading} colSpan={5} />
+
           </TableBody>
         </Table>
       </TableContainer>
