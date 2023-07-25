@@ -1,10 +1,25 @@
-.MuiChip-root{
+.MuiChip-root {
     padding: 1px !important;
 }
-.chip-square{
+
+.chip-square {
     border-radius: 4px !important;
 }
 
 textarea:disabled {
     cursor: not-allowed;
-  }
+}
+
+.text-muted{
+    display: inline;
+    font-size: 15px;
+    color: #818a91!important;
+    padding: 4px 0 0;
+}
+
+.box-noted{
+    border: 2px dashed #dadada;
+    padding: 2.75rem 1.25rem;
+    border-radius: 5px;
+    text-align: center;
+}

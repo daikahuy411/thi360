@@ -1,4 +1,5 @@
 import {
+  Fragment,
   useEffect,
   useState
 } from 'react'
@@ -9,6 +10,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import CatalogDialog from 'pages/shared/catalog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
+import AddQuestionAnswer from 'pages/shared/question-form'
 import Draggable from 'react-draggable'
 import {
   Controller,
@@ -35,8 +37,10 @@ import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import FolderIcon from '@mui/icons-material/FolderOpen'
 import {
   Button,
-  Divider
+  Divider,
+  Input
 } from '@mui/material'
+import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import Chip from '@mui/material/Chip'
@@ -51,6 +55,8 @@ import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import Paper from '@mui/material/Paper'
 import Radio from '@mui/material/Radio'
@@ -85,8 +91,11 @@ const QuestionEditForm = () => {
   const currentQuestion = useSelector(selectedQuestion)
   const [item, setItem] = useState(null)
   const [anwser, setAnwser] = useState([])
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [lsQuestionTypes, setLsQuestionTypes] = useState(null)
   const [questionTypeName, setQuestionTypeName] = useState('');
   const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
+  const [openAddQuestionAnswer, setOpenAddQuestionAnswer] = useState(false)
   const [isValidAnswer, setIsValidAnswer] = useState(false)
 
   let schema = yup.object().shape({
@@ -116,6 +125,10 @@ const QuestionEditForm = () => {
     }
 
     fetchData(questionId)
+
+    if (questionId > 0) {
+      getAllQuestionTypes()
+    }
   }, [questionId])
 
   const fetchData = (questionId) => {
@@ -127,14 +140,18 @@ const QuestionEditForm = () => {
 
         setCategorySelected({ categoryId: response.data.categoryId, categoryName: response.data.categoryName })
 
-        // data.answers.map((x) => {
-        //   setValue(`anws-content-${x.id}`, x.content)
-        //   return
-        // })
         setAnwser(Object.values(data.answers))
+        // setAnwser(data.answers)
 
       })
   }
+
+  const getAllQuestionTypes = () => {
+    new QuestionApi().getQuestionTypes().then(response => {
+      setLsQuestionTypes(response.data)
+    })
+  }
+
   useEffect(() => {
     if (!router.isReady) return
     if (type) {
@@ -148,9 +165,9 @@ const QuestionEditForm = () => {
     item.catalogId = Number(questionCatalogId)
     setQuestionTypeName(item.questionTypeName)
     dispatch(selectQuestion(item))
-    setAnwser(item.answers)
+    setAnwser(Object.values(item.answers))
     console.log('type:', type)
-    console.log('item:', item)
+    console.log('item----:', typeof item.answers)
   }
 
   useEffect(() => {
@@ -290,11 +307,18 @@ const QuestionEditForm = () => {
       -(anwser.length + 1),
       anwser.length + 1,
       "",
-      false
+      false,
+      {
+        isError: false,
+        message: ""
+      }
     )
+
+    console.log('newAnswer:', newAnswer)
+    console.log('anwser:', typeof anwser)
     anwser.push(newAnswer)
     setAnwser([...anwser])
-  };
+  }
 
   const removeAnswer = (id) => {
     let answers = [...anwser]
@@ -302,9 +326,10 @@ const QuestionEditForm = () => {
 
     setAnwser(answers)
     unregister(`anws-content-${id}`)
-  };
+  }
 
   const handleChangeAnwser = (id, field, checked = false) => {
+    console.log('checked-sdfsfs:', checked)
     let anwserArr = []
     anwser.forEach(element => {
       anwserArr.push(Object.assign({}, element))
@@ -313,6 +338,10 @@ const QuestionEditForm = () => {
     anwserArr.map((x) => {
       if (field === 'content') {
 
+      } if (field === 'position') {
+        if (x.id == id) {
+          x.order = Number(checked)
+        }
       } else if (field === 'checkbox') {
         if (x.id == id) {
           x.isCorrect = checked
@@ -326,7 +355,7 @@ const QuestionEditForm = () => {
       }
     })
     setAnwser([...anwserArr])
-  };
+  }
 
   /*
   * handle remove question-answer
@@ -351,6 +380,19 @@ const QuestionEditForm = () => {
   /*
   * handle remove question-answer
   */
+
+  const open = Boolean(anchorEl)
+  const handleChildQuestionClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const [childQuestionSelected, setChildQuestionSelected] = useState(null);
+  const handleShowFormChildQuestion = (item) => {
+    setAnchorEl(null)
+    setOpenAddQuestionAnswer(true)
+    console.log(item)
+    setChildQuestionSelected(item)
+  }
 
   return (
     <>
@@ -516,7 +558,7 @@ const QuestionEditForm = () => {
                             </FormControl>
                           </Grid>
                         </Grid>
-                        {currentQuestion && currentQuestion.questionTypeId !== QuestionType.SA && (
+                        {(currentQuestion.questionTypeId !== QuestionType.SA && currentQuestion.questionTypeId !== QuestionType.GQ) && (
                           <>
                             <Grid container spacing={5} style={{ paddingBottom: '20px', paddingTop: '10px' }}>
                               <Grid item xs={12}>
@@ -525,6 +567,9 @@ const QuestionEditForm = () => {
                             </Grid>
                             <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
                               <Grid item xs={12}>
+                                {currentQuestion.questionTypeId === QuestionType.ORDER && (
+                                  <Alert severity="info"><strong>Lưu ý!</strong> Thứ tự đáp án đúng phải được sắp xếp theo thứ tự từ trên xuống dưới.</Alert>
+                                )}
                                 <TableContainer component={Paper} style={{ marginTop: 5 }} className=''>
                                   <Table sx={{ minWidth: 650 }} aria-label='simple table' className={styles.answer_table}>
                                     <TableHead>
@@ -532,7 +577,9 @@ const QuestionEditForm = () => {
                                         <TableCell padding='checkbox'>
                                           #
                                         </TableCell>
-                                        <TableCell style={{ width: 120 }}>Đáp án đúng</TableCell>
+                                        {currentQuestion.questionTypeId !== QuestionType.ORDER && (
+                                          <TableCell style={{ width: 120 }}>Đáp án đúng</TableCell>
+                                        )}
                                         <TableCell>Nội dung</TableCell>
                                         <TableCell style={{ width: 30 }}></TableCell>
                                       </TableRow>
@@ -553,29 +600,41 @@ const QuestionEditForm = () => {
                                               <TableCell padding='checkbox' style={{ textAlign: 'center' }}>
                                                 {index + 1}
                                               </TableCell>
-                                              <TableCell scope='row' style={{ textAlign: 'center' }}>
-                                                {currentQuestion.questionTypeId === QuestionType.MC && (
-                                                  <Checkbox
-                                                    checked={anwser.isCorrect}
-                                                    value={anwser.isCorrect}
-                                                    name={`chk-ans-content-${anwser.id}`}
-                                                    onChange={(event) => {
-                                                      handleChangeAnwser(anwser.id, 'checkbox', event.target.checked)
-                                                    }}
-                                                  />
-                                                )}
-                                                {(currentQuestion.questionTypeId === QuestionType.SC ||
-                                                  currentQuestion.questionTypeId === QuestionType.TF) && (
-                                                    <Radio
+                                              {currentQuestion.questionTypeId !== QuestionType.ORDER && (
+                                                <TableCell scope='row' style={{ textAlign: 'center' }}>
+                                                  {currentQuestion.questionTypeId === QuestionType.MC && (
+                                                    <Checkbox
                                                       checked={anwser.isCorrect}
                                                       value={anwser.isCorrect}
-                                                      name={`rdb-ans-content-${anwser.id}`}
+                                                      name={`chk-ans-content-${anwser.id}`}
                                                       onChange={(event) => {
-                                                        handleChangeAnwser(anwser.id, '')
+                                                        handleChangeAnwser(anwser.id, 'checkbox', event.target.checked)
                                                       }}
                                                     />
                                                   )}
-                                              </TableCell>
+                                                  {(currentQuestion.questionTypeId === QuestionType.SC ||
+                                                    currentQuestion.questionTypeId === QuestionType.TF) && (
+                                                      <Radio
+                                                        checked={anwser.isCorrect}
+                                                        value={anwser.isCorrect}
+                                                        name={`rdb-ans-content-${anwser.id}`}
+                                                        onChange={(event) => {
+                                                          handleChangeAnwser(anwser.id, '')
+                                                        }}
+                                                      />
+                                                    )}
+                                                  {(currentQuestion.questionTypeId === QuestionType.FB) && (
+                                                    <Input
+                                                      type='number'
+                                                      name={`ans-order-${anwser.id}`}
+                                                      value={anwser.order}
+                                                      onChange={(event) => {
+                                                        handleChangeAnwser(anwser.id, 'position', event.target.value)
+                                                      }}
+                                                    />
+                                                  )}
+                                                </TableCell>
+                                              )}
                                               <TableCell scope='row'>
                                                 <FormControl fullWidth>
                                                   <Controller
@@ -648,6 +707,93 @@ const QuestionEditForm = () => {
                             </Grid>
                           </>
                         )}
+                        {currentQuestion.questionTypeId === QuestionType.GQ && (
+                          <>
+                            <Grid container spacing={5} style={{ paddingBottom: '20px', paddingTop: '10px' }}>
+                              <Grid item xs={12}>
+                                <Divider variant='left' textAlign='left'> <b>Câu hỏi con</b></Divider>
+                              </Grid>
+                            </Grid>
+                            {(!questionId || questionId == 0) && (
+                              <Grid container spacing={5} style={{ paddingBottom: '20px', paddingTop: '10px' }}>
+                                <Grid item xs={12}>
+                                  <div className='box-noted'>
+                                    <span className="text-muted">
+                                      Cập nhật câu hỏi chính trước khi thêm/ sửa câu hỏi phụ.
+                                    </span>
+                                  </div>
+                                </Grid>
+                              </Grid>
+                            )}
+                            {(questionId > 0) && (
+                              <Grid container spacing={5} style={{ paddingBottom: '20px', paddingTop: '10px' }}>
+                                <Grid item xs={12}>
+                                  <Fragment>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+                                      <Tooltip title="Thêm câu hỏi con vào câu hỏi chính phụ">
+                                        <Button
+                                          variant='outlined'
+                                          style={{ width: 250, margin: '20px' }}
+                                          color='success'
+                                          startIcon={<Icon icon='mdi:plus' />}
+                                          aria-controls={open ? 'account-menu' : undefined}
+                                          aria-haspopup="true"
+                                          aria-expanded={open ? 'true' : undefined}
+                                          onClick={handleChildQuestionClick}
+                                        >
+                                          Thêm câu hỏi con
+                                        </Button>
+                                      </Tooltip>
+                                    </Box>
+                                    {lsQuestionTypes && (
+                                      <Menu
+                                        anchorEl={anchorEl}
+                                        id="account-menu"
+                                        open={open}
+                                        // onClose={handleClose}
+                                        // onClick={handleClose}
+                                        PaperProps={{
+                                          elevation: 0,
+                                          sx: {
+                                            overflow: 'visible',
+                                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                            mt: 1.5,
+                                            '& .MuiAvatar-root': {
+                                              width: 32,
+                                              height: 32,
+                                              ml: -0.5,
+                                              mr: 1,
+                                            },
+                                            '&:before': {
+                                              content: '""',
+                                              display: 'block',
+                                              position: 'absolute',
+                                              top: 0,
+                                              right: 14,
+                                              width: 10,
+                                              height: 10,
+                                              bgcolor: 'background.paper',
+                                              transform: 'translateY(-50%) rotate(45deg)',
+                                              zIndex: 0,
+                                            },
+                                          },
+                                        }}
+                                        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                      >
+                                        {lsQuestionTypes.map(item => (
+                                          <MenuItem key={item.id} onClick={() => handleShowFormChildQuestion(item)}>
+                                            {item.name}
+                                          </MenuItem>
+                                        ))}
+                                      </Menu>
+                                    )}
+                                  </Fragment>
+                                </Grid>
+                              </Grid>
+                            )}
+                          </>
+                        )}
                       </form>
                     </div>
                   </div>
@@ -664,8 +810,18 @@ const QuestionEditForm = () => {
                 }}
                 excludedId={0}
                 onNodeSelected={nodeId => { handleSelectedCategory(nodeId) }}
+              />
+            )}
 
-
+            {openAddQuestionAnswer && (
+              <AddQuestionAnswer
+                isOpen={openAddQuestionAnswer}
+                onClose={() => {
+                  setOpenAddQuestionAnswer(false)
+                }}
+                questionId={0}
+                typeId={childQuestionSelected.typeId}
+                typeName={childQuestionSelected.name}
               />
             )}
 

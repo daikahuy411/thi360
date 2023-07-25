@@ -163,6 +163,25 @@ export default class QuestionApi extends ApiBase {
       };
     }
 
+    if (type.id == QuestionTypeEnum.FB) {
+      return {
+        id: 0,
+        content: "",
+        name: "",
+        parentId: 0,
+        order: 0,
+        explain: "",
+        contentFormat: "html",
+        totalQuestion: 0,
+        questionTypeId: type.id,
+        questionTypeName: typeName,
+        categoryId: 0,
+        answers: [
+          this.createAnswer(-1, 1, "", true, errors),
+        ],
+      };
+    }
+
     if (type.id == QuestionTypeEnum.GQ) {
       return {
         id: 0,
@@ -195,6 +214,27 @@ export default class QuestionApi extends ApiBase {
         questionTypeName: typeName,
         categoryId: 0,
         answers: [],
+        children: [],
+      };
+    }
+
+    if (type.id == QuestionTypeEnum.ORDER) {
+      return {
+        id: 0,
+        content: "",
+        name: "",
+        parentId: 0,
+        order: 0,
+        explain: "",
+        contentFormat: "html",
+        totalQuestion: 0,
+        questionTypeId: type.id,
+        questionTypeName: typeName,
+        categoryId: 0,
+        answers: [
+          this.createAnswer(-1, 1, "", true, errors),
+          this.createAnswer(-2, 2, "", true, errors),
+        ],
         children: [],
       };
     }
