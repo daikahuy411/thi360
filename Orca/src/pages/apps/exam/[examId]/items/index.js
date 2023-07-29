@@ -38,7 +38,7 @@ const ExamItemsListPage = () => {
                     )}
                   </h3>
                   <span className='right'>
-                    <Button variant='outlined' component={Link} href={`/apps/exams/${examId}`}>
+                    <Button variant='outlined' component={Link} href={`/apps/exam/${examId}`}>
                       <ArrowBackIcon />
                       &nbsp;Quay lại
                     </Button>

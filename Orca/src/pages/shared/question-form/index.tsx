@@ -3,12 +3,16 @@ import {
   useState
 } from 'react'
 
+import { QuestionCategoryApi } from 'api/catalog-api'
 import QuestionApi from 'api/question-api'
+import { useRouter } from 'next/router'
+import CatalogDialog from 'pages/shared/catalog'
 import {
   Controller,
   useForm
 } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { CatalogType } from 'types/CatalogType'
 import { QuestionType } from 'types/QuestionType'
 import * as yup from 'yup'
 
@@ -45,22 +49,25 @@ import Typography from '@mui/material/Typography'
 interface Props {
     isOpen: boolean;
     onClose: any;
+    parentQuestionId: number;
     questionId: number;
     typeId: number;
     typeName: string;
 }
 
-const AddQuestionAnswer: React.FC<Props> = ({ isOpen, onClose, questionId, typeId, typeName }) => {
+const AddQuestionAnswer: React.FC<Props> = ({ isOpen, onClose, parentQuestionId, questionId, typeId, typeName }) => {
 
     let schema = yup.object().shape({
         name: yup.string().required('* bắt buộc'),
         content: yup.string().required('* bắt buộc')
     })
 
-    // const currentQuestion = null//useSelector(selectedQuestion)
-    const [currentQuestion, setCurrentQuestion] = useState({ id: 0, questionTypeId: 0, name: '', content: '', explain: '', answers: [] })
+    const router = useRouter()
+    const { questionCatalogId, type } = router.query
+    const [currentQuestion, setCurrentQuestion] = useState<any>({ id: 0, questionTypeId: typeId, name: '', content: '', explain: '', answers: [] })
     const [anwser, setAnwser] = useState([])
     const [isValidAnswer, setIsValidAnswer] = useState(false)
+    const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
 
     const {
         control,
@@ -71,46 +78,33 @@ const AddQuestionAnswer: React.FC<Props> = ({ isOpen, onClose, questionId, typeI
         unregister,
         formState: { isValid, errors }
     } = useForm({
-        // currentQuestion,
+        defaultValues: currentQuestion,
         mode: 'onChange',
         resolver: yupResolver(schema)
     })
 
     useEffect(() => {
-        if (!questionId || questionId == 0) {
-            //   dispatch(selectQuestion({ id: 0, name: '', content: '', answers: [] }))
-            // setCurrentQuestion({ id: 0, name: '', content: '', answers: [] })
-            return
-        }
-
+        if (!questionId || questionId == 0) { return }
         fetchData(questionId)
-
-        if (questionId > 0) {
-            //   getAllQuestionTypes()
-        }
     }, [questionId])
 
     useEffect(() => {
         if (typeId) {
-          initQuestion(typeId)
+            initQuestion(typeId)
         }
-      }, [typeId])
+    }, [typeId])
 
-    const fetchData = (questionId) => {
+    useEffect(() => {
+        if (currentQuestion) reset(currentQuestion)
+    }, [currentQuestion])
+
+    const fetchData = (questionId: number) => {
         new QuestionApi().get(questionId)
             .then(response => {
                 let data = response.data
-                // dispatch(selectQuestion(data))
-                // setQuestionTypeName(data.questionTypeName)
-
-                // setCategorySelected({ categoryId: response.data.categoryId, categoryName: response.data.categoryName })
-
-                // data.answers.map((x) => {
-                //   setValue(`anws-content-${x.id}`, x.content)
-                //   return
-                // })
+                setCurrentQuestion(data)
+                setCategorySelected({ categoryId: response.data.categoryId, categoryName: response.data.categoryName })
                 setAnwser(Object.values(data.answers))
-
             })
     }
 
@@ -120,31 +114,49 @@ const AddQuestionAnswer: React.FC<Props> = ({ isOpen, onClose, questionId, typeI
         // })
     }
 
+    useEffect(() => {
+        checkIsvalidAnswer(true)
+    }, [anwser])
+
     const initQuestion = (type: number) => {
         const item = new QuestionApi().createQuestion({ id: type })
-    
-        // item.catalogId = Number(questionCatalogId)
+
+        item.catalogId = Number(questionCatalogId)
         // setQuestionTypeName(item.questionTypeName)
         // dispatch(selectQuestion(item))
         setAnwser(item.answers)
-        console.log('type:', type)
-        console.log('item:', item)
-      }
+    }
 
-    const checkValidate = (id) => {
+    /*
+    * handle category
+    */
+    const [categorySelected, setCategorySelected] = useState({ categoryId: 0, categoryName: '' })
+    const handleSelectedCategory = (selectedId: any) => {
+        QuestionCategoryApi.get(selectedId)
+            .then(response => {
+                if (response.data) {
+                    setCategorySelected({ categoryId: selectedId, categoryName: response.data.name })
+                    //   setItem({ ...item, categoryId: Number(selectedId) })
+                }
+            })
+    }
+
+    const cleanCategory = () => {
+        setCategorySelected({ categoryId: 0, categoryName: '' })
+    }
+    /*
+    * end handle category
+    */
+
+    const checkValidate = (id: number) => {
         let anwserArr = []
         anwser.forEach(element => {
             anwserArr.push(Object.assign({}, element))
         })
 
         anwserArr.map((x) => {
-            console.log('enswer-anwser:', x)
-            console.log('getValues():', getValues(`anws-content-${x.id}`))
-
             if (x.id == id) {
-                console.log('getValues:', getValues(`anws-content-${x.id}`))
                 if (!getValues(`anws-content-${x.id}`)) {
-                    console.log('getValues-áhjhdakjdhkajs:', getValues(`anws-content-${x.id}`))
                     let errorObj = {
                         isError: true,
                         message: "* Bắt buộc"
@@ -162,24 +174,39 @@ const AddQuestionAnswer: React.FC<Props> = ({ isOpen, onClose, questionId, typeI
         setAnwser([...anwserArr])
 
 
-        // checkIsvalidAnswer(true)
+        checkIsvalidAnswer(true)
     }
 
-    const save = (code) => {
+    const checkIsvalidAnswer = (isFormField = false) => {
+        let answers = [...anwser]
+        let check = true
+        answers.forEach(elm => {
+            let content = getValues(`anws-content-${elm.id}`)
+            if (!content)
+                content = elm.content
+
+            if (!content || content === '') {
+                check = false
+                return
+            }
+        })
+
+        setIsValidAnswer(check)
+    }
+
+    const save = (code: number) => {
         const itemValue = getValues()
         let param = Object.assign({}, currentQuestion)
+        param.parentId = parentQuestionId
         param.name = itemValue.name
         param.content = itemValue.content
         param.explain = itemValue.explain
-        // param.categoryId = categorySelected.categoryId
+        param.categoryId = categorySelected.categoryId
 
         let answerArr = []
         anwser.forEach(elm => {
             answerArr.push(Object.assign({}, elm))
         })
-
-        console.log('itemValue:', itemValue)
-
 
         answerArr.forEach(elm => {
             const content = getValues(`anws-content-${elm.id}`)
@@ -188,16 +215,16 @@ const AddQuestionAnswer: React.FC<Props> = ({ isOpen, onClose, questionId, typeI
 
         })
         param.answers = answerArr
-        console.log('param:', param)
 
         new QuestionApi().save(param)
             .then(response => {
                 toast.success('Cập nhật thành công')
                 if (code == 1) {
-                    //   router.push(`/apps/question-catalog/${questionCatalogId}/questions`)
+                    isOpen = false
+                    onClose()
                 } else {
                     reset()
-                    //   cleanCategory()
+                    cleanCategory()
                     //   initQuestion(type)
                 }
             })
@@ -218,7 +245,7 @@ const AddQuestionAnswer: React.FC<Props> = ({ isOpen, onClose, questionId, typeI
         setAnwser([...anwser])
     };
 
-    const removeAnswer = (id) => {
+    const removeAnswer = (id: number) => {
         let answers = [...anwser]
         answers = answers.filter((x) => x.id !== id)
 
@@ -356,17 +383,17 @@ const AddQuestionAnswer: React.FC<Props> = ({ isOpen, onClose, questionId, typeI
                                                     readOnly: true,
                                                     className: 'Mui-disabled',
                                                 }}
-                                                value={''}
+                                                value={categorySelected.categoryName ?? ''}
                                                 endAdornment={
                                                     <InputAdornment position='end'>
-                                                        <IconButton aria-label='toggle password visibility' edge='end' >
+                                                        <IconButton aria-label='toggle password visibility' edge='end' onClick={cleanCategory}>
                                                             <DeleteOutline />
                                                         </IconButton>
                                                         &nbsp;
                                                         <IconButton
                                                             edge='end'
                                                             onClick={() => {
-                                                                // setOpenCatalogDialog(true)
+                                                                setOpenCatalogDialog(true)
                                                             }}
                                                         >
                                                             <FolderIcon />
@@ -437,7 +464,7 @@ const AddQuestionAnswer: React.FC<Props> = ({ isOpen, onClose, questionId, typeI
                                         </Grid>
                                         <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
                                             <Grid item xs={12}>
-                                                <TableContainer component={Paper} style={{ marginTop: 5 }} className=''>
+                                                <TableContainer component={Paper} style={{ marginTop: 5 }} className='answer-table'>
                                                     <Table sx={{ minWidth: 650 }} aria-label='simple table' >
                                                         <TableHead>
                                                             <TableRow>
@@ -564,6 +591,18 @@ const AddQuestionAnswer: React.FC<Props> = ({ isOpen, onClose, questionId, typeI
                         </div>
                     </Grid>
                 </Grid>
+
+                {openCatalogDialog && (
+                    <CatalogDialog
+                        catalogType={CatalogType.QUESTION_CATEGORY}
+                        open={openCatalogDialog}
+                        onClose={() => {
+                            setOpenCatalogDialog(false)
+                        }}
+                        excludedId={0}
+                        onNodeSelected={(nodeId: any) => { handleSelectedCategory(nodeId) }}
+                    />
+                )}
             </>
         </Drawer >
     )

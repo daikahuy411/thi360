@@ -1,10 +1,11 @@
-import EntityBase from './EntityBase';
-import Answer from './Answer';
+import Answer from './Answer'
+import EntityBase from './EntityBase'
 
 export default interface Question extends EntityBase{
   parentId: number;
   questionTypeId: number;
   categoryId: number;
+  catalogId?: number;
   categoryName?: string;
   content: string;
   explain: string;
