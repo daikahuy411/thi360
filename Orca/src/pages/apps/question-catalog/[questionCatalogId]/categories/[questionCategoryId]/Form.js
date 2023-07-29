@@ -24,15 +24,8 @@ const EditForm = (props) => {
 
   const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
 
-  // const handleChange = prop => event => {
-  //   setValues({ ...values, [prop]: event.target.value })
-  // }
-
-  console.log('props:', props)
-
   useEffect(() => {
     setParentSelected({ parentId: props.item.parentId, parentName: props.item.parentName });
-    // setValues({ ...values, name: props.item.name })
     values.name = props.item.name
   }, [props.item])
 
@@ -61,7 +54,7 @@ const EditForm = (props) => {
 
   return (
     <>
-      <form onSubmit={e => e.preventDefault()} defaultValue={props.item}>
+      <form onSubmit={e => e.preventDefault()} defaultValue={props.item} style={{ height: 'auto', width: '100%', paddingTop: 10 }}>
         <Grid container spacing={5}>
           <Grid item xs={12}>
             <FormControl fullWidth variant='outlined'>
@@ -118,26 +111,6 @@ const EditForm = (props) => {
               )}
             </FormControl>
           </Grid>
-          {/* <Grid item xs={12}>
-            <FormControl fullWidth>
-              <Controller
-                name='description'
-                control={props.control}
-                rules={{ required: false }}
-                render={({ field: { value, onChange } }) => (
-                  <TextField
-                    multiline
-                    rows={3}
-                    fullWidth
-                    value={value ?? ''}
-                    label='Mô tả'
-                    InputLabelProps={{ shrink: true }}
-                    onChange={onChange}
-                  />
-                )}
-              />
-            </FormControl>
-          </Grid> */}
         </Grid>
       </form>
 

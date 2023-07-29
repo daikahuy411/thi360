@@ -31,6 +31,7 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import FormControl from '@mui/material/FormControl'
+import FormHelperText from '@mui/material/FormHelperText'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -38,7 +39,6 @@ import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
-import FormHelperText from '@mui/material/FormHelperText'
 
 import TopNav from '../_layout/_breadcrums'
 
@@ -226,9 +226,9 @@ const ExamCategoryEditPage = () => {
                       Câu hỏi
                     </div>
                   </div>
-                  <div className='grid-block' style={{ padding: 50 }}>
+                  <div className='grid-block' style={{ padding: 10 }}>
                     {/* <EditForm item={item} control={control} errors={errors} parentCallback={callbackFunction} /> */}
-                    <form onSubmit={e => e.preventDefault()}>
+                    <form onSubmit={e => e.preventDefault()} style={{ height: 'auto', width: '100%', paddingTop: 10 }}>
                       <Grid container spacing={5}>
                         <Grid item xs={12}>
                           <FormControl fullWidth variant='outlined'>

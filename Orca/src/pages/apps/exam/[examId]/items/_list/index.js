@@ -81,6 +81,9 @@ const ExamItemTable = () => {
           setTotalItem(response.data.totalItems)
         }
       })
+      .catch(() => {
+        toast.error('Xảy ra lỗi trong quá trình lấy dữ liệu. Vui lòng liên hệ quản trị hệ thống!')
+      })
   }
   /*
   * handle checkbox

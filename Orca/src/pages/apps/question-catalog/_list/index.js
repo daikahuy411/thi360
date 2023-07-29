@@ -11,8 +11,10 @@ import toast from 'react-hot-toast'
 import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
+import Chip from '@mui/material/Chip'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
@@ -255,10 +257,10 @@ const QuestionCatalogTable = () => {
                       {item.name}
                     </TableCell>
                     <TableCell component='th' scope='row'>
-                      {item.totalQuestion}
+                      <Chip icon={<HelpOutlineIcon />} label={`${item.totalQuestion} câu hỏi`} color="info" variant="outlined" className='chip-square' />
                     </TableCell>
                     <TableCell component='th' scope='row'>
-                      {item.totalCategory}
+                      <Chip icon={<Icon icon='mdi:category' />} label={`${item.totalCategory} danh mục`} color="primary" variant="outlined" className='chip-square' />
                     </TableCell>
                   </TableRow>
                 )

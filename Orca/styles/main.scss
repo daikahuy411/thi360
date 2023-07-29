@@ -23,3 +23,10 @@ textarea:disabled {
     border-radius: 5px;
     text-align: center;
 }
+
+.answer-table{
+    // background: aliceblue;
+    thead > tr > th, td{
+        border: 1px solid rgba(231, 230, 232, 1);
+    }
+}

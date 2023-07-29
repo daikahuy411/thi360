@@ -187,7 +187,7 @@ const EditQuestionCatalogPage = () => {
                 <div className='grid-block'>
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
-                    <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', paddingTop: 10 }}>
+                    <form onSubmit={handleSubmit(onSubmit)} style={{ height: 'auto', width: '100%', paddingTop: 10 }}>
                       <Grid container spacing={5}>
                         <Grid item xs={12}>
                           <FormControl fullWidth>
