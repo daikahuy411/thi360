@@ -58,7 +58,25 @@ const navigation = () => {
           path: '/apps/user'
         }
       ]
-    }
+    },
+    {
+      sectionTitle: 'Hệ thống'
+    },
+    {
+      title: 'Quản trị hệ thống',
+      icon: 'fluent-mdl2:system',
+      children: [
+        {
+          title: 'Tổ chức, Đơn vị',
+          path: '/apps/organization'
+        },
+      ]
+    },
+    {
+      title: 'Tenants',
+      icon: 'eos-icons:file-system',
+      path: '/apps/tenant'
+    },
   ]
 }
 

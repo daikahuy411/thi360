@@ -44,7 +44,7 @@ const TableLoading: React.FC<LoadingProps> = ({ isOpen, colSpan }) => {
         <>
             <TableRow style={{ display: isOpen ? 'table-row' : 'none' }}>
                 <TableCell component='td' scope='row' colSpan={5}>
-                    <Box sx={{ width: '50%', padding: '15px', margin: '0 auto', textAlign: 'center' }}>
+                    <Box sx={{ width: '180px', padding: '15px', margin: '0 auto', textAlign: 'center' }}>
                         <Typography variant="h6" gutterBottom style={{ color: '#16B1FF' }}>
                             Loading
                         </Typography>
