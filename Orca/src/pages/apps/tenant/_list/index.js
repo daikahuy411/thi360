@@ -3,7 +3,6 @@ import {
   useState
 } from 'react'
 
-import ExamApi from 'api/exam-api'
 import TenantApi from 'api/tenant-api'
 import moment from 'moment'
 import Link from 'next/link'
@@ -59,9 +58,7 @@ function PaperComponent(props) {
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const [totalItem, setTotalItem] = useState(0)
     const [keyword, setKeyword] = useState('')
-    // const [treeData, setTreeData] = useState(null)
     const [status, setStatus] = useState(-1)
-    const [categoryId, setCategoryId] = useState(0)
     const [loading, setLoading] = useState(false)
     const [isTableEmpty, setIsTableEmpty] = useState(false)
   
@@ -92,6 +89,7 @@ function PaperComponent(props) {
             if(response.data.value){
               setData(response.data.value)
               setTotalItem(response.data.totalItems)
+              setIsTableEmpty(false)
             }else{
               setIsTableEmpty(true)
             }           
@@ -147,7 +145,7 @@ function PaperComponent(props) {
     const handleCloseDelete = () => setOpenDelete(false);
     const handleDelete = () => {
       if (selected.length > 0) {
-        new ExamApi().deleteMultiple(selected)
+        new TenantApi().deleteMultiple(selected)
           .then((response) => {
             setOpenDelete(false)
             if (response.data.isSuccess) {
@@ -170,7 +168,7 @@ function PaperComponent(props) {
       <>
         <HelmetProvider>
           <Helmet>
-            <title>Quản lý Kỳ thi</title>
+            <title>Quản lý Tenant</title>
           </Helmet>
           <Divider />
           <Toolbar style={{ padding: 0 }}>
@@ -262,13 +260,13 @@ function PaperComponent(props) {
                           <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleClick(event, row.id)} />
                         </TableCell>
                         <TableCell component='th' scope='row'>
-                          <IconButton aria-label='filter' component={Link} href={`/apps/exam/${row.id}`}>
+                          <IconButton aria-label='filter' component={Link} href={`/apps/tenant/${row.id}`}>
                             <EditIcon />
                           </IconButton>
                         </TableCell>
                         <TableCell component='th' scope='row'>
                           [{row.id}]-{row.name}
-                          <br /> <i>{row.registrationTypeName}</i>
+                          <br /> <i>{row.description}</i>
                         </TableCell>
                         <TableCell>{moment(row.createdTime).format('DD/MM/YYYY')}</TableCell>
                       </TableRow>
@@ -300,7 +298,7 @@ function PaperComponent(props) {
             </DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Dữ liệu xóa sẽ không thể khôi phục lại. Bạn có muốn xóa Kỳ thi đã chọn không?
+                Bạn có muốn xóa Tenants đã chọn không?
               </DialogContentText>
             </DialogContent>
             <DialogActions>
