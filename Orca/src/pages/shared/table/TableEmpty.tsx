@@ -13,7 +13,7 @@ const TableEmpty: React.FC<LoadingProps> = ({ isOpen }) => {
 
     return (
         <>
-            <TableRow style={{}}>
+            <TableRow style={{ display: isOpen ? 'table-row' : 'none' }}>
                 <TableCell component='td' scope='row' colSpan={5}>
                     <Box sx={{ width: '50%', padding: '15px', margin: '0 auto', textAlign: 'center' }}>
                         <Icon icon='codicon:empty-window' />
