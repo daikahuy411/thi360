@@ -1,3 +1,8 @@
+import {
+  useEffect,
+  useState
+} from 'react'
+
 // ** Configs
 import themeConfig from 'configs/themeConfig'
 // ** Next Import
@@ -57,6 +62,7 @@ const VerticalNavHeader = props => {
   const theme = useTheme()
   const { navCollapsed } = settings
   const menuCollapsedStyles = navCollapsed && !navHover ? { opacity: 0 } : { opacity: 1 }
+  const [userData, setUserData] = useState();
 
   const menuHeaderPaddingLeft = () => {
     if (navCollapsed && !navHover) {
@@ -71,6 +77,12 @@ const VerticalNavHeader = props => {
   }
   const MenuLockedIcon = () => userMenuLockedIcon || <Icon icon='mdi:radiobox-marked' />
   const MenuUnlockedIcon = () => userMenuUnlockedIcon || <Icon icon='mdi:radiobox-blank' />
+
+  useEffect(() => {    
+    const users = window.localStorage.getItem('userData')
+    console.log('users:', JSON.parse(users))
+    setUserData(JSON.parse(users))
+  }, [])
 
   return (
     <MenuHeaderWrapper className='nav-header' sx={{ pl: menuHeaderPaddingLeft() }}>
@@ -137,9 +149,15 @@ const VerticalNavHeader = props => {
               </g>
             </g>
           </svg>
-          <HeaderTitle variant='h6' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 3 }) }}>
-            {themeConfig.templateName}
-          </HeaderTitle>
+          <Box>
+            <HeaderTitle variant='h6' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 3 }) }}>
+              {themeConfig.templateName}
+            </HeaderTitle>
+            <HeaderTitle variant="h6" sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 3 }) }} style={{ color: '#666666', fontSize: '12px' }}>
+              {userData?.tenantName}
+            </HeaderTitle>
+          </Box>
+
         </StyledLink>
       )}
 
