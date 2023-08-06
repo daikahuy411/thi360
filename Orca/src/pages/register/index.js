@@ -25,6 +25,7 @@ import { useSettings } from '@core/hooks/useSettings'
 // ** Layout Import
 import BlankLayout from '@core/layouts/BlankLayout'
 import { yupResolver } from '@hookform/resolvers/yup'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import Box from '@mui/material/Box'
 // ** MUI Components
 import Button from '@mui/material/Button'
@@ -33,6 +34,7 @@ import Divider from '@mui/material/Divider'
 import FormControl from '@mui/material/FormControl'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormHelperText from '@mui/material/FormHelperText'
+import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
@@ -42,6 +44,7 @@ import {
   useTheme
 } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
+import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
@@ -118,10 +121,14 @@ const Register = () => {
   const { skin } = settings
 
   const schema = yup.object().shape({
-    password: yup.string().min(5).required(),
-    username: yup.string().min(3).required(),
-    email: yup.string().email().required(),
-    terms: yup.bool().oneOf([true], 'You must accept the privacy policy & terms')
+    passwordHash: yup.string().min(5, 'Mật khẩu không được để trống & phải có ít nhất 6 ký tự!').required('Password không được để trống!'),
+    passwordConfirmation: yup.string()
+      .oneOf([yup.ref('passwordHash'), null], 'Mật khẩu không khớp'),
+    username: yup.string().min(3, 'UserName không được để trống & phải có ít nhất 3 ký tự').required('UserName không được để trống!'),
+    firstName: yup.string(),
+    lastName: yup.string(),
+    email: yup.string().email('Email không hợp lệ!').required('Email không được để trống!'),
+    terms: yup.bool().oneOf([true], 'Bạn cần đồng ý với chính sách và điều khoản để tiếp tục')
   })
 
   const {
@@ -136,18 +143,25 @@ const Register = () => {
   })
 
   const onSubmit = data => {
-    const { email, username, password } = data
-    register({ email, username, password }, err => {
-      if (err.email) {
+    const { email, username, passwordHash, firstName, lastName } = data
+    register({ email, username, passwordHash, firstName, lastName }, err => {
+      const error = err.response.data
+      if (error.email) {
         setError('email', {
           type: 'manual',
-          message: err.email
+          message: error.email
         })
       }
-      if (err.username) {
+      if (error.userName) {
         setError('username', {
           type: 'manual',
-          message: err.username
+          message: error.userName
+        })
+      }
+      if (error.passwordHash) {
+        setError('passwordHash', {
+          type: 'manual',
+          message: error.passwordHash
         })
       }
     })
@@ -266,153 +280,247 @@ const Register = () => {
               <Typography variant='body2'>Make your app management easy and fun!</Typography>
             </Box>
             <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
-              <FormControl fullWidth sx={{ mb: 4 }}>
-                <Controller
-                  name='username'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field: { value, onChange, onBlur } }) => (
-                    <TextField
-                      autoFocus
-                      value={value}
-                      onBlur={onBlur}
-                      label='Username'
-                      onChange={onChange}
-                      placeholder='johndoe'
-                      error={Boolean(errors.username)}
+              <Grid container spacing={2} maxWidth={"sm"}>
+                <Grid item xs={12} md={12}>
+                  <FormControl fullWidth sx={{ mb: 4 }}>
+                    <InputLabel htmlFor='auth-username' error={Boolean(errors.username)}>
+                      Tên người dùng
+                    </InputLabel>
+                    <Controller
+                      name='username'
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { value, onChange } }) => (
+                        <OutlinedInput
+                          autoFocus
+                          autoComplete='off'
+                          value={value ?? ''}
+                          label='Tên người dùng'
+                          required
+                          // onBlur={onBlur}
+                          onChange={onChange}
+                          id='auth-username'
+                          error={Boolean(errors.username)}
+                          endAdornment={
+                            <InputAdornment position='end'>
+                              <Tooltip placement="right-start" title="Tên người dùng viết chữ thường, không có dấu cách, có tối thiểu 3 ký tự.">
+                                <IconButton>
+                                  <InfoOutlinedIcon />
+                                </IconButton>
+                              </Tooltip>
+                            </InputAdornment>
+                          }
+                        />
+                      )}
                     />
-                  )}
-                />
-                {errors.username && (
-                  <FormHelperText sx={{ color: 'error.main' }}>{errors.username.message}</FormHelperText>
-                )}
-              </FormControl>
-              <FormControl fullWidth sx={{ mb: 4 }}>
-                <Controller
-                  name='email'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field: { value, onChange, onBlur } }) => (
-                    <TextField
-                      value={value}
-                      label='Email'
-                      onBlur={onBlur}
-                      onChange={onChange}
-                      error={Boolean(errors.email)}
-                      placeholder='user@email.com'
+                    {errors.username && (
+                      <FormHelperText sx={{ color: 'error.main' }}>{errors.username.message}</FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={8}>
+                  <FormControl fullWidth sx={{ mb: 4 }}>
+                    <Controller
+                      name='lastName'
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { value, onChange } }) => (
+                        <TextField
+                          value={value ?? ''}
+                          label='Họ & Tên đệm'
+                          onChange={onChange}
+                          error={Boolean(errors.lastName)}
+                          aria-describedby='validation-schema-lastName'
+                        />
+                      )}
                     />
-                  )}
-                />
-                {errors.email && <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>}
-              </FormControl>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>
-                  Password
-                </InputLabel>
-                <Controller
-                  name='password'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field: { value, onChange, onBlur } }) => (
-                    <OutlinedInput
-                      value={value}
-                      label='Password'
-                      onBlur={onBlur}
-                      onChange={onChange}
-                      id='auth-login-v2-password'
-                      error={Boolean(errors.password)}
-                      type={showPassword ? 'text' : 'password'}
-                      endAdornment={
-                        <InputAdornment position='end'>
-                          <IconButton
-                            edge='end'
-                            onMouseDown={e => e.preventDefault()}
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
-                          </IconButton>
-                        </InputAdornment>
-                      }
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <FormControl fullWidth sx={{ mb: 4 }}>
+                    <Controller
+                      name='firstName'
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { value, onChange } }) => (
+                        <TextField
+                          value={value ?? ''}
+                          label='Tên'
+                          onChange={onChange}
+                          error={Boolean(errors.firstName)}
+                          aria-describedby='validation-schema-firstName'
+                        />
+                      )}
                     />
-                  )}
-                />
-                {errors.password && (
-                  <FormHelperText sx={{ color: 'error.main' }}>{errors.password.message}</FormHelperText>
-                )}
-              </FormControl>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <FormControl fullWidth sx={{ mb: 4 }}>
+                    <Controller
+                      name='email'
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { value, onChange, onBlur } }) => (
+                        <TextField
+                          value={value}
+                          label='Email'
+                          required
+                          onBlur={onBlur}
+                          onChange={onChange}
+                          error={Boolean(errors.email)}
+                          placeholder='user@gmail.com'
+                        />
+                      )}
+                    />
+                    {errors.email && <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>}
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <FormControl fullWidth sx={{ mb: 4 }}>
+                    <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.passwordHash)}>
+                      Mật khẩu
+                    </InputLabel>
+                    <Controller
+                      name='passwordHash'
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { value, onChange, onBlur } }) => (
+                        <OutlinedInput
+                          autoComplete='new-password'
+                          value={value ?? ''}
+                          label='Mật khẩu'
+                          onBlur={onBlur}
+                          onChange={onChange}
+                          id='auth-login-v2-password'
+                          error={Boolean(errors.passwordHash)}
+                          type={showPassword ? 'text' : 'password'}
+                          endAdornment={
+                            <InputAdornment position='end'>
+                              <IconButton
+                                edge='end'
+                                onMouseDown={e => e.preventDefault()}
+                                onClick={() => setShowPassword(!showPassword)}
+                              >
+                                <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
+                              </IconButton>
+                              &nbsp;
+                              <Tooltip placement="right-start" title="Mật khẩu có tối thiểu 5 ký tự, bao gồm ít nhất 1 ký tự đặc biệt và ít nhất 1 ký tự không phải là số.">
+                                <IconButton>
+                                  <InfoOutlinedIcon />
+                                </IconButton>
+                              </Tooltip>
+                            </InputAdornment>
+                          }
+                        />
+                      )}
+                    />
+                    {errors.passwordHash && (
+                      <FormHelperText sx={{ color: 'error.main' }}>{errors.passwordHash.message}</FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <FormControl fullWidth sx={{ mb: 4 }}>
+                    <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.passwordConfirmation)}>
+                      Xác nhận mật khẩu
+                    </InputLabel>
+                    <Controller
+                      name='passwordConfirmation'
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { value, onChange, onBlur } }) => (
+                        <OutlinedInput
+                          value={value ?? ''}
+                          label='Xác nhận mật khẩu'
+                          onBlur={onBlur}
+                          onChange={onChange}
+                          id='auth-login-v2-password'
+                          error={Boolean(errors.passwordConfirmation)}
+                          type={showPassword ? 'text' : 'password'}
+                          endAdornment={
+                            <InputAdornment position='end'>
+                              <IconButton
+                                edge='end'
+                                onMouseDown={e => e.preventDefault()}
+                                onClick={() => setShowPassword(!showPassword)}
+                              >
+                                <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
+                              </IconButton>
 
-              <FormControl sx={{ mt: 1.5, mb: 4 }} error={Boolean(errors.terms)}>
-                <Controller
-                  name='terms'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field: { value, onChange } }) => {
-                    return (
-                      <FormControlLabel
-                        sx={{
-                          ...(errors.terms ? { color: 'error.main' } : null),
-                          '& .MuiFormControlLabel-label': { fontSize: '0.875rem' }
-                        }}
-                        control={
-                          <Checkbox
-                            checked={value}
-                            onChange={onChange}
-                            sx={errors.terms ? { color: 'error.main' } : null}
+                            </InputAdornment>
+                          }
+                        />
+                      )}
+                    />
+                    {errors.passwordConfirmation && (
+                      <FormHelperText sx={{ color: 'error.main' }}>{errors.passwordConfirmation.message}</FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <FormControl sx={{ mt: 1.5, mb: 4 }} error={Boolean(errors.terms)}>
+                    <Controller
+                      name='terms'
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { value, onChange } }) => {
+                        return (
+                          <FormControlLabel
+                            sx={{
+                              ...(errors.terms ? { color: 'error.main' } : null),
+                              '& .MuiFormControlLabel-label': { fontSize: '0.875rem' }
+                            }}
+                            control={
+                              <Checkbox
+                                checked={value}
+                                onChange={onChange}
+                                sx={errors.terms ? { color: 'error.main' } : null}
+                              />
+                            }
+                            label={
+                              <Fragment>
+                                <Typography
+                                  variant='body2'
+                                  component='span'
+                                  sx={{ color: errors.terms ? 'error.main' : '' }}
+                                >
+                                  Tôi đồng ý{' '}
+                                </Typography>
+                                <LinkStyled href='/' onClick={e => e.preventDefault()}>
+                                  chính sách & điều khoản
+                                </LinkStyled>
+                              </Fragment>
+                            }
                           />
-                        }
-                        label={
-                          <Fragment>
-                            <Typography
-                              variant='body2'
-                              component='span'
-                              sx={{ color: errors.terms ? 'error.main' : '' }}
-                            >
-                              I agree to{' '}
-                            </Typography>
-                            <LinkStyled href='/' onClick={e => e.preventDefault()}>
-                              privacy policy & terms
-                            </LinkStyled>
-                          </Fragment>
-                        }
-                      />
-                    )
-                  }}
-                />
-                {errors.terms && (
-                  <FormHelperText sx={{ mt: 0, color: 'error.main' }}>{errors.terms.message}</FormHelperText>
-                )}
-              </FormControl>
-              <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
-                Sign up
-              </Button>
-              <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-                <Typography variant='body2' sx={{ mr: 2 }}>
-                  Already have an account?
-                </Typography>
-                <Typography variant='body2'>
-                  <LinkStyled href='/login'>Sign in instead</LinkStyled>
-                </Typography>
-              </Box>
-              <Divider sx={{ my: theme => `${theme.spacing(5)} !important` }}>or</Divider>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
-                  <Icon icon='mdi:facebook' />
-                </IconButton>
-                <IconButton href='/' component={Link} sx={{ color: '#1da1f2' }} onClick={e => e.preventDefault()}>
-                  <Icon icon='mdi:twitter' />
-                </IconButton>
-                <IconButton
-                  href='/'
-                  component={Link}
-                  onClick={e => e.preventDefault()}
-                  sx={{ color: theme => (theme.palette.mode === 'light' ? '#272727' : 'grey.300') }}
-                >
-                  <Icon icon='mdi:github' />
-                </IconButton>
-                <IconButton href='/' component={Link} sx={{ color: '#db4437' }} onClick={e => e.preventDefault()}>
-                  <Icon icon='mdi:google' />
-                </IconButton>
-              </Box>
+                        )
+                      }}
+                    />
+                    {errors.terms && (
+                      <FormHelperText sx={{ mt: 0, color: 'error.main' }}>{errors.terms.message}</FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
+                  Đăng ký
+                </Button>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <Typography variant='body2' sx={{ mr: 2 }}>
+                    Bạn đã có tài khoản?
+                  </Typography>
+                  <Typography variant='body2'>
+                    <LinkStyled href='/login'>Đăng nhập</LinkStyled>
+                  </Typography>
+                </Box>
+                <Divider sx={{ my: theme => `${theme.spacing(5)} !important` }}>or</Divider>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
+                    <Icon icon='mdi:facebook' />
+                  </IconButton>
+                  <IconButton href='/' component={Link} sx={{ color: '#db4437' }} onClick={e => e.preventDefault()}>
+                    <Icon icon='mdi:google' />
+                  </IconButton>
+                </Box>
+              </Grid>
             </form>
           </BoxWrapper>
         </Box>
