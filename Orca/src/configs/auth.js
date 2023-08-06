@@ -10,7 +10,9 @@ export default {
 
   meEndpoint: '/auth/me',
   loginEndpoint: 'users/authenticate',
-  registerEndpoint: '/jwt/register',
+  registerEndpoint: 'users/register',
+  verifyActivateCodeEndpoint: 'users/verify-acctivate-code',
   storageTokenKeyName: 'accessToken',
+  storageUserDataKeyName: 'userData',
   onTokenExpiration: 'refreshToken' // logout | refreshToken
 }
