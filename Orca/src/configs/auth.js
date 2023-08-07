@@ -12,7 +12,9 @@ export default {
   loginEndpoint: 'users/authenticate',
   googleLoginEndpoint: 'users/googlelogin',
   userInfoEndpoint: 'users/userinfo',
-  registerEndpoint: '/jwt/register',
+  registerEndpoint: 'users/register',
+  verifyActivateCodeEndpoint: 'users/verify-acctivate-code',
   storageTokenKeyName: 'accessToken',
+  storageUserDataKeyName: 'userData',
   onTokenExpiration: 'refreshToken' // logout | refreshToken
 }

@@ -360,7 +360,7 @@ const LoginPage = () => {
                   New on our platform?
                 </Typography>
                 <Typography variant='body2'>
-                  <LinkStyled href='/register'>Create an account</LinkStyled>
+                  <LinkStyled href='/register'>Tạo mới tài khoản</LinkStyled>
                 </Typography>
               </Box>
               <Divider sx={{ my: theme => `${theme.spacing(5)} !important` }}>or</Divider>

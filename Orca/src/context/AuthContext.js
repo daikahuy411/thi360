@@ -11,6 +11,7 @@ import axios from 'axios'
 import authConfig from 'configs/auth'
 // ** Next Import
 import { useRouter } from 'next/router'
+import { toast } from 'react-hot-toast'
 
 // ** Defaults
 const defaultProvider = {
@@ -20,7 +21,8 @@ const defaultProvider = {
   setLoading: () => Boolean,
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
-  register: () => Promise.resolve()
+  register: () => Promise.resolve(),
+  verifyActivateCode: () => Promise.resolve()
 }
 const AuthContext = createContext(defaultProvider)
 
@@ -102,12 +104,32 @@ const AuthProvider = ({ children }) => {
 
   const handleRegister = (params, errorCallback) => {
     axios
-      .post(authConfig.registerEndpoint, params)
+      .post(`${authConfig.baseApiUrl}${authConfig.registerEndpoint}`, params)
       .then(res => {
-        if (res.data.error) {
-          if (errorCallback) errorCallback(res.data.error)
+        const response = res.data
+        if (response.error) {
+          if (errorCallback) errorCallback(response.error)
         } else {
-          handleLogin({ Username: params.email, password: params.password })
+          router.push(`verify-account/${response.token}`)
+        }
+      })
+      .catch(err => (errorCallback ? errorCallback(err) : null))
+  }
+
+  const handleActivateCode = (params, errorCallback) => {
+    axios
+      .post(`${authConfig.baseApiUrl}${authConfig.verifyActivateCodeEndpoint}`, params)
+      .then(res => {
+        const response = res.data
+        console.log('response-hahahaha:', response)
+        if (!response.isSuccess) {
+          if (errorCallback) errorCallback(response)
+        } else {
+          window.localStorage.setItem(authConfig.storageTokenKeyName, response.value.token)
+          window.localStorage.setItem(authConfig.storageUserDataKeyName, JSON.stringify(response.value))
+          setUser({ ...response.value })
+          toast.success('Chào mừng bạn đến với Thi360.com')
+          router.push('/')
         }
       })
       .catch(err => (errorCallback ? errorCallback(err) : null))
@@ -120,7 +142,8 @@ const AuthProvider = ({ children }) => {
     setLoading,
     login: handleLogin,
     logout: handleLogout,
-    register: handleRegister
+    register: handleRegister,
+    verifyActivateCode: handleActivateCode
   }
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
