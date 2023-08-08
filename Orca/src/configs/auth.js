@@ -14,6 +14,8 @@ export default {
   userInfoEndpoint: 'users/userinfo',
   registerEndpoint: 'users/register',
   verifyActivateCodeEndpoint: 'users/verify-acctivate-code',
+  sendMailForgotPasswordEndpoint: 'users/send-mail-forgot-password',
+  forgotPasswordEndpoint: 'users/forgot-password',
   storageTokenKeyName: 'accessToken',
   storageUserDataKeyName: 'userData',
   onTokenExpiration: 'refreshToken' // logout | refreshToken
