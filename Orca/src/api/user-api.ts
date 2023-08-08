@@ -27,9 +27,20 @@ export default class UserApi extends ApiBase {
     return axios.get(this.baseApiUrl + "/resend-email-activate-code/" + token);
   };
 
-  verifyAccount = (request: any) => {
-    console.log(request)
-    return axios.post(this.baseApiUrl + "/verify-acctivate-code", request );
+  // verifyAccount = (request: any) => {
+  //   return axios.post(this.baseApiUrl + "/verify-acctivate-code", request );
+  // };
+
+  requestForgotPassword = (request: any) => {
+    return axios.post(this.baseApiUrl + "/request-forgot-password", request );
+  };
+
+  verifyExpiteTime = (token: any) => {
+    return axios.get(this.baseApiUrl + "/check-expire-time/" + token);
+  };
+
+  resetPassword = (request: any) => {
+    return axios.post(this.baseApiUrl + "/reset-password/", request);
   };
 
   getUserProfile = (userId: string) => {

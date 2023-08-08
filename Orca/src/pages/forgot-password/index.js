@@ -1,9 +1,19 @@
+// ** React Imports
+import { useState } from 'react'
+
+import UserApi from 'api/user-api'
 // ** Configs
 import themeConfig from 'configs/themeConfig'
 // ** Next Imports
 import Link from 'next/link'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
+import toast from 'react-hot-toast'
 // ** Demo Imports
 import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
+import * as yup from 'yup'
 
 // ** Icon Imports
 import Icon from '@core/components/icon'
@@ -11,9 +21,15 @@ import Icon from '@core/components/icon'
 import { useSettings } from '@core/hooks/useSettings'
 // ** Layout Import
 import BlankLayout from '@core/layouts/BlankLayout'
+import { yupResolver } from '@hookform/resolvers/yup'
+import CloseIcon from '@mui/icons-material/Close'
+import SendIcon from '@mui/icons-material/Send'
+import LoadingButton from '@mui/lab/LoadingButton'
+import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
-// ** MUI Components
-import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl'
+import FormHelperText from '@mui/material/FormHelperText'
+import IconButton from '@mui/material/IconButton'
 import {
   styled,
   useTheme
@@ -41,7 +57,7 @@ const ForgotPasswordIllustration = styled('img')(({ theme }) => ({
 const RightWrapper = styled(Box)(({ theme }) => ({
   width: '100%',
   [theme.breakpoints.up('md')]: {
-    maxWidth: 450
+    maxWidth: 550
   }
 }))
 
@@ -69,6 +85,10 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main
 }))
 
+const defaultValues = {
+  email: ''
+}
+
 const ForgotPassword = () => {
   // ** Hooks
   const theme = useTheme()
@@ -78,8 +98,51 @@ const ForgotPassword = () => {
   const { skin } = settings
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
 
-  const handleSubmit = e => {
-    e.preventDefault()
+  const schema = yup.object().shape({
+    email: yup.string().email('Email không hợp lệ!').required('Email không được để trống!')
+  })
+
+  const {
+    control,
+    setError,
+    reset,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    defaultValues,
+    mode: 'onBlur',
+    resolver: yupResolver(schema)
+  })
+
+  const [loading, setLoading] = useState(false)
+  const [hasError, setHasError] = useState({ isError: false, message: '' })
+  const [hasSuccess, setHasSuccess] = useState({ isSuccess: false, message: '' })
+
+  const onSubmit = data => {
+    const { email } = data
+    const param = {
+      email: email
+    }
+    setHasSuccess({ isSuccess: false, message: '' })
+    setHasError({ isError: false, message: '' })
+    setLoading(true)
+    new UserApi().requestForgotPassword(param)
+      .then(response => {
+        console.log('response:', response)
+        const data = response.data
+        if (data.isSuccess) {
+          setHasSuccess({ isSuccess: true, message: data.value.email })
+        } else {
+          setHasError({ isError: true, message: data.message })
+        }
+        setLoading(false)
+        reset()
+      })
+      .catch((e) => {
+        console.log(e)
+        toast.error('Xảy ra lỗi trong quá trình gửi mail. Bạn vui lòng thử lại sau!')
+        setLoading(false)
+      })
   }
 
   const imageSource =
@@ -193,20 +256,70 @@ const ForgotPassword = () => {
               </Typography>
             </Box>
             <Box sx={{ mb: 6 }}>
-              <TypographyStyled variant='h5'>Forgot Password? 🔒</TypographyStyled>
+              <TypographyStyled variant='h5'>Quên Mật Khẩu? 🔒</TypographyStyled>
               <Typography variant='body2'>
-                Enter your email and we&prime;ll send you instructions to reset your password
+                Hãy cung cấp cho chúng tôi email bạn đã dùng để đăng ký tài khoản thi360.com và chúng tôi sẽ gửi cho bạn một liên kết để đặt lại mật khẩu qua email đó.
               </Typography>
             </Box>
-            <form noValidate autoComplete='off' onSubmit={handleSubmit}>
-              <TextField autoFocus type='email' label='Email' sx={{ display: 'flex', mb: 4 }} />
-              <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 5.25 }}>
-                Send reset link
-              </Button>
+            {hasSuccess.isSuccess &&
+              <Alert
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setHasSuccess({ isSuccess: false, message: '' })
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                sx={{ mb: 2 }}
+              >
+                Chúng tôi đã gửi một <strong> email có liên kết để đặt lại mật khẩu</strong> của bạn. Có thể mất một vài phút để hoàn thành. Hãy kiểm tra hộp thư đến của bạn <strong>{hasSuccess.message}</strong>
+              </Alert>
+            }
+            {hasError.isError &&
+              <Alert onClose={() => setHasError({ isError: false, message: '' })} severity="error" sx={{ mb: 2 }}>Email <b>{hasError.message}</b> không tồn tại hoặc không chính xác.</Alert>
+            }
+            <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+              <FormControl fullWidth sx={{ mb: 4 }}>
+                <Controller
+                  name='email'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <TextField
+                      autoFocus
+                      value={value}
+                      label='Email'
+                      required
+                      onBlur={onBlur}
+                      onChange={onChange}
+                      error={Boolean(errors.email)}
+                      placeholder='user@gmail.com'
+                      sx={{ display: 'flex', mb: 4 }}
+                    />
+                  )}
+                />
+                {errors.email && <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>}
+              </FormControl>
+              <LoadingButton
+                fullWidth
+                type='submit'
+                endIcon={<SendIcon />}
+                loading={loading}
+                loadingPosition="end"
+                variant="contained"
+                sx={{ mb: 5.25 }}
+              >
+                <span>Gửi email cho tôi</span>
+              </LoadingButton>
               <Typography variant='body2' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <LinkStyled href='/login'>
                   <Icon icon='mdi:chevron-left' />
-                  <span>Back to login</span>
+                  <span>Quay lại đăng nhập</span>
                 </LinkStyled>
               </Typography>
             </form>

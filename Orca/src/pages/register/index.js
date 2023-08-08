@@ -404,7 +404,7 @@ const Register = () => {
                                 <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
                               </IconButton>
                               &nbsp;
-                              <Tooltip placement="right-start" title="Mật khẩu có tối thiểu 5 ký tự, bao gồm ít nhất 1 ký tự đặc biệt và ít nhất 1 ký tự không phải là số.">
+                              <Tooltip placement="right-start" title="Mật khẩu có tối thiểu 5 ký tự, bao gồm ít nhất 1 chữ in hoa, 1 ký tự đặc biệt và ít nhất 1 ký tự không phải là số.">
                                 <IconButton>
                                   <InfoOutlinedIcon />
                                 </IconButton>

@@ -89,13 +89,15 @@ const VerifyAccount = () => {
   const [data, setData] = useState()
   const [hasError, setHasError] = useState({ isError: false, message: '' })
   const [isDisable, setIsDisable] = useState(false)
-  const [loading, setLoading] = useState(false);
+  const [isDisableResend, setIsDisableResend] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   // ** Hooks
   const theme = useTheme()
 
   const {
     control,
+    reset,
     handleSubmit,
     formState: { errors }
   } = useForm({ defaultValues })
@@ -112,12 +114,28 @@ const VerifyAccount = () => {
     setLoading(true)
     new UserApi().getEmail(token)
       .then(response => {
-        if(response.data.isActive){
-          router.push('/login')
-        }else{
-          setData(response.data)
-          setLoading(false)
+        const data = response.data
+        const split = data.email.split("@")
+        if(split[0].length > 4){
+          const citrus = split[0].slice(3)
+          data.email = `***${citrus}@${split[1]}`
+          setData({ ...data })
         }
+
+        if(!data.isSuccess){
+          setIsDisable(true)
+          setLoading(false)
+          setData(data)
+          setHasError({ isError: true, message: data.message })
+        }else{
+          if(data.isActive){
+            router.push('/login')
+          }else{
+            setData(response.data)
+            setLoading(false)
+          }
+        }
+        
       })
       .catch((e) => {
         console.log(e)
@@ -158,16 +176,15 @@ const VerifyAccount = () => {
   }
 
   const handleResendActivateCode = () => {
-    setIsDisable(true)
+    setIsDisableResend(true)
     new UserApi().resendActivateCode(token)
       .then(response => {
-        console.log('response:', response)
         toast.success('Chúng tôi đã gửi cho bạn mã xác minh. Vui lòng kiểm tra mail dùng để đăng ký của bạn!')
-        setIsDisable(false)
+        setIsDisableResend(false)
       })
       .catch((e) => {
         console.log(e)
-        setIsDisable(false)
+        setIsDisableResend(false)
         toast.error('Xảy ra lỗi trong quá trình gửi mail. Bạn vui lòng thử lại sau!')
       })
   }
@@ -297,7 +314,7 @@ const VerifyAccount = () => {
             <Typography sx={{ color: 'text.secondary' }}>
               Chúng tôi đã gửi mã xác minh đến email của bạn. Hãy nhập mã xác minh nhận được vào ô bên dưới!
             </Typography>
-            <Typography sx={{ mt: 2, fontWeight: 700 }}>******{data ? data.email : ''}</Typography>
+            <Typography sx={{ mt: 2, fontWeight: 700 }}> {data ? data.email : ''}</Typography>
           </Box>
           <Typography sx={{ fontWeight: 600, color: 'text.secondary' }}>Nhập mã bảo mật gồm 6 số</Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -331,13 +348,14 @@ const VerifyAccount = () => {
               loadingPosition="end"
               variant="contained"
               sx={{ mt: 4 }}
+              disabled={isDisable}
             >
               <span>Xác minh</span>
             </LoadingButton>
           </form>
           <Box sx={{ mt: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Typography sx={{ color: 'text.secondary' }}>Bạn chưa nhận được mã xác minh?</Typography>
-            <Button onClick={handleResendActivateCode} disabled={isDisable}>Gửi lại</Button>
+            <Button onClick={handleResendActivateCode} disabled={isDisableResend}>Gửi lại</Button>
           </Box>
         </CardContent>
       </Card>
