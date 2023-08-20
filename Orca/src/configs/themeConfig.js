@@ -8,7 +8,7 @@ const themeConfig = {
   // ** Layout Configs
   templateName: 'Thi360.com' /* App Name */,
   layout: 'vertical' /* vertical | horizontal */,
-  mode: 'light' /* light | dark | semi-dark /*! Note: semi-dark value will only work for Vertical Layout */,
+  mode: 'semi-dark' /* light | dark | semi-dark /*! Note: semi-dark value will only work for Vertical Layout */,
   direction: 'ltr' /* ltr | rtl */,
   skin: 'default' /* default | bordered */,
   contentWidth: 'full' /* full | boxed */,

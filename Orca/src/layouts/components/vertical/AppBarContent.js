@@ -67,9 +67,9 @@ const AppBarContent = props => {
           </IconButton>
         ) : null}
         &nbsp;
-        <IconButton>
+        {/* <IconButton>
           <MenuOpenIcon />
-        </IconButton>
+        </IconButton> */}
         &nbsp;
         {/* <Autocomplete hidden={hidden} settings={settings} /> */}
       </Box>

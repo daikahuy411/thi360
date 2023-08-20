@@ -11,6 +11,11 @@ const navigation = () => {
       path: '/program'
     },
     {
+      icon: 'mdi:cash',
+      title: 'Bảng giá',
+      path: '/pricing'
+    },
+    {
       icon: 'mdi:help-circle-outline',
       title: 'Hướng dẫn',
       path: '/help'
