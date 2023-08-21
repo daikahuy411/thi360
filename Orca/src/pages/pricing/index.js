@@ -27,10 +27,7 @@ const data = {
           perMonth: 0,
           totalAnnual: 0
         },
-        planBenefits: [
-          '5 luyện tập mỗi ngày',
-          'Truy cập chương trình THPT, THCS',
-        ]
+        planBenefits: ['5 luyện tập mỗi ngày', 'Truy cập chương trình THPT, THCS']
       },
       {
         monthlyPrice: 60,
@@ -43,11 +40,8 @@ const data = {
           perMonth: 40,
           totalAnnual: 480
         },
-        planBenefits: [
-          '30 luyện tập mỗi ngày',
-          'Truy cập chương trình THPT, THCS, TOEIC',
-        ]
-      },
+        planBenefits: ['30 luyện tập mỗi ngày', 'Truy cập chương trình THPT, THCS, TOEIC']
+      }
       // {
       //   monthlyPrice: 99,
       //   popularPlan: false,
@@ -80,12 +74,7 @@ const data = {
           perMonth: 80,
           totalAnnual: 0
         },
-        planBenefits: [
-          '30 học viên',
-          '1 tài khoản giáo viên',
-          '1000 câu hỏi',
-          'Sử dụng ngân hàng câu hỏi Thi360'
-        ]
+        planBenefits: ['30 học viên', '1 tài khoản giáo viên', '1000 câu hỏi', 'Sử dụng ngân hàng câu hỏi Thi360']
       },
       {
         monthlyPrice: 180,
@@ -98,15 +87,10 @@ const data = {
           perMonth: 180,
           totalAnnual: 480
         },
-        planBenefits: [
-          '90 học viên',
-          '3 tài khoản giáo viên',
-          '3000 câu hỏi',
-          'Sử dụng ngân hàng câu hỏi Thi360'
-        ]
-      },
-    ]
-    , enterprise: [
+        planBenefits: ['90 học viên', '3 tài khoản giáo viên', '3000 câu hỏi', 'Sử dụng ngân hàng câu hỏi Thi360']
+      }
+    ],
+    enterprise: [
       {
         title: 'Liên hệ',
         monthlyPrice: 80,
@@ -118,12 +102,9 @@ const data = {
           perMonth: 0,
           totalAnnual: 0
         },
-        planBenefits: [
-          'Không giới hạn học viên',
-          'Không giới hạn tài khoản giáo viên',
-          'Hệ thống độc lập',
-        ]
-      }]
+        planBenefits: ['Không giới hạn học viên', 'Không giới hạn tài khoản giáo viên', 'Hệ thống độc lập']
+      }
+    ]
   },
   faq: [
     {
@@ -238,44 +219,44 @@ const PricingPage = () => {
   const [sendInvoiceOpen, setSendInvoiceOpen] = useState(false)
   const toggleAddPaymentDrawer = () => setAddPaymentOpen(!addPaymentOpen)
 
-  return <>
-    <Grid container spacing={8}>
-      <Grid item md={2}>
+  return (
+    <>
+      <Grid container spacing={8}>
+        <Grid item md={2}></Grid>
+        <Grid item md={8}>
+          <Card>
+            <CardContent>
+              <br />
+              <PricingHeader />
+              <TabContext value={value}>
+                <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example'>
+                  <Tab value='student' label='HỌC VIÊN' />
+                  <Tab value='teacher' label='GIÁO VIÊN' />
+                  <Tab value='enterprise' label='TRUNG TÂM, TỔ CHỨC' />
+                </TabList>
+              </TabContext>
+              <br />
+              <Grid container spacing={6}>
+                {data.pricingPlans[value]?.map(item => (
+                  <Grid item xs={12} md={4} key={item.title.toLowerCase()}>
+                    <PlanDetails addPayment={() => setAddPaymentOpen(true)} data={item} />
+                  </Grid>
+                ))}
+              </Grid>
+            </CardContent>
+            <PricingCTA />
+            <CardContent>
+              <PricingTable data={data} />
+            </CardContent>
+            <CardContent sx={{ backgroundColor: 'action.hover' }}>
+              <PricingFooter data={data} />
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
-      <Grid item md={8}>
-        <Card>
-          <CardContent>
-            <br />
-            <PricingHeader />
-            <TabContext value={value} >
-              <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example'>
-                <Tab value='student' label='HỌC VIÊN' />
-                <Tab value='teacher' label='GIÁO VIÊN' />
-                <Tab value='enterprise' label='TRUNG TÂM, TỔ CHỨC' />
-              </TabList>
-            </TabContext>
-            <br />
-            <Grid container spacing={6}>
-              {data.pricingPlans[value]?.map(item => (
-                <Grid item xs={12} md={4} key={item.title.toLowerCase()}>
-                  <PlanDetails addPayment={() => setAddPaymentOpen(true)} data={item} />
-                </Grid>
-              ))}
-            </Grid>
-          </CardContent>
-          <PricingCTA />
-          <CardContent>
-            <PricingTable data={data} />
-          </CardContent>
-          <CardContent sx={{ backgroundColor: 'action.hover' }}>
-            <PricingFooter data={data} />
-          </CardContent>
-        </Card>
-      </Grid>
-    </Grid>
-    <AddPaymentDrawer open={addPaymentOpen} toggle={toggleAddPaymentDrawer} />
-  </>
+      <AddPaymentDrawer open={addPaymentOpen} toggle={toggleAddPaymentDrawer} />
+    </>
+  )
 }
 
 export default PricingPage
-

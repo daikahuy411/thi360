@@ -2,10 +2,7 @@
 import { hexToRGBA } from '@core/utils/hex-to-rgba'
 import MuiAppBar from '@mui/material/AppBar'
 // ** MUI Imports
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import MuiToolbar from '@mui/material/Toolbar'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 

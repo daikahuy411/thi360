@@ -10,10 +10,7 @@ import BlankLayout from '@core/layouts/BlankLayout'
 import Box from '@mui/material/Box'
 // ** MUI Components
 import Button from '@mui/material/Button'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 

@@ -1,8 +1,5 @@
 // ** React Imports
-import {
-  forwardRef,
-  useState
-} from 'react'
+import { forwardRef, useState } from 'react'
 
 import DialogTabBilling from 'views/pages/dialog-examples/create-app-tabs/DialogTabBilling'
 import DialogTabDatabase from 'views/pages/dialog-examples/create-app-tabs/DialogTabDatabase'

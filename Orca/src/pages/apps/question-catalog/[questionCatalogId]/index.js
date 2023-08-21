@@ -1,26 +1,14 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import QuestionCatalogApi from 'api/question-catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
-import {
-  selectedQuestionCatalog,
-  selectQuestionCatalog
-} from 'store/slices/questionCatalogSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectedQuestionCatalog, selectQuestionCatalog } from 'store/slices/questionCatalogSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -45,18 +33,15 @@ import Nav from '../_layout/_tabs'
 
 const schema = yup.object().shape({
   name: yup.string().required('* bắt buộc'),
-  description: yup.string(),
+  description: yup.string()
 })
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const EditQuestionCatalogPage = () => {
@@ -91,20 +76,21 @@ const EditQuestionCatalogPage = () => {
     if (currentQuestionCatalog) reset(currentQuestionCatalog)
   }, [currentQuestionCatalog])
 
-  const save = (code) => {
+  const save = code => {
     const item = getValues()
-    new QuestionCatalogApi().save(item)
-    .then(response => {
-      toast.success('Cập nhật thành công')
-      if (code == 1) {
-        router.push('/apps/question-catalog/')
-      } else {
-        reset()
-      }
-    })
-    .catch((e) => {
-      toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu')
-    })
+    new QuestionCatalogApi()
+      .save(item)
+      .then(response => {
+        toast.success('Cập nhật thành công')
+        if (code == 1) {
+          router.push('/apps/question-catalog/')
+        } else {
+          reset()
+        }
+      })
+      .catch(e => {
+        toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu')
+      })
   }
 
   const onSubmit = data => {
@@ -114,28 +100,29 @@ const EditQuestionCatalogPage = () => {
   }
 
   /*
-  * handle remove question-catalog
-  */
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * handle remove question-catalog
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (!questionCatalogId || questionCatalogId > 0) {
-      new QuestionCatalogApi().delete({ id: questionCatalogId })
-        .then((response) => {
+      new QuestionCatalogApi()
+        .delete({ id: questionCatalogId })
+        .then(response => {
           setOpenDelete(false)
           toast.success('Xóa dữ liệu thành công.')
           router.push(`/apps/question-catalog/`)
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * handle remove question-catalog
-  */
+   * handle remove question-catalog
+   */
 
   return (
     <>
@@ -238,24 +225,29 @@ const EditQuestionCatalogPage = () => {
                     </form>
 
                     <Dialog
-                        open={openDelete}
-                        onClose={handleCloseDelete}
-                        PaperComponent={PaperComponent}
-                        aria-labelledby="draggable-dialog-title"
-                      >
-                        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-                          Xác nhận
-                        </DialogTitle>
-                        <DialogContent>
-                          <DialogContentText>
-                            Dữ liệu xóa sẽ không thể khôi phục lại. Bạn có muốn xóa Bộ câu hỏi này không?
-                          </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                          <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-                          <Button onClick={handleDelete} color='error'>Đồng ý</Button>
-                        </DialogActions>
-                      </Dialog>
+                      open={openDelete}
+                      onClose={handleCloseDelete}
+                      PaperComponent={PaperComponent}
+                      aria-labelledby='draggable-dialog-title'
+                    >
+                      <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
+                        Xác nhận
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          Dữ liệu xóa sẽ không thể khôi phục lại. Bạn có muốn xóa Bộ câu hỏi này không?
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button autoFocus onClick={handleCloseDelete}>
+                          {' '}
+                          Hủy bỏ{' '}
+                        </Button>
+                        <Button onClick={handleDelete} color='error'>
+                          Đồng ý
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
                   </div>
                 </div>
               </div>

@@ -1,9 +1,5 @@
 // ** React Imports
-import {
-  createContext,
-  useEffect,
-  useState
-} from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 // ** Axios
 import axios from 'axios'
@@ -37,7 +33,7 @@ const AuthProvider = ({ children }) => {
     const initAuth = async () => {
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
       setUser(JSON.parse(window.localStorage.getItem('userData')))
-      setLoading(false);
+      setLoading(false)
 
       //TODO: create new endpoint to get current profile
       // if (storedToken) {

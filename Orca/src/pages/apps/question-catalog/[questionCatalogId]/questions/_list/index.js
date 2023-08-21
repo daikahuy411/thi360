@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import QuestionApi from 'api/question-api'
 import Link from 'next/link'
@@ -41,13 +38,10 @@ import Typography from '@mui/material/Typography'
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const QuestionTable = () => {
@@ -119,8 +113,8 @@ const QuestionTable = () => {
   }
 
   /*
-  * handle checkbox
-  */
+   * handle checkbox
+   */
   const [selected, setSelected] = useState([])
   const isSelected = name => selected.indexOf(name) !== -1
 
@@ -149,19 +143,20 @@ const QuestionTable = () => {
     setSelected(newSelected)
   }
   /*
-  * end handle checkbox
-  */
+   * end handle checkbox
+   */
 
   /*
-  * handle remove exam
-  */
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * handle remove exam
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (selected.length > 0) {
-      new QuestionApi().deleteMultiple(selected)
-        .then((response) => {
+      new QuestionApi()
+        .deleteMultiple(selected)
+        .then(response => {
           setOpenDelete(false)
           if (response.data.isSuccess) {
             toast.success('Xóa dữ liệu thành công.')
@@ -169,15 +164,15 @@ const QuestionTable = () => {
             setSelected([])
           }
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * handle remove exam
-  */
+   * handle remove exam
+   */
 
   return (
     <>
@@ -200,7 +195,11 @@ const QuestionTable = () => {
         &nbsp; &nbsp;
         <Tooltip title='Xóa câu hỏi'>
           <span>
-            <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete} disabled={selected.length > 0 ? false : true}>
+            <IconButton
+              sx={{ color: 'text.secondary' }}
+              onClick={handleClickOpenDelete}
+              disabled={selected.length > 0 ? false : true}
+            >
               <Icon icon='mdi:delete-outline' />
             </IconButton>
           </span>
@@ -291,7 +290,11 @@ const QuestionTable = () => {
                     }}
                   >
                     <TableCell padding='checkbox'>
-                      <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleSelectClick(event, row.id)} />
+                      <Checkbox
+                        checked={isItemSelected}
+                        inputProps={{ 'aria-labelledby': labelId }}
+                        onClick={event => handleSelectClick(event, row.id)}
+                      />
                     </TableCell>
                     <TableCell component='th' scope='row'>
                       <IconButton
@@ -308,17 +311,31 @@ const QuestionTable = () => {
                       {row.shortContent}
                     </TableCell>
                     <TableCell>
-                      {row.questionTypeName ? (<Chip icon={<Icon icon='mdi:category' />} label={row.questionTypeName} color="info" variant="outlined" className='chip-square' />) : null}
+                      {row.questionTypeName ? (
+                        <Chip
+                          icon={<Icon icon='mdi:category' />}
+                          label={row.questionTypeName}
+                          color='info'
+                          variant='outlined'
+                          className='chip-square'
+                        />
+                      ) : null}
                     </TableCell>
                     <TableCell>
-                      {row.categoryName ? (<Chip icon={<Icon icon='mdi:tag' />} label={row.categoryName} color="primary" variant="outlined" />) : null}
+                      {row.categoryName ? (
+                        <Chip
+                          icon={<Icon icon='mdi:tag' />}
+                          label={row.categoryName}
+                          color='primary'
+                          variant='outlined'
+                        />
+                      ) : null}
                     </TableCell>
                   </TableRow>
                 )
               })}
 
             <TableLoading isOpen={loading} colSpan={5} />
-
           </TableBody>
         </Table>
       </TableContainer>
@@ -337,9 +354,9 @@ const QuestionTable = () => {
         open={openDelete}
         onClose={handleCloseDelete}
         PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title"
+        aria-labelledby='draggable-dialog-title'
       >
-        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+        <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
           Xác nhận
         </DialogTitle>
         <DialogContent>
@@ -348,8 +365,13 @@ const QuestionTable = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-          <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+          <Button autoFocus onClick={handleCloseDelete}>
+            {' '}
+            Hủy bỏ{' '}
+          </Button>
+          <Button onClick={handleDelete} color='error'>
+            Đồng ý
+          </Button>
         </DialogActions>
       </Dialog>
     </>

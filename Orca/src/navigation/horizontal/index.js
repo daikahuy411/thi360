@@ -236,7 +236,7 @@ const navigation = () => {
             {
               title: 'More',
               path: '/components/more'
-            },
+            }
           ]
         }
       ]
@@ -529,7 +529,7 @@ const navigation = () => {
             {
               title: 'Input Mask',
               path: '/forms/form-elements/input-mask'
-            },
+            }
           ]
         },
         {

@@ -74,14 +74,14 @@ const navigation = () => {
         {
           title: 'Tổ chức, Đơn vị',
           path: '/apps/organization'
-        },
+        }
       ]
     },
     {
       title: 'Tenants',
       icon: 'eos-icons:file-system',
       path: '/apps/tenant'
-    },
+    }
   ]
 }
 

@@ -1,9 +1,5 @@
 // ** Third Party Component Imports
-import {
-  Bar,
-  BarChart,
-  ResponsiveContainer
-} from 'recharts'
+import { Bar, BarChart, ResponsiveContainer } from 'recharts'
 
 // ** Icon Imports
 import Icon from '@core/components/icon'

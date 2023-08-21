@@ -62,14 +62,11 @@ const AddPaymentDrawer = ({ open, toggle, plan }) => {
         <Box sx={{ mb: 6 }}>
           <FormControl fullWidth>
             <InputLabel htmlFor='payment-method'>Số tháng</InputLabel>
-            <Select
-              label='Số tháng'
-              labelId='payment-method'
-              id='payment-method-select'
-              defaultValue={1}
-            >
+            <Select label='Số tháng' labelId='payment-method' id='payment-method-select' defaultValue={1}>
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(item => (
-                <MenuItem value='VNPay'>{item}</MenuItem>
+                <MenuItem key={item} value={1}>
+                  {item}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -86,13 +83,10 @@ const AddPaymentDrawer = ({ open, toggle, plan }) => {
         <Box sx={{ mb: 6 }}>
           <FormControl fullWidth>
             <InputLabel htmlFor='payment-method'>Payment Method</InputLabel>
-            <Select
-              label='Payment Method'
-              labelId='payment-method'
-              id='payment-method-select'
-              defaultValue='VNPay'
-            >
-              <MenuItem value='VNPay'>VNPay</MenuItem>
+            <Select label='Payment Method' labelId='payment-method' id='payment-method-select' defaultValue='VNPay'>
+              <MenuItem key={'VNPay'} value='VNPay'>
+                VNPay
+              </MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -109,9 +103,8 @@ const AddPaymentDrawer = ({ open, toggle, plan }) => {
           </Button>
         </div>
         <div>
-          <br/>
-          <Alert severity='success'>
-            Gói sẽ được kích hoạt tự động ngay lập tức sau khi thanh toán thành công.</Alert>
+          <br />
+          <Alert severity='success'>Gói sẽ được kích hoạt tự động ngay lập tức sau khi thanh toán thành công.</Alert>
         </div>
       </Box>
     </Drawer>

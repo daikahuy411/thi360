@@ -6,10 +6,7 @@ import UserApi from 'api/user-api'
 import themeConfig from 'configs/themeConfig'
 // ** Next Imports
 import Link from 'next/link'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 // ** Demo Imports
 import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
@@ -30,10 +27,7 @@ import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
 import IconButton from '@mui/material/IconButton'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -126,7 +120,8 @@ const ForgotPassword = () => {
     setHasSuccess({ isSuccess: false, message: '' })
     setHasError({ isError: false, message: '' })
     setLoading(true)
-    new UserApi().requestForgotPassword(param)
+    new UserApi()
+      .requestForgotPassword(param)
       .then(response => {
         console.log('response:', response)
         const data = response.data
@@ -138,7 +133,7 @@ const ForgotPassword = () => {
         setLoading(false)
         reset()
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e)
         toast.error('Xảy ra lỗi trong quá trình gửi mail. Bạn vui lòng thử lại sau!')
         setLoading(false)
@@ -258,31 +253,35 @@ const ForgotPassword = () => {
             <Box sx={{ mb: 6 }}>
               <TypographyStyled variant='h5'>Quên Mật Khẩu? 🔒</TypographyStyled>
               <Typography variant='body2'>
-                Hãy cung cấp cho chúng tôi email bạn đã dùng để đăng ký tài khoản thi360.com và chúng tôi sẽ gửi cho bạn một liên kết để đặt lại mật khẩu qua email đó.
+                Hãy cung cấp cho chúng tôi email bạn đã dùng để đăng ký tài khoản thi360.com và chúng tôi sẽ gửi cho bạn
+                một liên kết để đặt lại mật khẩu qua email đó.
               </Typography>
             </Box>
-            {hasSuccess.isSuccess &&
+            {hasSuccess.isSuccess && (
               <Alert
                 action={
                   <IconButton
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
+                    aria-label='close'
+                    color='inherit'
+                    size='small'
                     onClick={() => {
                       setHasSuccess({ isSuccess: false, message: '' })
                     }}
                   >
-                    <CloseIcon fontSize="inherit" />
+                    <CloseIcon fontSize='inherit' />
                   </IconButton>
                 }
                 sx={{ mb: 2 }}
               >
-                Chúng tôi đã gửi một <strong> email có liên kết để đặt lại mật khẩu</strong> của bạn. Có thể mất một vài phút để hoàn thành. Hãy kiểm tra hộp thư đến của bạn <strong>{hasSuccess.message}</strong>
+                Chúng tôi đã gửi một <strong> email có liên kết để đặt lại mật khẩu</strong> của bạn. Có thể mất một vài
+                phút để hoàn thành. Hãy kiểm tra hộp thư đến của bạn <strong>{hasSuccess.message}</strong>
               </Alert>
-            }
-            {hasError.isError &&
-              <Alert onClose={() => setHasError({ isError: false, message: '' })} severity="error" sx={{ mb: 2 }}>Email <b>{hasError.message}</b> không tồn tại hoặc không chính xác.</Alert>
-            }
+            )}
+            {hasError.isError && (
+              <Alert onClose={() => setHasError({ isError: false, message: '' })} severity='error' sx={{ mb: 2 }}>
+                Email <b>{hasError.message}</b> không tồn tại hoặc không chính xác.
+              </Alert>
+            )}
             <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
               <FormControl fullWidth sx={{ mb: 4 }}>
                 <Controller
@@ -310,8 +309,8 @@ const ForgotPassword = () => {
                 type='submit'
                 endIcon={<SendIcon />}
                 loading={loading}
-                loadingPosition="end"
-                variant="contained"
+                loadingPosition='end'
+                variant='contained'
                 sx={{ mb: 5.25 }}
               >
                 <span>Gửi email cho tôi</span>

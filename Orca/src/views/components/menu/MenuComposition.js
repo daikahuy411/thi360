@@ -1,9 +1,5 @@
 // ** React Imports
-import {
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 // ** Hook Import
 import { useSettings } from '@core/hooks/useSettings'

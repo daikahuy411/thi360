@@ -1,16 +1,10 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import ExamItemApi from 'api/exam-item-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Draggable from 'react-draggable'
-import {
-  Helmet,
-  HelmetProvider
-} from 'react-helmet-async'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
@@ -41,13 +35,10 @@ import Typography from '@mui/material/Typography'
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const ExamItemTable = () => {
@@ -74,7 +65,8 @@ const ExamItemTable = () => {
   }, [examId, page, rowsPerPage])
 
   const fetchData = () => {
-    new ExamItemApi().getByExamId(examId, (page + 1), rowsPerPage)
+    new ExamItemApi()
+      .getByExamId(examId, page + 1, rowsPerPage)
       .then(response => {
         if (response.data.isSuccess) {
           setData(response.data.value)
@@ -86,8 +78,8 @@ const ExamItemTable = () => {
       })
   }
   /*
-  * handle checkbox
-  */
+   * handle checkbox
+   */
   const [selected, setSelected] = useState([])
   const isSelected = name => selected.indexOf(name) !== -1
 
@@ -116,20 +108,20 @@ const ExamItemTable = () => {
     setSelected(newSelected)
   }
   /*
-  * end handle checkbox
-  */
-
+   * end handle checkbox
+   */
 
   /*
- * handle remove exam-item
- */
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * handle remove exam-item
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (selected.length > 0) {
-      new ExamItemApi().deleteMultiple(selected)
-        .then((response) => {
+      new ExamItemApi()
+        .deleteMultiple(selected)
+        .then(response => {
           setOpenDelete(false)
           if (response.data.isSuccess) {
             toast.success('Xóa dữ liệu thành công.')
@@ -137,15 +129,15 @@ const ExamItemTable = () => {
             setSelected([])
           }
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * handle remove exam-item
-  */
+   * handle remove exam-item
+   */
 
   return (
     <>
@@ -172,7 +164,11 @@ const ExamItemTable = () => {
           &nbsp; &nbsp;
           <Tooltip title='Xóa môn thi'>
             <span>
-              <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete} disabled={selected.length > 0 ? false : true}>
+              <IconButton
+                sx={{ color: 'text.secondary' }}
+                onClick={handleClickOpenDelete}
+                disabled={selected.length > 0 ? false : true}
+              >
                 <Icon icon='mdi:delete-outline' />
               </IconButton>
             </span>
@@ -252,7 +248,11 @@ const ExamItemTable = () => {
                       }}
                     >
                       <TableCell padding='checkbox'>
-                        <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleClick(event, row.id)} />
+                        <Checkbox
+                          checked={isItemSelected}
+                          inputProps={{ 'aria-labelledby': labelId }}
+                          onClick={event => handleClick(event, row.id)}
+                        />
                       </TableCell>
                       <TableCell component='th' scope='row'>
                         <IconButton aria-label='filter' component={Link} href={`/apps/exam/${examId}/items/${row.id}`}>
@@ -284,9 +284,9 @@ const ExamItemTable = () => {
           open={openDelete}
           onClose={handleCloseDelete}
           PaperComponent={PaperComponent}
-          aria-labelledby="draggable-dialog-title"
+          aria-labelledby='draggable-dialog-title'
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
             Xác nhận
           </DialogTitle>
           <DialogContent>
@@ -295,8 +295,13 @@ const ExamItemTable = () => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-            <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+            <Button autoFocus onClick={handleCloseDelete}>
+              {' '}
+              Hủy bỏ{' '}
+            </Button>
+            <Button onClick={handleDelete} color='error'>
+              Đồng ý
+            </Button>
           </DialogActions>
         </Dialog>
       </HelmetProvider>

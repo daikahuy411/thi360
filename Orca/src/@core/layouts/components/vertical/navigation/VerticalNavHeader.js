@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 // ** Configs
 import themeConfig from 'configs/themeConfig'
@@ -13,10 +10,7 @@ import Icon from '@core/components/icon'
 import Box from '@mui/material/Box'
 // ** MUI Imports
 import IconButton from '@mui/material/IconButton'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 // ** Styled Components
@@ -62,7 +56,7 @@ const VerticalNavHeader = props => {
   const theme = useTheme()
   const { navCollapsed } = settings
   const menuCollapsedStyles = navCollapsed && !navHover ? { opacity: 0 } : { opacity: 1 }
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState()
 
   const menuHeaderPaddingLeft = () => {
     if (navCollapsed && !navHover) {
@@ -78,7 +72,7 @@ const VerticalNavHeader = props => {
   const MenuLockedIcon = () => userMenuLockedIcon || <Icon icon='mdi:radiobox-marked' />
   const MenuUnlockedIcon = () => userMenuUnlockedIcon || <Icon icon='mdi:radiobox-blank' />
 
-  useEffect(() => {    
+  useEffect(() => {
     const users = window.localStorage.getItem('userData')
     console.log('users:', JSON.parse(users))
     setUserData(JSON.parse(users))
@@ -153,11 +147,14 @@ const VerticalNavHeader = props => {
             <HeaderTitle variant='h6' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 3 }) }}>
               {themeConfig.templateName}
             </HeaderTitle>
-            <HeaderTitle variant="h6" sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 3 }) }} style={{ color: '#666666', fontSize: '12px' }}>
+            <HeaderTitle
+              variant='h6'
+              sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 3 }) }}
+              style={{ color: '#666666', fontSize: '12px' }}
+            >
               {userData?.tenantName}
             </HeaderTitle>
           </Box>
-
         </StyledLink>
       )}
 

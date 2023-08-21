@@ -1,27 +1,14 @@
-import {
-  Fragment,
-  useEffect,
-  useState
-} from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import { ExamCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import CatalogDialog from 'pages/shared/catalog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
-import {
-  selectedExamCategory,
-  selectExamCategory
-} from 'store/slices/examCategorySlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectedExamCategory, selectExamCategory } from 'store/slices/examCategorySlice'
 import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
@@ -51,7 +38,7 @@ import Nav from '../_layout/_tabs'
 
 const schema = yup.object().shape({
   name: yup.string().required('* bắt buộc'),
-  description: yup.string(),
+  description: yup.string()
 })
 
 const ExamCategoryEditPage = () => {
@@ -91,7 +78,7 @@ const ExamCategoryEditPage = () => {
       if (response.data.parentId > 0) {
         ExamCategoryApi.get(response.data.parentId).then(response => {
           if (response.data) {
-            setParentSelected({ parentId: response.data.id, parentName: response.data.name });
+            setParentSelected({ parentId: response.data.id, parentName: response.data.name })
           }
         })
       }
@@ -102,9 +89,9 @@ const ExamCategoryEditPage = () => {
     if (currentExamCategory) reset(currentExamCategory)
   }, [currentExamCategory])
 
-  const save = (code) => {
-    const currentExamCategory = getValues();
-    currentExamCategory.parentId = parentSelected.parentId;
+  const save = code => {
+    const currentExamCategory = getValues()
+    currentExamCategory.parentId = parentSelected.parentId
 
     ExamCategoryApi.save(currentExamCategory).then(response => {
       toast.success('Cập nhật thành công')
@@ -118,27 +105,27 @@ const ExamCategoryEditPage = () => {
   }
 
   /*
-  * handle parent exam-category
-  */
+   * handle parent exam-category
+   */
   const [parentSelected, setParentSelected] = useState({ parentId: 0, parentName: '' })
-  const handleSelectedParent = (selectedId) => {
+  const handleSelectedParent = selectedId => {
     ExamCategoryApi.get(selectedId).then(response => {
       if (response.data) {
-        setParentSelected({ parentId: selectedId, parentName: response.data.name });
+        setParentSelected({ parentId: selectedId, parentName: response.data.name })
       }
     })
   }
 
   const cleanParent = () => {
-    setParentSelected({ parentId: 0, parentName: '' });
+    setParentSelected({ parentId: 0, parentName: '' })
   }
   /*
-  * end handle parent exam-category
-  */
+   * end handle parent exam-category
+   */
 
   /*
-  * remove exam-category
-  */
+   * remove exam-category
+   */
   const [openDelete, setOpenDelete] = useState(false)
   const handleClickOpenFormDelete = () => setOpenDelete(true)
   const handleCloseFormDelete = () => setOpenDelete(false)
@@ -148,14 +135,14 @@ const ExamCategoryEditPage = () => {
         toast.success('Xóa dữ liệu thành công')
         router.push('/apps/exam-category/')
       })
-      .catch((e) => {
+      .catch(e => {
         handleCloseFormDelete()
         toast.error(e.response.data)
       })
   }
   /*
-  * end remove exam-category
-  */
+   * end remove exam-category
+   */
 
   return (
     <>
@@ -189,11 +176,15 @@ const ExamCategoryEditPage = () => {
                       &nbsp;Quay lại
                     </Button>
                     &nbsp;
-                    <Button disabled={!isValid} variant='contained' onClick={() => save(1)}>Cập nhật</Button>
+                    <Button disabled={!isValid} variant='contained' onClick={() => save(1)}>
+                      Cập nhật
+                    </Button>
                     {(!currentExamCategory || currentExamCategory.id == 0) && (
                       <>
                         &nbsp;
-                        <Button disabled={!isValid} variant='contained' onClick={() => save(2)}>Cập nhật &amp; Thêm mới</Button>
+                        <Button disabled={!isValid} variant='contained' onClick={() => save(2)}>
+                          Cập nhật &amp; Thêm mới
+                        </Button>
                       </>
                     )}
                   </span>
@@ -205,10 +196,7 @@ const ExamCategoryEditPage = () => {
                       <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', paddingTop: 10 }}>
                         <Grid container spacing={5}>
                           <Grid item xs={12}>
-                            <FormControl
-                              fullWidth
-                              variant='outlined'
-                            >
+                            <FormControl fullWidth variant='outlined'>
                               <Controller
                                 name='name'
                                 control={control}
@@ -220,12 +208,16 @@ const ExamCategoryEditPage = () => {
                                       id='outlined-adornment-parent-category'
                                       inputprops={{
                                         readOnly: true,
-                                        className: 'Mui-disabled',
+                                        className: 'Mui-disabled'
                                       }}
                                       value={parentSelected.parentName}
                                       endAdornment={
                                         <InputAdornment position='end'>
-                                          <IconButton aria-label='toggle password visibility' edge='end' onClick={cleanParent}>
+                                          <IconButton
+                                            aria-label='toggle password visibility'
+                                            edge='end'
+                                            onClick={cleanParent}
+                                          >
                                             <DeleteOutline />
                                           </IconButton>
                                           &nbsp;
@@ -296,7 +288,9 @@ const ExamCategoryEditPage = () => {
                         <CatalogDialog
                           catalogType={CatalogType.EXAM_CATEGORY}
                           excludedId={0}
-                          onNodeSelected={nodeId => { handleSelectedParent(nodeId) }}
+                          onNodeSelected={nodeId => {
+                            handleSelectedParent(nodeId)
+                          }}
                           onClose={() => {
                             setOpenCatalogDialog(false)
                           }}

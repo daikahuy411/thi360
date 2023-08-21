@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import UserApi from 'api/user-api'
 import Link from 'next/link'
@@ -36,13 +33,10 @@ import Typography from '@mui/material/Typography'
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const UserTable = () => {
@@ -71,16 +65,15 @@ const UserTable = () => {
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
     }
-    new UserApi().searches(param)
-      .then(response => {
-        setData(response.data.value)
-        setTotalItem(response.data.totalItems)
-      })
+    new UserApi().searches(param).then(response => {
+      setData(response.data.value)
+      setTotalItem(response.data.totalItems)
+    })
   }
 
   /*
-  * handle checkbox
-  */
+   * handle checkbox
+   */
   const [selected, setSelected] = useState([])
   const isSelected = name => selected.indexOf(name) !== -1
 
@@ -109,19 +102,20 @@ const UserTable = () => {
     setSelected(newSelected)
   }
   /*
-  * end handle checkbox
-  */
+   * end handle checkbox
+   */
 
   /*
-  * handle remove user
-  */
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * handle remove user
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (selected.length > 0) {
-      new UserApi().deleteMultiple(selected)
-        .then((response) => {
+      new UserApi()
+        .deleteMultiple(selected)
+        .then(response => {
           setOpenDelete(false)
           if (response.data.isSuccess) {
             toast.success('Xóa dữ liệu thành công.')
@@ -129,15 +123,15 @@ const UserTable = () => {
             setSelected([])
           }
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * end handle remove user
-  */
+   * end handle remove user
+   */
 
   return (
     <>
@@ -275,9 +269,9 @@ const UserTable = () => {
         open={openDelete}
         onClose={handleCloseDelete}
         PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title"
+        aria-labelledby='draggable-dialog-title'
       >
-        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+        <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
           Xác nhận
         </DialogTitle>
         <DialogContent>
@@ -286,8 +280,13 @@ const UserTable = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-          <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+          <Button autoFocus onClick={handleCloseDelete}>
+            {' '}
+            Hủy bỏ{' '}
+          </Button>
+          <Button onClick={handleDelete} color='error'>
+            Đồng ý
+          </Button>
         </DialogActions>
       </Dialog>
     </>

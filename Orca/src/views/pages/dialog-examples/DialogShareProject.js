@@ -1,9 +1,5 @@
 // ** React Imports
-import {
-  forwardRef,
-  Fragment,
-  useState
-} from 'react'
+import { forwardRef, Fragment, useState } from 'react'
 
 // ** Configs Imports
 import themeConfig from 'configs/themeConfig'

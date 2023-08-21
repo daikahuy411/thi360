@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import Spinner from '@core/components/spinner'
 
 const Home = () => {
-  
   const auth = useAuth()
   const router = useRouter()
 

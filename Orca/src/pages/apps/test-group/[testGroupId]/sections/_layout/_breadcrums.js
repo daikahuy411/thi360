@@ -2,14 +2,8 @@ import { useEffect } from 'react'
 
 import TestGroupSectionApi from 'api/test-group-section-api'
 import { useRouter } from 'next/router'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
-import {
-  selectedTestGroupSection,
-  selectTestGroupSection
-} from 'store/slices/testGroupSectionSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectedTestGroupSection, selectTestGroupSection } from 'store/slices/testGroupSectionSlice'
 import { selectedTestGroup } from 'store/slices/testGroupSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'

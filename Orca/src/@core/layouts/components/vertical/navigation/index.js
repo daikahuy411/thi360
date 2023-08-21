@@ -1,8 +1,5 @@
 // ** React Import
-import {
-  useRef,
-  useState
-} from 'react'
+import { useRef, useState } from 'react'
 
 import themeConfig from 'configs/themeConfig'
 // ** Third Party Components
@@ -13,10 +10,7 @@ import { hexToRGBA } from '@core/utils/hex-to-rgba'
 import Box from '@mui/material/Box'
 // ** MUI Import
 import List from '@mui/material/List'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 
 // ** Component Imports
 import Drawer from './Drawer'
@@ -110,11 +104,7 @@ const Navigation = props => {
   const ScrollWrapper = hidden ? Box : PerfectScrollbar
 
   return (
-    <Drawer
-      {...props}
-      navHover={navHover}
-      setNavHover={setNavHover}
-    >
+    <Drawer {...props} navHover={navHover} setNavHover={setNavHover}>
       <VerticalNavHeader {...props} navHover={navHover} />
       {beforeNavMenuContent && beforeVerticalNavMenuContentPosition === 'fixed' ? beforeNavMenuContent(props) : null}
       {(beforeVerticalNavMenuContentPosition === 'static' || !beforeNavMenuContent) && (

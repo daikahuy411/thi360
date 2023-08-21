@@ -1,4 +1,6 @@
-export const RatingsBasicJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const RatingsBasicJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { useState } from 'react'
 
 // ** MUI Imports
@@ -33,9 +35,13 @@ const RatingsBasic = () => {
 }
 
 export default RatingsBasic
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const RatingsCustomizedJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const RatingsCustomizedJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Rating from '@mui/material/Rating'
@@ -103,9 +109,13 @@ const RatingsCustomized = () => {
 }
 
 export default RatingsCustomized
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const RatingsHalfJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const RatingsHalfJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Box from '@mui/material/Box'
 import Rating from '@mui/material/Rating'
 import Typography from '@mui/material/Typography'
@@ -126,9 +136,13 @@ const RatingsHalf = () => {
 }
 
 export default RatingsHalf
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const RatingsSizesJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const RatingsSizesJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Box from '@mui/material/Box'
 import Rating from '@mui/material/Rating'
 
@@ -143,9 +157,13 @@ const RatingsSizes = () => {
 }
 
 export default RatingsSizes
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const RatingsHoverFeedbackJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const RatingsHoverFeedbackJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { useState } from 'react'
 
 // ** MUI Imports
@@ -187,5 +205,6 @@ const RatingsHoverFeedback = () => {
 }
 
 export default RatingsHoverFeedback
-`}</code></pre>) 
-
+`}</code>
+  </pre>
+)

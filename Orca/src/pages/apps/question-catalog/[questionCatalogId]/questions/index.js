@@ -29,7 +29,9 @@ const QuestionsPage = () => {
                 <div className='title-bar' id='EntityHeadingTitleBar'>
                   <h3 className='title left'>
                     <span className='title__label'>
-                      {currentQuestionCatalog && currentQuestionCatalog.id > 0 && <span>{currentQuestionCatalog.name}</span>}
+                      {currentQuestionCatalog && currentQuestionCatalog.id > 0 && (
+                        <span>{currentQuestionCatalog.name}</span>
+                      )}
                     </span>
                     {currentQuestionCatalog && currentQuestionCatalog.id > 0 && (
                       <IconButton aria-label='delete'>

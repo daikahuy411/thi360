@@ -1,22 +1,13 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import OrganizationApi from 'api/organization-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import QuestionCatalogSelector from 'pages/shared/question-catalog-selector'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectedClass } from 'store/slices/examCategorySlice'
 import * as yup from 'yup'
 

@@ -2,14 +2,8 @@ import { useEffect } from 'react'
 
 import OrganizationApi from 'api/organization-api'
 import { useRouter } from 'next/router'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
-import {
-  selectClass,
-  selectedClass
-} from 'store/slices/classSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectClass, selectedClass } from 'store/slices/classSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
@@ -29,7 +23,6 @@ const TopNav = props => {
       })
     }
   }, [classId])
-
 
   return (
     <Breadcrumbs aria-label='breadcrumb' style={{ borderTop: '0px solid rgba(58, 53, 65, 0.12)', paddingTop: 0 }}>

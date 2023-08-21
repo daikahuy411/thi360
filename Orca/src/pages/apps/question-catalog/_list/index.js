@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import QuestionCatalogApi from 'api/question-catalog-api'
 import Link from 'next/link'
@@ -38,13 +35,10 @@ import Typography from '@mui/material/Typography'
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const QuestionCatalogTable = () => {
@@ -81,12 +75,12 @@ const QuestionCatalogTable = () => {
           setTotalItem(response.data.totalItems)
         }
       })
-      .catch((e) => console.log(e))
+      .catch(e => console.log(e))
   }
 
   /*
- * handle checkbox
- */
+   * handle checkbox
+   */
   const [selected, setSelected] = useState([])
   const isSelected = name => selected.indexOf(name) !== -1
 
@@ -115,19 +109,20 @@ const QuestionCatalogTable = () => {
     setSelected(newSelected)
   }
   /*
-  * end handle checkbox
-  */
+   * end handle checkbox
+   */
 
   /*
-  * handle remove question-catalog
-  */
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * handle remove question-catalog
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (selected.length > 0) {
-      new QuestionCatalogApi().deleteMultiple(selected)
-        .then((response) => {
+      new QuestionCatalogApi()
+        .deleteMultiple(selected)
+        .then(response => {
           setOpenDelete(false)
           if (response.data.isSuccess) {
             toast.success('Xóa dữ liệu thành công.')
@@ -135,15 +130,15 @@ const QuestionCatalogTable = () => {
             setSelected([])
           }
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * handle remove question-catalog
-  */
+   * handle remove question-catalog
+   */
 
   return (
     <>
@@ -167,7 +162,11 @@ const QuestionCatalogTable = () => {
         &nbsp; &nbsp;
         <Tooltip title='Delete'>
           <span>
-            <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete} disabled={selected.length > 0 ? false : true}>
+            <IconButton
+              sx={{ color: 'text.secondary' }}
+              onClick={handleClickOpenDelete}
+              disabled={selected.length > 0 ? false : true}
+            >
               <Icon icon='mdi:delete-outline' />
             </IconButton>
           </span>
@@ -196,7 +195,7 @@ const QuestionCatalogTable = () => {
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
-            labelRowsPerPage={"Số dòng/trang:"}
+            labelRowsPerPage={'Số dòng/trang:'}
             rowsPerPageOptions={[10, 25, 100]}
             component='div'
             count={totalItem}
@@ -246,7 +245,11 @@ const QuestionCatalogTable = () => {
                     }}
                   >
                     <TableCell padding='checkbox'>
-                      <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleClick(event, item.id)}/>
+                      <Checkbox
+                        checked={isItemSelected}
+                        inputProps={{ 'aria-labelledby': labelId }}
+                        onClick={event => handleClick(event, item.id)}
+                      />
                     </TableCell>
                     <TableCell component='th' scope='row'>
                       <IconButton aria-label='filter' component={Link} href={`/apps/question-catalog/${item.id}`}>
@@ -257,10 +260,22 @@ const QuestionCatalogTable = () => {
                       {item.name}
                     </TableCell>
                     <TableCell component='th' scope='row'>
-                      <Chip icon={<HelpOutlineIcon />} label={`${item.totalQuestion} câu hỏi`} color="info" variant="outlined" className='chip-square' />
+                      <Chip
+                        icon={<HelpOutlineIcon />}
+                        label={`${item.totalQuestion} câu hỏi`}
+                        color='info'
+                        variant='outlined'
+                        className='chip-square'
+                      />
                     </TableCell>
                     <TableCell component='th' scope='row'>
-                      <Chip icon={<Icon icon='mdi:category' />} label={`${item.totalCategory} danh mục`} color="primary" variant="outlined" className='chip-square' />
+                      <Chip
+                        icon={<Icon icon='mdi:category' />}
+                        label={`${item.totalCategory} danh mục`}
+                        color='primary'
+                        variant='outlined'
+                        className='chip-square'
+                      />
                     </TableCell>
                   </TableRow>
                 )
@@ -269,7 +284,7 @@ const QuestionCatalogTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        labelRowsPerPage={"Số dòng/trang:"}
+        labelRowsPerPage={'Số dòng/trang:'}
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
         count={totalItem}
@@ -283,9 +298,9 @@ const QuestionCatalogTable = () => {
         open={openDelete}
         onClose={handleCloseDelete}
         PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title"
+        aria-labelledby='draggable-dialog-title'
       >
-        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+        <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
           Xác nhận
         </DialogTitle>
         <DialogContent>
@@ -294,8 +309,13 @@ const QuestionCatalogTable = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-          <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+          <Button autoFocus onClick={handleCloseDelete}>
+            {' '}
+            Hủy bỏ{' '}
+          </Button>
+          <Button onClick={handleDelete} color='error'>
+            Đồng ý
+          </Button>
         </DialogActions>
       </Dialog>
     </>

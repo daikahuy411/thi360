@@ -2,10 +2,7 @@ import 'dayjs/locale/vi'
 import 'moment/locale/vi'
 
 import * as React from 'react'
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import { ExamCategoryApi } from 'api/catalog-api'
 import ExamApi from 'api/exam-api'
@@ -16,23 +13,11 @@ import { useRouter } from 'next/router'
 import CatalogDialog from 'pages/shared/catalog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
-import {
-  Helmet,
-  HelmetProvider
-} from 'react-helmet-async'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
-import {
-  selectedExam,
-  selectExam
-} from 'store/slices/examSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectedExam, selectExam } from 'store/slices/examSlice'
 import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -67,8 +52,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
 
-moment.tz.setDefault();
-moment().format("DD/MM/YYYY hh:mm");
+moment.tz.setDefault()
+moment().format('DD/MM/YYYY hh:mm')
 
 const schema = yup.object().shape({
   name: yup.string().required('* bắt buộc'),
@@ -78,30 +63,33 @@ const schema = yup.object().shape({
   registrationType: yup.number().required('* bắt buộc').moreThan(0, '* bắt buộc'),
   viewPermissionAfterFinish: yup.number().required('* bắt buộc').moreThan(0, '* bắt buộc'),
   isSpecificDuration: yup.boolean(),
-  startDate: yup.date().nullable().notRequired().when('isSpecificDuration', {
-    is: true,
-    then: yup.date()
-      .required('* bắt buộc'),
+  startDate: yup
+    .date()
+    .nullable()
+    .notRequired()
+    .when('isSpecificDuration', {
+      is: true,
+      then: yup.date().required('* bắt buộc'),
 
-    otherwise: yup.date().nullable().notRequired(),
-  }),
-  endDate: yup.date().nullable().notRequired().when('isSpecificDuration', {
-    is: true,
-    then: yup.date()
-      .required('* bắt buộc'),
-    otherwise: yup.date().nullable().notRequired(),
-  })
+      otherwise: yup.date().nullable().notRequired()
+    }),
+  endDate: yup
+    .date()
+    .nullable()
+    .notRequired()
+    .when('isSpecificDuration', {
+      is: true,
+      then: yup.date().required('* bắt buộc'),
+      otherwise: yup.date().nullable().notRequired()
+    })
 })
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const EditExamPage = () => {
@@ -122,24 +110,25 @@ const EditExamPage = () => {
     mode: 'onChange',
     resolver: yupResolver(schema)
   })
-  const [checkedIsSpecificDuration, setCheckedIsSpecificDuration] = React.useState(false);
+  const [checkedIsSpecificDuration, setCheckedIsSpecificDuration] = React.useState(false)
   const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
-
 
   useEffect(() => {
     if (!examId || examId == 0) {
       dispatch(selectExam({ id: 0, name: '' }))
       return
     }
-    new ExamApi().get(examId)
-      .then(response => {
-        dispatch(selectExam(response.data))
-        if (response.data) {
-          setCheckedIsSpecificDuration(response.data.isSpecificDuration)
-          
-          setOrganizationSelected({ organizationId: response.data.categoryId, organizationName: response.data.categoryName });
-        }
-      })
+    new ExamApi().get(examId).then(response => {
+      dispatch(selectExam(response.data))
+      if (response.data) {
+        setCheckedIsSpecificDuration(response.data.isSpecificDuration)
+
+        setOrganizationSelected({
+          organizationId: response.data.categoryId,
+          organizationName: response.data.categoryName
+        })
+      }
+    })
   }, [examId])
 
   useEffect(() => {
@@ -147,35 +136,48 @@ const EditExamPage = () => {
   }, [currentExam])
 
   /*
-  * handle save
-  */
-  const save = (code) => {
+   * handle save
+   */
+  const save = code => {
     const item = getValues()
     let param
     if (item.isSpecificDuration) {
       // const start = moment(new Date(item.startDate)).format('DD/MM/YYYY HH:mm:ss')
-      // const end = moment(new Date(item.endDate)).format('DD/MM/YYYY HH:mm:ss')      
+      // const end = moment(new Date(item.endDate)).format('DD/MM/YYYY HH:mm:ss')
 
       const startDate = new Date(item.startDate)
       const endDate = new Date(item.endDate)
 
       let startStr = ''
-      startStr += `${startDate.getFullYear()}-${(startDate.getMonth() + 1) < 10 ? '0' + (startDate.getMonth() + 1) : (startDate.getMonth() + 1)}-`
-      startStr += `${startDate.getDate() < 10 ? '0' + startDate.getDate() : startDate.getDate()} ${startDate.getHours() < 10 ? '0' + startDate.getHours() : startDate.getHours()}:`
+      startStr += `${startDate.getFullYear()}-${
+        startDate.getMonth() + 1 < 10 ? '0' + (startDate.getMonth() + 1) : startDate.getMonth() + 1
+      }-`
+      startStr += `${startDate.getDate() < 10 ? '0' + startDate.getDate() : startDate.getDate()} ${
+        startDate.getHours() < 10 ? '0' + startDate.getHours() : startDate.getHours()
+      }:`
       startStr += `${startDate.getMinutes() < 10 ? '0' + startDate.getMinutes() : startDate.getMinutes()}:00.000Z`
 
       let endStr = ''
-      endStr += `${endDate.getFullYear()}-${(endDate.getMonth() + 1) < 10 ? '0' + (endDate.getMonth() + 1) : (endDate.getMonth() + 1)}-`
-      endStr += `${endDate.getDate() < 10 ? '0' + endDate.getDate() : endDate.getDate()} ${endDate.getHours() < 10 ? '0' + endDate.getHours() : endDate.getHours()}:`
+      endStr += `${endDate.getFullYear()}-${
+        endDate.getMonth() + 1 < 10 ? '0' + (endDate.getMonth() + 1) : endDate.getMonth() + 1
+      }-`
+      endStr += `${endDate.getDate() < 10 ? '0' + endDate.getDate() : endDate.getDate()} ${
+        endDate.getHours() < 10 ? '0' + endDate.getHours() : endDate.getHours()
+      }:`
       endStr += `${endDate.getMinutes() < 10 ? '0' + endDate.getMinutes() : endDate.getMinutes()}:00.000Z`
 
-      param = { ...item, startDate: new Date(startStr), endDate: new Date(endStr), CategoryId: organizationSelected.organizationId }
-    }
-    else {
+      param = {
+        ...item,
+        startDate: new Date(startStr),
+        endDate: new Date(endStr),
+        CategoryId: organizationSelected.organizationId
+      }
+    } else {
       param = { ...item, startDate: undefined, endDate: undefined, CategoryId: organizationSelected.organizationId }
     }
-    
-    new ExamApi().save(param)
+
+    new ExamApi()
+      .save(param)
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code == 1) {
@@ -184,7 +186,7 @@ const EditExamPage = () => {
           reset()
         }
       })
-      .catch((e) => {
+      .catch(e => {
         toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu')
       })
   }
@@ -195,14 +197,14 @@ const EditExamPage = () => {
     })
   }
   /*
-  * end handle save
-  */
+   * end handle save
+   */
 
   const handleChangeDate = (field, value) => {
     setValue(field, value)
   }
 
-  const handleChangeIsSpecificDuration = (e) => {
+  const handleChangeIsSpecificDuration = e => {
     setCheckedIsSpecificDuration(e.target.checked)
     if (!e.target.checked) {
       setValue('startDate', null)
@@ -211,48 +213,48 @@ const EditExamPage = () => {
   }
 
   /*
-  * handle organization
-  */
+   * handle organization
+   */
   const [organizationSelected, setOrganizationSelected] = useState({ organizationId: 0, organizationName: '' })
-  const handleSelectedOrganization = (selectedId) => {
-    ExamCategoryApi.get(selectedId)
-      .then(response => {
-        if (response.data) {
-          setOrganizationSelected({ organizationId: selectedId, organizationName: response.data.name });
-        }
-      })
+  const handleSelectedOrganization = selectedId => {
+    ExamCategoryApi.get(selectedId).then(response => {
+      if (response.data) {
+        setOrganizationSelected({ organizationId: selectedId, organizationName: response.data.name })
+      }
+    })
   }
 
   const cleanOrganization = () => {
-    setOrganizationSelected({ organizationId: 0, organizationName: '' });
+    setOrganizationSelected({ organizationId: 0, organizationName: '' })
   }
   /*
-  * end handle organization
-  */
+   * end handle organization
+   */
 
   /*
-  * handle remove exam
-  */
-  const [openDelete, setOpenDelete] = React.useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * handle remove exam
+   */
+  const [openDelete, setOpenDelete] = React.useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (!examId || examId > 0) {
-      new ExamApi().delete({ id: examId })
-        .then((response) => {
+      new ExamApi()
+        .delete({ id: examId })
+        .then(response => {
           setOpenDelete(false)
           toast.success('Xóa dữ liệu thành công.')
           router.push(`/apps/exam/`)
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * handle remove exam
-  */
+   * handle remove exam
+   */
 
   return (
     <>
@@ -304,7 +306,10 @@ const EditExamPage = () => {
                   <div className='grid-block'>
                     <Nav />
                     <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
-                      <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', width: '100%', paddingTop: 10 }}>
+                      <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        style={{ height: '100vh', width: '100%', paddingTop: 10 }}
+                      >
                         <Grid container spacing={5}>
                           <Grid item xs={12} md={8}>
                             <Grid container spacing={5}>
@@ -447,7 +452,10 @@ const EditExamPage = () => {
                                     )}
                                   />
                                   {errors.registrationType && (
-                                    <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-registration-type'>
+                                    <FormHelperText
+                                      sx={{ color: 'error.main' }}
+                                      id='validation-schema-registration-type'
+                                    >
                                       {errors.registrationType.message}
                                     </FormHelperText>
                                   )}
@@ -481,7 +489,10 @@ const EditExamPage = () => {
                                     )}
                                   />
                                   {errors.viewPermissionAfterFinish && (
-                                    <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-viewPermissionAfterFinish'>
+                                    <FormHelperText
+                                      sx={{ color: 'error.main' }}
+                                      id='validation-schema-viewPermissionAfterFinish'
+                                    >
                                       {errors.viewPermissionAfterFinish.message}
                                     </FormHelperText>
                                   )}
@@ -498,7 +509,7 @@ const EditExamPage = () => {
                                       render={({ field: { value, onChange } }) => (
                                         <Checkbox
                                           checked={value ?? false}
-                                          onChange={(e) => {
+                                          onChange={e => {
                                             onChange(e)
                                             handleChangeIsSpecificDuration(e)
                                           }}
@@ -519,11 +530,11 @@ const EditExamPage = () => {
                                         control={control}
                                         rules={{ required: true }}
                                         render={({ field: { value, onChange } }) => (
-                                          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale="vi">
+                                          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale='vi'>
                                             <DateTimePicker
-                                              label="Thời gian bắt đầu"
+                                              label='Thời gian bắt đầu'
                                               value={moment(value) ?? null}
-                                              inputFormat="DD/MM/YYYY hh:mm"
+                                              inputFormat='DD/MM/YYYY hh:mm'
                                               onChange={onChange}
                                             />
                                           </LocalizationProvider>
@@ -543,11 +554,11 @@ const EditExamPage = () => {
                                         control={control}
                                         rules={{ required: true }}
                                         render={({ field: { value, onChange } }) => (
-                                          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale="vi">
+                                          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale='vi'>
                                             <DateTimePicker
-                                              label="Thời gian kết thúc"
+                                              label='Thời gian kết thúc'
                                               value={moment(value) ?? null}
-                                              inputFormat="DD/MM/YYYY hh:mm"
+                                              inputFormat='DD/MM/YYYY hh:mm'
                                               onChange={onChange}
                                             />
                                           </LocalizationProvider>
@@ -562,7 +573,6 @@ const EditExamPage = () => {
                                   </Grid>
                                 </>
                               )}
-
                             </Grid>
                           </Grid>
                           <Grid item xs={12} md={4}>
@@ -574,12 +584,16 @@ const EditExamPage = () => {
                                     id='outlined-adornment-parent-category'
                                     inputprops={{
                                       readOnly: true,
-                                      className: 'Mui-disabled',
+                                      className: 'Mui-disabled'
                                     }}
                                     value={organizationSelected.organizationName ?? ''}
                                     endAdornment={
                                       <InputAdornment position='end'>
-                                        <IconButton aria-label='toggle password visibility' edge='end' onClick={cleanOrganization}>
+                                        <IconButton
+                                          aria-label='toggle password visibility'
+                                          edge='end'
+                                          onClick={cleanOrganization}
+                                        >
                                           <DeleteOutline />
                                         </IconButton>
                                         &nbsp;
@@ -606,7 +620,9 @@ const EditExamPage = () => {
                         <CatalogDialog
                           catalogType={CatalogType.EXAM_CATEGORY}
                           excludedId={0}
-                          onNodeSelected={nodeId => { handleSelectedOrganization(nodeId) }}
+                          onNodeSelected={nodeId => {
+                            handleSelectedOrganization(nodeId)
+                          }}
                           onClose={() => {
                             setOpenCatalogDialog(false)
                           }}
@@ -618,9 +634,9 @@ const EditExamPage = () => {
                         open={openDelete}
                         onClose={handleCloseDelete}
                         PaperComponent={PaperComponent}
-                        aria-labelledby="draggable-dialog-title"
+                        aria-labelledby='draggable-dialog-title'
                       >
-                        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+                        <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
                           Xác nhận
                         </DialogTitle>
                         <DialogContent>
@@ -629,8 +645,13 @@ const EditExamPage = () => {
                           </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                          <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-                          <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+                          <Button autoFocus onClick={handleCloseDelete}>
+                            {' '}
+                            Hủy bỏ{' '}
+                          </Button>
+                          <Button onClick={handleDelete} color='error'>
+                            Đồng ý
+                          </Button>
                         </DialogActions>
                       </Dialog>
                     </div>

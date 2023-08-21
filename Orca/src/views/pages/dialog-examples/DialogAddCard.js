@@ -2,10 +2,7 @@
 import 'react-credit-cards/es/styles-compiled.css'
 
 // ** React Imports
-import {
-  forwardRef,
-  useState
-} from 'react'
+import { forwardRef, useState } from 'react'
 
 // ** Third Party Imports
 import Payment from 'payment'
@@ -16,11 +13,7 @@ import Icon from '@core/components/icon'
 // ** Styled Component Imports
 import CardWrapper from '@core/styles/libs/react-credit-cards'
 // ** Util Import
-import {
-  formatCreditCardNumber,
-  formatCVC,
-  formatExpirationDate
-} from '@core/utils/format'
+import { formatCreditCardNumber, formatCVC, formatExpirationDate } from '@core/utils/format'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'

@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import ExamItemApi from 'api/exam-item-api'
 import TestGroupApi from 'api/test-group-api'
@@ -10,19 +7,10 @@ import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import TestGroupSelector from 'pages/shared/test-group-selector'
 import Draggable from 'react-draggable'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
-import {
-  selectedExamItem,
-  selectExamItem
-} from 'store/slices/examItemSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectedExamItem, selectExamItem } from 'store/slices/examItemSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -59,7 +47,12 @@ import Nav from '../_layout/_tabs'
 const schema = yup.object().shape({
   name: yup.string().required('* bắt buộc'),
   content: yup.string(),
-  duration: yup.number().typeError('* bắt buộc nhập kiểu số').transform((value) => Number.isNaN(value) ? '' : value).required('* bắt buộc').moreThan(0, '* bắt buộc'),
+  duration: yup
+    .number()
+    .typeError('* bắt buộc nhập kiểu số')
+    .transform(value => (Number.isNaN(value) ? '' : value))
+    .required('* bắt buộc')
+    .moreThan(0, '* bắt buộc'),
   requiredScore: yup.number().typeError('* bắt buộc nhập kiểu số').required('* bắt buộc').moreThan(0, '* bắt buộc'),
   numberOfExamAttemptAllow: yup.number().typeError('* bắt buộc nhập kiểu số').required('* bắt buộc'),
   finalizationMethod: yup.number().required('* bắt buộc').moreThan(0, '* bắt buộc')
@@ -67,13 +60,10 @@ const schema = yup.object().shape({
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const ExamItemEditForm = () => {
@@ -86,7 +76,7 @@ const ExamItemEditForm = () => {
     randomAnswerOrder: true,
     randomQuestionOrder: true,
     allowRepeatMediaFile: false
-  });
+  })
   const [loading, setLoading] = useState(false)
 
   const {
@@ -109,34 +99,34 @@ const ExamItemEditForm = () => {
       return
     }
 
-    new ExamItemApi().get(itemId)
-      .then(response => {
-        dispatch(selectExamItem(response.data))
-        console.log(response.data)
-        console.log(response.data.testGroup.name)
-        setTestGroupSelected({ testGroupId: response.data.testGroupId, testGroupName: response.data.testGroup?.name })
-        setStateSetting({
-          ...stateSetting,
-          ['randomAnswerOrder']: response.data.settings.randomAnswerOrder,
-          ['randomQuestionOrder']: response.data.settings.randomQuestionOrder,
-          ['allowRepeatMediaFile']: response.data.settings.allowRepeatMediaFile,
-        })
-        setLoading(false)
+    new ExamItemApi().get(itemId).then(response => {
+      dispatch(selectExamItem(response.data))
+      console.log(response.data)
+      console.log(response.data.testGroup.name)
+      setTestGroupSelected({ testGroupId: response.data.testGroupId, testGroupName: response.data.testGroup?.name })
+      setStateSetting({
+        ...stateSetting,
+        ['randomAnswerOrder']: response.data.settings.randomAnswerOrder,
+        ['randomQuestionOrder']: response.data.settings.randomQuestionOrder,
+        ['allowRepeatMediaFile']: response.data.settings.allowRepeatMediaFile
       })
+      setLoading(false)
+    })
   }, [itemId])
 
   useEffect(() => {
     if (currentExamItem) reset(currentExamItem)
   }, [currentExamItem])
 
-  const save = (code) => {
+  const save = code => {
     const item = getValues()
     item.setting = {}
     item.setting.randomAnswerOrder = stateSetting.randomAnswerOrder
     item.setting.randomQuestionOrder = stateSetting.randomQuestionOrder
     item.setting.allowRepeatMediaFile = stateSetting.allowRepeatMediaFile
 
-    new ExamItemApi().save({ ...item, examId: examId, testGroupId: testGroupSelected.testGroupId })
+    new ExamItemApi()
+      .save({ ...item, examId: examId, testGroupId: testGroupSelected.testGroupId })
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code === 1) {
@@ -151,66 +141,65 @@ const ExamItemEditForm = () => {
           })
         }
       })
-      .catch((e) => console.log(e))
+      .catch(e => console.log(e))
   }
 
   const onSubmit = data => {
-    new ExamItemApi().save(data)
-      .then(response => {
-        toast.success('Form Submitted')
-      })
+    new ExamItemApi().save(data).then(response => {
+      toast.success('Form Submitted')
+    })
   }
 
   /*
-* handle test-group
-*/
+   * handle test-group
+   */
   const [testGroupSelected, setTestGroupSelected] = useState({ testGroupId: 0, testGroupName: '' })
-  const handleSelectedTestGroup = (selectedId) => {
-    new TestGroupApi().get(selectedId)
-      .then(response => {
-        if (response.data) {
-          setTestGroupSelected({ testGroupId: selectedId, testGroupName: response.data.name });
-        }
-      })
+  const handleSelectedTestGroup = selectedId => {
+    new TestGroupApi().get(selectedId).then(response => {
+      if (response.data) {
+        setTestGroupSelected({ testGroupId: selectedId, testGroupName: response.data.name })
+      }
+    })
   }
 
   const cleanTestGroup = () => {
-    setTestGroupSelected({ testGroupId: 0, testGroupName: '' });
+    setTestGroupSelected({ testGroupId: 0, testGroupName: '' })
   }
   /*
-  * end handle test-group
-  */
+   * end handle test-group
+   */
 
   /*
-  * handle remove exam-item
-  */
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * handle remove exam-item
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (!itemId || itemId > 0) {
-      new ExamItemApi().delete({ id: itemId })
-        .then((response) => {
+      new ExamItemApi()
+        .delete({ id: itemId })
+        .then(response => {
           setOpenDelete(false)
           toast.success('Xóa dữ liệu thành công.')
           router.push(`/apps/exam/${examId}/items`)
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * handle remove exam-item
-  */
+   * handle remove exam-item
+   */
 
-  const handleChangeSwitch = (event) => {
+  const handleChangeSwitch = event => {
     setStateSetting({
       ...stateSetting,
-      [event.target.name]: event.target.checked,
-    });
-  };
+      [event.target.name]: event.target.checked
+    })
+  }
 
   return (
     <>
@@ -259,21 +248,24 @@ const ExamItemEditForm = () => {
                   <>
                     <div className='grid-block'>
                       <Nav />
-                      <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
+                      <div
+                        className='grid-block'
+                        style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}
+                      >
                         {loading && (
                           <Box sx={{ width: '100%' }}>
                             <Skeleton height={40} />
-                            <Skeleton variant="rounded" width={'100%'} height={80} animation="wave" />
-                            <Skeleton height={40} animation="wave" />
+                            <Skeleton variant='rounded' width={'100%'} height={80} animation='wave' />
+                            <Skeleton height={40} animation='wave' />
                             <Box style={{ display: 'flex', gap: '10px' }}>
-                              <Skeleton width={'30%'} height={40} animation="wave" />
-                              <Skeleton width={'30%'} height={40} animation="wave" />
-                              <Skeleton width={'30%'} height={40} animation="wave" />
+                              <Skeleton width={'30%'} height={40} animation='wave' />
+                              <Skeleton width={'30%'} height={40} animation='wave' />
+                              <Skeleton width={'30%'} height={40} animation='wave' />
                             </Box>
-                            <Skeleton variant="rounded" width={'100%'} height={40} animation="wave" />
-                            <Skeleton width={'30%'} height={40} animation="wave" />
-                            <Skeleton width={'30%'} height={40} animation="wave" />
-                            <Skeleton width={'30%'} height={40} animation="wave" />
+                            <Skeleton variant='rounded' width={'100%'} height={40} animation='wave' />
+                            <Skeleton width={'30%'} height={40} animation='wave' />
+                            <Skeleton width={'30%'} height={40} animation='wave' />
+                            <Skeleton width={'30%'} height={40} animation='wave' />
                           </Box>
                         )}
 
@@ -331,13 +323,17 @@ const ExamItemEditForm = () => {
                                     id='outlined-adornment-parent-category'
                                     inputprops={{
                                       readOnly: true,
-                                      className: 'Mui-disabled',
+                                      className: 'Mui-disabled'
                                     }}
                                     disabled={true}
                                     value={testGroupSelected.testGroupName}
                                     endAdornment={
                                       <InputAdornment position='end'>
-                                        <IconButton aria-label='toggle password visibility' edge='end' onClick={() => cleanTestGroup(true)}>
+                                        <IconButton
+                                          aria-label='toggle password visibility'
+                                          edge='end'
+                                          onClick={() => cleanTestGroup(true)}
+                                        >
                                           <DeleteOutline />
                                         </IconButton>
                                         &nbsp;
@@ -477,9 +473,13 @@ const ExamItemEditForm = () => {
                                 <FormGroup row>
                                   <FormControlLabel
                                     control={
-                                      <Switch checked={stateSetting.randomAnswerOrder} onChange={handleChangeSwitch} name="randomAnswerOrder" />
+                                      <Switch
+                                        checked={stateSetting.randomAnswerOrder}
+                                        onChange={handleChangeSwitch}
+                                        name='randomAnswerOrder'
+                                      />
                                     }
-                                    label="Trộn ngẫu nhiên câu trả lời"
+                                    label='Trộn ngẫu nhiên câu trả lời'
                                   />
                                 </FormGroup>
                               </Grid>
@@ -487,9 +487,13 @@ const ExamItemEditForm = () => {
                                 <FormGroup row>
                                   <FormControlLabel
                                     control={
-                                      <Switch checked={stateSetting.randomQuestionOrder} onChange={handleChangeSwitch} name="randomQuestionOrder" />
+                                      <Switch
+                                        checked={stateSetting.randomQuestionOrder}
+                                        onChange={handleChangeSwitch}
+                                        name='randomQuestionOrder'
+                                      />
                                     }
-                                    label="Trộn ngẫu nhiên câu hỏi"
+                                    label='Trộn ngẫu nhiên câu hỏi'
                                   />
                                 </FormGroup>
                               </Grid>
@@ -497,16 +501,19 @@ const ExamItemEditForm = () => {
                                 <FormGroup row>
                                   <FormControlLabel
                                     control={
-                                      <Switch checked={stateSetting.allowRepeatMediaFile} onChange={handleChangeSwitch} name="allowRepeatMediaFile" />
+                                      <Switch
+                                        checked={stateSetting.allowRepeatMediaFile}
+                                        onChange={handleChangeSwitch}
+                                        name='allowRepeatMediaFile'
+                                      />
                                     }
-                                    label="Cho phép nghe lại audio"
+                                    label='Cho phép nghe lại audio'
                                   />
                                 </FormGroup>
                               </Grid>
                             </Grid>
                           </form>
-                        )
-                        }
+                        )}
                       </div>
                     </div>
                   </>
@@ -518,7 +525,9 @@ const ExamItemEditForm = () => {
                 onClose={() => {
                   setOpenQuestionCatalogSelector(false)
                 }}
-                onNodeSelected={nodeId => { handleSelectedTestGroup(nodeId) }}
+                onNodeSelected={nodeId => {
+                  handleSelectedTestGroup(nodeId)
+                }}
               />
             )}
 
@@ -526,9 +535,9 @@ const ExamItemEditForm = () => {
               open={openDelete}
               onClose={handleCloseDelete}
               PaperComponent={PaperComponent}
-              aria-labelledby="draggable-dialog-title"
+              aria-labelledby='draggable-dialog-title'
             >
-              <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+              <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
                 Xác nhận
               </DialogTitle>
               <DialogContent>
@@ -537,8 +546,13 @@ const ExamItemEditForm = () => {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-                <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+                <Button autoFocus onClick={handleCloseDelete}>
+                  {' '}
+                  Hủy bỏ{' '}
+                </Button>
+                <Button onClick={handleDelete} color='error'>
+                  Đồng ý
+                </Button>
               </DialogActions>
             </Dialog>
           </>

@@ -2,10 +2,7 @@
 import 'cleave.js/dist/addons/cleave-phone.us'
 
 // ** React Imports
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import UserApi from 'api/user-api'
 // ** Third Party Imports
@@ -15,10 +12,7 @@ import themeConfig from 'configs/themeConfig'
 // ** Hooks
 import { useAuth } from 'hooks/useAuth'
 import { useRouter } from 'next/router'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 // ** Demo Imports
 import FooterIllustrationsV1 from 'views/pages/auth/FooterIllustrationsV1'
@@ -38,10 +32,7 @@ import Button from '@mui/material/Button'
 import MuiCard from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import FormHelperText from '@mui/material/FormHelperText'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 // ** Styled Components
@@ -107,37 +98,37 @@ const VerifyAccount = () => {
 
   useEffect(() => {
     if (!router.isReady) return
-    fetchData();
+    fetchData()
   }, [token])
 
   const fetchData = () => {
     setLoading(true)
-    new UserApi().getEmail(token)
+    new UserApi()
+      .getEmail(token)
       .then(response => {
         const data = response.data
-        const split = data.email.split("@")
-        if(split[0].length > 4){
+        const split = data.email.split('@')
+        if (split[0].length > 4) {
           const citrus = split[0].slice(3)
           data.email = `***${citrus}@${split[1]}`
           setData({ ...data })
         }
 
-        if(!data.isSuccess){
+        if (!data.isSuccess) {
           setIsDisable(true)
           setLoading(false)
           setData(data)
           setHasError({ isError: true, message: data.message })
-        }else{
-          if(data.isActive){
+        } else {
+          if (data.isActive) {
             router.push('/login')
-          }else{
+          } else {
             setData(response.data)
             setLoading(false)
           }
         }
-        
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e)
         setLoading(false)
       })
@@ -159,8 +150,6 @@ const VerifyAccount = () => {
     })
   }
 
-
-
   const handleChange = (event, onChange) => {
     if (!isBackspace) {
       onChange(event)
@@ -177,12 +166,13 @@ const VerifyAccount = () => {
 
   const handleResendActivateCode = () => {
     setIsDisableResend(true)
-    new UserApi().resendActivateCode(token)
+    new UserApi()
+      .resendActivateCode(token)
       .then(response => {
         toast.success('Chúng tôi đã gửi cho bạn mã xác minh. Vui lòng kiểm tra mail dùng để đăng ký của bạn!')
         setIsDisableResend(false)
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e)
         setIsDisableResend(false)
         toast.error('Xảy ra lỗi trong quá trình gửi mail. Bạn vui lòng thử lại sau!')
@@ -336,17 +326,19 @@ const VerifyAccount = () => {
             {errorsArray.length ? (
               <FormHelperText sx={{ color: 'error.main' }}>Mã OTP không được để trống.</FormHelperText>
             ) : null}
-            {hasError.isError &&
-              <Alert onClose={() => { }} severity="error">{hasError.message}</Alert>
-            }
+            {hasError.isError && (
+              <Alert onClose={() => {}} severity='error'>
+                {hasError.message}
+              </Alert>
+            )}
             {/* <Button fullWidth type='submit' variant='contained' sx={{ mt: 4 }}>  Xác minh </Button> */}
             <LoadingButton
               fullWidth
               type='submit'
               endIcon={<SendIcon />}
               loading={loading}
-              loadingPosition="end"
-              variant="contained"
+              loadingPosition='end'
+              variant='contained'
               sx={{ mt: 4 }}
               disabled={isDisable}
             >
@@ -355,7 +347,9 @@ const VerifyAccount = () => {
           </form>
           <Box sx={{ mt: 4, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Typography sx={{ color: 'text.secondary' }}>Bạn chưa nhận được mã xác minh?</Typography>
-            <Button onClick={handleResendActivateCode} disabled={isDisableResend}>Gửi lại</Button>
+            <Button onClick={handleResendActivateCode} disabled={isDisableResend}>
+              Gửi lại
+            </Button>
           </Box>
         </CardContent>
       </Card>

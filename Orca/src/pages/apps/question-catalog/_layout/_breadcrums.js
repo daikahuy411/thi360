@@ -2,14 +2,8 @@ import { useEffect } from 'react'
 
 import QuestionCatalogApi from 'api/question-catalog-api'
 import { useRouter } from 'next/router'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
-import {
-  selectedQuestionCatalog,
-  selectQuestionCatalog
-} from 'store/slices/questionCatalogSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectedQuestionCatalog, selectQuestionCatalog } from 'store/slices/questionCatalogSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'

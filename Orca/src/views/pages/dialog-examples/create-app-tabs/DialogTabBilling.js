@@ -11,11 +11,7 @@ import Cards from 'react-credit-cards'
 // ** Styled Component Imports
 import CardWrapper from '@core/styles/libs/react-credit-cards'
 // ** Util Import
-import {
-  formatCreditCardNumber,
-  formatCVC,
-  formatExpirationDate
-} from '@core/utils/format'
+import { formatCreditCardNumber, formatCVC, formatExpirationDate } from '@core/utils/format'
 import FormControlLabel from '@mui/material/FormControlLabel'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'

@@ -20,7 +20,7 @@ export const store = configureStore({
     [questionSlice.name]: questionSlice.reducer,
     [examCategorySlice.name]: examCategorySlice.reducer,
     [testGroupSectionSlice.name]: testGroupSectionSlice.reducer,
-    [examItemSlice.name]: examItemSlice.reducer,
+    [examItemSlice.name]: examItemSlice.reducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
