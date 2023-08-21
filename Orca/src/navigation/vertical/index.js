@@ -67,6 +67,10 @@ const navigation = () => {
       icon: 'fluent-mdl2:system',
       children: [
         {
+          title: 'Quản lý người dùng',
+          path: '/apps/organization'
+        },
+        {
           title: 'Tổ chức, Đơn vị',
           path: '/apps/organization'
         },

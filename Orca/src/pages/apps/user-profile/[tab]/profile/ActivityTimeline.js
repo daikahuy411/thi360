@@ -31,7 +31,7 @@ const ActivityTimeline = () => {
   return (
     <Card>
       <CardHeader
-        title='Lịch sử thi'
+        title='Activity Timeline'
         sx={{ '& .MuiCardHeader-avatar': { mr: 2.5 } }}
         avatar={<Icon icon='mdi:chart-timeline-variant' />}
         titleTypographyProps={{ sx: { color: 'text.primary' } }}

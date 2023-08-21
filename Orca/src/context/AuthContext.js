@@ -121,7 +121,6 @@ const AuthProvider = ({ children }) => {
       .post(`${authConfig.baseApiUrl}${authConfig.verifyActivateCodeEndpoint}`, params)
       .then(res => {
         const response = res.data
-        console.log('response-hahahaha:', response)
         if (!response.isSuccess) {
           if (errorCallback) errorCallback(response)
         } else {

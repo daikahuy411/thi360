@@ -4,6 +4,9 @@ import {
   useState
 } from 'react'
 
+// ** Third Party Imports
+import axios from 'axios'
+
 import CustomAvatar from '@core/components/mui/avatar'
 // ** Custom Components Imports
 import OptionsMenu from '@core/components/option-menu'
@@ -131,9 +134,9 @@ const ProfileTable = () => {
   const [value, setValue] = useState('')
   const [pageSize, setPageSize] = useState(7)
   useEffect(() => {
-    // axios.get('/pages/profile-table', { params: { q: value } }).then(response => {
-    //   setData(response.data)
-    // })
+    axios.get('/pages/profile-table', { params: { q: value } }).then(response => {
+      setData(response.data)
+    })
   }, [value])
 
   const handleFilter = val => {
