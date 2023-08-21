@@ -1,8 +1,5 @@
 // ** React Imports
-import {
-  Fragment,
-  useState
-} from 'react'
+import { Fragment, useState } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -101,7 +98,9 @@ const ShortcutsDropdown = props => {
           sx={{ cursor: 'default', userSelect: 'auto', backgroundColor: 'transparent !important' }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <Typography sx={{ fontSize: '1.125rem', color: 'text.secondary', fontWeight: 600 }}>Chương trình</Typography>
+            <Typography sx={{ fontSize: '1.125rem', color: 'text.secondary', fontWeight: 600 }}>
+              Chương trình
+            </Typography>
             {/* <Tooltip title='Add Shortcut' placement='top'>
               <IconButton disableRipple>
                 <Icon icon='mdi:plus-circle-outline' />

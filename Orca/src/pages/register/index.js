@@ -1,8 +1,5 @@
 // ** React Imports
-import {
-  Fragment,
-  useState
-} from 'react'
+import { Fragment, useState } from 'react'
 
 // ** Configs
 import themeConfig from 'configs/themeConfig'
@@ -10,10 +7,7 @@ import themeConfig from 'configs/themeConfig'
 import { useAuth } from 'hooks/useAuth'
 // ** Next Imports
 import Link from 'next/link'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 // ** Demo Imports
 import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
 // ** Third Party Imports
@@ -39,10 +33,7 @@ import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
@@ -121,10 +112,15 @@ const Register = () => {
   const { skin } = settings
 
   const schema = yup.object().shape({
-    passwordHash: yup.string().min(5, 'Mật khẩu không được để trống & phải có ít nhất 6 ký tự!').required('Password không được để trống!'),
-    passwordConfirmation: yup.string()
-      .oneOf([yup.ref('passwordHash'), null], 'Mật khẩu không khớp'),
-    username: yup.string().min(3, 'UserName không được để trống & phải có ít nhất 3 ký tự').required('UserName không được để trống!'),
+    passwordHash: yup
+      .string()
+      .min(5, 'Mật khẩu không được để trống & phải có ít nhất 6 ký tự!')
+      .required('Password không được để trống!'),
+    passwordConfirmation: yup.string().oneOf([yup.ref('passwordHash'), null], 'Mật khẩu không khớp'),
+    username: yup
+      .string()
+      .min(3, 'UserName không được để trống & phải có ít nhất 3 ký tự')
+      .required('UserName không được để trống!'),
     firstName: yup.string(),
     lastName: yup.string(),
     email: yup.string().email('Email không hợp lệ!').required('Email không được để trống!'),
@@ -280,7 +276,7 @@ const Register = () => {
               <Typography variant='body2'>Make your app management easy and fun!</Typography>
             </Box>
             <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
-              <Grid container spacing={2} maxWidth={"sm"}>
+              <Grid container spacing={2} maxWidth={'sm'}>
                 <Grid item xs={12} md={12}>
                   <FormControl fullWidth sx={{ mb: 4 }}>
                     <InputLabel htmlFor='auth-username' error={Boolean(errors.username)}>
@@ -303,7 +299,10 @@ const Register = () => {
                           error={Boolean(errors.username)}
                           endAdornment={
                             <InputAdornment position='end'>
-                              <Tooltip placement="right-start" title="Tên người dùng viết chữ thường, không có dấu cách, có tối thiểu 3 ký tự.">
+                              <Tooltip
+                                placement='right-start'
+                                title='Tên người dùng viết chữ thường, không có dấu cách, có tối thiểu 3 ký tự.'
+                              >
                                 <IconButton>
                                   <InfoOutlinedIcon />
                                 </IconButton>
@@ -372,7 +371,9 @@ const Register = () => {
                         />
                       )}
                     />
-                    {errors.email && <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>}
+                    {errors.email && (
+                      <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>
+                    )}
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} md={12}>
@@ -404,7 +405,10 @@ const Register = () => {
                                 <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
                               </IconButton>
                               &nbsp;
-                              <Tooltip placement="right-start" title="Mật khẩu có tối thiểu 5 ký tự, bao gồm ít nhất 1 chữ in hoa, 1 ký tự đặc biệt và ít nhất 1 ký tự không phải là số.">
+                              <Tooltip
+                                placement='right-start'
+                                title='Mật khẩu có tối thiểu 5 ký tự, bao gồm ít nhất 1 chữ in hoa, 1 ký tự đặc biệt và ít nhất 1 ký tự không phải là số.'
+                              >
                                 <IconButton>
                                   <InfoOutlinedIcon />
                                 </IconButton>
@@ -446,14 +450,15 @@ const Register = () => {
                               >
                                 <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
                               </IconButton>
-
                             </InputAdornment>
                           }
                         />
                       )}
                     />
                     {errors.passwordConfirmation && (
-                      <FormHelperText sx={{ color: 'error.main' }}>{errors.passwordConfirmation.message}</FormHelperText>
+                      <FormHelperText sx={{ color: 'error.main' }}>
+                        {errors.passwordConfirmation.message}
+                      </FormHelperText>
                     )}
                   </FormControl>
                 </Grid>

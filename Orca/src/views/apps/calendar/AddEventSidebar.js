@@ -1,18 +1,9 @@
 // ** React Imports
-import {
-  forwardRef,
-  Fragment,
-  useCallback,
-  useEffect,
-  useState
-} from 'react'
+import { forwardRef, Fragment, useCallback, useEffect, useState } from 'react'
 
 // ** Third Party Imports
 import DatePicker from 'react-datepicker'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
 // ** Icon Imports
 import Icon from '@core/components/icon'

@@ -1,4 +1,6 @@
-export const ChipsAvatarJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ChipsAvatarJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Chip from '@mui/material/Chip'
 import Avatar from '@mui/material/Avatar'
 
@@ -24,9 +26,13 @@ const ChipsAvatar = () => {
 }
 
 export default ChipsAvatar
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ChipsArrayJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ChipsArrayJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { useState } from 'react'
 
 // ** MUI Imports
@@ -62,9 +68,13 @@ const ChipsArray = () => {
 }
 
 export default ChipsArray
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ChipsColorsJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ChipsColorsJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { Fragment } from 'react'
 
 // ** MUI Imports
@@ -97,9 +107,13 @@ const ChipsColors = () => {
 }
 
 export default ChipsColors
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ChipsClickableJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ChipsClickableJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Chip from '@mui/material/Chip'
 
 const ChipsClickable = () => {
@@ -116,9 +130,13 @@ const ChipsClickable = () => {
 }
 
 export default ChipsClickable
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ChipsIconJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ChipsIconJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Chip from '@mui/material/Chip'
 
 // ** Icon Imports
@@ -139,9 +157,13 @@ const ChipsIcon = () => {
 }
 
 export default ChipsIcon
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ChipsLightJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** Custom Components Imports
+export const ChipsLightJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** Custom Components Imports
 import CustomChip from '@core/components/mui/chip'
 
 const ChipsCustomized = () => {
@@ -158,9 +180,13 @@ const ChipsCustomized = () => {
 }
 
 export default ChipsCustomized
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ChipsOnDeleteJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ChipsOnDeleteJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { Fragment } from 'react'
 
 // ** MUI Imports
@@ -199,9 +225,13 @@ const ChipsOnDelete = () => {
 }
 
 export default ChipsOnDelete
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ChipsRoundedJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** Custom Components Imports
+export const ChipsRoundedJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** Custom Components Imports
 import CustomChip from '@core/components/mui/chip'
 
 const ChipsRounded = () => {
@@ -218,9 +248,13 @@ const ChipsRounded = () => {
 }
 
 export default ChipsRounded
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ChipsDisabledJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ChipsDisabledJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Chip from '@mui/material/Chip'
 
 const ChipsDisabled = () => {
@@ -233,9 +267,13 @@ const ChipsDisabled = () => {
 }
 
 export default ChipsDisabled
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ChipsVariantsJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ChipsVariantsJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Chip from '@mui/material/Chip'
 
 const ChipsVariants = () => {
@@ -248,9 +286,13 @@ const ChipsVariants = () => {
 }
 
 export default ChipsVariants
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ChipsSizesJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ChipsSizesJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Chip from '@mui/material/Chip'
 
 const ChipsSizes = () => {
@@ -263,5 +305,6 @@ const ChipsSizes = () => {
 }
 
 export default ChipsSizes
-`}</code></pre>) 
-
+`}</code>
+  </pre>
+)

@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useState
-} from 'react'
+import React, { useEffect, useState } from 'react'
 
 import TestGroupApi from 'api/test-group-api'
 import { makeStyles } from 'tss-react/mui'
@@ -117,13 +114,12 @@ export default function TestGroupSelector({ onClose, onNodeSelected = null }) {
   }, [page, rowsPerPage])
 
   const fetchData = () => {
-    new TestGroupApi().searches({ page: page + 1, limit: rowsPerPage })
-      .then(response => {
-        if (response.data.isSuccess) {
-          setData(response.data.value)
-          setTotalItem(response.data.totalItems)
-        }
-      })
+    new TestGroupApi().searches({ page: page + 1, limit: rowsPerPage }).then(response => {
+      if (response.data.isSuccess) {
+        setData(response.data.value)
+        setTotalItem(response.data.totalItems)
+      }
+    })
   }
 
   const onOk = () => {
@@ -224,14 +220,16 @@ export default function TestGroupSelector({ onClose, onNodeSelected = null }) {
                             inputProps={{ 'aria-label': 'A' }}
                           />
                         </TableCell>
-                        <TableCell>{item.name} - {item.id}</TableCell>
+                        <TableCell>
+                          {item.name} - {item.id}
+                        </TableCell>
                       </TableRow>
                     ))}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
-              labelRowsPerPage={"Số dòng/trang:"}
+              labelRowsPerPage={'Số dòng/trang:'}
               rowsPerPageOptions={[10, 25, 100]}
               component='div'
               count={totalItem}

@@ -5,8 +5,8 @@ export default {
   // baserUrl: 'http://localhost:8888/',
   // baseApiUrl: 'http://localhost:8888/api/',
 
-  // baserUrl: 'http://beta.thi360.com',
-  // baseApiUrl: 'http://beta.thi360.com/api/',
+  // baserUrl: 'http://v1.thi360.com',
+  // baseApiUrl: 'http://v1.thi360.com/api/',
 
   meEndpoint: '/auth/me',
   loginEndpoint: 'users/authenticate',

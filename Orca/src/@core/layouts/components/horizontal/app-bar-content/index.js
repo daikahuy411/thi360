@@ -5,10 +5,7 @@ import Link from 'next/link'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 const StyledLink = styled(Link)(({ theme }) => ({

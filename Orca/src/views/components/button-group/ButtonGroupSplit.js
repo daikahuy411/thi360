@@ -1,9 +1,5 @@
 // ** React Imports
-import {
-  Fragment,
-  useRef,
-  useState
-} from 'react'
+import { Fragment, useRef, useState } from 'react'
 
 // ** Icon Imports
 import Icon from '@core/components/icon'

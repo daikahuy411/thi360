@@ -1,9 +1,5 @@
 // ** React Imports
-import {
-  createContext,
-  useEffect,
-  useState
-} from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 // ** ThemeConfig Import
 import themeConfig from 'configs/themeConfig'

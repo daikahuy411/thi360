@@ -1,10 +1,5 @@
 // ** React Imports
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 // ** Third Party Imports
 import axios from 'axios'
@@ -26,10 +21,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'

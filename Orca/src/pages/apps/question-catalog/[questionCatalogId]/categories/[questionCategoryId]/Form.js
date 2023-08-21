@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import { QuestionCategoryApi } from 'api/catalog-api'
 import CatalogDialog from 'pages/shared/catalog'
@@ -19,51 +16,53 @@ import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import TextField from '@mui/material/TextField'
 
-const EditForm = (props) => {
+const EditForm = props => {
   const [values, setValues] = useState({ name: '' })
 
   const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
 
   useEffect(() => {
-    setParentSelected({ parentId: props.item.parentId, parentName: props.item.parentName });
+    setParentSelected({ parentId: props.item.parentId, parentName: props.item.parentName })
     values.name = props.item.name
   }, [props.item])
 
   /*
-  * handle parent
-  */
+   * handle parent
+   */
   const [parentSelected, setParentSelected] = useState({ parentId: 0, parentName: '' })
-  const handleSelectedParent = (selectedId) => {
-    QuestionCategoryApi.get(selectedId)
-      .then(response => {
-        if (response.data) {
-          setParentSelected({ parentId: selectedId, parentName: response.data.name });
-          
+  const handleSelectedParent = selectedId => {
+    QuestionCategoryApi.get(selectedId).then(response => {
+      if (response.data) {
+        setParentSelected({ parentId: selectedId, parentName: response.data.name })
 
-          props.parentCallback(selectedId);
-        }
-      })
+        props.parentCallback(selectedId)
+      }
+    })
   }
 
   const cleanParent = () => {
-    setParentSelected({ parentId: 0, parentName: '' });
+    setParentSelected({ parentId: 0, parentName: '' })
   }
   /*
-  * end handle parent
-  */
+   * end handle parent
+   */
 
   return (
     <>
-      <form onSubmit={e => e.preventDefault()} defaultValue={props.item} style={{ height: 'auto', width: '100%', paddingTop: 10 }}>
+      <form
+        onSubmit={e => e.preventDefault()}
+        defaultValue={props.item}
+        style={{ height: 'auto', width: '100%', paddingTop: 10 }}
+      >
         <Grid container spacing={5}>
           <Grid item xs={12}>
             <FormControl fullWidth variant='outlined'>
-              <InputLabel htmlFor='outlined-adornment-parent-category'>Danh mục cha</InputLabel>              
+              <InputLabel htmlFor='outlined-adornment-parent-category'>Danh mục cha</InputLabel>
               <OutlinedInput
                 id='outlined-adornment-parent-category'
                 inputprops={{
                   readOnly: true,
-                  className: 'Mui-disabled',
+                  className: 'Mui-disabled'
                 }}
                 value={parentSelected.parentName ?? ''}
                 endAdornment={
@@ -94,7 +93,7 @@ const EditForm = (props) => {
                 rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
                   <TextField
-                    value={ value ?? values.name}
+                    value={value ?? values.name}
                     label='Tên'
                     InputLabelProps={{ shrink: true }}
                     required
@@ -118,7 +117,9 @@ const EditForm = (props) => {
         <CatalogDialog
           catalogType={CatalogType.QUESTION_CATEGORY}
           excludedId={0}
-          onNodeSelected={nodeId => { handleSelectedParent(nodeId) }}
+          onNodeSelected={nodeId => {
+            handleSelectedParent(nodeId)
+          }}
           onClose={() => {
             setOpenCatalogDialog(false)
           }}

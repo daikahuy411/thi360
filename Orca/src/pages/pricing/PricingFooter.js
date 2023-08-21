@@ -55,7 +55,7 @@ const PricingFooter = props => {
   return (
     <>
       <Box sx={{ mb: 11.75, textAlign: 'center' }}>
-        <Typography variant='h5' sx={{ mb: 2.5, pt:5 }}>
+        <Typography variant='h5' sx={{ mb: 2.5, pt: 5 }}>
           FAQs
         </Typography>
         <Typography variant='body2'>Let us help answer the most common questions.</Typography>
@@ -68,4 +68,3 @@ const PricingFooter = props => {
 }
 
 export default PricingFooter
-  

@@ -2,10 +2,7 @@
 import { useState } from 'react'
 
 // ** Third Party Imports
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
 // ** Icon Imports
 import Icon from '@core/components/icon'

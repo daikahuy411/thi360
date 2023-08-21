@@ -1,8 +1,5 @@
 // ** React Imports
-import {
-  Fragment,
-  useState
-} from 'react'
+import { Fragment, useState } from 'react'
 
 // ** Context
 import { useAuth } from 'hooks/useAuth'

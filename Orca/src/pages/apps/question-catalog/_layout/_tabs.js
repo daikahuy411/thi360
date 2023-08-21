@@ -12,18 +12,20 @@ const Nav = ({ children }) => {
     <>
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
         <Link
-          className={`finger-tabs__tab flex-none ${router.asPath === `/apps/question-catalog/${questionCatalogId}/` ? 'is-active' : 'disabled'
-            }`}
+          className={`finger-tabs__tab flex-none ${
+            router.asPath === `/apps/question-catalog/${questionCatalogId}/` ? 'is-active' : 'disabled'
+          }`}
           title='Chi tiết'
           component={Link}
           href={`/apps/question-catalog/${questionCatalogId}`}
         >
           Chi tiết
         </Link>
-        {currentQuestionCatalog && currentQuestionCatalog.id > 0 ?
+        {currentQuestionCatalog && currentQuestionCatalog.id > 0 ? (
           <Link
-            className={`finger-tabs__tab flex-none ${router.asPath === `/apps/question-catalog/${questionCatalogId}/categories/` ? 'is-active' : 'disabled'
-              }`}
+            className={`finger-tabs__tab flex-none ${
+              router.asPath === `/apps/question-catalog/${questionCatalogId}/categories/` ? 'is-active' : 'disabled'
+            }`}
             title='Danh mục'
             component={Link}
             href={
@@ -34,19 +36,22 @@ const Nav = ({ children }) => {
           >
             Danh mục
           </Link>
-          : <p
-            className={`finger-tabs__tab flex-none ${router.asPath === `/apps/question-catalog/${questionCatalogId}/categories/` ? 'is-active' : 'disabled'
-              }`}
+        ) : (
+          <p
+            className={`finger-tabs__tab flex-none ${
+              router.asPath === `/apps/question-catalog/${questionCatalogId}/categories/` ? 'is-active' : 'disabled'
+            }`}
             title='Danh mục'
           >
             Danh mục
           </p>
-        }
+        )}
 
-        {currentQuestionCatalog && currentQuestionCatalog.id > 0 ?
+        {currentQuestionCatalog && currentQuestionCatalog.id > 0 ? (
           <Link
-            className={`finger-tabs__tab flex-none ${router.asPath === `/apps/question-catalog/${questionCatalogId}/questions/` ? 'is-active' : 'disabled'
-              }`}
+            className={`finger-tabs__tab flex-none ${
+              router.asPath === `/apps/question-catalog/${questionCatalogId}/questions/` ? 'is-active' : 'disabled'
+            }`}
             title='Câu hỏi'
             component={Link}
             href={
@@ -57,16 +62,17 @@ const Nav = ({ children }) => {
           >
             Câu hỏi
           </Link>
-          : <p
-            className={`finger-tabs__tab flex-none ${router.asPath === `/apps/question-catalog/${questionCatalogId}/questions/` ? 'is-active' : 'disabled'
-              }`}
+        ) : (
+          <p
+            className={`finger-tabs__tab flex-none ${
+              router.asPath === `/apps/question-catalog/${questionCatalogId}/questions/` ? 'is-active' : 'disabled'
+            }`}
             title='Câu hỏi'
             component={Link}
           >
             Câu hỏi
           </p>
-        }
-
+        )}
       </div>
     </>
   )

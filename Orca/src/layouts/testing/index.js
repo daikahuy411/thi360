@@ -1,7 +1,3 @@
 export default function TestingLayout({ children }) {
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>
 }

@@ -1,8 +1,5 @@
 // ** React Imports
-import {
-  forwardRef,
-  useState
-} from 'react'
+import { forwardRef, useState } from 'react'
 
 // ** Component Import
 import PricingPlans from 'views/pages/pricing/PricingPlans'

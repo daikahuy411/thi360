@@ -1,16 +1,10 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import ExamApi from 'api/exam-api'
 import moment from 'moment'
 import Link from 'next/link'
 import Draggable from 'react-draggable'
-import {
-  Helmet,
-  HelmetProvider
-} from 'react-helmet-async'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
@@ -43,13 +37,10 @@ import Typography from '@mui/material/Typography'
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const ExamTable = () => {
@@ -90,12 +81,12 @@ const ExamTable = () => {
           setTotalItem(response.data.totalItems)
         }
       })
-      .catch((e) => console.log(e))
+      .catch(e => console.log(e))
   }
 
   /*
-  * handle checkbox
-  */
+   * handle checkbox
+   */
   const [selected, setSelected] = useState([])
   const isSelected = name => selected.indexOf(name) !== -1
 
@@ -124,19 +115,20 @@ const ExamTable = () => {
     setSelected(newSelected)
   }
   /*
-  * end handle checkbox
-  */
+   * end handle checkbox
+   */
 
   /*
-  * handle remove exam
-  */
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * handle remove exam
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (selected.length > 0) {
-      new ExamApi().deleteMultiple(selected)
-        .then((response) => {
+      new ExamApi()
+        .deleteMultiple(selected)
+        .then(response => {
           setOpenDelete(false)
           if (response.data.isSuccess) {
             toast.success('Xóa dữ liệu thành công.')
@@ -144,15 +136,15 @@ const ExamTable = () => {
             setSelected([])
           }
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * handle remove exam
-  */
+   * handle remove exam
+   */
 
   return (
     <>
@@ -180,7 +172,11 @@ const ExamTable = () => {
           &nbsp; &nbsp;
           <Tooltip title='Xóa kỳ thi'>
             <span>
-              <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete} disabled={selected.length > 0 ? false : true}>
+              <IconButton
+                sx={{ color: 'text.secondary' }}
+                onClick={handleClickOpenDelete}
+                disabled={selected.length > 0 ? false : true}
+              >
                 <Icon icon='mdi:delete-outline' />
               </IconButton>
             </span>
@@ -209,7 +205,7 @@ const ExamTable = () => {
           </Grid>
           <Grid item md={4} alignContent={'right'}>
             <TablePagination
-              labelRowsPerPage={"Số dòng/trang:"}
+              labelRowsPerPage={'Số dòng/trang:'}
               rowsPerPageOptions={[10, 25, 100]}
               component='div'
               count={totalItem}
@@ -262,7 +258,11 @@ const ExamTable = () => {
                       }}
                     >
                       <TableCell padding='checkbox'>
-                        <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleClick(event, row.id)} />
+                        <Checkbox
+                          checked={isItemSelected}
+                          inputProps={{ 'aria-labelledby': labelId }}
+                          onClick={event => handleClick(event, row.id)}
+                        />
                       </TableCell>
                       <TableCell component='th' scope='row'>
                         <IconButton aria-label='filter' component={Link} href={`/apps/exam/${row.id}`}>
@@ -283,7 +283,7 @@ const ExamTable = () => {
                       <TableCell>{row.totalAttempt}</TableCell>
                       <TableCell>{row.totalUser}</TableCell>
                       <TableCell>
-                        <Chip label={row.statusName} color="primary" variant="outlined" />
+                        <Chip label={row.statusName} color='primary' variant='outlined' />
                       </TableCell>
                       <TableCell>{moment(row.createdTime).format('DD/MM/YYYY')}</TableCell>
                     </TableRow>
@@ -293,7 +293,7 @@ const ExamTable = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          labelRowsPerPage={"Số dòng/trang:"}
+          labelRowsPerPage={'Số dòng/trang:'}
           rowsPerPageOptions={[10, 25, 100]}
           component='div'
           count={totalItem}
@@ -306,9 +306,9 @@ const ExamTable = () => {
           open={openDelete}
           onClose={handleCloseDelete}
           PaperComponent={PaperComponent}
-          aria-labelledby="draggable-dialog-title"
+          aria-labelledby='draggable-dialog-title'
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
             Xác nhận
           </DialogTitle>
           <DialogContent>
@@ -317,8 +317,13 @@ const ExamTable = () => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-            <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+            <Button autoFocus onClick={handleCloseDelete}>
+              {' '}
+              Hủy bỏ{' '}
+            </Button>
+            <Button onClick={handleDelete} color='error'>
+              Đồng ý
+            </Button>
           </DialogActions>
         </Dialog>
       </HelmetProvider>

@@ -23,7 +23,6 @@ function CatalogDialog({ catalogType, open, onClose, excludedId = 0, onNodeSelec
   }
 
   const onOk = () => {
-
     if (onNodeSelected) {
       onNodeSelected(selectedNodeId)
       onClose()
@@ -31,7 +30,7 @@ function CatalogDialog({ catalogType, open, onClose, excludedId = 0, onNodeSelec
   }
 
   return (
-    <Drawer anchor='right' onClose={onClose} open={open} variant='temporary' style={{ overflowY: 'unset' }} >
+    <Drawer anchor='right' onClose={onClose} open={open} variant='temporary' style={{ overflowY: 'unset' }}>
       <>
         <Box
           className='customizer-header'

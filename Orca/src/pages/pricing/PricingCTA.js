@@ -52,7 +52,7 @@ const PricingCTA = () => {
       <Grid container spacing={5}>
         <Grid item xs={12} md={8}>
           <Typography variant='h5' sx={{ mb: 2.5, color: 'primary.main' }}>
-           Bạn muốn thử trước?
+            Bạn muốn thử trước?
           </Typography>
           <Typography sx={{ mb: 10, color: 'text.secondary' }}>
             Liên hệ với chúng tôi hoặc nhắn tin để sử dụng miễn phí hệ thống với toàn bộ tính năng trong vòng 14 ngày.

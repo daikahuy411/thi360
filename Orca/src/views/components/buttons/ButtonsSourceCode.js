@@ -1,4 +1,6 @@
-export const ButtonsColorsJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ButtonsColorsJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { Fragment } from 'react'
 
 // ** MUI Imports
@@ -46,9 +48,13 @@ const ButtonsColors = () => {
 }
 
 export default ButtonsColors
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonsCustomizedJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ButtonsCustomizedJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import { brown } from '@mui/material/colors'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
@@ -111,9 +117,13 @@ const ButtonsCustomized = () => {
 }
 
 export default ButtonsCustomized
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonsFabJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ButtonsFabJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Box from '@mui/material/Box'
 import Fab from '@mui/material/Fab'
 import Typography from '@mui/material/Typography'
@@ -191,9 +201,13 @@ const ButtonsFab = () => {
 }
 
 export default ButtonsFab
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonsIconsJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ButtonsIconsJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import IconButton from '@mui/material/IconButton'
 
 // ** Icon Imports
@@ -219,9 +233,13 @@ const ButtonsIcons = () => {
 }
 
 export default ButtonsIcons
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonsContainedJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ButtonsContainedJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Button from '@mui/material/Button'
 
 const ButtonsContained = () => {
@@ -242,9 +260,13 @@ const ButtonsContained = () => {
 }
 
 export default ButtonsContained
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonsFabSizesJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ButtonsFabSizesJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { Fragment } from 'react'
 
 // ** MUI Imports
@@ -286,9 +308,13 @@ const ButtonsFabSizes = () => {
 }
 
 export default ButtonsFabSizes
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonsOutlinedJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ButtonsOutlinedJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Button from '@mui/material/Button'
 
 const ButtonsOutlined = () => {
@@ -309,9 +335,13 @@ const ButtonsOutlined = () => {
 }
 
 export default ButtonsOutlined
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonsSizesJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ButtonsSizesJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { Fragment } from 'react'
 
 // ** MUI Imports
@@ -376,9 +406,13 @@ const ButtonsSizes = () => {
 }
 
 export default ButtonsSizes
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonsTextJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ButtonsTextJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Button from '@mui/material/Button'
 
 const ButtonsText = () => {
@@ -399,9 +433,13 @@ const ButtonsText = () => {
 }
 
 export default ButtonsText
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonsWithIconAndLabelJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ButtonsWithIconAndLabelJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Button from '@mui/material/Button'
 
 // ** Icon Imports
@@ -421,5 +459,6 @@ const ButtonsWithIconAndLabel = () => {
 }
 
 export default ButtonsWithIconAndLabel
-`}</code></pre>) 
-
+`}</code>
+  </pre>
+)

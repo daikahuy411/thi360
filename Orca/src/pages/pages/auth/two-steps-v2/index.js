@@ -8,10 +8,7 @@ import { useState } from 'react'
 import Cleave from 'cleave.js/react'
 // ** Configs
 import themeConfig from 'configs/themeConfig'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 // ** Demo Imports
 import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
 
@@ -27,10 +24,7 @@ import Box from '@mui/material/Box'
 // ** MUI Components
 import Button from '@mui/material/Button'
 import FormHelperText from '@mui/material/FormHelperText'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 

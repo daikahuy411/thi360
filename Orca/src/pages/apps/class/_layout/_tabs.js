@@ -14,32 +14,36 @@ const Nav = ({ children }) => {
     <>
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
         <Link
-          className={`finger-tabs__tab flex-none ${router.asPath === `/apps/class/${classId}/` ? 'is-active' : 'disabled'
-            }`}
+          className={`finger-tabs__tab flex-none ${
+            router.asPath === `/apps/class/${classId}/` ? 'is-active' : 'disabled'
+          }`}
           title='Chi tiết'
           component={Link}
           href={`/apps/class/${classId}`}
         >
           Chi tiết
         </Link>
-        {currentClass && currentClass.id > 0 ?
+        {currentClass && currentClass.id > 0 ? (
           <Link
-            className={`finger-tabs__tab flex-none ${router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
-              }`}
+            className={`finger-tabs__tab flex-none ${
+              router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
+            }`}
             title='Học viên'
             component={Link}
             href={linkUser}
           >
             Học viên
           </Link>
-          : <p
-            className={`finger-tabs__tab flex-none ${router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
-              }`}
+        ) : (
+          <p
+            className={`finger-tabs__tab flex-none ${
+              router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
+            }`}
             title='Học viên'
           >
             Học viên
           </p>
-        }
+        )}
       </div>
     </>
   )

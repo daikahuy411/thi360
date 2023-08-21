@@ -10,10 +10,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import MuiCard from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 // ** Styled Components

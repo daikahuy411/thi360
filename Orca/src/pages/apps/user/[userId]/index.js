@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import OrganizationApi from 'api/organization-api'
 import UserApi from 'api/user-api'
@@ -9,19 +6,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import CatalogDialog from 'pages/shared/catalog'
 import Draggable from 'react-draggable'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
-import {
-  selectedUser,
-  selectUser
-} from 'store/slices/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectedUser, selectUser } from 'store/slices/userSlice'
 import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
@@ -59,34 +47,36 @@ import Tooltip from '@mui/material/Tooltip'
 import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
 
-const schema = yup.object().shape({
-  firstName: yup.string().required('* bắt buộc'),
-  lastName: yup.string().required('* bắt buộc'),
-  userName: yup.string().required('* bắt buộc'),
-  hasPassword: yup.boolean(),
-  passwordHash: yup.string().when('hasPassword', {
-    is: true,
-    then: yup.string()
-      .required('* bắt buộc')
-      .max(6, '* cho phép tối đa 6 ký tự'),
-    otherwise: yup.string().nullable().notRequired(),
-  }),
-  gender: yup.number().required('* bắt buộc').moreThan(-1, '* bắt buộc'),
-  phoneNumber: yup.string().nullable().notRequired().when('phoneNumber', {
-    is: (value) => value?.length,
-    then: (rule) => rule.min(10, '* cần tối thiểu 10 số').max(11, '* Cho phép tối đa 11 số'),
-  }),
-}, ['phoneNumber', 'phoneNumber'])
+const schema = yup.object().shape(
+  {
+    firstName: yup.string().required('* bắt buộc'),
+    lastName: yup.string().required('* bắt buộc'),
+    userName: yup.string().required('* bắt buộc'),
+    hasPassword: yup.boolean(),
+    passwordHash: yup.string().when('hasPassword', {
+      is: true,
+      then: yup.string().required('* bắt buộc').max(6, '* cho phép tối đa 6 ký tự'),
+      otherwise: yup.string().nullable().notRequired()
+    }),
+    gender: yup.number().required('* bắt buộc').moreThan(-1, '* bắt buộc'),
+    phoneNumber: yup
+      .string()
+      .nullable()
+      .notRequired()
+      .when('phoneNumber', {
+        is: value => value?.length,
+        then: rule => rule.min(10, '* cần tối thiểu 10 số').max(11, '* Cho phép tối đa 11 số')
+      })
+  },
+  ['phoneNumber', 'phoneNumber']
+)
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const EditStudentPage = () => {
@@ -95,7 +85,7 @@ const EditStudentPage = () => {
   const { userId } = router.query
   const currentUser = useSelector(selectedUser)
   const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
-  const [cbChangePassword, setCbChangePassword] = useState(false);
+  const [cbChangePassword, setCbChangePassword] = useState(false)
 
   const {
     control,
@@ -111,7 +101,6 @@ const EditStudentPage = () => {
 
   useEffect(() => {
     if (!userId || userId == 0) {
-
       dispatch(selectUser({ id: '0', firstName: '', lastName: '', userName: '', passwordHash: '', hasPassword: false }))
       return
     }
@@ -123,19 +112,23 @@ const EditStudentPage = () => {
   }, [currentUser])
 
   const fetchData = () => {
-    new UserApi().getUserProfile(userId)
+    new UserApi()
+      .getUserProfile(userId)
       .then(response => {
         dispatch(selectUser(response.data))
 
-        setOrganizationSelected({ organizationId: response.data.organizationId, organizationName: response.data.organizationName });
+        setOrganizationSelected({
+          organizationId: response.data.organizationId,
+          organizationName: response.data.organizationName
+        })
       })
-      .catch((e) => console.log(e))
+      .catch(e => console.log(e))
   }
 
   /*
-  * handle save
-  */
-  const save = (code) => {
+   * handle save
+   */
+  const save = code => {
     const item = getValues()
     let param
     if (item.id == '0') {
@@ -144,13 +137,18 @@ const EditStudentPage = () => {
       if (cbChangePassword) {
         param = { ...item, hasPassword: cbChangePassword, organizationId: organizationSelected.organizationId }
       } else {
-        param = { ...item, passwordHash: undefined, hasPassword: cbChangePassword, organizationId: organizationSelected.organizationId }
+        param = {
+          ...item,
+          passwordHash: undefined,
+          hasPassword: cbChangePassword,
+          organizationId: organizationSelected.organizationId
+        }
       }
     }
 
-    new UserApi().save(param)
+    new UserApi()
+      .save(param)
       .then(response => {
-
         toast.success('Cập nhật thành công')
         if (code === 1) {
           router.push('/apps/user/')
@@ -158,15 +156,15 @@ const EditStudentPage = () => {
           reset()
         }
       })
-      .catch((e) => {
-        const errors = [];
-        Object.keys(e.response.data).forEach((key) => {
-          errors.push({ name: key, errors: e.response.data[key] });
-        });
+      .catch(e => {
+        const errors = []
+        Object.keys(e.response.data).forEach(key => {
+          errors.push({ name: key, errors: e.response.data[key] })
+        })
 
         errors.forEach(elm => {
           toast.error(elm.errors)
-        });
+        })
       })
   }
 
@@ -176,64 +174,64 @@ const EditStudentPage = () => {
     })
   }
   /*
-  * end handle save
-  */
+   * end handle save
+   */
 
   /*
-  * handle input password
-  */
-  const [showPassword, setShowPassword] = useState(true);
+   * handle input password
+   */
+  const [showPassword, setShowPassword] = useState(true)
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+  const handleClickShowPassword = () => setShowPassword(show => !show)
+  const handleMouseDownPassword = event => {
+    event.preventDefault()
+  }
   /*
-  * end handle input password
-  */
+   * end handle input password
+   */
 
   /*
-  * handle organization
-  */
+   * handle organization
+   */
   const [organizationSelected, setOrganizationSelected] = useState({ organizationId: 0, organizationName: '' })
-  const handleSelectedOrganization = (selectedId) => {
-    new OrganizationApi().get(selectedId)
-      .then(response => {
-        if (response.data) {
-          setOrganizationSelected({ organizationId: selectedId, organizationName: response.data.name });
-        }
-      })
+  const handleSelectedOrganization = selectedId => {
+    new OrganizationApi().get(selectedId).then(response => {
+      if (response.data) {
+        setOrganizationSelected({ organizationId: selectedId, organizationName: response.data.name })
+      }
+    })
   }
 
   const cleanOrganization = () => {
-    setOrganizationSelected({ organizationId: 0, organizationName: '' });
+    setOrganizationSelected({ organizationId: 0, organizationName: '' })
   }
   /*
-  * end handle organization
-  */
+   * end handle organization
+   */
 
   /*
-  * remove user
-  */
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * remove user
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (!userId || userId !== '0') {
-      new UserApi().delete({ id: userId })
-        .then((response) => {
+      new UserApi()
+        .delete({ id: userId })
+        .then(response => {
           toast.success('Xóa dữ liệu thành công.')
           router.push('/apps/user/')
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * end remove user
-  */
+   * end remove user
+   */
 
   return (
     <>
@@ -246,7 +244,11 @@ const EditStudentPage = () => {
                 <div className='title-bar' id='EntityHeadingTitleBar'>
                   <h3 className='title left'>
                     <span className='title__label'>
-                      {currentUser && currentUser.id != '0' && <span>{currentUser.userName} - {currentUser.fullName}</span>}
+                      {currentUser && currentUser.id != '0' && (
+                        <span>
+                          {currentUser.userName} - {currentUser.fullName}
+                        </span>
+                      )}
                       {(!currentUser || currentUser.id == 0) && <span>Tạo mới Học viên</span>}
                     </span>
                     {currentUser && currentUser.id != '' && (
@@ -286,7 +288,7 @@ const EditStudentPage = () => {
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                     <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', height: '100vh', paddingTop: 10 }}>
-                      <Grid container spacing={5} maxWidth={"sm"}>
+                      <Grid container spacing={5} maxWidth={'sm'}>
                         <Grid item xs={12} md={6}>
                           <FormControl fullWidth>
                             <Controller
@@ -361,7 +363,7 @@ const EditStudentPage = () => {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} md={6}>
-                          {((!currentUser || currentUser.id == 0) || cbChangePassword) && (
+                          {(!currentUser || currentUser.id == 0 || cbChangePassword) && (
                             <FormControl fullWidth>
                               <Controller
                                 name='passwordHash'
@@ -369,9 +371,9 @@ const EditStudentPage = () => {
                                 rules={{ required: true }}
                                 render={({ field: { value, onChange } }) => (
                                   <>
-                                    <InputLabel htmlFor="outlined-adornment-password">Mật khẩu</InputLabel>
+                                    <InputLabel htmlFor='outlined-adornment-password'>Mật khẩu</InputLabel>
                                     <OutlinedInput
-                                      id="outlined-adornment-password"
+                                      id='outlined-adornment-password'
                                       value={value ?? ''}
                                       required
                                       onChange={onChange}
@@ -379,24 +381,27 @@ const EditStudentPage = () => {
                                       aria-describedby='validation-schema-firstName'
                                       type={showPassword ? 'text' : 'password'}
                                       endAdornment={
-                                        <InputAdornment position="end">
+                                        <InputAdornment position='end'>
                                           <IconButton
-                                            aria-label="toggle password visibility"
+                                            aria-label='toggle password visibility'
                                             onClick={handleClickShowPassword}
                                             onMouseDown={handleMouseDownPassword}
-                                            edge="end"
+                                            edge='end'
                                           >
                                             {showPassword ? <VisibilityOff /> : <Visibility />}
                                           </IconButton>
                                           &nbsp;
-                                          <Tooltip placement="right-start" title="Mật khẩu có tối đa 6 ký tự, bao gồm ít nhất 1 ký tự đặc biệt và ít nhất 1 ký tự không phải là số.">
+                                          <Tooltip
+                                            placement='right-start'
+                                            title='Mật khẩu có tối đa 6 ký tự, bao gồm ít nhất 1 ký tự đặc biệt và ít nhất 1 ký tự không phải là số.'
+                                          >
                                             <IconButton>
                                               <InfoOutlinedIcon />
                                             </IconButton>
                                           </Tooltip>
                                         </InputAdornment>
                                       }
-                                      label="Password"
+                                      label='Password'
                                     />
                                   </>
                                 )}
@@ -406,7 +411,6 @@ const EditStudentPage = () => {
                                   {errors.passwordHash.message}
                                 </FormHelperText>
                               )}
-
                             </FormControl>
                           )}
                         </Grid>
@@ -422,9 +426,9 @@ const EditStudentPage = () => {
                                   render={({ field: { value, onChange } }) => (
                                     <Checkbox
                                       checked={value ?? false}
-                                      onChange={(e) => {
+                                      onChange={e => {
                                         onChange(e)
-                                        setCbChangePassword(e.target.checked);
+                                        setCbChangePassword(e.target.checked)
                                       }}
                                     />
                                   )}
@@ -516,10 +520,7 @@ const EditStudentPage = () => {
                                 control={control}
                                 rules={{ required: false }}
                                 render={({ field: { value, onChange } }) => (
-                                  <Checkbox
-                                    checked={value ?? false}
-                                    onChange={onChange}
-                                  />
+                                  <Checkbox checked={value ?? false} onChange={onChange} />
                                 )}
                               />
                             }
@@ -546,10 +547,7 @@ const EditStudentPage = () => {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12}>
-                          <FormControl
-                            fullWidth
-                            variant='outlined'
-                          >
+                          <FormControl fullWidth variant='outlined'>
                             <Controller
                               name='organizationId'
                               control={control}
@@ -561,12 +559,16 @@ const EditStudentPage = () => {
                                     id='outlined-adornment-parent-category'
                                     inputprops={{
                                       readOnly: true,
-                                      className: 'Mui-disabled',
+                                      className: 'Mui-disabled'
                                     }}
                                     value={organizationSelected.organizationName ?? 0}
                                     endAdornment={
                                       <InputAdornment position='end'>
-                                        <IconButton aria-label='toggle password visibility' edge='end' onClick={cleanOrganization}>
+                                        <IconButton
+                                          aria-label='toggle password visibility'
+                                          edge='end'
+                                          onClick={cleanOrganization}
+                                        >
                                           <DeleteOutline />
                                         </IconButton>
                                         &nbsp;
@@ -594,7 +596,9 @@ const EditStudentPage = () => {
                       <CatalogDialog
                         catalogType={CatalogType.DOCUMENT_ORGANIZATION}
                         excludedId={0}
-                        onNodeSelected={nodeId => { handleSelectedOrganization(nodeId) }}
+                        onNodeSelected={nodeId => {
+                          handleSelectedOrganization(nodeId)
+                        }}
                         onClose={() => {
                           setOpenCatalogDialog(false)
                         }}
@@ -606,9 +610,9 @@ const EditStudentPage = () => {
                       open={openDelete}
                       onClose={handleCloseDelete}
                       PaperComponent={PaperComponent}
-                      aria-labelledby="draggable-dialog-title"
+                      aria-labelledby='draggable-dialog-title'
                     >
-                      <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+                      <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
                         Xác nhận
                       </DialogTitle>
                       <DialogContent>
@@ -617,8 +621,13 @@ const EditStudentPage = () => {
                         </DialogContentText>
                       </DialogContent>
                       <DialogActions>
-                        <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-                        <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+                        <Button autoFocus onClick={handleCloseDelete}>
+                          {' '}
+                          Hủy bỏ{' '}
+                        </Button>
+                        <Button onClick={handleDelete} color='error'>
+                          Đồng ý
+                        </Button>
                       </DialogActions>
                     </Dialog>
                   </div>

@@ -1,8 +1,5 @@
 const FingerTabs = () => {
-  return (
-    <>
-    </>
-  )
+  return <></>
 }
 
 export default FingerTabs

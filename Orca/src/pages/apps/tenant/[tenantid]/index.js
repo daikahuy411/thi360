@@ -6,23 +6,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
-import {
-  Helmet,
-  HelmetProvider
-} from 'react-helmet-async'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
-import {
-  selectedExam,
-  selectExam
-} from 'store/slices/examSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectedExam, selectExam } from 'store/slices/examSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -51,13 +39,10 @@ const schema = yup.object().shape({
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const EditTenantPage = () => {
@@ -79,16 +64,14 @@ const EditTenantPage = () => {
     resolver: yupResolver(schema)
   })
 
-
   useEffect(() => {
     if (!tenantId || tenantId == 0) {
       dispatch(selectExam({ id: 0, name: '', description: '' }))
       return
     }
-    new TenantApi().get(tenantId)
-      .then(response => {
-        dispatch(selectExam(response.data))
-      })
+    new TenantApi().get(tenantId).then(response => {
+      dispatch(selectExam(response.data))
+    })
   }, [tenantId])
 
   useEffect(() => {
@@ -96,12 +79,13 @@ const EditTenantPage = () => {
   }, [currentTenant])
 
   /*
-  * handle save
-  */
-  const save = (code) => {
+   * handle save
+   */
+  const save = code => {
     const item = getValues()
-    
-    new TenantApi().save(item)
+
+    new TenantApi()
+      .save(item)
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code == 1) {
@@ -110,7 +94,7 @@ const EditTenantPage = () => {
           reset()
         }
       })
-      .catch((e) => {
+      .catch(e => {
         toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu')
       })
   }
@@ -121,32 +105,33 @@ const EditTenantPage = () => {
     })
   }
   /*
-  * end handle save
-  */
+   * end handle save
+   */
 
   /*
-  * handle remove exam
-  */
-  const [openDelete, setOpenDelete] = React.useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * handle remove exam
+   */
+  const [openDelete, setOpenDelete] = React.useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (!tenantId || tenantId > 0) {
-      new TenantApi().delete({ id: tenantId })
-        .then((response) => {
+      new TenantApi()
+        .delete({ id: tenantId })
+        .then(response => {
           setOpenDelete(false)
           toast.success('Xóa dữ liệu thành công.')
           router.push(`/apps/tenant/`)
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * handle remove exam
-  */
+   * handle remove exam
+   */
 
   return (
     <>
@@ -197,7 +182,10 @@ const EditTenantPage = () => {
                   </div>
                   <div className='grid-block'>
                     <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
-                      <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', width: '100%', paddingTop: 10 }}>
+                      <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        style={{ height: '100vh', width: '100%', paddingTop: 10 }}
+                      >
                         <Grid container spacing={5}>
                           <Grid item xs={12} md={8}>
                             <Grid container spacing={5}>
@@ -249,8 +237,7 @@ const EditTenantPage = () => {
                             </Grid>
                           </Grid>
                           <Grid item xs={12} md={4}>
-                            <Grid container spacing={5}>
-                            </Grid>
+                            <Grid container spacing={5}></Grid>
                           </Grid>
                         </Grid>
                       </form>
@@ -259,9 +246,9 @@ const EditTenantPage = () => {
                         open={openDelete}
                         onClose={handleCloseDelete}
                         PaperComponent={PaperComponent}
-                        aria-labelledby="draggable-dialog-title"
+                        aria-labelledby='draggable-dialog-title'
                       >
-                        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+                        <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
                           Xác nhận
                         </DialogTitle>
                         <DialogContent>
@@ -270,8 +257,13 @@ const EditTenantPage = () => {
                           </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                          <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-                          <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+                          <Button autoFocus onClick={handleCloseDelete}>
+                            {' '}
+                            Hủy bỏ{' '}
+                          </Button>
+                          <Button onClick={handleDelete} color='error'>
+                            Đồng ý
+                          </Button>
                         </DialogActions>
                       </Dialog>
                     </div>
