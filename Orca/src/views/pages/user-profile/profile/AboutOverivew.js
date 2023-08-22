@@ -1,9 +1,18 @@
+import {
+  useEffect,
+  useState
+} from 'react'
+
+import moment from 'moment'
+
 // ** Icon Imports
 import Icon from '@core/components/icon'
+import OptionsMenu from '@core/components/option-menu'
 // ** MUI Components
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
@@ -67,27 +76,190 @@ const renderTeams = arr => {
 
 const AboutOverivew = props => {
   const { teams, about, contacts, overview } = props
+  const [data, setData] = useState()
+
+  useEffect(() => {
+    if (about) {
+      setData(about)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props])
 
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Card>
+          <CardHeader
+            title='Thông tin cá nhân'
+            action={
+              <OptionsMenu
+                iconButtonProps={{ size: 'small' }}
+                options={['Chỉnh sửa']}
+              />
+            }
+          />
           <CardContent>
             <Box sx={{ mb: 6 }}>
-              <Typography variant='caption' sx={{ mb: 5, display: 'block', textTransform: 'uppercase' }}>
-                About
-              </Typography>
-              {renderList(about)}
+              {/* <Typography variant='caption' sx={{ mb: 5, display: 'block', textTransform: 'uppercase' }}>
+                Thông tin cá nhân
+              </Typography> */}
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  '&:not(:last-of-type)': { mb: 4 },
+                  '& svg': { color: 'text.secondary' }
+                }}
+              >
+                <Icon icon={'mdi:account-check-outline'} />
+                <Typography sx={{ mx: 2, fontWeight: 600, color: 'text.secondary' }}>
+                  Tài khoản:
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  {data?.userName}
+                </Typography>
+              </Box>
+              <Box
+                // key={index}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  '&:not(:last-of-type)': { mb: 4 },
+                  '& svg': { color: 'text.secondary' }
+                }}
+              >
+                <Icon icon={'mdi:account-outline'} />
+                <Typography sx={{ mx: 2, fontWeight: 600, color: 'text.secondary' }}>
+                  Tên:
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  {data?.fullName}
+                </Typography>
+              </Box>
+              <Box
+                // key={index}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  '&:not(:last-of-type)': { mb: 4 },
+                  '& svg': { color: 'text.secondary' }
+                }}
+              >
+                <Icon icon={'mdi:check'} />
+                <Typography sx={{ mx: 2, fontWeight: 600, color: 'text.secondary' }}>
+                  Trạng thái:
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  Active
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  '&:not(:last-of-type)': { mb: 4 },
+                  '& svg': { color: 'text.secondary' }
+                }}
+              >
+                <Icon icon={'mdi:calendar-blank'} />
+                <Typography sx={{ mx: 2, fontWeight: 600, color: 'text.secondary' }}>
+                  Ngày sinh:
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  {data?.dob != null ? moment(data.dob).format('DD/MM/YYYY') : <><i>Chưa cập nhật</i></>}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  '&:not(:last-of-type)': { mb: 4 },
+                  '& svg': { color: 'text.secondary' }
+                }}
+              >
+                <Icon icon={'mdi:star-outline'} />
+                <Typography sx={{ mx: 2, fontWeight: 600, color: 'text.secondary' }}>
+                  Giới tính:
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  {data?.genderName != '' ? data?.genderName : <><i>Chưa cập nhật</i></>}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  '&:not(:last-of-type)': { mb: 4 },
+                  '& svg': { color: 'text.secondary' }
+                }}
+              >
+                <Icon icon={'mdi:briefcase-outline'} />
+                <Typography sx={{ mx: 2, fontWeight: 600, color: 'text.secondary' }}>
+                  Nghề nghiệp:
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  {data?.job ?? <><i>Chưa cập nhật</i></>}
+                </Typography>
+              </Box>
             </Box>
             <Box sx={{ mb: 6 }}>
               <Typography variant='caption' sx={{ mb: 5, display: 'block', textTransform: 'uppercase' }}>
-                Contacts
+                Liên hệ
               </Typography>
-              {renderList(contacts)}
+              <Box
+                // key={index}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  '&:not(:last-of-type)': { mb: 4 },
+                  '& svg': { color: 'text.secondary' }
+                }}
+              >
+                <Icon icon={'mdi:phone-outline'} />
+                <Typography sx={{ mx: 2, fontWeight: 600, color: 'text.secondary' }}>
+                  Điện thoại:
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  {data?.phoneNumber ?? <><i>Chưa cập nhật</i></>}
+                </Typography>
+              </Box>
+              <Box
+                // key={index}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  '&:not(:last-of-type)': { mb: 4 },
+                  '& svg': { color: 'text.secondary' }
+                }}
+              >
+                <Icon icon={'mdi:email-outline'} />
+                <Typography sx={{ mx: 2, fontWeight: 600, color: 'text.secondary' }}>
+                  Email:
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  {data?.email ?? <><i>Chưa cập nhật</i></>}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  '&:not(:last-of-type)': { mb: 4 },
+                  '& svg': { color: 'text.secondary' }
+                }}
+              >
+                <Icon icon={'mdi:map-marker-outline'} />
+                <Typography sx={{ mx: 2, fontWeight: 600, color: 'text.secondary' }}>
+                  Địa chỉ:
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  {data?.address ?? <><i>Chưa cập nhật</i></>}
+                </Typography>
+              </Box>
             </Box>
             <div>
               <Typography variant='caption' sx={{ mb: 5, display: 'block', textTransform: 'uppercase' }}>
-                Teams
+                Nhóm / Lớp
               </Typography>
               {renderTeams(teams)}
             </div>
@@ -99,9 +271,9 @@ const AboutOverivew = props => {
           <CardContent>
             <div>
               <Typography variant='caption' sx={{ mb: 5, display: 'block', textTransform: 'uppercase' }}>
-                Overview
+                Gói sản phẩm
               </Typography>
-              {renderList(overview)}
+              Bạn đang dùng gói Standard
             </div>
           </CardContent>
         </Card>

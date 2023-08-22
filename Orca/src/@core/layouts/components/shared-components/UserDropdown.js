@@ -1,6 +1,12 @@
 // ** React Imports
-import { Fragment, useState } from 'react'
+import {
+  Fragment,
+  useEffect,
+  useState
+} from 'react'
 
+// ** Config
+import authConfig from 'configs/auth'
 // ** Context
 import { useAuth } from 'hooks/useAuth'
 // ** Next Import
@@ -33,6 +39,7 @@ const UserDropdown = props => {
 
   // ** States
   const [anchorEl, setAnchorEl] = useState(null)
+  const [userData, setUserData] = useState()
 
   // ** Hooks
   const router = useRouter()
@@ -40,6 +47,13 @@ const UserDropdown = props => {
 
   // ** Vars
   const { direction } = settings
+
+  useEffect(() => {
+    const userInfo = window.localStorage.getItem(authConfig.storageUserDataKeyName)
+    console.log('userInfo', JSON.parse(userInfo))
+    setUserData(JSON.parse(userInfo))
+  }, [])
+
 
   const handleDropdownOpen = event => {
     setAnchorEl(event.currentTarget)
@@ -112,21 +126,21 @@ const UserDropdown = props => {
               <Avatar alt='John Doe' src='/images/avatars/1.png' sx={{ width: '2.5rem', height: '2.5rem' }} />
             </Badge>
             <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography sx={{ fontWeight: 600 }}>John Doe</Typography>
+              <Typography sx={{ fontWeight: 600 }}>{userData?.name}</Typography>
               <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                Admin
+                {userData?.userName}
               </Typography>
             </Box>
           </Box>
         </Box>
         <Divider sx={{ mt: '0 !important' }} />
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/user-profile/profile')}>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/user-profile/profile')}>
           <Box sx={styles}>
             <Icon icon='mdi:account-outline' />
             Thông tin
           </Box>
         </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/account-settings/account')}>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/account-settings/account')}>
           <Box sx={styles}>
             <Icon icon='mdi:cog-outline' />
             Cấu hình
