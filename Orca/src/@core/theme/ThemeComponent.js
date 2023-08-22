@@ -6,11 +6,7 @@ import UserThemeOptions from 'layouts/UserThemeOptions'
 
 import CssBaseline from '@mui/material/CssBaseline'
 import GlobalStyles from '@mui/material/GlobalStyles'
-import {
-  createTheme,
-  responsiveFontSizes,
-  ThemeProvider
-} from '@mui/material/styles'
+import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles'
 // ** MUI Imports
 import { deepmerge } from '@mui/utils'
 

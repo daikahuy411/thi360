@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useState
-} from 'react'
+import React, { useEffect, useState } from 'react'
 
 import QuestionCatalogApi from 'api/question-catalog-api'
 import { makeStyles } from 'tss-react/mui'

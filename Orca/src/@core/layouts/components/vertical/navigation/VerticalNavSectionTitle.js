@@ -5,10 +5,7 @@ import Translations from 'layouts/components/Translations'
 // ** MUI Imports
 import Divider from '@mui/material/Divider'
 import MuiListSubheader from '@mui/material/ListSubheader'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 // ** Styled Components

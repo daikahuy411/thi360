@@ -1,8 +1,4 @@
-import {
-  Fragment,
-  useEffect,
-  useState
-} from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import { QuestionCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
@@ -10,10 +6,7 @@ import { useRouter } from 'next/router'
 import CatalogDialog from 'pages/shared/catalog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
@@ -44,18 +37,15 @@ import TopNav from '../_layout/_breadcrums'
 
 const schema = yup.object().shape({
   name: yup.string().required('* bắt buộc'),
-  description: yup.string(),
+  description: yup.string()
 })
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const ExamCategoryEditPage = () => {
@@ -78,8 +68,6 @@ const ExamCategoryEditPage = () => {
     resolver: yupResolver(schema)
   })
 
-
-
   useEffect(() => {
     if (!questionCategoryId || questionCategoryId == 0) return
     fetchData()
@@ -90,24 +78,29 @@ const ExamCategoryEditPage = () => {
   }, [item])
 
   const fetchData = () => {
-    QuestionCategoryApi.get(questionCategoryId)
-      .then(response => {
-        console.log('ahehe', response.data)
-        setItem(response.data)
+    QuestionCategoryApi.get(questionCategoryId).then(response => {
+      console.log('ahehe', response.data)
+      setItem(response.data)
 
-        setParentSelected({ parentId: response.data.parentId, parentName: response.data.parentName });
-      })
+      setParentSelected({ parentId: response.data.parentId, parentName: response.data.parentName })
+    })
   }
   // const callbackFunction = (childData) => {
   //   setParentId(childData)
   // }
 
-  const save = (code) => {
+  const save = code => {
     const item = getValues()
     console.log('item-save:', item)
     console.log('parentId:', parentId)
 
-    QuestionCategoryApi.save({ ...item, id: Number(questionCategoryId), catalogId: Number(questionCatalogId), parentId: parentSelected.parentId, order: 0 })
+    QuestionCategoryApi.save({
+      ...item,
+      id: Number(questionCategoryId),
+      catalogId: Number(questionCatalogId),
+      parentId: parentSelected.parentId,
+      order: 0
+    })
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code == 1) {
@@ -116,55 +109,53 @@ const ExamCategoryEditPage = () => {
           reset()
         }
       })
-      .catch((e) => {
+      .catch(e => {
         toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu')
       })
   }
 
   /*
-  * handle parent
-  */
+   * handle parent
+   */
   const [parentSelected, setParentSelected] = useState({ parentId: 0, parentName: '' })
-  const handleSelectedParent = (selectedId) => {
-    QuestionCategoryApi.get(selectedId)
-      .then(response => {
-        if (response.data) {
-          setParentSelected({ parentId: selectedId, parentName: response.data.name });
-        }
-      })
+  const handleSelectedParent = selectedId => {
+    QuestionCategoryApi.get(selectedId).then(response => {
+      if (response.data) {
+        setParentSelected({ parentId: selectedId, parentName: response.data.name })
+      }
+    })
   }
 
   const cleanParent = () => {
-    setParentSelected({ parentId: 0, parentName: '' });
+    setParentSelected({ parentId: 0, parentName: '' })
   }
   /*
-  * end handle parent
-  */
+   * end handle parent
+   */
 
   /*
-  * handle remove question-catalog
-  */
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * handle remove question-catalog
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (!questionCategoryId || questionCategoryId > 0) {
       QuestionCategoryApi.delete({ id: questionCategoryId })
-        .then((response) => {
+        .then(response => {
           setOpenDelete(false)
           toast.success('Xóa dữ liệu thành công.')
           router.push(`/apps/question-catalog/${questionCatalogId}/categories`)
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * handle remove question-catalog
-  */
-
+   * handle remove question-catalog
+   */
 
   return (
     <>
@@ -177,7 +168,7 @@ const ExamCategoryEditPage = () => {
                 <div className='title-bar' id='EntityHeadingTitleBar'>
                   <h3 className='title left'>
                     <span className='title__label'>
-                      {(item && item.id > 0) && <span>{item.name}</span>}
+                      {item && item.id > 0 && <span>{item.name}</span>}
                       {(!item || item.id == 0) && <span>Tạo mới Danh mục Câu hỏi</span>}
                     </span>
                     {item && item.id > 0 && <EntityInfoModal entity={item} />}
@@ -200,11 +191,15 @@ const ExamCategoryEditPage = () => {
                       &nbsp;Quay lại
                     </Button>
                     &nbsp;
-                    <Button disabled={!isValid} onClick={() => save(1)} variant='contained'>Cập nhật</Button>
+                    <Button disabled={!isValid} onClick={() => save(1)} variant='contained'>
+                      Cập nhật
+                    </Button>
                     {(!item || item.id == 0) && (
                       <>
                         &nbsp;
-                        <Button disabled={!isValid} onClick={() => save(2)} variant='contained'>Cập nhật &amp; Thêm mới</Button>
+                        <Button disabled={!isValid} onClick={() => save(2)} variant='contained'>
+                          Cập nhật &amp; Thêm mới
+                        </Button>
                       </>
                     )}
                   </span>
@@ -237,7 +232,7 @@ const ExamCategoryEditPage = () => {
                               id='outlined-adornment-parent-category'
                               inputprops={{
                                 readOnly: true,
-                                className: 'Mui-disabled',
+                                className: 'Mui-disabled'
                               }}
                               value={parentSelected.parentName ?? ''}
                               endAdornment={
@@ -292,7 +287,9 @@ const ExamCategoryEditPage = () => {
                       <CatalogDialog
                         catalogType={CatalogType.QUESTION_CATEGORY}
                         excludedId={0}
-                        onNodeSelected={nodeId => { handleSelectedParent(nodeId) }}
+                        onNodeSelected={nodeId => {
+                          handleSelectedParent(nodeId)
+                        }}
                         onClose={() => {
                           setOpenCatalogDialog(false)
                         }}
@@ -308,9 +305,9 @@ const ExamCategoryEditPage = () => {
               open={openDelete}
               onClose={handleCloseDelete}
               PaperComponent={PaperComponent}
-              aria-labelledby="draggable-dialog-title"
+              aria-labelledby='draggable-dialog-title'
             >
-              <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+              <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
                 Xác nhận
               </DialogTitle>
               <DialogContent>
@@ -319,8 +316,13 @@ const ExamCategoryEditPage = () => {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-                <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+                <Button autoFocus onClick={handleCloseDelete}>
+                  {' '}
+                  Hủy bỏ{' '}
+                </Button>
+                <Button onClick={handleDelete} color='error'>
+                  Đồng ý
+                </Button>
               </DialogActions>
             </Dialog>
           </Fragment>

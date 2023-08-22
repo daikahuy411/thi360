@@ -1,8 +1,5 @@
 // ** React Imports
-import {
-  Fragment,
-  useEffect
-} from 'react'
+import { Fragment, useEffect } from 'react'
 
 // ** Third Party Imports
 import clsx from 'clsx'
@@ -17,10 +14,7 @@ import { useRouter } from 'next/router'
 // ** Icon Imports
 import Icon from '@core/components/icon'
 // ** Utils
-import {
-  hasActiveChild,
-  removeChildren
-} from '@core/layouts/utils'
+import { hasActiveChild, removeChildren } from '@core/layouts/utils'
 import Box from '@mui/material/Box'
 // ** MUI Imports
 import Chip from '@mui/material/Chip'
@@ -28,10 +22,7 @@ import Collapse from '@mui/material/Collapse'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 // ** Custom Components Imports

@@ -7,10 +7,7 @@ import Link from 'next/link'
 import { useSettings } from '@core/hooks/useSettings'
 // ** MUI Imports
 import AppBar from '@mui/material/AppBar'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 

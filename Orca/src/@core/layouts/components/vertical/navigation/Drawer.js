@@ -100,8 +100,7 @@ const Drawer = props => {
           ...drawerColors(),
           width: navCollapsed && !navHover ? collapsedNavWidth : navWidth,
           ...(!hidden && navCollapsed && navHover ? { boxShadow: 9 } : {}),
-          // borderRight: navigationBorderWidth === 0 ? 0 : `${navigationBorderWidth}px solid ${theme.palette.divider}`,
-          borderRight: " 1px solid rgb(221, 221, 221)",
+          borderRight: navigationBorderWidth === 0 ? 0 : `${navigationBorderWidth}px solid ${theme.palette.divider}`,
           ...userNavMenuPaperStyle
         },
         ...navMenuProps?.PaperProps

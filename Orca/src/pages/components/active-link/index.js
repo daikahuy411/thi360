@@ -1,7 +1,4 @@
-import {
-  Link,
-  useRouter
-} from 'next/router'
+import { Link, useRouter } from 'next/router'
 
 const ActiveLink = ({ children, href, className }) => {
   const router = useRouter()

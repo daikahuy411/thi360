@@ -103,6 +103,7 @@ const PlanDetails = props => {
       </Box>
       <BoxFeature>{renderFeatures()}</BoxFeature>
       <Button
+        onClick={() => props.addPayment()}
         fullWidth
         color={data?.currentPlan ? 'success' : 'primary'}
         variant={data?.popularPlan ? 'contained' : 'outlined'}

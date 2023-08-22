@@ -1,8 +1,5 @@
 // ** React Imports
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import UserApi from 'api/user-api'
 // ** Configs
@@ -10,10 +7,7 @@ import themeConfig from 'configs/themeConfig'
 // ** Next Imports
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 // ** Demo Imports
 import FooterIllustrationsV1 from 'views/pages/auth/FooterIllustrationsV1'
@@ -37,10 +31,7 @@ import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
@@ -67,9 +58,11 @@ const ResetPasswordV1 = () => {
   const { resetPasswordToken } = router.query
 
   const schema = yup.object().shape({
-    newPassword: yup.string().min(5, 'Mật khẩu không được để trống & phải có ít nhất 6 ký tự!').required('Password không được để trống!'),
-    confirmNewPassword: yup.string()
-      .oneOf([yup.ref('newPassword'), null], 'Mật khẩu & nhập lại mật khẩu không khớp')
+    newPassword: yup
+      .string()
+      .min(5, 'Mật khẩu không được để trống & phải có ít nhất 6 ký tự!')
+      .required('Password không được để trống!'),
+    confirmNewPassword: yup.string().oneOf([yup.ref('newPassword'), null], 'Mật khẩu & nhập lại mật khẩu không khớp')
   })
 
   const {
@@ -92,11 +85,12 @@ const ResetPasswordV1 = () => {
 
   useEffect(() => {
     if (!router.isReady) return
-    verifyExpiteTime();
+    verifyExpiteTime()
   }, [resetPasswordToken])
 
   const verifyExpiteTime = () => {
-    new UserApi().verifyExpiteTime(resetPasswordToken)
+    new UserApi()
+      .verifyExpiteTime(resetPasswordToken)
       .then(response => {
         const data = response.data
         if (!data.isSuccess) {
@@ -104,7 +98,7 @@ const ResetPasswordV1 = () => {
           router.replace('/forgot-password')
         }
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e)
         toast.error('Xảy ra lỗi trong quá trình xử lý dữ liệu. Bạn vui lòng quay lại sau!')
         router.replace('/forgot-password')
@@ -119,18 +113,19 @@ const ResetPasswordV1 = () => {
       securityStamp: resetPasswordToken
     }
 
-    new UserApi().resetPassword(param)
+    new UserApi()
+      .resetPassword(param)
       .then(response => {
         const data = response.data
         if (!data.isSuccess) {
           toast.error(data.message)
           router.replace('/forgot-password')
-        }else{
+        } else {
           toast.success(data.message)
           router.push('/login')
         }
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e)
         toast.error('Xảy ra lỗi trong quá trình xử lý dữ liệu. Bạn vui lòng quay lại sau!')
         router.replace('/forgot-password')
@@ -248,7 +243,10 @@ const ResetPasswordV1 = () => {
                           <Icon icon={showNewPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
                         </IconButton>
                         &nbsp;
-                        <Tooltip placement="right-start" title="Mật khẩu có tối thiểu 5 ký tự, bao gồm ít nhất 1 chữ in hoa, 1 ký tự đặc biệt và ít nhất 1 ký tự là số.">
+                        <Tooltip
+                          placement='right-start'
+                          title='Mật khẩu có tối thiểu 5 ký tự, bao gồm ít nhất 1 chữ in hoa, 1 ký tự đặc biệt và ít nhất 1 ký tự là số.'
+                        >
                           <IconButton>
                             <InfoOutlinedIcon />
                           </IconButton>
@@ -295,17 +293,17 @@ const ResetPasswordV1 = () => {
               )}
             </FormControl>
             <LoadingButton
-                fullWidth
-                size='large'
-                type='submit'
-                endIcon={<SendIcon />}
-                loading={loading}
-                loadingPosition="end"
-                variant="contained"
-                sx={{ mb: 5.25 }}
-              >
-                <span>Đặt Mật Khẩu Mới</span>
-              </LoadingButton>
+              fullWidth
+              size='large'
+              type='submit'
+              endIcon={<SendIcon />}
+              loading={loading}
+              loadingPosition='end'
+              variant='contained'
+              sx={{ mb: 5.25 }}
+            >
+              <span>Đặt Mật Khẩu Mới</span>
+            </LoadingButton>
             <Typography variant='body2' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <LinkStyled href='/login'>
                 <Icon icon='mdi:chevron-left' />

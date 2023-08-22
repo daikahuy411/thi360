@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import UserApi from 'api/user-api'
 import Link from 'next/link'
@@ -37,13 +34,10 @@ import Typography from '@mui/material/Typography'
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const UserTable = () => {
@@ -86,8 +80,8 @@ const UserTable = () => {
   }, [classId, page, rowsPerPage])
 
   /*
-  * handle checkbox
-  */
+   * handle checkbox
+   */
   const [selected, setSelected] = useState([])
   const isSelected = name => selected.indexOf(name) !== -1
 
@@ -116,19 +110,20 @@ const UserTable = () => {
     setSelected(newSelected)
   }
   /*
-  * end handle checkbox
-  */
+   * end handle checkbox
+   */
 
   /*
-  * handle remove user-class
-  */
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * handle remove user-class
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (selected.length > 0) {
-      new UserApi().removeUserInClass(selected)
-        .then((response) => {
+      new UserApi()
+        .removeUserInClass(selected)
+        .then(response => {
           setOpenDelete(false)
           if (response.data.isSuccess) {
             toast.success('Xóa dữ liệu thành công.')
@@ -136,15 +131,15 @@ const UserTable = () => {
             setSelected([])
           }
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * handle remove user-class
-  */
+   * handle remove user-class
+   */
 
   return (
     <>
@@ -167,7 +162,11 @@ const UserTable = () => {
         &nbsp; &nbsp;
         <Tooltip title='Xóa học viên khỏi lớp'>
           <span>
-            <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete} disabled={selected.length > 0 ? false : true}>
+            <IconButton
+              sx={{ color: 'text.secondary' }}
+              onClick={handleClickOpenDelete}
+              disabled={selected.length > 0 ? false : true}
+            >
               <Icon icon='mdi:delete-outline' />
             </IconButton>
           </span>
@@ -246,7 +245,11 @@ const UserTable = () => {
                     }}
                   >
                     <TableCell padding='checkbox'>
-                      <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleClick(event, row.id)} />
+                      <Checkbox
+                        checked={isItemSelected}
+                        inputProps={{ 'aria-labelledby': labelId }}
+                        onClick={event => handleClick(event, row.id)}
+                      />
                     </TableCell>
                     <TableCell component='th' scope='row'>
                       <IconButton aria-label='filter' component={Link} href={`/apps/user/${row.id}`}>
@@ -280,9 +283,9 @@ const UserTable = () => {
         open={openDelete}
         onClose={handleCloseDelete}
         PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title"
+        aria-labelledby='draggable-dialog-title'
       >
-        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+        <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
           Xác nhận
         </DialogTitle>
         <DialogContent>
@@ -291,8 +294,13 @@ const UserTable = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-          <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+          <Button autoFocus onClick={handleCloseDelete}>
+            {' '}
+            Hủy bỏ{' '}
+          </Button>
+          <Button onClick={handleDelete} color='error'>
+            Đồng ý
+          </Button>
         </DialogActions>
       </Dialog>
     </>

@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import { QuestionCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
@@ -62,12 +59,12 @@ const CategoryTable = () => {
         setTotalItem(response.data.totalItems)
         setTotalParentItem(response.data.totalParentItems)
       })
-      .catch((e) => console.log(e))
+      .catch(e => console.log(e))
   }
 
   useEffect(() => {
     fetchData()
-  }, [questionCatalogId, page, rowsPerPage ])
+  }, [questionCatalogId, page, rowsPerPage])
 
   return (
     <>
@@ -140,7 +137,8 @@ const CategoryTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data && data.map((item, index) => <TreeRow key={index} item={item} excludedId={0} nodeId={item.Id} level={0} />)}
+            {data &&
+              data.map((item, index) => <TreeRow key={index} item={item} excludedId={0} nodeId={item.Id} level={0} />)}
           </TableBody>
         </Table>
       </TableContainer>

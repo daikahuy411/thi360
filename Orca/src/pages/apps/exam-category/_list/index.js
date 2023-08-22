@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import { ExamCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
@@ -65,7 +62,7 @@ const ExamCategoryTable = () => {
         setTotalItem(response.data.totalItems)
         setTotalParentItem(response.data.totalParentItems)
       })
-      .catch((e) => console.log(e))
+      .catch(e => console.log(e))
   }
 
   return (
@@ -135,9 +132,7 @@ const ExamCategoryTable = () => {
           </TableHead>
           <TableBody>
             {data &&
-              data.map((item, index) => (
-                <TreeRow key={index} item={item} excludedId={0} nodeId={item.Id} level={0} />
-              ))}
+              data.map((item, index) => <TreeRow key={index} item={item} excludedId={0} nodeId={item.Id} level={0} />)}
           </TableBody>
         </Table>
       </TableContainer>

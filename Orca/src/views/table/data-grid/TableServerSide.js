@@ -1,9 +1,5 @@
 // ** React Imports
-import {
-  useCallback,
-  useEffect,
-  useState
-} from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 // ** ThirdParty Components
 import axios from 'axios'

@@ -6,23 +6,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
-import {
-  Helmet,
-  HelmetProvider
-} from 'react-helmet-async'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
-import {
-  selectedTestGroup,
-  selectTestGroup
-} from 'store/slices/testGroupSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectedTestGroup, selectTestGroup } from 'store/slices/testGroupSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -46,18 +34,15 @@ import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
 
 const schema = yup.object().shape({
-  name: yup.string().required('* bắt buộc'),
+  name: yup.string().required('* bắt buộc')
 })
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const EditTestGroupPage = () => {
@@ -78,8 +63,6 @@ const EditTestGroupPage = () => {
     resolver: yupResolver(schema)
   })
 
-
-
   useEffect(() => {
     if (!testGroupId || testGroupId == 0) {
       dispatch(selectTestGroup({ id: 0, name: '' }))
@@ -95,11 +78,12 @@ const EditTestGroupPage = () => {
   }, [currentTestGroup])
 
   /*
-  * save data
-  */
-  const save = (code) => {
+   * save data
+   */
+  const save = code => {
     const item = getValues()
-    new TestGroupApi().save(item)
+    new TestGroupApi()
+      .save(item)
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code === 1) {
@@ -108,7 +92,7 @@ const EditTestGroupPage = () => {
           reset()
         }
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e)
       })
   }
@@ -119,39 +103,38 @@ const EditTestGroupPage = () => {
     })
   }
   /*
-  * end save data
-  */
+   * end save data
+   */
 
   /*
-  * remove test-group
-  */
-  const [openDelete, setOpenDelete] = React.useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * remove test-group
+   */
+  const [openDelete, setOpenDelete] = React.useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (!testGroupId || testGroupId > 0) {
-      new TestGroupApi().delete({ id: testGroupId })
-        .then((response) => {
+      new TestGroupApi()
+        .delete({ id: testGroupId })
+        .then(response => {
           toast.success('Xóa dữ liệu thành công.')
           router.push('/apps/test-group/')
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * remove test-group
-  */
+   * remove test-group
+   */
 
   return (
     <>
       <HelmetProvider>
         <Helmet>
-          <title>
-            {currentTestGroup && currentTestGroup.id > 0 ? currentTestGroup.name : 'Tạo mới Bộ đề thi'}
-          </title>
+          <title>{currentTestGroup && currentTestGroup.id > 0 ? currentTestGroup.name : 'Tạo mới Bộ đề thi'}</title>
         </Helmet>
         <div style={{ padding: 0 }}>
           <div sx={{ py: 5.375 }} style={{ padding: 0 }}>
@@ -187,7 +170,7 @@ const EditTestGroupPage = () => {
                       {(!currentTestGroup || currentTestGroup.id == 0) && (
                         <>
                           &nbsp;
-                          <Button disabled={!isValid} onClick={() => save(2)} variant='contained' >
+                          <Button disabled={!isValid} onClick={() => save(2)} variant='contained'>
                             Cập nhật &amp; Thêm mới
                           </Button>
                         </>
@@ -197,7 +180,10 @@ const EditTestGroupPage = () => {
                   <div className='grid-block'>
                     <Nav />
                     <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
-                      <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', width: '100%', paddingTop: 10 }}>
+                      <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        style={{ height: '100vh', width: '100%', paddingTop: 10 }}
+                      >
                         <Grid container spacing={5}>
                           <Grid item xs={12} md={6}>
                             <FormControl fullWidth>
@@ -232,9 +218,9 @@ const EditTestGroupPage = () => {
                         open={openDelete}
                         onClose={handleCloseDelete}
                         PaperComponent={PaperComponent}
-                        aria-labelledby="draggable-dialog-title"
+                        aria-labelledby='draggable-dialog-title'
                       >
-                        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+                        <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
                           Xác nhận
                         </DialogTitle>
                         <DialogContent>
@@ -243,8 +229,13 @@ const EditTestGroupPage = () => {
                           </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                          <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-                          <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+                          <Button autoFocus onClick={handleCloseDelete}>
+                            {' '}
+                            Hủy bỏ{' '}
+                          </Button>
+                          <Button onClick={handleDelete} color='error'>
+                            Đồng ý
+                          </Button>
                         </DialogActions>
                       </Dialog>
                     </div>

@@ -1,8 +1,5 @@
 // ** React Imports
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 // ** Third Party Imports
 import axios from 'axios'

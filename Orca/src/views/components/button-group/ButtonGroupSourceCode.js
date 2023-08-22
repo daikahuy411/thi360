@@ -1,4 +1,6 @@
-export const ButtonGroupColorsJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ButtonGroupColorsJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 
@@ -39,9 +41,13 @@ const ButtonGroupColor = () => {
 }
 
 export default ButtonGroupColor
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonGroupBasicJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ButtonGroupBasicJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 
@@ -74,9 +80,13 @@ const ButtonGroupBasic = () => {
 }
 
 export default ButtonGroupBasic
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonGroupSizesJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ButtonGroupSizesJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 
@@ -109,9 +119,13 @@ const ButtonGroupSizes = () => {
 }
 
 export default ButtonGroupSizes
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonGroupVerticalJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const ButtonGroupVerticalJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 
@@ -138,9 +152,13 @@ const ButtonGroupVertical = () => {
 }
 
 export default ButtonGroupVertical
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonToggleColorsJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ButtonToggleColorsJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { useState } from 'react'
 
 // ** MUI Imports
@@ -197,9 +215,13 @@ const ButtonToggleColors = () => {
 }
 
 export default ButtonToggleColors
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonGroupSplitJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ButtonGroupSplitJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { useRef, useState, Fragment } from 'react'
 
 // ** MUI Imports
@@ -287,9 +309,13 @@ const ButtonGroupSplit = () => {
 }
 
 export default ButtonGroupSplit
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonToggleCustomizedJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ButtonToggleCustomizedJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { useState } from 'react'
 
 // ** MUI Imports
@@ -364,9 +390,13 @@ const ButtonToggleCustomized = () => {
 }
 
 export default ButtonToggleCustomized
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonToggleEnforceValueJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ButtonToggleEnforceValueJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { useState } from 'react'
 
 // ** MUI Imports
@@ -433,9 +463,13 @@ const ButtonToggleEnforceValue = () => {
 }
 
 export default ButtonToggleEnforceValue
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonToggleSizesJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ButtonToggleSizesJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { useState } from 'react'
 
 // ** MUI Imports
@@ -520,9 +554,13 @@ const ButtonToggleSizes = () => {
 }
 
 export default ButtonToggleSizes
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonToggleMultipleJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ButtonToggleMultipleJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { useState } from 'react'
 
 // ** MUI Imports
@@ -559,9 +597,13 @@ const ButtonToggleMultiple = () => {
 }
 
 export default ButtonToggleMultiple
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonToggleVerticalJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ButtonToggleVerticalJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { useState } from 'react'
 
 // ** MUI Imports
@@ -595,9 +637,13 @@ const ButtonToggleVertical = () => {
 }
 
 export default ButtonToggleVertical
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const ButtonToggleSimpleJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const ButtonToggleSimpleJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { useState } from 'react'
 
 // ** MUI Imports
@@ -634,5 +680,6 @@ const ButtonToggleSimple = () => {
 }
 
 export default ButtonToggleSimple
-`}</code></pre>) 
-
+`}</code>
+  </pre>
+)

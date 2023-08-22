@@ -1,9 +1,5 @@
 // ** React Imports
-import {
-  Fragment,
-  useEffect,
-  useState
-} from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 // ** Third Party Imports
 import clsx from 'clsx'
@@ -30,10 +26,7 @@ import List from '@mui/material/List'
 import MuiListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Paper from '@mui/material/Paper'
-import {
-  styled,
-  useTheme
-} from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 // ** Custom Components Imports

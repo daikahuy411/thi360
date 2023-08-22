@@ -38,10 +38,7 @@ import GuestGuard from '@core/components/auth/GuestGuard'
 // ** Spinner Import
 import Spinner from '@core/components/spinner'
 import WindowWrapper from '@core/components/window-wrapper'
-import {
-  SettingsConsumer,
-  SettingsProvider
-} from '@core/context/settingsContext'
+import { SettingsConsumer, SettingsProvider } from '@core/context/settingsContext'
 // ** Styled Components
 import ReactHotToast from '@core/styles/libs/react-hot-toast'
 import ThemeComponent from '@core/theme/ThemeComponent'
@@ -89,16 +86,16 @@ const App = props => {
   const guestGuard = Component.guestGuard ?? false
   const aclAbilities = Component.acl ?? defaultACLObj
 
-  new Interceptor().initialize();
+  new Interceptor().initialize()
 
   return (
     <>
-      {getLayout && getLayout().type.name === "TestingLayout" && (
+      {getLayout && getLayout().type.name === 'TestingLayout' && (
         <TestingLayout>
           <Component {...pageProps} />
         </TestingLayout>
       )}
-      {(!Component.PageLayout || getLayout().type.name !== "TestingLayout") && (
+      {(!Component.PageLayout || getLayout().type.name !== 'TestingLayout') && (
         <Provider store={store}>
           <CacheProvider value={emotionCache}>
             <Head>

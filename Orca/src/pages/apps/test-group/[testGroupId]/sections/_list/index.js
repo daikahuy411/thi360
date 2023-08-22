@@ -1,17 +1,11 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import TestGroupSectionApi from 'api/test-group-section-api'
 import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Draggable from 'react-draggable'
-import {
-  Helmet,
-  HelmetProvider
-} from 'react-helmet-async'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
@@ -42,13 +36,10 @@ import Typography from '@mui/material/Typography'
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const SectionsTable = ({ testGroup }) => {
@@ -70,9 +61,8 @@ const SectionsTable = ({ testGroup }) => {
 
   useEffect(() => {
     if (router.isReady) {
-      fetchData();
+      fetchData()
     }
-
   }, [page, rowsPerPage, router.isReady])
 
   const fetchData = () => {
@@ -82,19 +72,20 @@ const SectionsTable = ({ testGroup }) => {
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
     }
-    new TestGroupSectionApi().searches(param)
+    new TestGroupSectionApi()
+      .searches(param)
       .then(response => {
         if (response.data.isSuccess) {
           setData(response.data.value)
           setTotalItem(response.data.totalItems)
         }
       })
-      .catch((e) => console.log(e))
+      .catch(e => console.log(e))
   }
 
   /*
-  * handle checkbox
-  */
+   * handle checkbox
+   */
   const [selected, setSelected] = useState([])
   const isSelected = name => selected.indexOf(name) !== -1
 
@@ -123,19 +114,20 @@ const SectionsTable = ({ testGroup }) => {
     setSelected(newSelected)
   }
   /*
-  * end handle checkbox
-  */
+   * end handle checkbox
+   */
 
   /*
-  * handle remove test-group-section
-  */
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * handle remove test-group-section
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (selected.length > 0) {
-      new TestGroupSectionApi().deleteMultiple(selected)
-        .then((response) => {
+      new TestGroupSectionApi()
+        .deleteMultiple(selected)
+        .then(response => {
           setOpenDelete(false)
           if (response.data.isSuccess) {
             toast.success('Xóa dữ liệu thành công.')
@@ -143,15 +135,15 @@ const SectionsTable = ({ testGroup }) => {
             setSelected([])
           }
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * handle remove test-group-section
-  */
+   * handle remove test-group-section
+   */
 
   return (
     <>
@@ -180,7 +172,11 @@ const SectionsTable = ({ testGroup }) => {
               &nbsp; &nbsp;
               <Tooltip title='Xóa phần thi'>
                 <span>
-                  <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete} disabled={selected.length > 0 ? false : true}>
+                  <IconButton
+                    sx={{ color: 'text.secondary' }}
+                    onClick={handleClickOpenDelete}
+                    disabled={selected.length > 0 ? false : true}
+                  >
                     <Icon icon='mdi:delete-outline' />
                   </IconButton>
                 </span>
@@ -250,7 +246,7 @@ const SectionsTable = ({ testGroup }) => {
                           role='checkbox'
                           key={row.id}
                           selected={isItemSelected}
-                          aria-checked={isItemSelected}                          
+                          aria-checked={isItemSelected}
                           sx={{
                             '&:last-of-type td, &:last-of-type th': {
                               border: 0
@@ -258,7 +254,11 @@ const SectionsTable = ({ testGroup }) => {
                           }}
                         >
                           <TableCell padding='checkbox'>
-                            <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} onClick={event => handleClick(event, row.id)}/>
+                            <Checkbox
+                              checked={isItemSelected}
+                              inputProps={{ 'aria-labelledby': labelId }}
+                              onClick={event => handleClick(event, row.id)}
+                            />
                           </TableCell>
                           <TableCell component='th' scope='row'>
                             <IconButton
@@ -275,8 +275,7 @@ const SectionsTable = ({ testGroup }) => {
                           <TableCell>{moment(row.createdTime).format('DD/MM/YYYY hh:mm')}</TableCell>
                         </TableRow>
                       )
-                    }
-                    )}
+                    })}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -295,9 +294,9 @@ const SectionsTable = ({ testGroup }) => {
               open={openDelete}
               onClose={handleCloseDelete}
               PaperComponent={PaperComponent}
-              aria-labelledby="draggable-dialog-title"
+              aria-labelledby='draggable-dialog-title'
             >
-              <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+              <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
                 Xác nhận
               </DialogTitle>
               <DialogContent>
@@ -306,8 +305,13 @@ const SectionsTable = ({ testGroup }) => {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-                <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+                <Button autoFocus onClick={handleCloseDelete}>
+                  {' '}
+                  Hủy bỏ{' '}
+                </Button>
+                <Button onClick={handleDelete} color='error'>
+                  Đồng ý
+                </Button>
               </DialogActions>
             </Dialog>
           </HelmetProvider>

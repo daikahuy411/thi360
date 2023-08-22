@@ -1,4 +1,6 @@
-export const TreeViewBasicJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const TreeViewBasicJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import TreeView from '@mui/lab/TreeView'
 import TreeItem from '@mui/lab/TreeItem'
 
@@ -33,9 +35,13 @@ const TreeViewBasic = ({ direction }) => {
 }
 
 export default TreeViewBasic
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const TreeViewControlledJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** React Imports
+export const TreeViewControlledJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** React Imports
 import { useState } from 'react'
 
 // ** MUI Imports
@@ -88,9 +94,13 @@ const TreeViewControlled = ({ direction }) => {
 }
 
 export default TreeViewControlled
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const TreeViewGmailCloneJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const TreeViewGmailCloneJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import Box from '@mui/material/Box'
 import TreeView from '@mui/lab/TreeView'
 import { styled } from '@mui/material/styles'
@@ -172,9 +182,13 @@ const TreeViewGmailClone = ({ direction }) => {
 }
 
 export default TreeViewGmailClone
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const TreeViewCustomizedJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const TreeViewCustomizedJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import TreeItem from '@mui/lab/TreeItem'
 import { alpha, styled } from '@mui/material/styles'
 import MuiTreeView from '@mui/lab/TreeView'
@@ -222,9 +236,13 @@ const TreeViewCustomized = () => {
 }
 
 export default TreeViewCustomized
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const TreeViewMultiSelectionJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const TreeViewMultiSelectionJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import TreeView from '@mui/lab/TreeView'
 import TreeItem from '@mui/lab/TreeItem'
 
@@ -260,9 +278,13 @@ const TreeViewMultiSelection = ({ direction }) => {
 }
 
 export default TreeViewMultiSelection
-`}</code></pre>) 
+`}</code>
+  </pre>
+)
 
-export const TreeViewRichObjectJSXCode = (<pre className='language-jsx'><code className='language-jsx'>{`// ** MUI Imports
+export const TreeViewRichObjectJSXCode = (
+  <pre className='language-jsx'>
+    <code className='language-jsx'>{`// ** MUI Imports
 import TreeView from '@mui/lab/TreeView'
 import TreeItem from '@mui/lab/TreeItem'
 
@@ -311,5 +333,6 @@ const TreeViewRichObject = ({ direction }) => {
 }
 
 export default TreeViewRichObject
-`}</code></pre>) 
-
+`}</code>
+  </pre>
+)

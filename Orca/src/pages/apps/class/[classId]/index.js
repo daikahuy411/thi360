@@ -6,19 +6,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
-import {
-  Controller,
-  useForm
-} from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
-import {
-  selectClass,
-  selectedClass
-} from 'store/slices/classSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectClass, selectedClass } from 'store/slices/classSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -52,13 +43,10 @@ const schema = yup.object().shape({
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const EditClassPage = () => {
@@ -99,9 +87,10 @@ const EditClassPage = () => {
     })
   }
 
-  const save = (code) => {
+  const save = code => {
     const item = getValues()
-    new OrganizationApi().save({ ...item, type: 2 })
+    new OrganizationApi()
+      .save({ ...item, type: 2 })
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code === 1) {
@@ -110,34 +99,35 @@ const EditClassPage = () => {
           reset()
         }
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e)
         toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu.')
       })
   }
 
   /*
-  * remove class
-  */
-  const [openDelete, setOpenDelete] = React.useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * remove class
+   */
+  const [openDelete, setOpenDelete] = React.useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (!classId || classId > 0) {
-      new OrganizationApi().delete({id: classId})
-      .then((response) => {
-        toast.success('Xóa dữ liệu thành công.')
-        router.push('/apps/class/')
-      })
-      .catch((e) => {
-        setOpenDelete(false)
-        toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
-      })      
+      new OrganizationApi()
+        .delete({ id: classId })
+        .then(response => {
+          toast.success('Xóa dữ liệu thành công.')
+          router.push('/apps/class/')
+        })
+        .catch(e => {
+          setOpenDelete(false)
+          toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
+        })
     }
   }
   /*
-  * remove class
-  */
+   * remove class
+   */
 
   return (
     <>
@@ -164,7 +154,7 @@ const EditClassPage = () => {
                         &nbsp;
                       </>
                     )}
-                    <Button variant='outlined' component={Link} href='/apps/class/' >
+                    <Button variant='outlined' component={Link} href='/apps/class/'>
                       <ArrowBackIcon />
                       &nbsp;Quay lại
                     </Button>
@@ -283,9 +273,9 @@ const EditClassPage = () => {
                       open={openDelete}
                       onClose={handleCloseDelete}
                       PaperComponent={PaperComponent}
-                      aria-labelledby="draggable-dialog-title"
+                      aria-labelledby='draggable-dialog-title'
                     >
-                      <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+                      <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
                         Xác nhận
                       </DialogTitle>
                       <DialogContent>
@@ -294,8 +284,13 @@ const EditClassPage = () => {
                         </DialogContentText>
                       </DialogContent>
                       <DialogActions>
-                        <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-                        <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+                        <Button autoFocus onClick={handleCloseDelete}>
+                          {' '}
+                          Hủy bỏ{' '}
+                        </Button>
+                        <Button onClick={handleDelete} color='error'>
+                          Đồng ý
+                        </Button>
                       </DialogActions>
                     </Dialog>
                   </div>

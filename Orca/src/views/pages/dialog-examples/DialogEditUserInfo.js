@@ -1,8 +1,5 @@
 // ** React Imports
-import {
-  forwardRef,
-  useState
-} from 'react'
+import { forwardRef, useState } from 'react'
 
 // ** Icon Imports
 import Icon from '@core/components/icon'

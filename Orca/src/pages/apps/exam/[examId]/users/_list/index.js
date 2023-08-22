@@ -1,16 +1,10 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import ExamUserApi from 'api/exam-user-api'
 import { useRouter } from 'next/router'
 import UserModal from 'pages/shared/user-modal'
 import Draggable from 'react-draggable'
-import {
-  Helmet,
-  HelmetProvider
-} from 'react-helmet-async'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
@@ -40,13 +34,10 @@ import Typography from '@mui/material/Typography'
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 const UserTable = () => {
@@ -83,30 +74,30 @@ const UserTable = () => {
   }
 
   const fetchData = () => {
-    new ExamUserApi().getExamUsersByExam(examId, page + 1, rowsPerPage)
-      .then(response => {
-        if (response.data.isSuccess) {
-          setData(response.data.value)
-          setTotalItem(response.data.totalItems)
-        }
-      })
+    new ExamUserApi().getExamUsersByExam(examId, page + 1, rowsPerPage).then(response => {
+      if (response.data.isSuccess) {
+        setData(response.data.value)
+        setTotalItem(response.data.totalItems)
+      }
+    })
   }
 
   const onSelectedUsers = users => {
     let userIds = users.map(a => a.id)
-    new ExamUserApi().addUsersToExam(examId, userIds)
+    new ExamUserApi()
+      .addUsersToExam(examId, userIds)
       .then(response => {
         fetchData()
         toast.success('Cập nhật thành công')
       })
-      .catch((e) => {
+      .catch(e => {
         toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu')
       })
   }
 
   /*
-  * handle checkbox
-  */
+   * handle checkbox
+   */
   const [selected, setSelected] = useState([])
   const isSelected = name => selected.indexOf(name) !== -1
 
@@ -135,19 +126,20 @@ const UserTable = () => {
     setSelected(newSelected)
   }
   /*
-  * end handle checkbox
-  */
+   * end handle checkbox
+   */
 
   /*
-  * handle remove class
-  */
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleClickOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+   * handle remove class
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
     if (selected.length > 0) {
-      new ExamUserApi().deleteMultiple(selected)
-        .then((response) => {
+      new ExamUserApi()
+        .deleteMultiple(selected)
+        .then(response => {
           setOpenDelete(false)
           if (response.data.isSuccess) {
             toast.success('Xóa dữ liệu thành công.')
@@ -155,15 +147,15 @@ const UserTable = () => {
             setSelected([])
           }
         })
-        .catch((e) => {
+        .catch(e => {
           setOpenDelete(false)
           toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
         })
     }
   }
   /*
-  * handle remove class
-  */
+   * handle remove class
+   */
 
   return (
     <>
@@ -188,9 +180,13 @@ const UserTable = () => {
             </IconButton>
           </Tooltip>
           &nbsp; &nbsp;
-          <Tooltip title='Xóa học viên khỏi kỳ thi' >
+          <Tooltip title='Xóa học viên khỏi kỳ thi'>
             <span>
-              <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete} disabled={selected.length > 0 ? false : true}>
+              <IconButton
+                sx={{ color: 'text.secondary' }}
+                onClick={handleClickOpenDelete}
+                disabled={selected.length > 0 ? false : true}
+              >
                 <Icon icon='mdi:delete-outline' />
               </IconButton>
             </span>
@@ -279,8 +275,7 @@ const UserTable = () => {
                       <TableCell>{row.organizationName}</TableCell>
                     </TableRow>
                   )
-                }
-                )}
+                })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -299,9 +294,9 @@ const UserTable = () => {
           open={openDelete}
           onClose={handleCloseDelete}
           PaperComponent={PaperComponent}
-          aria-labelledby="draggable-dialog-title"
+          aria-labelledby='draggable-dialog-title'
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
             Xác nhận
           </DialogTitle>
           <DialogContent>
@@ -310,12 +305,19 @@ const UserTable = () => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-            <Button onClick={handleDelete} color='error'>Đồng ý</Button>
+            <Button autoFocus onClick={handleCloseDelete}>
+              {' '}
+              Hủy bỏ{' '}
+            </Button>
+            <Button onClick={handleDelete} color='error'>
+              Đồng ý
+            </Button>
           </DialogActions>
         </Dialog>
 
-        {openUserModal && <UserModal open={openUserModal} onOk={onSelectedUsers} onClose={() => setOpenUserModal(false)} />}
+        {openUserModal && (
+          <UserModal open={openUserModal} onOk={onSelectedUsers} onClose={() => setOpenUserModal(false)} />
+        )}
       </HelmetProvider>
     </>
   )

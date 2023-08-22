@@ -1,8 +1,5 @@
 // ** React Imports
-import {
-  Fragment,
-  useState
-} from 'react'
+import { Fragment, useState } from 'react'
 
 // ** Third Party Components
 import PerfectScrollbarComponent from 'react-perfect-scrollbar'

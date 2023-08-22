@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useState
-} from 'react'
+import React, { useEffect, useState } from 'react'
 
 import UserApi from 'api/user-api'
 import { useRouter } from 'next/router'
@@ -228,7 +225,7 @@ function UserModal({ onClose, onOk }) {
                 </Table>
               </TableContainer>
               <TablePagination
-                labelRowsPerPage={"Số dòng/trang:"}
+                labelRowsPerPage={'Số dòng/trang:'}
                 rowsPerPageOptions={[10, 25, 100]}
                 component='div'
                 count={totalItem}

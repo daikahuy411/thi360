@@ -13,11 +13,7 @@ import CustomChip from '@core/components/mui/chip'
 // ** Styled Component Imports
 import CardWrapper from '@core/styles/libs/react-credit-cards'
 // ** Util Import
-import {
-  formatCreditCardNumber,
-  formatCVC,
-  formatExpirationDate
-} from '@core/utils/format'
+import { formatCreditCardNumber, formatCVC, formatExpirationDate } from '@core/utils/format'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 // ** MUI Imports

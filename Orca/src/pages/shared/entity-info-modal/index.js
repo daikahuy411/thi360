@@ -14,7 +14,6 @@ import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 
 const EntityInfoModal = ({ entity }) => {
-
   // ** States
   const [open, setOpen] = useState(false)
   const handleClickOpen = () => setOpen(true)
@@ -39,7 +38,7 @@ const EntityInfoModal = ({ entity }) => {
                   Ngày tạo
                 </TableCell>
                 <TableCell style={{ width: 160 }} align='right'>
-                  {moment(entity.createdTime).format('DD/MM/YYYY hh:mm') }
+                  {moment(entity.createdTime).format('DD/MM/YYYY hh:mm')}
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -55,7 +54,7 @@ const EntityInfoModal = ({ entity }) => {
                   Sửa gần nhất
                 </TableCell>
                 <TableCell style={{ width: 160 }} align='right'>
-                {moment(entity.lastModifiedTime).format('DD/MM/YYYY hh:mm') }
+                  {moment(entity.lastModifiedTime).format('DD/MM/YYYY hh:mm')}
                 </TableCell>
               </TableRow>
             </TableBody>
