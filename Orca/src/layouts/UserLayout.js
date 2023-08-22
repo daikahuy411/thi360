@@ -1,6 +1,6 @@
 import HorizontalNavItems from 'navigation/horizontal'
 // ** Navigation Imports
-import VerticalNavItems from 'navigation/vertical'
+import { useAuth } from 'hooks/useAuth'
 
 // ** Hook Import
 import { useSettings } from '@core/hooks/useSettings'
@@ -16,9 +16,22 @@ import HorizontalAppBarContent from './components/horizontal/AppBarContent'
 // import ServerSideHorizontalNavItems from './components/horizontal/ServerSideNavItems'
 import VerticalAppBarContent from './components/vertical/AppBarContent'
 
+import { studentLinks, teacherLinks, hostLinks } from 'navigation'
+
 const UserLayout = ({ children, contentHeightFixed }) => {
   // ** Hooks
   const { settings, saveSettings } = useSettings()
+  const auth = useAuth()
+  var links = studentLinks;
+
+  if (auth.user && auth.user.roles.includes("Host")) {
+    links.concat(teacherLinks);
+    links.concat(hostLinks);
+  } else {
+    if (auth.user && auth.user.roles.includes("Teacher")) {
+      links.concat(teacherLinks);
+    }
+  }
 
   // ** Vars for server side navigation
   // const { menuItems: verticalMenuItems } = ServerSideVerticalNavItems()
@@ -44,10 +57,7 @@ const UserLayout = ({ children, contentHeightFixed }) => {
       contentHeightFixed={contentHeightFixed}
       verticalLayoutProps={{
         navMenu: {
-          navItems: VerticalNavItems()
-
-          // Uncomment the below line when using server-side menu in vertical layout and comment the above line
-          // navItems: verticalMenuItems
+          navItems: links
         },
         appBar: {
           content: props => (
