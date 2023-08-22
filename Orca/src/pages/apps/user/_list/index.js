@@ -243,7 +243,9 @@ const UserTable = () => {
                       </IconButton>
                     </TableCell>
                     <TableCell component='th' scope='row'>
-                      {row.userName}
+                      <Typography noWrap variant='body'>
+                        {row.userName}
+                      </Typography>
                     </TableCell>
                     <TableCell>{row.fullName}</TableCell>
                     <TableCell>{row.genderName}</TableCell>

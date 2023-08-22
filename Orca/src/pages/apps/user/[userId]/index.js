@@ -52,10 +52,10 @@ const schema = yup.object().shape(
     firstName: yup.string().required('* bắt buộc'),
     lastName: yup.string().required('* bắt buộc'),
     userName: yup.string().required('* bắt buộc'),
-    hasPassword: yup.boolean(),
-    passwordHash: yup.string().when('hasPassword', {
+    changePassword: yup.boolean(),
+    passwordHash: yup.string().when('changePassword', {
       is: true,
-      then: yup.string().required('* bắt buộc').max(6, '* cho phép tối đa 6 ký tự'),
+      then: yup.string().required('* bắt buộc').min(6, '* tối thiểu 6 ký tự'),
       otherwise: yup.string().nullable().notRequired()
     }),
     gender: yup.number().required('* bắt buộc').moreThan(-1, '* bắt buộc'),
@@ -101,7 +101,7 @@ const EditStudentPage = () => {
 
   useEffect(() => {
     if (!userId || userId == 0) {
-      dispatch(selectUser({ id: '0', firstName: '', lastName: '', userName: '', passwordHash: '', hasPassword: false }))
+      dispatch(selectUser({ id: '0', firstName: '', lastName: '', userName: '', passwordHash: '', changePassword: false }))
       return
     }
     fetchData()
@@ -132,15 +132,15 @@ const EditStudentPage = () => {
     const item = getValues()
     let param
     if (item.id == '0') {
-      param = { ...item, hasPassword: cbChangePassword, organizationId: organizationSelected.organizationId }
+      param = { ...item, changePassword: cbChangePassword, organizationId: organizationSelected.organizationId }
     } else {
       if (cbChangePassword) {
-        param = { ...item, hasPassword: cbChangePassword, organizationId: organizationSelected.organizationId }
+        param = { ...item, changePassword: cbChangePassword, organizationId: organizationSelected.organizationId }
       } else {
         param = {
           ...item,
           passwordHash: undefined,
-          hasPassword: cbChangePassword,
+          changePassword: cbChangePassword,
           organizationId: organizationSelected.organizationId
         }
       }
@@ -417,10 +417,10 @@ const EditStudentPage = () => {
                         {currentUser && currentUser.id != '0' && (
                           <Grid item xs={12} md={12}>
                             <FormControlLabel
-                              name='hasPassword'
+                              name='changePassword'
                               control={
                                 <Controller
-                                  name='hasPassword'
+                                  name='changePassword'
                                   control={control}
                                   rules={{ required: false }}
                                   render={({ field: { value, onChange } }) => (
