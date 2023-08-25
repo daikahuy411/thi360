@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import ApiBase from './api-base'
+import internal from 'stream';
 
 class V1Api extends ApiBase {
   constructor() {
@@ -31,7 +32,6 @@ class V1Api extends ApiBase {
     return response;
   };
 
-  ///{subjectId,programId, curriculumId}
   searchExams = (query: any) => {
     const url = `${this.baseApiUrl}/searchExams`;
     const response = axios.post(url, query);
@@ -41,6 +41,24 @@ class V1Api extends ApiBase {
   getExam = (examId: number) => {
     const url = `${this.baseApiUrl}/exams/${examId}`;
     const response = axios.get(url);
+    return response;
+  }
+
+  getPricingPlans = () => {
+    const url = `${this.baseApiUrl}/pricingplans`;
+    const response = axios.get(url);
+    return response;
+  }
+
+  createOrder = (planId: number, month: number) => {
+    const url = `${this.baseApiUrl}/Orders`;
+    const response = axios.post(url, { planId: planId, month: month });
+    return response;
+  }
+
+  completeOrder = (id: number) => {
+    const url = `${this.baseApiUrl}/CompleteOrder`;
+    const response = axios.post(url, { id: id });
     return response;
   }
 }

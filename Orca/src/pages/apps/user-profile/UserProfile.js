@@ -1,7 +1,7 @@
 // ** React Imports
 import {
-  useEffect,
-  useState
+    useEffect,
+    useState
 } from 'react'
 
 import UserApi from 'api/user-api'
@@ -48,7 +48,7 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
     }
 }))
 
-const UserProfile = ({ tab }) => {    
+const UserProfile = ({ tab }) => {
     // ** State
     const [activeTab, setActiveTab] = useState(tab)
     const [isLoading, setIsLoading] = useState(true)
@@ -82,14 +82,14 @@ const UserProfile = ({ tab }) => {
 
     const me = () => {
         new UserApi()
-        .me()
-        .then(response => {
+            .me()
+            .then(response => {
 
-          console.log('me:', response)
-          const data = response.data
-          setData(data)
-        })
-        .catch((e) => {console.log(e)})
+                console.log('me:', response)
+                const data = response.data
+                setData(data)
+            })
+            .catch((e) => { console.log(e) })
     }
 
     const tabContentList = {
@@ -130,6 +130,15 @@ const UserProfile = ({ tab }) => {
                                             <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
                                                 <Icon fontSize={20} icon='mdi:account-multiple-outline' />
                                                 {!hideText && 'Lớp học'}
+                                            </Box>
+                                        }
+                                    />
+                                    <Tab
+                                        value='orders'
+                                        label={
+                                            <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
+                                                <Icon fontSize={20} icon='mdi:account-multiple-outline' />
+                                                {!hideText && 'Lịch sử thanh toán'}
                                             </Box>
                                         }
                                     />

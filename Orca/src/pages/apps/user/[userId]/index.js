@@ -101,7 +101,9 @@ const EditStudentPage = () => {
 
   useEffect(() => {
     if (!userId || userId == 0) {
-      dispatch(selectUser({ id: '0', firstName: '', lastName: '', userName: '', passwordHash: '', changePassword: false }))
+      dispatch(
+        selectUser({ id: '0', firstName: '', lastName: '', userName: '', passwordHash: '', changePassword: false })
+      )
       return
     }
     fetchData()

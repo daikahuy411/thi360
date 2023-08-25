@@ -28,7 +28,7 @@ const BoxFeature = styled(Box)(({ theme }) => ({
 
 const PlanDetails = props => {
   // ** Props
-  const { plan, data } = props
+  const { plan, data, isCurrentPlan } = props
 
   const renderFeatures = () => {
     return data?.planBenefits.map((item, index) => (
@@ -45,12 +45,12 @@ const PlanDetails = props => {
     <BoxWrapper
       sx={{
         border: theme =>
-          !data?.popularPlan
+          !data?.isPopular
             ? `1px solid ${theme.palette.divider}`
             : `1px solid ${hexToRGBA(theme.palette.primary.main, 0.5)}`
       }}
     >
-      {data?.popularPlan ? (
+      {data?.isPopular ? (
         <CustomChip
           skin='light'
           label='Popular'
@@ -71,44 +71,45 @@ const PlanDetails = props => {
       <Box sx={{ mb: 5, display: 'flex', justifyContent: 'center' }}>
         <img
           width={data?.imgWidth}
-          src={`${data?.imgSrc}`}
+          src={`${data?.imageSrc}`}
           height={data?.imgHeight}
-          alt={`${data?.title.toLowerCase().replace(' ', '-')}-plan-img`}
+          alt={`${data?.name.toLowerCase().replace(' ', '-')}-plan-img`}
         />
       </Box>
       <Box sx={{ textAlign: 'center' }}>
         <Typography variant='h5' sx={{ mb: 1.5 }}>
-          {data?.title}
+          {data?.name}
         </Typography>
         <Typography variant='body2'>{data?.subtitle}</Typography>
         <Box sx={{ my: 7, position: 'relative' }}>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Typography variant='body2' sx={{ mt: 1.6, fontWeight: 600, alignSelf: 'flex-start' }}>
-              $
-            </Typography>
             <Typography variant='h3' sx={{ fontWeight: 600, color: 'primary.main', lineHeight: 1.17 }}>
-              {plan === 'monthly' ? data?.monthlyPrice : data?.yearlyPlan.perMonth}
+              {/* {plan === 'monthly' ? data?.monthlyPrice : data?.yearlyPlan.perMonth} */}
+              {data.totalVN}
+            </Typography>
+            <Typography variant='body2' sx={{ mt: 1.6, fontWeight: 600, alignSelf: 'flex-start' }}>
+              đ
             </Typography>
             <Typography variant='body2' sx={{ mb: 1.6, fontWeight: 600, alignSelf: 'flex-end' }}>
-              /month
+              /tháng
             </Typography>
           </Box>
-          {plan !== 'monthly' && data?.monthlyPrice !== 0 ? (
+          {/* {plan !== 'monthly' && data?.monthlyPrice !== 0 ? (
             <Typography
               variant='caption'
               sx={{ top: 50, left: '50%', position: 'absolute', transform: 'translateX(-50%)' }}
             >{`USD ${data?.yearlyPlan.totalAnnual}/year`}</Typography>
-          ) : null}
+          ) : null} */}
         </Box>
       </Box>
       <BoxFeature>{renderFeatures()}</BoxFeature>
       <Button
-        onClick={() => props.addPayment()}
+        onClick={isCurrentPlan ? null : () => props.addPayment()}
         fullWidth
-        color={data?.currentPlan ? 'success' : 'primary'}
-        variant={data?.popularPlan ? 'contained' : 'outlined'}
+        color={isCurrentPlan ? 'success' : 'primary'}
+        variant={isCurrentPlan ? 'contained' : 'outlined'}
       >
-        {data?.currentPlan ? 'Your Current Plan' : 'Upgrade'}
+        {isCurrentPlan ? 'Your Current Plan' : 'Đăng ký'}
       </Button>
     </BoxWrapper>
   )

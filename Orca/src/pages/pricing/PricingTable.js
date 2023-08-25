@@ -108,7 +108,7 @@ const PricingTable = ({ data }) => {
                   </TableCell>
                 </TableRow>
               ))}
-              <TableRow sx={{ '& .MuiTableCell-root': { border: 0 } }}>
+              {/* <TableRow sx={{ '& .MuiTableCell-root': { border: 0 } }}>
                 <TableCell></TableCell>
                 <TableCell align='center' sx={{ whiteSpace: 'nowrap' }}>
                   <Button variant='outlined'>Choose Plan</Button>
@@ -119,7 +119,7 @@ const PricingTable = ({ data }) => {
                 <TableCell align='center' sx={{ whiteSpace: 'nowrap' }}>
                   <Button variant='outlined'>Choose Plan</Button>
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
             </TableBody>
           </Table>
         </TableContainer>

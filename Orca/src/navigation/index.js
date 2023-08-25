@@ -23,8 +23,8 @@ export const studentLinks = [
     title: 'Thời khóa biểu',
     icon: 'mdi:calendar-blank-outline',
     path: '/apps/calendar'
-  },
-];
+  }
+]
 
 export const hostLinks = [
   {
@@ -45,7 +45,7 @@ export const hostLinks = [
     icon: 'eos-icons:file-system',
     path: '/apps/tenant'
   }
-];
+]
 
 export const teacherLinks = [
   {
@@ -86,6 +86,5 @@ export const teacherLinks = [
         path: '/apps/user'
       }
     ]
-  },
+  }
 ]
-

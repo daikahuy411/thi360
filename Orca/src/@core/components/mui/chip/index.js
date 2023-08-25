@@ -32,6 +32,7 @@ const Chip = props => {
         'MuiChip-rounded': rounded,
         'MuiChip-light': skin === 'light'
       })}
+      style={{ fontSize: 16 }}
       sx={skin === 'light' && color ? Object.assign(colors[color], sx) : sx}
     />
   )
