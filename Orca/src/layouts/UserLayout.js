@@ -22,14 +22,14 @@ const UserLayout = ({ children, contentHeightFixed }) => {
   // ** Hooks
   const { settings, saveSettings } = useSettings()
   const auth = useAuth()
-  var links = studentLinks;
+  var links = studentLinks
 
-  if (auth.user && auth.user.roles.includes("Host")) {
-    links.concat(teacherLinks);
-    links.concat(hostLinks);
+  if (auth.user && auth.user.roles.includes('Host')) {
+    links = links.concat(teacherLinks)
+    links = links.concat(hostLinks)
   } else {
-    if (auth.user && auth.user.roles.includes("Teacher")) {
-      links.concat(teacherLinks);
+    if (auth.user && auth.user.roles.includes('Teacher')) {
+      links = links.concat(teacherLinks)
     }
   }
 

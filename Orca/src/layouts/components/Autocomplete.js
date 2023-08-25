@@ -347,23 +347,25 @@ const AutocompleteComponent = ({ hidden, settings }) => {
 
   // Get all data using API
   useEffect(() => {
-    axios
-      .get('/app-bar/search', {
-        params: { q: searchValue }
-      })
-      .then(response => {
-        if (response.data && response.data.length) {
-          setOptions(response.data)
-        } else {
-          setOptions([])
-        }
-      })
+    // axios
+    //   .get('/app-bar/search', {
+    //     params: { q: searchValue }
+    //   })
+    //   .then(response => {
+    //     if (response.data && response.data.length) {
+    //       setOptions(response.data)
+    //     } else {
+    //       setOptions([])
+    //     }
+    //   })
   }, [searchValue])
+
   useEffect(() => {
     if (!openDialog) {
       setSearchValue('')
     }
   }, [openDialog])
+
   useEffect(() => {
     setIsMounted(true)
 

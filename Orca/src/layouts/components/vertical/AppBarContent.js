@@ -6,7 +6,7 @@ import MenuOpenIcon from '@mui/icons-material/MenuOpen'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
-
+import Autocomplete from '../Autocomplete'
 import ProgramSelectors from './ProgramSelectors'
 
 const notifications = [
@@ -71,15 +71,15 @@ const AppBarContent = props => {
           <MenuOpenIcon />
         </IconButton> */}
         &nbsp;
-        {/* <Autocomplete hidden={hidden} settings={settings} /> */}
+        <Autocomplete hidden={hidden} settings={settings} />
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
         {/* <LanguageDropdown settings={settings} saveSettings={saveSettings} />
         <ModeToggler settings={settings} saveSettings={saveSettings} />*/}
         {/* <ShortcutsDropdown settings={settings} shortcuts={shortcuts} /> */}
-        <ProgramSelectors />
+        {/* <ProgramSelectors /> */}
         &nbsp;
-        {/* <NotificationDropdown settings={settings} notifications={notifications} /> */}
+        <NotificationDropdown settings={settings} notifications={notifications} />
         <UserDropdown settings={settings} />
       </Box>
     </Box>
