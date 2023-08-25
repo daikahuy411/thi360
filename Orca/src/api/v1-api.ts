@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 import ApiBase from './api-base'
-import internal from 'stream';
 
 class V1Api extends ApiBase {
   constructor() {
