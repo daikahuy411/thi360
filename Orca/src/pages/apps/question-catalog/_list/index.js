@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import QuestionCatalogApi from 'api/question-catalog-api'
 import Link from 'next/link'
 import Draggable from 'react-draggable'
+import moment from 'moment'
 import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
@@ -32,6 +33,7 @@ import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import LoadingSpinner from '@core/components/loading-spinner'
 
 function PaperComponent(props) {
   return (
@@ -43,11 +45,11 @@ function PaperComponent(props) {
 
 const QuestionCatalogTable = () => {
   const [keyword, setKeyword] = useState('')
-
   const [data, setData] = useState([])
   const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [loading, setLoading] = useState(false)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -63,6 +65,7 @@ const QuestionCatalogTable = () => {
   }, [page, rowsPerPage])
 
   const fetchData = () => {
+    setLoading(true)
     new QuestionCatalogApi()
       .searches({
         Page: page + 1,
@@ -70,6 +73,7 @@ const QuestionCatalogTable = () => {
         Keyword: keyword
       })
       .then(response => {
+        setLoading(false)
         if (response.data.isSuccess) {
           setData(response.data.value)
           setTotalItem(response.data.totalItems)
@@ -195,7 +199,7 @@ const QuestionCatalogTable = () => {
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
-            labelRowsPerPage={'Số dòng/trang:'}
+            labelRowsPerPage={'Hiển thị:'}
             rowsPerPageOptions={[10, 25, 100]}
             component='div'
             count={totalItem}
@@ -207,84 +211,76 @@ const QuestionCatalogTable = () => {
         </Grid>
       </Grid>
       <TableContainer component={Paper} style={{ marginTop: 5 }}>
-        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-          <TableHead>
-            <TableRow>
-              <TableCell padding='checkbox'>
-                <Checkbox
-                  onChange={handleSelectAllClick}
-                  checked={data.length > 0 && selected.length === data.length}
-                  indeterminate={selected.length > 0 && selected.length < data.length}
-                  inputProps={{ 'aria-label': 'select all desserts' }}
-                />
-              </TableCell>
-              <TableCell style={{ width: 30 }}>Sửa</TableCell>
-              <TableCell>Tên</TableCell>
-              <TableCell style={{ width: 200 }}>Ngân hàng câu hỏi</TableCell>
-              <TableCell style={{ width: 200 }}>Danh mục câu hỏi</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data &&
-              data.map((item, index) => {
-                const isItemSelected = isSelected(item.id)
-                const labelId = `enhanced-table-checkbox-${index}`
+        <LoadingSpinner active={loading}>
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+            <TableHead>
+              <TableRow>
+                <TableCell padding='checkbox'>
+                  <Checkbox
+                    onChange={handleSelectAllClick}
+                    checked={data.length > 0 && selected.length === data.length}
+                    indeterminate={selected.length > 0 && selected.length < data.length}
+                    inputProps={{ 'aria-label': 'select all desserts' }}
+                  />
+                </TableCell>
+                <TableCell style={{ width: 30 }}>Sửa</TableCell>
+                <TableCell>Tên</TableCell>
+                <TableCell style={{ width: 130, textAlign: 'right' }}>Danh mục</TableCell>
+                <TableCell style={{ width: 130, textAlign: 'right' }}>Câu hỏi</TableCell>
+                <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data &&
+                data.map((item, index) => {
+                  const isItemSelected = isSelected(item.id)
+                  const labelId = `enhanced-table-checkbox-${index}`
 
-                return (
-                  <TableRow
-                    hover
-                    tabIndex={-1}
-                    role='checkbox'
-                    key={item.id}
-                    selected={isItemSelected}
-                    aria-checked={isItemSelected}
-                    sx={{
-                      '&:last-of-type td, &:last-of-type th': {
-                        border: 0
-                      }
-                    }}
-                  >
-                    <TableCell padding='checkbox'>
-                      <Checkbox
-                        checked={isItemSelected}
-                        inputProps={{ 'aria-labelledby': labelId }}
-                        onClick={event => handleClick(event, item.id)}
-                      />
-                    </TableCell>
-                    <TableCell component='th' scope='row'>
-                      <IconButton aria-label='filter' component={Link} href={`/apps/question-catalog/${item.id}`}>
-                        <EditIcon />
-                      </IconButton>
-                    </TableCell>
-                    <TableCell component='th' scope='row'>
-                      {item.name}
-                    </TableCell>
-                    <TableCell component='th' scope='row'>
-                      <Chip
-                        icon={<HelpOutlineIcon />}
-                        label={`${item.totalQuestion} câu hỏi`}
-                        color='info'
-                        variant='outlined'
-                        className='chip-square'
-                      />
-                    </TableCell>
-                    <TableCell component='th' scope='row'>
-                      <Chip
-                        icon={<Icon icon='mdi:category' />}
-                        label={`${item.totalCategory} danh mục`}
-                        color='primary'
-                        variant='outlined'
-                        className='chip-square'
-                      />
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-          </TableBody>
-        </Table>
+                  return (
+                    <TableRow
+                      hover
+                      tabIndex={-1}
+                      role='checkbox'
+                      key={item.id}
+                      selected={isItemSelected}
+                      aria-checked={isItemSelected}
+                      sx={{
+                        '&:last-of-type td, &:last-of-type th': {
+                          border: 0
+                        }
+                      }}
+                    >
+                      <TableCell padding='checkbox'>
+                        <Checkbox
+                          checked={isItemSelected}
+                          inputProps={{ 'aria-labelledby': labelId }}
+                          onClick={event => handleClick(event, item.id)}
+                        />
+                      </TableCell>
+                      <TableCell component='th' scope='row'>
+                        <IconButton aria-label='filter' component={Link} href={`/apps/question-catalog/${item.id}`}>
+                          <EditIcon />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell component='th' scope='row'>
+                        <Typography variant='body1'>{item.name}</Typography>
+                      </TableCell>
+                      <TableCell component='th' scope='row' style={{ textAlign: 'right' }}>
+                        {item.totalCategory}
+                      </TableCell>
+                      <TableCell component='th' scope='row' style={{ textAlign: 'right' }}>
+                        {item.totalQuestion}
+                      </TableCell>
+                      <TableCell>{moment(item.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
+                    </TableRow>
+                  )
+                })}
+            </TableBody>
+          </Table>
+        </LoadingSpinner>
       </TableContainer>
       <TablePagination
-        labelRowsPerPage={'Số dòng/trang:'}
+        labelRowsPerPage={'Hiển thị:'}
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
         count={totalItem}

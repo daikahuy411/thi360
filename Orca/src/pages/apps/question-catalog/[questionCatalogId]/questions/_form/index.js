@@ -1,23 +1,32 @@
-import { Fragment, useEffect, useState } from 'react'
+import {
+  Fragment,
+  useEffect,
+  useState
+} from 'react'
 
 import { QuestionCategoryApi } from 'api/catalog-api'
 import QuestionApi from 'api/question-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CatalogDialog from 'pages/shared/catalog'
+import CategoryDialog from 'pages/shared/category-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import CircularLoading from 'pages/shared/loading/CircularLoading'
 import AddQuestionAnswer from 'pages/shared/question-form'
 import Draggable from 'react-draggable'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-// // ** Icon Imports
-// import Icon from 'src/@core/components/icon'
-// // ** Custom Components Imports
-// import OptionsMenu from 'src/@core/components/option-menu'
-import { selectedQuestion, selectQuestion } from 'store/slices/questionSlice'
-import { CatalogType } from 'types/CatalogType'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedQuestion,
+  selectQuestion
+} from 'store/slices/questionSlice'
+import { CategoryType } from 'types/CategoryType'
 import { QuestionType } from 'types/QuestionType'
 import * as yup from 'yup'
 
@@ -28,11 +37,14 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import EditIcon from '@mui/icons-material/Edit'
 import FolderIcon from '@mui/icons-material/FolderOpen'
-import { Button, Divider, Input } from '@mui/material'
+import {
+  Button,
+  Divider,
+  Input
+} from '@mui/material'
 import Alert from '@mui/material/Alert'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
-// import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
@@ -49,7 +61,6 @@ import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
-// import Link from '@mui/material/Link'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import OutlinedInput from '@mui/material/OutlinedInput'
@@ -67,7 +78,6 @@ import Typography from '@mui/material/Typography'
 
 import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
-import styles from './question-form.module.scss'
 
 function PaperComponent(props) {
   return (
@@ -83,7 +93,7 @@ const QuestionEditForm = () => {
   const { questionCatalogId, questionId, type } = router.query
   const currentQuestion = useSelector(selectedQuestion)
   const [item, setItem] = useState(null)
-  const [anwser, setAnwser] = useState([])
+  const [answers, setAnswers] = useState([])
   const [anchorEl, setAnchorEl] = useState(null)
   const [lsQuestionTypes, setLsQuestionTypes] = useState(null)
   const [questionTypeName, setQuestionTypeName] = useState('')
@@ -93,7 +103,6 @@ const QuestionEditForm = () => {
   const [isloadingQuestion, setIsLoadingQuestion] = useState(false)
 
   let schema = yup.object().shape({
-    name: yup.string().required('* bắt buộc'),
     content: yup.string().required('* bắt buộc')
   })
 
@@ -135,7 +144,7 @@ const QuestionEditForm = () => {
 
       setCategorySelected({ categoryId: response.data.categoryId, categoryName: response.data.categoryName })
 
-      setAnwser(Object.values(data.answers))
+      setAnswers(Object.values(data.answers))
       setIsLoadingQuestion(false)
     })
   }
@@ -144,6 +153,13 @@ const QuestionEditForm = () => {
     new QuestionApi().getQuestionTypes().then(response => {
       setLsQuestionTypes(response.data)
     })
+  }
+
+  const moveItem = (from, to) => {
+    var reOrderAnswers = [...answers]
+    var f = reOrderAnswers.splice(from, 1)[0]
+    reOrderAnswers.splice(to, 0, f)
+    setAnswers(reOrderAnswers)
   }
 
   useEffect(() => {
@@ -158,7 +174,7 @@ const QuestionEditForm = () => {
     item.catalogId = Number(questionCatalogId)
     setQuestionTypeName(item.questionTypeName)
     dispatch(selectQuestion(item))
-    setAnwser(Object.values(item.answers))
+    setAnswers(Object.values(item.answers))
   }
 
   useEffect(() => {
@@ -167,7 +183,7 @@ const QuestionEditForm = () => {
 
   const checkValidate = id => {
     let anwserArr = []
-    anwser.forEach(element => {
+    answers.forEach(element => {
       anwserArr.push(Object.assign({}, element))
     })
 
@@ -188,14 +204,14 @@ const QuestionEditForm = () => {
         }
       }
     })
-    setAnwser([...anwserArr])
+    setAnswers([...anwserArr])
     checkIsvalidAnswer(true)
   }
 
   const checkIsvalidAnswer = (isFormField = false) => {
-    let answers = [...anwser]
+    let answersCloned = [...answers]
     let check = true
-    answers.forEach(elm => {
+    answersCloned.forEach(elm => {
       let content = getValues(`anws-content-${elm.id}`)
       if (!content) content = elm.content
 
@@ -217,7 +233,7 @@ const QuestionEditForm = () => {
     param.categoryId = categorySelected.categoryId
 
     let answerArr = []
-    anwser.forEach(elm => {
+    answers.forEach(elm => {
       answerArr.push(Object.assign({}, elm))
     })
 
@@ -272,29 +288,29 @@ const QuestionEditForm = () => {
 
   useEffect(() => {
     checkIsvalidAnswer(true)
-  }, [anwser])
+  }, [answers])
 
   const addAnswer = () => {
-    const newAnswer = new QuestionApi().createAnswer(-(anwser.length + 1), anwser.length + 1, '', false, {
+    const newAnswer = new QuestionApi().createAnswer(-(answers.length + 1), answers.length + 1, '', false, {
       isError: false,
       message: ''
     })
 
-    anwser.push(newAnswer)
-    setAnwser([...anwser])
+    answers.push(newAnswer)
+    setAnswers([...answers])
   }
 
   const removeAnswer = id => {
-    let answers = [...anwser]
+    let answers = [...answers]
     answers = answers.filter(x => x.id !== id)
 
-    setAnwser(answers)
+    setAnswers(answers)
     unregister(`anws-content-${id}`)
   }
 
   const handleChangeAnwser = (id, field, checked = false) => {
     let anwserArr = []
-    anwser.forEach(element => {
+    answers.forEach(element => {
       anwserArr.push(Object.assign({}, element))
     })
 
@@ -316,7 +332,7 @@ const QuestionEditForm = () => {
         }
       }
     })
-    setAnwser([...anwserArr])
+    setAnswers([...anwserArr])
   }
 
   /*
@@ -405,12 +421,13 @@ const QuestionEditForm = () => {
                   <div className='title-bar' id='EntityHeadingTitleBar'>
                     <h3 className='title left'>
                       <span className='title__label'>
-                        {currentQuestion && currentQuestion.id > 0 && <span>{currentQuestion.name}</span>}
+                        {currentQuestion && currentQuestion.id > 0 && <span>{currentQuestion.id}</span>}
                         {(!currentQuestion || currentQuestion.id == 0) && (
                           <>
                             <span>Tạo mới Câu hỏi</span>
                           </>
                         )}
+                        -{questionTypeName}
                       </span>
                       {currentQuestion && currentQuestion.id > 0 && <EntityInfoModal entity={currentQuestion} />}
                     </h3>
@@ -464,46 +481,7 @@ const QuestionEditForm = () => {
                           onSubmit={handleSubmit(onSubmit)}
                           style={{ height: 'auto', width: '100%', paddingTop: 10 }}
                         >
-                          <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
-                            <Grid item xs={12}>
-                              <b>
-                                Loại câu hỏi:{' '}
-                                <Chip
-                                  icon={<Icon icon='mdi:category' />}
-                                  label={questionTypeName}
-                                  color='info'
-                                  variant='outlined'
-                                  className='chip-square'
-                                />
-                              </b>
-                            </Grid>
-                          </Grid>
                           <Grid container spacing={5}>
-                            <Grid item xs={12} md={12}>
-                              <FormControl fullWidth>
-                                <Controller
-                                  name='name'
-                                  control={control}
-                                  rules={{ required: true }}
-                                  render={({ field: { value, onChange } }) => (
-                                    <TextField
-                                      value={value ?? ''}
-                                      label='Tên'
-                                      InputLabelProps={{ shrink: true }}
-                                      required
-                                      onChange={onChange}
-                                      error={Boolean(errors.name)}
-                                      aria-describedby='validation-schema-name'
-                                    />
-                                  )}
-                                />
-                                {errors.name && (
-                                  <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
-                                    {errors.name.message}
-                                  </FormHelperText>
-                                )}
-                              </FormControl>
-                            </Grid>
                             <Grid item xs={12}>
                               <FormControl fullWidth variant='outlined'>
                                 <InputLabel htmlFor='outlined-adornment-parent-category'>Danh mục câu hỏi</InputLabel>
@@ -588,44 +566,39 @@ const QuestionEditForm = () => {
                               </FormControl>
                             </Grid>
                           </Grid>
+                          <br />
                           {currentQuestion.questionTypeId !== QuestionType.SA &&
                             currentQuestion.questionTypeId !== QuestionType.GQ && (
                               <>
-                                <Grid container spacing={5} style={{ paddingBottom: '20px', paddingTop: '10px' }}>
-                                  <Grid item xs={12}>
-                                    <Divider variant='left' textAlign='left'>
-                                      {' '}
-                                      <b>Đáp án </b>
-                                    </Divider>
-                                  </Grid>
-                                </Grid>
                                 <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
                                   <Grid item xs={12}>
                                     {currentQuestion.questionTypeId === QuestionType.ORDER && (
-                                      <Alert severity='info'>
-                                        <strong>Lưu ý!</strong> Thứ tự đáp án đúng phải được sắp xếp theo thứ tự từ trên
-                                        xuống dưới.
-                                      </Alert>
+                                      <>
+                                        <Alert severity='info'>
+                                          <strong>Hướng dẫn</strong>
+                                          <br />
+                                          Thứ tự đáp án đúng phải được sắp xếp theo thứ tự từ trên xuống dưới.
+                                        </Alert>
+                                        <br />
+                                      </>
                                     )}
                                     <TableContainer component={Paper} style={{ marginTop: 5 }} className=''>
-                                      <Table
-                                        sx={{ minWidth: 650 }}
-                                        aria-label='simple table'
-                                        className={styles.answer_table}
-                                      >
+                                      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                                         <TableHead>
                                           <TableRow>
-                                            <TableCell padding='checkbox'>#</TableCell>
+                                            <TableCell padding='checkbox' align='center'>
+                                              #
+                                            </TableCell>
                                             {currentQuestion.questionTypeId !== QuestionType.ORDER && (
                                               <TableCell style={{ width: 120 }}>Đáp án đúng</TableCell>
                                             )}
                                             <TableCell>Nội dung</TableCell>
-                                            <TableCell style={{ width: 30 }}></TableCell>
+                                            <TableCell style={{ width: 150 }}></TableCell>
                                           </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                          {anwser &&
-                                            anwser.map((anwser, index) => {
+                                          {answers &&
+                                            answers.map((anwser, index) => {
                                               return (
                                                 <TableRow
                                                   hover
@@ -636,11 +609,20 @@ const QuestionEditForm = () => {
                                                     }
                                                   }}
                                                 >
-                                                  <TableCell padding='checkbox' style={{ textAlign: 'center' }}>
+                                                  <TableCell
+                                                    padding='checkbox'
+                                                    scope='row'
+                                                    component='th'
+                                                    style={{ textAlign: 'center' }}
+                                                  >
                                                     {index + 1}
                                                   </TableCell>
                                                   {currentQuestion.questionTypeId !== QuestionType.ORDER && (
-                                                    <TableCell scope='row' style={{ textAlign: 'center' }}>
+                                                    <TableCell
+                                                      scope='row'
+                                                      component='th'
+                                                      style={{ textAlign: 'center' }}
+                                                    >
                                                       {currentQuestion.questionTypeId === QuestionType.MC && (
                                                         <Checkbox
                                                           checked={anwser.isCorrect}
@@ -657,15 +639,15 @@ const QuestionEditForm = () => {
                                                       )}
                                                       {(currentQuestion.questionTypeId === QuestionType.SC ||
                                                         currentQuestion.questionTypeId === QuestionType.TF) && (
-                                                        <Radio
-                                                          checked={anwser.isCorrect}
-                                                          value={anwser.isCorrect}
-                                                          name={`rdb-ans-content-${anwser.id}`}
-                                                          onChange={event => {
-                                                            handleChangeAnwser(anwser.id, '')
-                                                          }}
-                                                        />
-                                                      )}
+                                                          <Radio
+                                                            checked={anwser.isCorrect}
+                                                            value={anwser.isCorrect}
+                                                            name={`rdb-ans-content-${anwser.id}`}
+                                                            onChange={event => {
+                                                              handleChangeAnwser(anwser.id, '')
+                                                            }}
+                                                          />
+                                                        )}
                                                       {currentQuestion.questionTypeId === QuestionType.FB && (
                                                         <Input
                                                           type='number'
@@ -682,7 +664,7 @@ const QuestionEditForm = () => {
                                                       )}
                                                     </TableCell>
                                                   )}
-                                                  <TableCell scope='row'>
+                                                  <TableCell scope='row' component='th'>
                                                     <FormControl fullWidth>
                                                       <Controller
                                                         name={`anws-content-${anwser.id}`}
@@ -722,7 +704,21 @@ const QuestionEditForm = () => {
                                                       </FormHelperText>
                                                     </FormControl>
                                                   </TableCell>
-                                                  <TableCell>
+                                                  <TableCell scope='row' component='th' align='right'>
+                                                    {currentQuestion.questionTypeId === QuestionType.ORDER && (
+                                                      <>
+                                                        {index > 0 && (
+                                                          <IconButton onClick={() => moveItem(index, index - 1)}>
+                                                            <Icon icon='mdi:arrow-up' fontSize={20} />
+                                                          </IconButton>
+                                                        )}
+                                                        {index !== (answers.length - 1) && (
+                                                          <IconButton onClick={() => moveItem(index, index + 1)}>
+                                                            <Icon icon='mdi:arrow-down' fontSize={20} />
+                                                          </IconButton>
+                                                        )}
+                                                      </>
+                                                    )}
                                                     {currentQuestion.questionTypeId !== QuestionType.TF && (
                                                       <Tooltip title='Xóa đáp án'>
                                                         <span>
@@ -730,7 +726,7 @@ const QuestionEditForm = () => {
                                                             aria-label='Xóa đáp án'
                                                             onClick={() => removeAnswer(anwser.id)}
                                                           >
-                                                            <DeleteIcon color='warning' />
+                                                            <Icon icon='mdi:trash' fontSize={20} />
                                                           </IconButton>
                                                         </span>
                                                       </Tooltip>
@@ -739,14 +735,14 @@ const QuestionEditForm = () => {
                                                 </TableRow>
                                               )
                                             })}
-
                                           {currentQuestion && currentQuestion.questionTypeId !== QuestionType.TF && (
                                             <TableRow key={`add-anwser`}>
                                               <TableCell padding='checkbox' colSpan={4} style={{ textAlign: 'center' }}>
                                                 <Button
-                                                  variant='outlined'
+                                                  size='small'
+                                                  variant='contained'
                                                   style={{ width: 250, margin: '20px' }}
-                                                  color='success'
+                                                  color='primary'
                                                   startIcon={<Icon icon='mdi:plus' />}
                                                   onClick={() => addAnswer()}
                                                 >
@@ -1076,13 +1072,14 @@ const QuestionEditForm = () => {
             )}
 
             {openCatalogDialog && (
-              <CatalogDialog
-                catalogType={CatalogType.QUESTION_CATEGORY}
+              <CategoryDialog
+                categoryType={CategoryType.QUESTION_CATEGORY}
                 open={openCatalogDialog}
                 onClose={() => {
                   setOpenCatalogDialog(false)
                 }}
-                excludedId={0}
+                catalogId={questionCatalogId}
+                currentId={0}
                 onNodeSelected={nodeId => {
                   handleSelectedCategory(nodeId)
                 }}

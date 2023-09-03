@@ -225,7 +225,7 @@ function UserModal({ onClose, onOk }) {
                 </Table>
               </TableContainer>
               <TablePagination
-                labelRowsPerPage={'Số dòng/trang:'}
+                labelRowsPerPage={'Hiển thị:'}
                 rowsPerPageOptions={[10, 25, 100]}
                 component='div'
                 count={totalItem}

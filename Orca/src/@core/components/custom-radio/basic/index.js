@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 
 const CustomRadioBasic = props => {
   // ** Props
-  const { name, data, selected, gridProps, handleChange, color = 'primary' } = props
+  const { name, data, selected, gridProps, handleChange, disabled = false, color = 'primary' } = props
   const { meta, title, value, content } = data
 
   const renderData = () => {
@@ -55,13 +55,14 @@ const CustomRadioBasic = props => {
     return (
       <Grid item {...gridProps}>
         <Box
-          onClick={() => handleChange(value)}
+          onClick={() => (disabled ? null : handleChange(value))}
+          disabled={disabled}
           sx={{
             p: 4,
             height: '100%',
             display: 'flex',
             borderRadius: 1,
-            cursor: 'pointer',
+            cursor: disabled ? 'disabled' : 'pointer',
             position: 'relative',
             alignItems: 'flex-start',
             border: theme => `1px solid ${theme.palette.divider}`,
@@ -72,6 +73,7 @@ const CustomRadioBasic = props => {
         >
           <Radio
             name={name}
+            disabled={disabled}
             size='small'
             color={color}
             value={value}

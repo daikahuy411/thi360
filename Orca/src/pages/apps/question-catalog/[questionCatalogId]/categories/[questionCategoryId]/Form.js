@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 import { QuestionCategoryApi } from 'api/catalog-api'
-import CatalogDialog from 'pages/shared/catalog'
+import CategoryDialog from 'pages/shared/category-dialog'
 import { Controller } from 'react-hook-form'
-import { CatalogType } from 'types/CatalogType'
+import { CategoryType } from 'types/CategoryType'
 
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import FolderIcon from '@mui/icons-material/FolderOpen'
@@ -17,9 +18,11 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import TextField from '@mui/material/TextField'
 
 const EditForm = props => {
-  const [values, setValues] = useState({ name: '' })
+  const router = useRouter()
 
+  const [values, setValues] = useState({ name: '' })
   const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
+  const { questionCatalogId } = router.query
 
   useEffect(() => {
     setParentSelected({ parentId: props.item.parentId, parentName: props.item.parentName })
@@ -114,9 +117,10 @@ const EditForm = props => {
       </form>
 
       {openCatalogDialog && (
-        <CatalogDialog
-          catalogType={CatalogType.QUESTION_CATEGORY}
+        <CategoryDialog
+          categoryType={CategoryType.QUESTION_CATEGORY}
           excludedId={0}
+          catalogId={questionCatalogId}
           onNodeSelected={nodeId => {
             handleSelectedParent(nodeId)
           }}

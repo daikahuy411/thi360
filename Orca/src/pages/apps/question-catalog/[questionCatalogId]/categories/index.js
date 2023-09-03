@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { selectedQuestionCatalog } from 'store/slices/questionCatalogSlice'
+import LoadingSpinner from '@core/components/loading-spinner'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'

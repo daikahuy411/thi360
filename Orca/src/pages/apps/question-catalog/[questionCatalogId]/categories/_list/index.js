@@ -22,6 +22,7 @@ import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import LoadingSpinner from '@core/components/loading-spinner'
 
 import TreeRow from './TreeRow'
 
@@ -33,6 +34,7 @@ const CategoryTable = () => {
   const [totalParentItem, setTotalParentItem] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const { questionCatalogId } = router.query
+  const [loading, setLoading] = useState(false)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -53,11 +55,14 @@ const CategoryTable = () => {
       limit: rowsPerPage
     }
 
+    setLoading(true)
+
     QuestionCategoryApi.searches(param)
       .then(response => {
         setData(response.data.value)
         setTotalItem(response.data.totalItems)
         setTotalParentItem(response.data.totalParentItems)
+        setLoading(false)
       })
       .catch(e => console.log(e))
   }
@@ -126,21 +131,25 @@ const CategoryTable = () => {
         </Grid>
       </Grid>
       <TableContainer component={Paper} style={{ marginTop: 5 }}>
-        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-          <TableHead>
-            <TableRow>
-              <TableCell style={{ width: 120 }}>#</TableCell>
-              <TableCell>Tên</TableCell>
-              <TableCell align='right' style={{ width: 120 }}>
-                Số câu hỏi
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data &&
-              data.map((item, index) => <TreeRow key={index} item={item} excludedId={0} nodeId={item.Id} level={0} />)}
-          </TableBody>
-        </Table>
+        <LoadingSpinner active={loading}>
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+            <TableHead>
+              <TableRow>
+                <TableCell style={{ width: 120 }}>#</TableCell>
+                <TableCell>Tên</TableCell>
+                <TableCell align='right' style={{ width: 120 }}>
+                  Số câu hỏi
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data &&
+                data.map((item, index) => (
+                  <TreeRow key={index} item={item} excludedId={0} nodeId={item.Id} level={0} />
+                ))}
+            </TableBody>
+          </Table>
+        </LoadingSpinner>
       </TableContainer>
       <TablePagination
         labelRowsPerPage='Số dòng/trang'

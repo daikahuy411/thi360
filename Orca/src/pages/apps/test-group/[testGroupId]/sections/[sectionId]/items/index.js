@@ -53,7 +53,9 @@ const TestsList = () => {
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                     <div style={{ width: '100%' }}>
-                      <ItemsTable />
+                      {currentTestGroupSection && (
+                        <ItemsTable data={currentTestGroupSection.items} />
+                      )}
                     </div>
                   </div>
                 </div>

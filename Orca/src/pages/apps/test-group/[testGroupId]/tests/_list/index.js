@@ -73,7 +73,7 @@ const TestsTable = () => {
           </IconButton>
         </Tooltip>
         &nbsp; &nbsp;
-        <Button variant='contained' style={{ width: 160 }} color='primary' startIcon={<Icon icon='mdi:send' />}>
+        <Button variant='contained' style={{ width: 180 }} color='primary' startIcon={<Icon icon='mdi:send' />}>
           Sinh đề
         </Button>
       </Toolbar>
@@ -109,12 +109,12 @@ const TestsTable = () => {
                   // onChange={onSelectAllClick}
                   // checked={rowCount > 0 && numSelected === rowCount}
                   inputProps={{ 'aria-label': 'select all desserts' }}
-                  // indeterminate={numSelected > 0 && numSelected < rowCount}
+                // indeterminate={numSelected > 0 && numSelected < rowCount}
                 />
               </TableCell>
               <TableCell style={{ width: 30 }}>Sửa</TableCell>
               <TableCell>Tên</TableCell>
-              <TableCell style={{ width: 210 }}>Ngày tạo</TableCell>
+              <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

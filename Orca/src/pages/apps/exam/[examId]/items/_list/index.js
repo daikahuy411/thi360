@@ -1,10 +1,17 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import ExamItemApi from 'api/exam-item-api'
+import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Draggable from 'react-draggable'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
+import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
 import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
@@ -178,7 +185,7 @@ const ExamItemTable = () => {
             component={Link}
             href={`/apps/exam/${examId}/items/0`}
             variant='contained'
-            style={{ width: 160 }}
+            style={{ width: 180 }}
             color='primary'
             startIcon={<Icon icon='mdi:plus' />}
           >
@@ -225,6 +232,7 @@ const ExamItemTable = () => {
                 <TableCell align='right' style={{ width: 120 }}>
                   Số đề thi
                 </TableCell>
+                <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -260,9 +268,10 @@ const ExamItemTable = () => {
                         </IconButton>
                       </TableCell>
                       <TableCell component='th' scope='row'>
-                        {row.name}
+                        <Typography variant='body1'>{row.name}</Typography>
                       </TableCell>
                       <TableCell align='right'>{row.totalUser}</TableCell>
+                      <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
                     </TableRow>
                   )
                 })}

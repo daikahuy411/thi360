@@ -4,13 +4,13 @@ import OrganizationApi from 'api/organization-api'
 import UserApi from 'api/user-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CatalogDialog from 'pages/shared/catalog'
+import CategoryDialog from 'pages/shared/category-dialog'
 import Draggable from 'react-draggable'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectedUser, selectUser } from 'store/slices/userSlice'
-import { CatalogType } from 'types/CatalogType'
+import { CategoryType } from 'types/CategoryType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -595,8 +595,8 @@ const EditStudentPage = () => {
                     </form>
 
                     {openCatalogDialog && (
-                      <CatalogDialog
-                        catalogType={CatalogType.DOCUMENT_ORGANIZATION}
+                      <CategoryDialog
+                        categoryType={CategoryType.DOCUMENT_ORGANIZATION}
                         excludedId={0}
                         onNodeSelected={nodeId => {
                           handleSelectedOrganization(nodeId)

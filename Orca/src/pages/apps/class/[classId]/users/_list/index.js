@@ -176,7 +176,7 @@ const UserTable = () => {
           component={Link}
           href={`/apps/user/0`}
           variant='contained'
-          style={{ width: 160 }}
+          style={{ width: 180 }}
           color='primary'
           startIcon={<Icon icon='mdi:plus' />}
         >
