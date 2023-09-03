@@ -1,9 +1,5 @@
 // ** React Imports
-import {
-  Fragment,
-  useEffect,
-  useState
-} from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 // ** Config
 import authConfig from 'configs/auth'
@@ -53,7 +49,6 @@ const UserDropdown = props => {
     console.log('userInfo', JSON.parse(userInfo))
     setUserData(JSON.parse(userInfo))
   }, [])
-
 
   const handleDropdownOpen = event => {
     setAnchorEl(event.currentTarget)

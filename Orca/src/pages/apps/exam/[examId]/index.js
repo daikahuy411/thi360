@@ -10,7 +10,7 @@ import ExamApi from 'api/exam-api'
 import moment from 'moment-timezone'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CatalogDialog from 'pages/shared/catalog'
+import CategoryDialog from 'pages/shared/category-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
@@ -18,7 +18,7 @@ import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectedExam, selectExam } from 'store/slices/examSlice'
-import { CatalogType } from 'types/CatalogType'
+import { CategoryType } from 'types/CategoryType'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -53,7 +53,7 @@ import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
 
 moment.tz.setDefault()
-moment().format('DD/MM/YYYY hh:mm')
+moment().format('DD-MM-YYYY HH:mm hh:mm')
 
 const schema = yup.object().shape({
   name: yup.string().required('* bắt buộc'),
@@ -142,8 +142,8 @@ const EditExamPage = () => {
     const item = getValues()
     let param
     if (item.isSpecificDuration) {
-      // const start = moment(new Date(item.startDate)).format('DD/MM/YYYY HH:mm:ss')
-      // const end = moment(new Date(item.endDate)).format('DD/MM/YYYY HH:mm:ss')
+      // const start = moment(new Date(item.startDate)).format('DD-MM-YYYY HH:mm HH:mm:ss')
+      // const end = moment(new Date(item.endDate)).format('DD-MM-YYYY HH:mm HH:mm:ss')
 
       const startDate = new Date(item.startDate)
       const endDate = new Date(item.endDate)
@@ -358,6 +358,40 @@ const EditExamPage = () => {
                                   />
                                 </FormControl>
                               </Grid>
+                              <Grid item xs={12}>
+                                <FormControl fullWidth variant='outlined'>
+                                  <InputLabel htmlFor='outlined-adornment-parent-category'>Danh mục Kỳ thi</InputLabel>
+                                  <OutlinedInput
+                                    id='outlined-adornment-parent-category'
+                                    inputprops={{
+                                      readOnly: true,
+                                      className: 'Mui-disabled'
+                                    }}
+                                    value={organizationSelected.organizationName ?? ''}
+                                    endAdornment={
+                                      <InputAdornment position='end'>
+                                        <IconButton
+                                          aria-label='toggle password visibility'
+                                          edge='end'
+                                          onClick={cleanOrganization}
+                                        >
+                                          <DeleteOutline />
+                                        </IconButton>
+                                        &nbsp;
+                                        <IconButton
+                                          edge='end'
+                                          onClick={() => {
+                                            setOpenCatalogDialog(true)
+                                          }}
+                                        >
+                                          <FolderIcon />
+                                        </IconButton>
+                                      </InputAdornment>
+                                    }
+                                    label='Danh mục Kỳ thi'
+                                  />
+                                </FormControl>
+                              </Grid>
                               <Grid item xs={6}>
                                 <FormControl fullWidth>
                                   <Controller
@@ -520,7 +554,6 @@ const EditExamPage = () => {
                                   label='Xác định thời gian bắt đầu/ kết thúc'
                                 />
                               </Grid>
-
                               {checkedIsSpecificDuration && (
                                 <>
                                   <Grid item xs={6}>
@@ -534,7 +567,7 @@ const EditExamPage = () => {
                                             <DateTimePicker
                                               label='Thời gian bắt đầu'
                                               value={moment(value) ?? null}
-                                              inputFormat='DD/MM/YYYY hh:mm'
+                                              inputFormat='DD-MM-YYYY HH:mm hh:mm'
                                               onChange={onChange}
                                             />
                                           </LocalizationProvider>
@@ -558,7 +591,7 @@ const EditExamPage = () => {
                                             <DateTimePicker
                                               label='Thời gian kết thúc'
                                               value={moment(value) ?? null}
-                                              inputFormat='DD/MM/YYYY hh:mm'
+                                              inputFormat='DD-MM-YYYY HH:mm hh:mm'
                                               onChange={onChange}
                                             />
                                           </LocalizationProvider>
@@ -575,50 +608,12 @@ const EditExamPage = () => {
                               )}
                             </Grid>
                           </Grid>
-                          <Grid item xs={12} md={4}>
-                            <Grid container spacing={5}>
-                              <Grid item xs={12}>
-                                <FormControl fullWidth variant='outlined'>
-                                  <InputLabel htmlFor='outlined-adornment-parent-category'>Phân loại</InputLabel>
-                                  <OutlinedInput
-                                    id='outlined-adornment-parent-category'
-                                    inputprops={{
-                                      readOnly: true,
-                                      className: 'Mui-disabled'
-                                    }}
-                                    value={organizationSelected.organizationName ?? ''}
-                                    endAdornment={
-                                      <InputAdornment position='end'>
-                                        <IconButton
-                                          aria-label='toggle password visibility'
-                                          edge='end'
-                                          onClick={cleanOrganization}
-                                        >
-                                          <DeleteOutline />
-                                        </IconButton>
-                                        &nbsp;
-                                        <IconButton
-                                          edge='end'
-                                          onClick={() => {
-                                            setOpenCatalogDialog(true)
-                                          }}
-                                        >
-                                          <FolderIcon />
-                                        </IconButton>
-                                      </InputAdornment>
-                                    }
-                                    label='Danh mục cha'
-                                  />
-                                </FormControl>
-                              </Grid>
-                            </Grid>
-                          </Grid>
                         </Grid>
                       </form>
 
                       {openCatalogDialog && (
-                        <CatalogDialog
-                          catalogType={CatalogType.EXAM_CATEGORY}
+                        <CategoryDialog
+                          categoryType={CategoryType.EXAM_CATEGORY}
                           excludedId={0}
                           onNodeSelected={nodeId => {
                             handleSelectedOrganization(nodeId)

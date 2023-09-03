@@ -186,7 +186,7 @@ const SectionsTable = ({ testGroup }) => {
                 component={Link}
                 href={`/apps/test-group/${testGroupId}/sections/0`}
                 variant='contained'
-                style={{ width: 160 }}
+                style={{ width: 180 }}
                 color='primary'
                 startIcon={<Icon icon='mdi:plus' />}
               >
@@ -230,7 +230,7 @@ const SectionsTable = ({ testGroup }) => {
                     </TableCell>
                     <TableCell style={{ width: 30 }}>Sửa</TableCell>
                     <TableCell>Tên</TableCell>
-                    <TableCell style={{ width: 210 }}>Ngày tạo</TableCell>
+                    <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -270,9 +270,9 @@ const SectionsTable = ({ testGroup }) => {
                             </IconButton>
                           </TableCell>
                           <TableCell component='th' scope='row'>
-                            {row.name}
+                            <Typography variant='body1'>{row.name}</Typography>
                           </TableCell>
-                          <TableCell>{moment(row.createdTime).format('DD/MM/YYYY hh:mm')}</TableCell>
+                          <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
                         </TableRow>
                       )
                     })}

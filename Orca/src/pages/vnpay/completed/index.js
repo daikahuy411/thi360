@@ -14,9 +14,8 @@ const VNPayCompleted = () => {
   }, [])
 
   const fetchData = () => {
-    var oderId = searchParams.get("vnp_TxnRef");
-    new V1Api().completeOrder(parseInt(oderId)).then(response => {
-    })
+    var oderId = searchParams.get('vnp_TxnRef')
+    new V1Api().completeOrder(parseInt(oderId)).then(response => {})
   }
 
   return (

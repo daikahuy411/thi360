@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-
+import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
@@ -19,37 +18,24 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
-import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
-const ItemsTable = () => {
+const ItemsTable = ({ data }) => {
   const router = useRouter()
-  const [data, setData] = useState([])
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
   const { testGroupId, sectionId } = router.query
   const currentTestGroup = useSelector(selectedTestGroup)
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage)
-  }
-
-  const handleChangeRowsPerPage = event => {
-    setRowsPerPage(+event.target.value)
-    setPage(0)
-  }
-
-  useEffect(() => {
-    if (!testGroupId || testGroupId == 0) return
-    if (currentTestGroup && currentTestGroup.id > 0) {
-      var section = currentTestGroup.sections.find(x => x.id === parseInt(sectionId))
-      setData(section.items || [])
-    }
-  }, [testGroupId, sectionId])
+  // useEffect(() => {
+  //   if (!testGroupId || testGroupId == 0) return
+  //   if (currentTestGroup && currentTestGroup.id > 0) {
+  //     var section = currentTestGroup.sections.find(x => x.id === parseInt(sectionId))
+  //     setData(section.items || [])
+  //   }
+  // }, [testGroupId, sectionId])
 
   return (
     <>
@@ -80,7 +66,7 @@ const ItemsTable = () => {
           variant='contained'
           component={Link}
           href={`/apps/test-group/${testGroupId}/sections/${sectionId}/items/add`}
-          style={{ width: 160 }}
+          style={{ width: 180 }}
           color='primary'
           startIcon={<Icon icon='mdi:plus' />}
         >
@@ -97,18 +83,6 @@ const ItemsTable = () => {
         <Grid item md={3} lg={3}>
           <TextField fullWidth placeholder='Tìm kiếm' size='small' />
         </Grid>
-        <Grid item md={6} lg={6} alignContent={'right'}>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            labelRowsPerPage='Hiển thị'
-            component='div'
-            count={data.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Grid>
       </Grid>
       <TableContainer component={Paper} style={{ marginTop: 5 }}>
         <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -119,14 +93,14 @@ const ItemsTable = () => {
                   // onChange={onSelectAllClick}
                   // checked={rowCount > 0 && numSelected === rowCount}
                   inputProps={{ 'aria-label': 'select all desserts' }}
-                  // indeterminate={numSelected > 0 && numSelected < rowCount}
+                // indeterminate={numSelected > 0 && numSelected < rowCount}
                 />
               </TableCell>
               <TableCell style={{ width: 30 }}>Sửa</TableCell>
               <TableCell>Tên</TableCell>
               <TableCell>Loại cấu hình</TableCell>
               <TableCell>Số câu hỏi</TableCell>
-              <TableCell style={{ width: 210 }}>Ngày tạo</TableCell>
+              <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -153,7 +127,7 @@ const ItemsTable = () => {
                     </IconButton>
                   </TableCell>
                   <TableCell component='th' scope='row'>
-                    {row.name}
+                    <Typography variant='body1'>{row.name}</Typography>
                   </TableCell>
                   <TableCell component='th' scope='row'>
                     {row.typeName}
@@ -161,22 +135,12 @@ const ItemsTable = () => {
                   <TableCell component='th' scope='row'>
                     {row.numberOfQuestion}
                   </TableCell>
-                  <TableCell>{row.createdTime}</TableCell>
+                  <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component='div'
-        count={data.length}
-        labelRowsPerPage='Hiển thị'
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
     </>
   )
 }

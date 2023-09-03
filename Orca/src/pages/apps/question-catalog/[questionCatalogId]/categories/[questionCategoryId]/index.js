@@ -3,12 +3,12 @@ import { Fragment, useEffect, useState } from 'react'
 import { QuestionCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CatalogDialog from 'pages/shared/catalog'
+import CategoryDialog from 'pages/shared/category-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { CatalogType } from 'types/CatalogType'
+import { CategoryType } from 'types/CategoryType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -48,7 +48,7 @@ function PaperComponent(props) {
   )
 }
 
-const ExamCategoryEditPage = () => {
+const QuestionCategoryEditPage = () => {
   const router = useRouter()
   const { questionCategoryId, questionCatalogId } = router.query
   const [item, setItem] = useState({ id: 0, name: '' })
@@ -79,15 +79,10 @@ const ExamCategoryEditPage = () => {
 
   const fetchData = () => {
     QuestionCategoryApi.get(questionCategoryId).then(response => {
-      console.log('ahehe', response.data)
       setItem(response.data)
-
       setParentSelected({ parentId: response.data.parentId, parentName: response.data.parentName })
     })
   }
-  // const callbackFunction = (childData) => {
-  //   setParentId(childData)
-  // }
 
   const save = code => {
     const item = getValues()
@@ -284,9 +279,10 @@ const ExamCategoryEditPage = () => {
                     </form>
 
                     {openCatalogDialog && (
-                      <CatalogDialog
-                        catalogType={CatalogType.QUESTION_CATEGORY}
-                        excludedId={0}
+                      <CategoryDialog
+                        categoryType={CategoryType.QUESTION_CATEGORY}
+                        currentId={questionCategoryId}
+                        catalogId={parseInt(questionCatalogId)}
                         onNodeSelected={nodeId => {
                           handleSelectedParent(nodeId)
                         }}
@@ -332,4 +328,4 @@ const ExamCategoryEditPage = () => {
   )
 }
 
-export default ExamCategoryEditPage
+export default QuestionCategoryEditPage

@@ -187,7 +187,7 @@ const OrganizationTable = () => {
             component={Link}
             href={`/apps/exam/0`}
             variant='contained'
-            style={{ width: 160 }}
+            style={{ width: 180 }}
             color='primary'
             startIcon={<Icon icon='mdi:plus' />}
           >
@@ -206,7 +206,7 @@ const OrganizationTable = () => {
           </Grid>
           <Grid item md={4} alignContent={'right'}>
             <TablePagination
-              labelRowsPerPage={'Số dòng/trang:'}
+              labelRowsPerPage={'Hiển thị:'}
               rowsPerPageOptions={[10, 25, 100]}
               component='div'
               count={totalItem}
@@ -235,7 +235,7 @@ const OrganizationTable = () => {
                 <TableCell>Lượt thi</TableCell>
                 <TableCell>Học viên</TableCell>
                 <TableCell>Trạng thái</TableCell>
-                <TableCell>Ngày tạo</TableCell>
+                <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -286,7 +286,7 @@ const OrganizationTable = () => {
                       <TableCell>
                         <Chip label={row.statusName} color='primary' variant='outlined' />
                       </TableCell>
-                      <TableCell>{moment(row.createdTime).format('DD/MM/YYYY')}</TableCell>
+                      <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
                     </TableRow>
                   )
                 })}
@@ -294,7 +294,7 @@ const OrganizationTable = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          labelRowsPerPage={'Số dòng/trang:'}
+          labelRowsPerPage={'Hiển thị:'}
           rowsPerPageOptions={[10, 25, 100]}
           component='div'
           count={totalItem}

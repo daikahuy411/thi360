@@ -37,15 +37,15 @@ const EntityInfoModal = ({ entity }) => {
                 <TableCell component='th' scope='row'>
                   Ngày tạo
                 </TableCell>
-                <TableCell style={{ width: 160 }} align='right'>
-                  {moment(entity.createdTime).format('DD/MM/YYYY hh:mm')}
+                <TableCell style={{ width: 180 }} align='right'>
+                  {moment(entity.createdTime).format('DD-MM-YYYY HH:mm hh:mm')}
                 </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell component='th' scope='row'>
                   Người tạo
                 </TableCell>
-                <TableCell style={{ width: 160 }} align='right'>
+                <TableCell style={{ width: 180 }} align='right'>
                   {entity.createdByName}
                 </TableCell>
               </TableRow>
@@ -53,8 +53,8 @@ const EntityInfoModal = ({ entity }) => {
                 <TableCell component='th' scope='row'>
                   Sửa gần nhất
                 </TableCell>
-                <TableCell style={{ width: 160 }} align='right'>
-                  {moment(entity.lastModifiedTime).format('DD/MM/YYYY hh:mm')}
+                <TableCell style={{ width: 180 }} align='right'>
+                  {moment(entity.lastModifiedTime).format('DD-MM-YYYY HH:mm')}
                 </TableCell>
               </TableRow>
             </TableBody>
