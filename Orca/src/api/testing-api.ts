@@ -1,5 +1,6 @@
-import ApiBase from "./api-base";
-import axios from "axios";
+import axios from 'axios'
+
+import ApiBase from './api-base'
 
 export default class TestingApi extends ApiBase {
   constructor() {
@@ -302,5 +303,10 @@ export default class TestingApi extends ApiBase {
       this.baseApiUrl + "/GetExamItemAttempHistoryByUserId",
       query
     );
+  };
+
+  // lấy lịch sử thi của người dùng theo userid, kỳ thi, môn thi, đề thi
+  UserExamAttemptHistory = (param: any) => {
+    return axios.get(this.baseApiUrl + "/UserExamAttemptHistory", { params: param })
   };
 }

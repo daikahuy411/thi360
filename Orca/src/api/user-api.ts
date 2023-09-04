@@ -31,6 +31,16 @@ export default class UserApi extends ApiBase {
     return axios.get(this.baseApiUrl + "/me");
   };
 
+  updateProfile = (request: any) => {
+    const url = `${this.baseApiUrl}/UpdateProfile`;
+    const response = axios.put(url, request, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response;
+  };
+
   changePassword = (param: any) => {
     const url = this.baseApiUrl + `/changepass/${param.oldPass}/${param.newPass}`;
     return axios.put(url);
@@ -41,7 +51,7 @@ export default class UserApi extends ApiBase {
   // };
 
   requestForgotPassword = (request: any) => {
-    return axios.post(this.baseApiUrl + "/request-forgot-password", request );
+    return axios.post(this.baseApiUrl + "/request-forgot-password", request);
   };
 
   verifyExpiteTime = (token: any) => {

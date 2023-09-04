@@ -50,7 +50,7 @@ const UserProfileHeader = (props) => {
         <CardMedia
           component='img'
           alt='profile-header'
-          image={'/images/pages/profile-banner.png'}
+          image={'/images/banners/banner-9.jpg'}
           sx={{
             height: { xs: 150, md: 250 }
           }}
@@ -65,7 +65,7 @@ const UserProfileHeader = (props) => {
             justifyContent: { xs: 'center', md: 'flex-start' }
           }}
         >
-          <ProfilePicture src={ data?.pictureUrl } alt='profile-picture' />
+          <ProfilePicture src={ data?.pictureUrl ? data.pictureUrl : '/images/avatars/default1.png' } alt='profile-picture' />
           <Box
             sx={{
               width: '100%',
