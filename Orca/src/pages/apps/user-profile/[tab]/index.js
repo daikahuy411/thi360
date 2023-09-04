@@ -11,10 +11,9 @@ const UserProfilePage = () => {
         if (!router.isReady) {
             return
         }
-        console.log('tab:', tab)
     }, [tab])
 
-    return <UserProfile tab={'profile'} data={null} />
+    return <UserProfile tab={tab} data={null} />
 }
 
 export default UserProfilePage;

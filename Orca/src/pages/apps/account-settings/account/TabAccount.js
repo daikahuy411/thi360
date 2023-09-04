@@ -4,11 +4,13 @@ import 'dayjs/locale/vi'
 // ** React Imports
 import {
   useEffect,
+  useRef,
   useState
 } from 'react'
 
 import UserApi from 'api/user-api'
 import moment from 'moment'
+import AvatarEditor from 'react-avatar-editor'
 // ** Third Party Imports
 import {
   Controller,
@@ -18,9 +20,14 @@ import { toast } from 'react-hot-toast'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
+import {
+  Button,
+  Modal,
+  Slider
+} from '@mui/material'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+// import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
@@ -39,8 +46,100 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 
-const initialData = {
+/*
+* handle crop avatar
+*/
+const boxStyle = {
+    width: "300px",
+    height: "300px",
+    display: "flex",
+    flexFlow: "column",
+    justifyContent: "center",
+    alignItems: "center"
+}
+const modalStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+}
+const CropperModal = ({ src, modalOpen, setModalOpen, setPreview, setIsChangeAvatar }) => {
+    const [slideValue, setSlideValue] = useState(10);
+    const cropRef = useRef(null);
 
+    //handle save
+    const handleAgree = async () => {
+        if (cropRef) {
+            const dataUrl = cropRef.current.getImage().toDataURL()
+            const result = await fetch(dataUrl)
+            const blob = await result.blob()
+            setPreview(URL.createObjectURL(blob))
+            setIsChangeAvatar(true)
+            setModalOpen(false)
+        }
+    };
+
+    return (
+        <Modal sx={modalStyle} open={modalOpen}>
+            <Box sx={boxStyle}>
+                <AvatarEditor
+                    ref={cropRef}
+                    image={src}
+                    style={{ width: "100%", height: "100%" }}
+                    border={50}
+                    borderRadius={5}
+                    color={[0, 0, 0, 0.72]}
+                    scale={slideValue / 10}
+                    rotate={0}
+                />
+
+                {/* MUI Slider */}
+                <Slider
+                    min={10}
+                    max={50}
+                    sx={{
+                        margin: "0 auto",
+                        width: "80%",
+                        color: "cyan"
+                    }}
+                    size="medium"
+                    defaultValue={slideValue}
+                    value={slideValue}
+                    onChange={(e) => setSlideValue(e.target.value)}
+                />
+                <Box
+                    sx={{
+                        display: "flex",
+                        padding: "10px",
+                        border: "3px solid white",
+                        background: "black"
+                    }}
+                >
+                    <Button
+                        size="small"
+                        sx={{ marginRight: "10px", color: "white", borderColor: "white" }}
+                        variant="outlined"
+                        onClick={(e) => setModalOpen(false)}
+                    >
+                        Hủy
+                    </Button>
+                    <Button
+                        sx={{ background: "#5596e6" }}
+                        size="small"
+                        variant="contained"
+                        onClick={handleAgree}
+                    >
+                        Đồng ý
+                    </Button>
+                </Box>
+            </Box>
+        </Modal>
+    );
+}
+/*
+* end handle crop avatar
+*/
+
+const initialData = {
     firstName: '',
     lastName: '',
     email: '',
@@ -90,7 +189,8 @@ const TabAccount = (props) => {
     // ** State
     const [inputValue, setInputValue] = useState('')
     const [formData, setFormData] = useState(initialData)
-    const [imgSrc, setImgSrc] = useState('/images/avatars/1.png')
+    const [avatarFile, setAvatarFile] = useState()
+    const [imgSrc, setImgSrc] = useState('')
 
     // ** Hooks
     const {
@@ -120,44 +220,57 @@ const TabAccount = (props) => {
             .me()
             .then(response => {
                 const data = response.data
-                setImgSrc(data.pictureUrl)
+                setPreview(data.pictureUrl ? data.pictureUrl : '/images/avatars/default1.png')
                 setFormData(data)
             })
             .catch((e) => { console.log(e) })
     }
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
         const item = getValues()
         console.log('item-edit:', item)
-        new UserApi().save(item)
+        let avatar = await fetch(preview).then(r => r.blob()).then(blobFile => new File([blobFile], "fileNameGoesHere", { type: "image/png" }))
+
+        const formData = new FormData()
+        formData.append("id", item.id)
+        formData.append("userName", item.userName)
+        formData.append("firstName", item.firstName)
+        formData.append("lastName", item.lastName)
+        formData.append("address", item.address)
+        formData.append("gender", item.gender)
+        formData.append("dob", item.dob)
+        formData.append("phoneNumber", item.phoneNumber)
+        formData.append("isChangeAvatar", isChangeAvatar)
+        formData.append("avatarFile", avatar)
+
+        new UserApi().updateProfile(formData)
             .then(response => {
                 console.log(response)
                 const data = response.data
-                if(data.succeeded){
+                if (data.succeeded) {
                     toast.success('Cập nhật dữ liệu thành công')
                     me()
-                }else{
+                } else {
                     toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu')
                 }
             })
             .catch((e) => console.log(e))
     }
 
-    const handleInputImageChange = file => {
-        const reader = new FileReader()
-        const { files } = file.target
-        if (files && files.length !== 0) {
-            reader.onload = () => setImgSrc(reader.result)
-            reader.readAsDataURL(files[0])
-            if (reader.result !== null) {
-                setInputValue(reader.result)
-            }
-        }
+    const [src, setSrc] = useState(null)
+    const [modalOpen, setModalOpen] = useState(false)
+    const [preview, setPreview] = useState(null)
+    const [isChangeAvatar, setIsChangeAvatar] = useState(false)    
+    const inputRef = useRef(null)
+
+    const handleImgChange = (e) => {
+        setSrc(URL.createObjectURL(e.target.files[0]));
+        setModalOpen(true);
     }
 
-    const handleInputImageReset = () => {
+    const handleResetAvatar = () => {
         setInputValue('')
-        setImgSrc(formData.pictureUrl)
+        setPreview(formData?.pictureUrl ? formData.pictureUrl : '/images/avatars/default1.png')
     }
 
     return (
@@ -167,20 +280,34 @@ const TabAccount = (props) => {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <CardContent sx={{ pb: theme => `${theme.spacing(10)}` }}>
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <ImgStyled src={imgSrc} alt='Profile Pic' />
+                                <ImgStyled
+                                    src={
+                                        preview ||
+                                        " https://www.signivis.com/img/custom/avatars/member-avatar-01.png"
+                                    }
+                                    alt='Profile Pic'
+                                />
                                 <div>
-                                    <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
+                                    <CropperModal
+                                        modalOpen={modalOpen}
+                                        src={src}
+                                        setPreview={setPreview}
+                                        setModalOpen={setModalOpen}
+                                        setIsChangeAvatar={setIsChangeAvatar}
+                                    />
+                                    <ButtonStyled component='label' variant='contained' htmlFor='account-upload-avatar'>
                                         Chọn ảnh
                                         <input
+                                            id='account-upload-avatar'
                                             hidden
-                                            type='file'
-                                            value={inputValue}
-                                            accept='image/png, image/jpeg'
-                                            onChange={handleInputImageChange}
-                                            id='account-settings-upload-image'
+                                            type="file"
+                                            accept="image/*"
+                                            value={avatarFile}
+                                            ref={inputRef}
+                                            onChange={handleImgChange}
                                         />
                                     </ButtonStyled>
-                                    <ResetButtonStyled color='secondary' variant='outlined' onClick={handleInputImageReset}>
+                                    <ResetButtonStyled color='secondary' variant='outlined' onClick={handleResetAvatar}>
                                         Hủy bỏ
                                     </ResetButtonStyled>
                                     <Typography variant='caption' sx={{ mt: 4, display: 'block', color: 'text.disabled' }}>
