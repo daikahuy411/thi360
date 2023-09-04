@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 import QuestionApi from 'api/question-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import TableLoading from 'pages/shared/loading/TableLoading'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
+import moment from 'moment'
 
 import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
@@ -35,6 +35,7 @@ import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import LoadingSpinner from '@core/components/loading-spinner'
 
 function PaperComponent(props) {
   return (
@@ -207,7 +208,7 @@ const QuestionTable = () => {
         &nbsp; &nbsp;
         <Button
           variant='contained'
-          style={{ width: 160 }}
+          style={{ width: 180 }}
           color='primary'
           startIcon={<Icon icon='mdi:plus' />}
           onClick={handleClick}
@@ -252,92 +253,88 @@ const QuestionTable = () => {
         </Grid>
       </Grid>
       <TableContainer component={Paper} style={{ marginTop: 5 }}>
-        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-          <TableHead>
-            <TableRow>
-              <TableCell padding='checkbox'>
-                <Checkbox
-                  onChange={handleSelectAllClick}
-                  checked={data.length > 0 && selected.length === data.length}
-                  indeterminate={selected.length > 0 && selected.length < data.length}
-                  inputProps={{ 'aria-label': 'select all desserts' }}
-                />
-              </TableCell>
-              <TableCell style={{ width: 30 }}>Sửa</TableCell>
-              <TableCell>Nội dung</TableCell>
-              <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
-              <TableCell style={{ width: 280 }}>Danh mục</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data &&
-              data.map((row, index) => {
-                const isItemSelected = isSelected(row.id)
-                const labelId = `enhanced-table-checkbox-${index}`
+        <LoadingSpinner active={loading}>
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+            <TableHead>
+              <TableRow>
+                <TableCell padding='checkbox'>
+                  <Checkbox
+                    onChange={handleSelectAllClick}
+                    checked={data.length > 0 && selected.length === data.length}
+                    indeterminate={selected.length > 0 && selected.length < data.length}
+                    inputProps={{ 'aria-label': 'select all desserts' }}
+                  />
+                </TableCell>
+                <TableCell align='center' style={{ width: 30 }}>
+                  Sửa
+                </TableCell>
+                <TableCell style={{ width: 160 }}>Mã</TableCell>
+                <TableCell>Nội dung</TableCell>
+                <TableCell style={{ width: 280 }}>Danh mục</TableCell>
+                <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
+                <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data &&
+                data.map((row, index) => {
+                  const isItemSelected = isSelected(row.id)
+                  const labelId = `enhanced-table-checkbox-${index}`
 
-                return (
-                  <TableRow
-                    hover
-                    tabIndex={-1}
-                    role='checkbox'
-                    key={row.id}
-                    selected={isItemSelected}
-                    aria-checked={isItemSelected}
-                    sx={{
-                      '&:last-of-type td, &:last-of-type th': {
-                        border: 0
-                      }
-                    }}
-                  >
-                    <TableCell padding='checkbox'>
-                      <Checkbox
-                        checked={isItemSelected}
-                        inputProps={{ 'aria-labelledby': labelId }}
-                        onClick={event => handleSelectClick(event, row.id)}
-                      />
-                    </TableCell>
-                    <TableCell component='th' scope='row'>
-                      <IconButton
-                        aria-label='filter'
-                        component={Link}
-                        href={`/apps/question-catalog/${questionCatalogId}/questions/${row.id}`}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                    </TableCell>
-                    <TableCell component='th' scope='row'>
-                      <strong>{row.name}</strong>
-                      <br />
-                      {row.shortContent}
-                    </TableCell>
-                    <TableCell>
-                      {row.questionTypeName ? (
-                        <Chip
-                          icon={<Icon icon='mdi:category' />}
-                          label={row.questionTypeName}
-                          color='info'
-                          variant='outlined'
-                          className='chip-square'
+                  return (
+                    <TableRow
+                      hover
+                      tabIndex={-1}
+                      role='checkbox'
+                      key={row.id}
+                      selected={isItemSelected}
+                      aria-checked={isItemSelected}
+                      sx={{
+                        '&:last-of-type td, &:last-of-type th': {
+                          border: 0
+                        }
+                      }}
+                    >
+                      <TableCell padding='checkbox'>
+                        <Checkbox
+                          checked={isItemSelected}
+                          inputProps={{ 'aria-labelledby': labelId }}
+                          onClick={event => handleSelectClick(event, row.id)}
                         />
-                      ) : null}
-                    </TableCell>
-                    <TableCell>
-                      {row.categoryName ? (
-                        <Chip
-                          icon={<Icon icon='mdi:tag' />}
-                          label={row.categoryName}
-                          color='primary'
-                          variant='outlined'
-                        />
-                      ) : null}
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-
-            <TableLoading isOpen={loading} colSpan={5} />
-          </TableBody>
-        </Table>
+                      </TableCell>
+                      <TableCell component='th' scope='row'>
+                        <IconButton
+                          aria-label='filter'
+                          component={Link}
+                          href={`/apps/question-catalog/${questionCatalogId}/questions/${row.id}`}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell component='th' scope='row'>
+                        <Typography variant='body1'>{row.id}</Typography>
+                      </TableCell>
+                      <TableCell component='th' scope='row'>
+                        {row.shortContent}
+                      </TableCell>
+                      <TableCell>
+                        {row.categoryName ? (
+                          <Chip
+                            icon={<Icon icon='mdi:tag' />}
+                            label={row.categoryName}
+                            color='secondary'
+                            variant='outlined'
+                          />
+                        ) : null}
+                      </TableCell>
+                      <TableCell>{row.questionTypeName}</TableCell>
+                      <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
+                    </TableRow>
+                  )
+                })}
+            </TableBody>
+          </Table>
+        </LoadingSpinner>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}

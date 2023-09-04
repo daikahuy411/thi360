@@ -1,18 +1,18 @@
 import {
-  useEffect,
-  useState
+    useEffect,
+    useState
 } from 'react'
 
 import { QuestionCategoryApi } from 'api/catalog-api'
 import QuestionApi from 'api/question-api'
 import { useRouter } from 'next/router'
-import CatalogDialog from 'pages/shared/catalog'
+import CategoryDialog from 'pages/shared/category-dialog'
 import {
-  Controller,
-  useForm
+    Controller,
+    useForm
 } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { CatalogType } from 'types/CatalogType'
+import { CategoryType } from 'types/CategoryType'
 import { QuestionType } from 'types/QuestionType'
 import * as yup from 'yup'
 
@@ -593,8 +593,8 @@ const AddQuestionAnswer: React.FC<Props> = ({ isOpen, onClose, parentQuestionId,
                 </Grid>
 
                 {openCatalogDialog && (
-                    <CatalogDialog
-                        catalogType={CatalogType.QUESTION_CATEGORY}
+                    <CategoryDialog
+                        categoryType={CategoryType.QUESTION_CATEGORY}
                         open={openCatalogDialog}
                         onClose={() => {
                             setOpenCatalogDialog(false)

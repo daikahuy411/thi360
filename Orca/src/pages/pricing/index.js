@@ -12,6 +12,11 @@ import Tab from '@mui/material/Tab'
 import AddPaymentDrawer from './AddPaymentDrawer'
 import Grid from '@mui/material/Grid'
 import PlanDetails from '@core/components/plan-details'
+import V1Api from 'api/v1-api'
+import Alert from '@mui/material/Alert'
+import Icon from '@core/components/icon'
+import AlertTitle from '@mui/material/AlertTitle'
+import Typography from '@mui/material/Typography'
 
 const data = {
   pricingPlans: {
@@ -210,14 +215,24 @@ const data = {
 
 const PricingPage = () => {
   const [value, setValue] = useState('student')
+  const [plans, setPlans] = useState([])
+  const [addPaymentOpen, setAddPaymentOpen] = useState(false)
+  const [selectedPlan, setSelectedPlan] = useState(null)
+  const toggleAddPaymentDrawer = () => setAddPaymentOpen(!addPaymentOpen)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
 
-  const [addPaymentOpen, setAddPaymentOpen] = useState(false)
-  const [sendInvoiceOpen, setSendInvoiceOpen] = useState(false)
-  const toggleAddPaymentDrawer = () => setAddPaymentOpen(!addPaymentOpen)
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const fetchData = () => {
+    new V1Api().getPricingPlans().then(response => {
+      setPlans(response.data.value)
+    })
+  }
 
   return (
     <>
@@ -228,6 +243,17 @@ const PricingPage = () => {
             <CardContent>
               <br />
               <PricingHeader />
+              <Alert severity='success' icon={<Icon icon='mdi:tag-outline' />} sx={{ mb: 4 }}>
+                <AlertTitle>Khuyến mại</AlertTitle>
+                <div>
+                  <Typography sx={{ color: 'success.main' }}>
+                    - Giảm 10% khi mua 12 tháng với tất cả các gói.
+                  </Typography>
+                  <Typography sx={{ color: 'success.main' }}>
+                    - Giảm 10% khi sử dụng mã giảm giá: "BACKTOSCHOOL"
+                  </Typography>
+                </div>
+              </Alert>
               <TabContext value={value}>
                 <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example'>
                   <Tab value='student' label='HỌC VIÊN' />
@@ -237,9 +263,21 @@ const PricingPage = () => {
               </TabContext>
               <br />
               <Grid container spacing={6}>
-                {data.pricingPlans[value]?.map(item => (
-                  <Grid item xs={12} md={4} key={item.title.toLowerCase()}>
-                    <PlanDetails addPayment={() => setAddPaymentOpen(true)} data={item} />
+                {plans[value]?.map(item => (
+                  <Grid item xs={12} md={4} key={item.id}>
+                    <PlanDetails
+                      isCurrentPlan={
+                        plans.userCurrentPlans &&
+                        plans.userCurrentPlans.filter(x => {
+                          return x.pricingPlanId == item.id
+                        }).length > 0
+                      }
+                      addPayment={() => {
+                        setSelectedPlan(item)
+                        setAddPaymentOpen(true)
+                      }}
+                      data={item}
+                    />
                   </Grid>
                 ))}
               </Grid>
@@ -254,7 +292,7 @@ const PricingPage = () => {
           </Card>
         </Grid>
       </Grid>
-      <AddPaymentDrawer open={addPaymentOpen} toggle={toggleAddPaymentDrawer} />
+      <AddPaymentDrawer open={addPaymentOpen} plan={selectedPlan} toggle={toggleAddPaymentDrawer} />
     </>
   )
 }

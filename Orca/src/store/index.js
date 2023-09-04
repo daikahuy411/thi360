@@ -7,6 +7,7 @@ import { examSlice } from './slices/examSlice'
 import { questionCatalogSlice } from './slices/questionCatalogSlice'
 import { questionSlice } from './slices/questionSlice'
 import { testGroupSectionSlice } from './slices/testGroupSectionSlice'
+import { testGroupSectionItemSlice } from './slices/testGroupSectionItemSlice'
 import { testGroupSlice } from './slices/testGroupSlice'
 import { userSlice } from './slices/userSlice'
 
@@ -20,7 +21,8 @@ export const store = configureStore({
     [questionSlice.name]: questionSlice.reducer,
     [examCategorySlice.name]: examCategorySlice.reducer,
     [testGroupSectionSlice.name]: testGroupSectionSlice.reducer,
-    [examItemSlice.name]: examItemSlice.reducer
+    [examItemSlice.name]: examItemSlice.reducer,
+    [testGroupSectionItemSlice.name]: testGroupSectionItemSlice.reducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

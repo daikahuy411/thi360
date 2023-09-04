@@ -1,0 +1,193 @@
+import React, { useState, useEffect } from 'react'
+import Icon from '@core/components/icon'
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Divider from '@mui/material/Divider'
+import Drawer from '@mui/material/Drawer'
+import IconButton from '@mui/material/IconButton'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TablePagination from '@mui/material/TablePagination'
+import TableRow from '@mui/material/TableRow'
+import OrganizationApi from 'api/organization-api'
+import CatalogApi from 'api/catalog-api'
+import { CategoryType } from 'types/CategoryType'
+import TreeRow from './TreeRow'
+import LoadingSpinner from '@core/components/loading-spinner'
+
+// catalogId: avaiable trong trường hợp là QuestionCategory
+function CategoryDialog({ categoryType, open, onClose, catalogId = 0, currentId = 0, onNodeSelected = null }) {
+  const [selectedNodeId, setSelectedNodeId] = useState(0)
+  const [data, setData] = useState([])
+  const [totalItem, setTotalItem] = useState(0)
+  const [totalParentItem, setTotalParentItem] = useState(0)
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [loading, setLoading] = useState(false)
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage)
+  }
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [page, rowsPerPage])
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const fetchData = () => {
+    const param = {
+      keyword: '',
+      catalogId: catalogId,
+      page: page == 0 ? 1 : page + 1,
+      limit: rowsPerPage
+    }
+    setLoading(true)
+
+    if (categoryType === CategoryType.DEPARTMENT) {
+      new OrganizationApi().getOrganizationTree().then(response => {
+        setData(response.data.value)
+        setTotalItem(response.data.totalItems)
+        setTotalParentItem(response.data.totalParentItems)
+        setLoading(false)
+      })
+    } else {
+      new CatalogApi(categoryType).searches(param).then(response => {
+        setData(response.data.value)
+        setTotalItem(response.data.totalItems)
+        setTotalParentItem(response.data.totalParentItems)
+        setLoading(false)
+      })
+    }
+  }
+
+  const handleNodeSelected = nodeId => {
+    setSelectedNodeId(nodeId)
+  }
+
+  const onOk = () => {
+    if (onNodeSelected) {
+      onNodeSelected(selectedNodeId)
+      onClose()
+    }
+  }
+
+  return (
+    <Drawer anchor='right' onClose={onClose} open={open} variant='temporary' style={{ overflowY: 'unset' }}>
+      <>
+        <Box
+          className='customizer-header'
+          sx={{
+            position: 'relative',
+            p: theme => theme.spacing(3.5, 5),
+            borderBottom: theme => `1px solid ${theme.palette.divider}`,
+            marginBottom: 2
+          }}
+        >
+          <Typography variant='h6' sx={{ fontWeight: 600, fontSize: 18, textTransform: 'uppercase' }}>
+            Danh mục
+          </Typography>
+          <IconButton
+            onClick={() => onClose()}
+            sx={{
+              right: 20,
+              top: '50%',
+              position: 'absolute',
+              color: 'text.secondary',
+              transform: 'translateY(-50%)'
+            }}
+          >
+            <Icon icon='mdi:close' fontSize={20} />
+          </IconButton>
+        </Box>
+        <Grid container>
+          <Grid item md={4}>
+            <IconButton aria-label='filter'>
+              <FilterAltOutlinedIcon />
+            </IconButton>
+          </Grid>
+          <Grid item md={4}>
+            <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+          </Grid>
+          <Grid item md={4} alignContent={'right'} alignItems={'right'}>
+            <Button
+              disabled={selectedNodeId == 0}
+              color='primary'
+              style={{ float: 'right' }}
+              type='submit'
+              variant='contained'
+              onClick={() => {
+                if (onOk) {
+                  onOk()
+                }
+              }}
+            >
+              Chọn
+            </Button>
+          </Grid>
+          <Grid item md={12} style={{ width: 360 }}>
+            <Divider />
+            <div style={{ overflowY: 'scroll', height: `calc(100vh - 130px)` }}>
+              <TableContainer component={Paper} style={{ marginTop: 5 }}>
+                <LoadingSpinner active={loading}>
+                  <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell style={{ width: 60 }}>Chọn</TableCell>
+                        <TableCell>Tên</TableCell>
+                        <TableCell align='right' style={{ width: 180 }}>
+                          Ngày tạo
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {data &&
+                        data.map((item, index) => (
+                          <TreeRow
+                            onSelected={handleNodeSelected}
+                            selectedValue={selectedNodeId}
+                            key={index}
+                            item={item}
+                            currentId={currentId}
+                            nodeId={item.Id}
+                            level={0}
+                          />
+                        ))}
+                    </TableBody>
+                  </Table>
+                </LoadingSpinner>
+              </TableContainer>
+              <TablePagination
+                labelRowsPerPage='Số dòng/trang'
+                rowsPerPageOptions={[10, 25, 100]}
+                component='div'
+                count={totalParentItem}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </div>
+          </Grid>
+        </Grid>
+      </>
+    </Drawer>
+  )
+}
+
+export default CategoryDialog

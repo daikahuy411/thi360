@@ -3,13 +3,13 @@ import { Fragment, useEffect, useState } from 'react'
 import { ExamCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CatalogDialog from 'pages/shared/catalog'
+import CategoryDialog from 'pages/shared/category-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectedExamCategory, selectExamCategory } from 'store/slices/examCategorySlice'
-import { CatalogType } from 'types/CatalogType'
+import { CategoryType } from 'types/CategoryType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -285,9 +285,9 @@ const ExamCategoryEditPage = () => {
                         </Grid>
                       </form>
                       {openCatalogDialog && (
-                        <CatalogDialog
-                          catalogType={CatalogType.EXAM_CATEGORY}
-                          excludedId={0}
+                        <CategoryDialog
+                          categoryType={CategoryType.EXAM_CATEGORY}
+                          currentId={examCategoryId}
                           onNodeSelected={nodeId => {
                             handleSelectedParent(nodeId)
                           }}

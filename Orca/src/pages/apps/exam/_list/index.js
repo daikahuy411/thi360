@@ -186,7 +186,7 @@ const ExamTable = () => {
             component={Link}
             href={`/apps/exam/0`}
             variant='contained'
-            style={{ width: 160 }}
+            style={{ width: 180 }}
             color='primary'
             startIcon={<Icon icon='mdi:plus' />}
           >
@@ -205,7 +205,7 @@ const ExamTable = () => {
           </Grid>
           <Grid item md={4} alignContent={'right'}>
             <TablePagination
-              labelRowsPerPage={'Số dòng/trang:'}
+              labelRowsPerPage={'Hiển thị:'}
               rowsPerPageOptions={[10, 25, 100]}
               component='div'
               count={totalItem}
@@ -231,10 +231,10 @@ const ExamTable = () => {
                 <TableCell style={{ width: 30 }}>Sửa</TableCell>
                 <TableCell>Tên</TableCell>
                 <TableCell style={{ width: 120 }}>Hình thức</TableCell>
-                <TableCell>Lượt thi</TableCell>
-                <TableCell>Học viên</TableCell>
+                <TableCell align='right'>Lượt thi</TableCell>
+                <TableCell align='right'>Học viên</TableCell>
                 <TableCell>Trạng thái</TableCell>
-                <TableCell>Ngày tạo</TableCell>
+                <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -270,22 +270,24 @@ const ExamTable = () => {
                         </IconButton>
                       </TableCell>
                       <TableCell component='th' scope='row'>
-                        [{row.id}]-{row.name}
-                        <br /> <i>{row.registrationTypeName}</i>
+                        <Typography variant='body1'>
+                          [{row.id}]-{row.name}
+                        </Typography>
+                        {/* <br /> <i>{row.registrationTypeName}</i> */}
                       </TableCell>
+                      <TableCell>
+                        {row.examTypeName}
+                      </TableCell>
+                      <TableCell align='right'>{row.totalAttempt}</TableCell>
+                      <TableCell align='right'>{row.totalUser}</TableCell>
                       <TableCell>
                         <CustomChip
                           skin='light'
-                          label={row.examTypeName}
-                          color={row.examType === 1 ? 'secondary' : 'success'}
+                          label={row.statusName}
+                          color={row.status === 3 ? 'default' : row.status === 1 ? 'secondary' : 'success'}
                         />
                       </TableCell>
-                      <TableCell>{row.totalAttempt}</TableCell>
-                      <TableCell>{row.totalUser}</TableCell>
-                      <TableCell>
-                        <Chip label={row.statusName} color='primary' variant='outlined' />
-                      </TableCell>
-                      <TableCell>{moment(row.createdTime).format('DD/MM/YYYY')}</TableCell>
+                      <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
                     </TableRow>
                   )
                 })}
@@ -293,7 +295,7 @@ const ExamTable = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          labelRowsPerPage={'Số dòng/trang:'}
+          labelRowsPerPage={'Hiển thị:'}
           rowsPerPageOptions={[10, 25, 100]}
           component='div'
           count={totalItem}

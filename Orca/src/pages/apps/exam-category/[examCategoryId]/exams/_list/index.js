@@ -81,7 +81,7 @@ const ExamTable = () => {
           component={Link}
           href={`/apps/user/0`}
           variant='contained'
-          style={{ width: 160 }}
+          style={{ width: 180 }}
           color='primary'
           startIcon={<Icon icon='mdi:plus' />}
         >
@@ -129,7 +129,7 @@ const ExamTable = () => {
               <TableCell>Lượt thi</TableCell>
               <TableCell>Học viên</TableCell>
               <TableCell>Trạng thái</TableCell>
-              <TableCell>Ngày tạo</TableCell>
+              <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -4,6 +4,7 @@ import UserApi from 'api/user-api'
 import Link from 'next/link'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
+import moment from 'moment'
 
 import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
@@ -212,6 +213,7 @@ const UserTable = () => {
               <TableCell>Tên đầy đủ </TableCell>
               <TableCell style={{ width: 120 }}>Giới tính</TableCell>
               <TableCell style={{ width: 180 }}>Lớp</TableCell>
+              <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -243,13 +245,16 @@ const UserTable = () => {
                       </IconButton>
                     </TableCell>
                     <TableCell component='th' scope='row'>
-                      <Typography noWrap variant='body'>
+                      <Typography noWrap variant='body1'>
                         {row.userName}
                       </Typography>
                     </TableCell>
-                    <TableCell>{row.fullName}</TableCell>
+                    <TableCell>
+                      <Typography variant='body1'>{row.fullName}</Typography>{' '}
+                    </TableCell>
                     <TableCell>{row.genderName}</TableCell>
                     <TableCell>{row.organizationName}</TableCell>
+                    <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
                   </TableRow>
                 )
               })}

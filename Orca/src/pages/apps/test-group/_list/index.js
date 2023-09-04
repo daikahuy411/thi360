@@ -4,6 +4,7 @@ import TestGroupApi from 'api/test-group-api'
 import Link from 'next/link'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
+import moment from 'moment'
 
 import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
@@ -30,6 +31,7 @@ import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import LoadingSpinner from '@core/components/loading-spinner'
 
 function PaperComponent(props) {
   return (
@@ -44,6 +46,7 @@ const TestGroupTable = () => {
   const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [loading, setLoading] = useState(false)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -64,9 +67,13 @@ const TestGroupTable = () => {
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
     }
+
+    setLoading(true)
+
     new TestGroupApi()
       .searches(param)
       .then(response => {
+        setLoading(false)
         if (response.data.isSuccess) {
           setData(response.data.value)
           setTotalItem(response.data.totalItems)
@@ -191,7 +198,7 @@ const TestGroupTable = () => {
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
-            labelRowsPerPage={'Số dòng/trang:'}
+            labelRowsPerPage={'Hiển thị:'}
             rowsPerPageOptions={[10, 25, 100]}
             component='div'
             count={totalItem}
@@ -203,64 +210,69 @@ const TestGroupTable = () => {
         </Grid>
       </Grid>
       <TableContainer component={Paper} style={{ marginTop: 5 }}>
-        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-          <TableHead>
-            <TableRow>
-              <TableCell padding='checkbox'>
-                <Checkbox
-                  onChange={handleSelectAllClick}
-                  checked={data.length > 0 && selected.length === data.length}
-                  indeterminate={selected.length > 0 && selected.length < data.length}
-                  inputProps={{ 'aria-label': 'select all desserts' }}
-                />
-              </TableCell>
-              <TableCell style={{ width: 30 }}>Sửa</TableCell>
-              <TableCell>Tên</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data &&
-              data.map((row, index) => {
-                const isItemSelected = isSelected(row.id)
-                const labelId = `enhanced-table-checkbox-${index}`
-
-                return (
-                  <TableRow
-                    hover
-                    tabIndex={-1}
-                    role='checkbox'
-                    key={row.id}
-                    selected={isItemSelected}
-                    aria-checked={isItemSelected}
-                    sx={{
-                      '&:last-of-type td, &:last-of-type th': {
-                        border: 0
-                      }
-                    }}
-                  >
-                    <TableCell padding='checkbox'>
-                      <Checkbox
-                        checked={isItemSelected}
-                        inputProps={{ 'aria-labelledby': labelId }}
-                        onClick={event => handleClick(event, row.id)}
-                      />
-                    </TableCell>
-                    <TableCell component='th' scope='row'>
-                      <IconButton aria-label='filter' component={Link} href={`/apps/test-group/${row.id}`}>
-                        <EditIcon />
-                      </IconButton>
-                    </TableCell>
-                    <TableCell component='th' scope='row'>
-                      {row.name}
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-          </TableBody>
-        </Table>
+        <LoadingSpinner active={loading}>
+          <div style={{ minHeight: 300 }}>
+            <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+              <TableHead>
+                <TableRow>
+                  <TableCell padding='checkbox'>
+                    <Checkbox
+                      onChange={handleSelectAllClick}
+                      checked={data.length > 0 && selected.length === data.length}
+                      indeterminate={selected.length > 0 && selected.length < data.length}
+                      inputProps={{ 'aria-label': 'select all desserts' }}
+                    />
+                  </TableCell>
+                  <TableCell style={{ width: 30 }}>Sửa</TableCell>
+                  <TableCell>Tên</TableCell>
+                  <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data &&
+                  data.map((row, index) => {
+                    const isItemSelected = isSelected(row.id)
+                    const labelId = `enhanced-table-checkbox-${index}`
+                    return (
+                      <TableRow
+                        hover
+                        tabIndex={-1}
+                        role='checkbox'
+                        key={row.id}
+                        selected={isItemSelected}
+                        aria-checked={isItemSelected}
+                        sx={{
+                          '&:last-of-type td, &:last-of-type th': {
+                            border: 0
+                          }
+                        }}
+                      >
+                        <TableCell padding='checkbox'>
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{ 'aria-labelledby': labelId }}
+                            onClick={event => handleClick(event, row.id)}
+                          />
+                        </TableCell>
+                        <TableCell component='th' scope='row'>
+                          <IconButton aria-label='filter' component={Link} href={`/apps/test-group/${row.id}`}>
+                            <EditIcon />
+                          </IconButton>
+                        </TableCell>
+                        <TableCell component='th' scope='row'>
+                          <Typography variant='body1'>{row.name}</Typography>
+                        </TableCell>
+                        <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
+                      </TableRow>
+                    )
+                  })}
+              </TableBody>
+            </Table>
+          </div>
+        </LoadingSpinner>
       </TableContainer>
       <TablePagination
-        labelRowsPerPage={'Số dòng/trang:'}
+        labelRowsPerPage={'Hiển thị:'}
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
         count={totalItem}

@@ -184,7 +184,7 @@ const TenantTable = () => {
             component={Link}
             href={`/apps/tenant/0`}
             variant='contained'
-            style={{ width: 160 }}
+            style={{ width: 180 }}
             color='primary'
             startIcon={<Icon icon='mdi:plus' />}
           >
@@ -203,7 +203,7 @@ const TenantTable = () => {
           </Grid>
           <Grid item md={4} alignContent={'right'}>
             <TablePagination
-              labelRowsPerPage={'Số dòng/trang:'}
+              labelRowsPerPage={'Hiển thị:'}
               rowsPerPageOptions={[10, 25, 100]}
               component='div'
               count={totalItem}
@@ -228,7 +228,7 @@ const TenantTable = () => {
                 </TableCell>
                 <TableCell style={{ width: 30 }}>Sửa</TableCell>
                 <TableCell>Tên</TableCell>
-                <TableCell style={{ width: 120 }}>Ngày tạo</TableCell>
+                <TableCell style={{ width: 20 }}>Ngày tạo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -267,7 +267,7 @@ const TenantTable = () => {
                         [{row.id}]-{row.name}
                         <br /> <i>{row.description}</i>
                       </TableCell>
-                      <TableCell>{moment(row.createdTime).format('DD/MM/YYYY')}</TableCell>
+                      <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
                     </TableRow>
                   )
                 })}
@@ -277,7 +277,7 @@ const TenantTable = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          labelRowsPerPage={'Số dòng/trang:'}
+          labelRowsPerPage={'Hiển thị:'}
           rowsPerPageOptions={[10, 25, 100]}
           component='div'
           count={totalItem}

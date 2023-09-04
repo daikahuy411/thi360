@@ -21,7 +21,7 @@ const PricingHeader = props => {
   return (
     <Box sx={{ mb: [8, 9], textAlign: 'center' }}>
       <Typography variant='h4'>Pricing Plans</Typography>
-      <Box sx={{ mt: 2.5, mb: 6 }}>
+      <Box sx={{ mt: 2.5, mb: 2 }}>
         <Typography variant='body2'>
           All plans include 40+ advanced tools and features to boost your product.
         </Typography>
@@ -42,9 +42,9 @@ const PricingHeader = props => {
           Annually
         </InputLabel>
         {!hidden && ( */}
-        <Box>
+        {/* <Box>
           <CustomChip size='large' skin='light' color='primary' label='Giảm 10% khi mua 1 năm' />
-        </Box>
+        </Box> */}
         {/* )} */}
       </Box>
     </Box>

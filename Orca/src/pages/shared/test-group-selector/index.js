@@ -229,7 +229,7 @@ export default function TestGroupSelector({ onClose, onNodeSelected = null }) {
               </Table>
             </TableContainer>
             <TablePagination
-              labelRowsPerPage={'Số dòng/trang:'}
+              labelRowsPerPage={'Hiển thị:'}
               rowsPerPageOptions={[10, 25, 100]}
               component='div'
               count={totalItem}
