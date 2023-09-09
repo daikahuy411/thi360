@@ -17,6 +17,8 @@ import {
   useForm
 } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { selectProfile } from 'store/slices/profileSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -30,10 +32,7 @@ import Box from '@mui/material/Box'
 // import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import CardHeader from '@mui/material/CardHeader'
-import Checkbox from '@mui/material/Checkbox'
 import FormControl from '@mui/material/FormControl'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import FormHelperText from '@mui/material/FormHelperText'
 import Grid from '@mui/material/Grid'
 import InputLabel from '@mui/material/InputLabel'
@@ -45,6 +44,8 @@ import Typography from '@mui/material/Typography'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+
+import SelfRemoveAccount from './SelfRemoveAccount'
 
 /*
 * handle crop avatar
@@ -187,10 +188,11 @@ const schema = yup.object().shape({
 const TabAccount = (props) => {
     const { tab } = props
     // ** State
+    const dispatch = useDispatch()
     const [inputValue, setInputValue] = useState('')
     const [formData, setFormData] = useState(initialData)
     const [avatarFile, setAvatarFile] = useState()
-    const [imgSrc, setImgSrc] = useState('')
+    // const [imgSrc, setImgSrc] = useState('')
 
     // ** Hooks
     const {
@@ -222,6 +224,7 @@ const TabAccount = (props) => {
                 const data = response.data
                 setPreview(data.pictureUrl ? data.pictureUrl : '/images/avatars/default1.png')
                 setFormData(data)
+                dispatch(selectProfile(data))
             })
             .catch((e) => { console.log(e) })
     }
@@ -238,7 +241,8 @@ const TabAccount = (props) => {
         formData.append("lastName", item.lastName)
         formData.append("address", item.address)
         formData.append("gender", item.gender)
-        formData.append("dob", item.dob)
+        if(item.dob)
+            formData.append("dob", item.dob)
         formData.append("phoneNumber", item.phoneNumber)
         formData.append("isChangeAvatar", isChangeAvatar)
         formData.append("avatarFile", avatar)
@@ -260,12 +264,20 @@ const TabAccount = (props) => {
     const [src, setSrc] = useState(null)
     const [modalOpen, setModalOpen] = useState(false)
     const [preview, setPreview] = useState(null)
-    const [isChangeAvatar, setIsChangeAvatar] = useState(false)    
+    const [isChangeAvatar, setIsChangeAvatar] = useState(false)
     const inputRef = useRef(null)
 
     const handleImgChange = (e) => {
-        setSrc(URL.createObjectURL(e.target.files[0]));
-        setModalOpen(true);
+        if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+            if (e.target.files[0].size <= 500000) {
+                setSrc(URL.createObjectURL(e.target.files[0]));
+                setModalOpen(true);
+            } else {
+                toast.error('Hệ thống chỉ hỗ trợ dung lượng tối đa là 0.5mb. Bạn cần chọn ảnh phù hợp.')
+            }
+        } else {
+            toast.error('Hệ thống chỉ hỗ trợ định dạng PNG hoặc JPEG. Bạn cần chọn ảnh phù hợp.')
+        }
     }
 
     const handleResetAvatar = () => {
@@ -301,7 +313,7 @@ const TabAccount = (props) => {
                                             id='account-upload-avatar'
                                             hidden
                                             type="file"
-                                            accept="image/*"
+                                            accept="image/png, image/jpg, image/jpeg"
                                             value={avatarFile}
                                             ref={inputRef}
                                             onChange={handleImgChange}
@@ -311,7 +323,7 @@ const TabAccount = (props) => {
                                         Hủy bỏ
                                     </ResetButtonStyled>
                                     <Typography variant='caption' sx={{ mt: 4, display: 'block', color: 'text.disabled' }}>
-                                        Chỉ cho phép ảnh có định dạng PNG hoặc JPEG. Dung lượng tối đa 1mb.
+                                        Chỉ cho phép ảnh có định dạng PNG, JPG hoặc JPEG. Dung lượng tối đa 0.5mb.
                                     </Typography>
                                 </div>
                             </Box>
@@ -481,7 +493,7 @@ const TabAccount = (props) => {
 
             {/* Delete Account Card */}
             <Grid item xs={12}>
-                <Card>
+                {/* <Card>
                     <CardHeader title='Xóa tài khoản của bạn' />
                     <CardContent>
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -518,7 +530,8 @@ const TabAccount = (props) => {
                             </Button>
                         </form>
                     </CardContent>
-                </Card>
+                </Card> */}
+                <SelfRemoveAccount />
             </Grid>
         </Grid>
     )

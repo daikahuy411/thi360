@@ -1,14 +1,22 @@
 // ** React Imports
-import { useState } from 'react'
-import authConfig from 'configs/auth'
+import {
+  useEffect,
+  useState
+} from 'react'
 
+import axios from 'axios'
+import authConfig from 'configs/auth'
 // ** Configs
 import themeConfig from 'configs/themeConfig'
 // ** Hooks
 import { useAuth } from 'hooks/useAuth'
 // ** Next Imports
 import Link from 'next/link'
-import { Controller, useForm } from 'react-hook-form'
+import { router } from 'next/router'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 // ** Demo Imports
 import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
 // ** Third Party Imports
@@ -34,13 +42,13 @@ import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import axios from 'axios'
-import { useEffect } from 'react'
-import { router } from 'next/router'
 
 // ** Styled Components
 const LoginIllustrationWrapper = styled(Box)(({ theme }) => ({
@@ -130,6 +138,8 @@ const LoginPage = () => {
     }
     checkIfAccessTokenExists()
   }, [])
+
+  
 
   const loginWithGoogle = () => {
     //window.open(`${authConfig.baseApiUrl}${authConfig.googleLoginEndpoint}`, "Google Login", "width=800,height=800");

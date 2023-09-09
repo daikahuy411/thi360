@@ -46,9 +46,10 @@ export default class UserApi extends ApiBase {
     return axios.put(url);
   };
 
-  // verifyAccount = (request: any) => {
-  //   return axios.post(this.baseApiUrl + "/verify-acctivate-code", request );
-  // };
+  selfRemoveAccount = (request: any) => {
+    const response = axios.delete(`${this.baseApiUrl}/SelfRemoveAccount/${request.id}`)
+    return response;
+  };
 
   requestForgotPassword = (request: any) => {
     return axios.post(this.baseApiUrl + "/request-forgot-password", request);
