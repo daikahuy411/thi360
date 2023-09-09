@@ -74,7 +74,6 @@ const VerticalNavHeader = props => {
 
   useEffect(() => {
     const users = window.localStorage.getItem('userData')
-    console.log('users:', JSON.parse(users))
     setUserData(JSON.parse(users))
   }, [])
 

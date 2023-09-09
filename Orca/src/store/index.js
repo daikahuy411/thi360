@@ -4,15 +4,17 @@ import { classSlice } from './slices/classSlice'
 import { examCategorySlice } from './slices/examCategorySlice'
 import { examItemSlice } from './slices/examItemSlice'
 import { examSlice } from './slices/examSlice'
+import { profileSlice } from './slices/profileSlice'
 import { questionCatalogSlice } from './slices/questionCatalogSlice'
 import { questionSlice } from './slices/questionSlice'
-import { testGroupSectionSlice } from './slices/testGroupSectionSlice'
 import { testGroupSectionItemSlice } from './slices/testGroupSectionItemSlice'
+import { testGroupSectionSlice } from './slices/testGroupSectionSlice'
 import { testGroupSlice } from './slices/testGroupSlice'
 import { userSlice } from './slices/userSlice'
 
 export const store = configureStore({
   reducer: {
+    [profileSlice.name]: profileSlice.reducer,
     [classSlice.name]: classSlice.reducer,
     [userSlice.name]: userSlice.reducer,
     [examSlice.name]: examSlice.reducer,

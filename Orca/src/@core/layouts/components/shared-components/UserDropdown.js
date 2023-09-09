@@ -1,12 +1,24 @@
 // ** React Imports
-import { Fragment, useEffect, useState } from 'react'
+import {
+  Fragment,
+  useEffect,
+  useState
+} from 'react'
 
-// ** Config
+import UserApi from 'api/user-api'
 import authConfig from 'configs/auth'
 // ** Context
 import { useAuth } from 'hooks/useAuth'
 // ** Next Import
 import { useRouter } from 'next/router'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedProfile,
+  selectProfile
+} from 'store/slices/profileSlice'
 
 // ** Icon Imports
 import Icon from '@core/components/icon'
@@ -32,10 +44,12 @@ const BadgeContentSpan = styled('span')(({ theme }) => ({
 const UserDropdown = props => {
   // ** Props
   const { settings } = props
+  const dispatch = useDispatch()
 
   // ** States
   const [anchorEl, setAnchorEl] = useState(null)
   const [userData, setUserData] = useState()
+  const currentClass = useSelector(selectedProfile)
 
   // ** Hooks
   const router = useRouter()
@@ -48,7 +62,20 @@ const UserDropdown = props => {
     const userInfo = window.localStorage.getItem(authConfig.storageUserDataKeyName)
     console.log('userInfo', JSON.parse(userInfo))
     setUserData(JSON.parse(userInfo))
-  }, [])
+    if (!currentClass) {
+      me()
+    }
+  }, [currentClass])
+
+  const me = () => {
+    new UserApi()
+      .me()
+      .then(response => {
+        const data = response.data
+        dispatch(selectProfile(data))
+      })
+      .catch((e) => { console.log(e) })
+  }
 
   const handleDropdownOpen = event => {
     setAnchorEl(event.currentTarget)
@@ -97,7 +124,7 @@ const UserDropdown = props => {
           alt='John Doe'
           onClick={handleDropdownOpen}
           sx={{ width: 40, height: 40 }}
-          src='/images/avatars/1.png'
+          src={currentClass?.pictureUrl ? currentClass.pictureUrl : '/images/avatars/default1.png'}
         />
       </Badge>
       <Menu
@@ -118,12 +145,12 @@ const UserDropdown = props => {
                 horizontal: 'right'
               }}
             >
-              <Avatar alt='John Doe' src='/images/avatars/1.png' sx={{ width: '2.5rem', height: '2.5rem' }} />
+              <Avatar alt='John Doe' src={currentClass?.pictureUrl ? currentClass.pictureUrl : '/images/avatars/default1.png'} sx={{ width: '2.5rem', height: '2.5rem' }} />
             </Badge>
             <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography sx={{ fontWeight: 600 }}>{userData?.name}</Typography>
+              <Typography sx={{ fontWeight: 600 }}>{currentClass?.fullName}</Typography>
               <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                {userData?.userName}
+                {currentClass?.userName}
               </Typography>
             </Box>
           </Box>

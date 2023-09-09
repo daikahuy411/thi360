@@ -1,6 +1,11 @@
 // ** React Imports
-import { createContext, useEffect, useState } from 'react'
+import {
+  createContext,
+  useEffect,
+  useState
+} from 'react'
 
+import UserApi from 'api/user-api'
 // ** Axios
 import axios from 'axios'
 // ** Config
@@ -8,6 +13,8 @@ import authConfig from 'configs/auth'
 // ** Next Import
 import { useRouter } from 'next/router'
 import { toast } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { selectProfile } from 'store/slices/profileSlice'
 
 // ** Defaults
 const defaultProvider = {
@@ -22,7 +29,8 @@ const defaultProvider = {
 }
 const AuthContext = createContext(defaultProvider)
 
-const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {  
+  const dispatch = useDispatch()
   // ** States
   const [user, setUser] = useState(defaultProvider.user)
   const [loading, setLoading] = useState(defaultProvider.loading)
@@ -80,6 +88,8 @@ const AuthProvider = ({ children }) => {
         // params.rememberMe
         //   ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.value.token)
         //   : null
+
+        me()
         const returnUrl = router.query.returnUrl
         setUser({ ...response.data.value })
         params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.value)) : null
@@ -89,6 +99,16 @@ const AuthProvider = ({ children }) => {
       .catch(err => {
         if (errorCallback) errorCallback(err)
       })
+  }
+
+  const me = async () => {
+    await new UserApi()
+      .me()
+      .then(response => {
+        const data = response.data
+        dispatch(selectProfile(data))
+      })
+      .catch((e) => { console.log(e) })
   }
 
   const handleLogout = () => {
