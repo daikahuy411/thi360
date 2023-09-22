@@ -70,7 +70,7 @@ const AccountSettings = () => {
   }, [tab])
 
   const tabContentList = {
-    account: <TabAccount tab={tab}/>,
+    account: <TabAccount tab={tab} />,
     security: <TabSecurity />
   }
 
