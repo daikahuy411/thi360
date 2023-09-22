@@ -1,13 +1,14 @@
+import Link from 'next/link'
+
 // ** Icon Imports
 import Icon from '@core/components/icon'
 import NotificationDropdown from '@core/layouts/components/shared-components/NotificationDropdown'
 import UserDropdown from '@core/layouts/components/shared-components/UserDropdown'
-import MenuOpenIcon from '@mui/icons-material/MenuOpen'
 // ** MUI Imports
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
-import Autocomplete from '../Autocomplete'
-import ProgramSelectors from './ProgramSelectors'
+import Typography from '@mui/material/Typography'
 
 const notifications = [
   {
@@ -71,7 +72,20 @@ const AppBarContent = props => {
           <MenuOpenIcon />
         </IconButton> */}
         &nbsp;
-        <Autocomplete hidden={hidden} settings={settings} />
+        <Typography
+          sx={{
+            //styleName: 24 semibold;
+            fontFamily: 'Be Vietnam Pro',
+            fontSize: '24px',
+            fontWeight: '600',
+            lineHeight: '36px',
+            letterSpacing: '0em',
+            textAlign: 'left'
+          }}
+        >
+          Chương trình
+        </Typography>
+        {/* <Autocomplete hidden={hidden} settings={settings} /> */}
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
         {/* <LanguageDropdown settings={settings} saveSettings={saveSettings} />
@@ -79,6 +93,27 @@ const AppBarContent = props => {
         {/* <ShortcutsDropdown settings={settings} shortcuts={shortcuts} /> */}
         {/* <ProgramSelectors /> */}
         &nbsp;
+        <Button
+          component={Link}
+          sx={{
+            // width: '135px',
+            // height: '48px',
+            // top: '30px',
+            // left: '974px',
+            // borderRadius: '8px',
+            color: '#fff',
+            backgroundColor: '#9B51E0',
+            textDecoration: 'none',
+            marginRight: '1em',
+            ':hover': {
+              backgroundColor: '#9B51E0',
+              opacity: '0.7'
+            }
+          }}
+          href='/pricing'
+        >
+          Bảng giá
+        </Button>
         <NotificationDropdown settings={settings} notifications={notifications} />
         <UserDropdown settings={settings} />
       </Box>

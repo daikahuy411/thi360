@@ -1,9 +1,5 @@
 // ** React Imports
-import {
-  Fragment,
-  useEffect,
-  useState
-} from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import UserApi from 'api/user-api'
 import authConfig from 'configs/auth'
@@ -11,14 +7,9 @@ import authConfig from 'configs/auth'
 import { useAuth } from 'hooks/useAuth'
 // ** Next Import
 import { useRouter } from 'next/router'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
-import {
-  selectedProfile,
-  selectProfile
-} from 'store/slices/profileSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectedProfile, selectProfile } from 'store/slices/profileSlice'
+import Button from '@mui/material/Button'
 
 // ** Icon Imports
 import Icon from '@core/components/icon'
@@ -37,7 +28,9 @@ const BadgeContentSpan = styled('span')(({ theme }) => ({
   width: 8,
   height: 8,
   borderRadius: '50%',
-  backgroundColor: theme.palette.success.main,
+  backgroundColor: theme.palette.success.light,
+  // backgroundColor: '#9B51E0',
+
   boxShadow: `0 0 0 2px ${theme.palette.background.paper}`
 }))
 
@@ -74,7 +67,9 @@ const UserDropdown = props => {
         const data = response.data
         dispatch(selectProfile(data))
       })
-      .catch((e) => { console.log(e) })
+      .catch(e => {
+        console.log(e)
+      })
   }
 
   const handleDropdownOpen = event => {
@@ -113,7 +108,7 @@ const UserDropdown = props => {
       <Badge
         overlap='circular'
         onClick={handleDropdownOpen}
-        sx={{ ml: 2, cursor: 'pointer' }}
+        sx={{ ml: 2, cursor: 'pointer', marginRight: '1rem' }}
         badgeContent={<BadgeContentSpan />}
         anchorOrigin={{
           vertical: 'bottom',
@@ -127,6 +122,35 @@ const UserDropdown = props => {
           src={currentClass?.pictureUrl ? currentClass.pictureUrl : '/images/avatars/default1.png'}
         />
       </Badge>
+      <Box display='inline-block' width='134px'>
+        <Typography
+          sx={{
+            //styleName: 20 semibold;
+            fontFamily: 'Be Vietnam Pro',
+            fontSize: '20px',
+            fontWeight: '600',
+            lineHeight: '30px',
+            letterSpacing: '0em',
+            textAlign: 'start'
+          }}
+        >
+          {currentClass?.fullName}
+        </Typography>
+        <Typography
+          sx={{
+            //styleName: 20 semibold;
+            fontFamily: 'Be Vietnam Pro',
+            fontSize: '16px',
+            fontWeight: '400',
+            lineHeight: '24px',
+            letterSpacing: '0em',
+            textAlign: 'start'
+          }}
+        >
+          {currentClass?.organizationId}
+        </Typography>
+      </Box>
+
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -145,7 +169,11 @@ const UserDropdown = props => {
                 horizontal: 'right'
               }}
             >
-              <Avatar alt='John Doe' src={currentClass?.pictureUrl ? currentClass.pictureUrl : '/images/avatars/default1.png'} sx={{ width: '2.5rem', height: '2.5rem' }} />
+              <Avatar
+                alt='John Doe'
+                src={currentClass?.pictureUrl ? currentClass.pictureUrl : '/images/avatars/default1.png'}
+                sx={{ width: '2.5rem', height: '2.5rem' }}
+              />
             </Badge>
             <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
               <Typography sx={{ fontWeight: 600 }}>{currentClass?.fullName}</Typography>

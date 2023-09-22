@@ -6,16 +6,7 @@ import ChangePasswordCard from 'pages/apps/account-settings/security/ChangePassw
 import Icon from '@core/components/icon'
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import Grid from '@mui/material/Grid'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Typography from '@mui/material/Typography'
 
 // import TwoFactorAuthentication from 'src/views/pages/account-settings/security/TwoFactorAuthentication'
 
@@ -66,9 +57,9 @@ const TabSecurity = () => {
       {/* <Grid item xs={12}>
         <CreateApiKey />
       </Grid> */}
-      
+
       {/* Recent Devices Card*/}
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Card>
           <CardHeader title='Lịch sử đăng nhập' />
           <TableContainer>
@@ -111,7 +102,7 @@ const TabSecurity = () => {
             </Table>
           </TableContainer>
         </Card>
-      </Grid>
+      </Grid> */}
     </Grid>
   )
 }
