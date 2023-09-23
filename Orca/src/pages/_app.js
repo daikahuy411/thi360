@@ -7,6 +7,7 @@ import 'prismjs/components/prism-jsx'
 import 'prismjs/components/prism-tsx'
 // ** React Perfect Scrollbar Style
 import 'react-perfect-scrollbar/dist/css/styles.css'
+import 'react-datepicker/dist/react-datepicker.css'
 import 'iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'

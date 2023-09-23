@@ -5,9 +5,47 @@ export const studentLinks = [
     path: '/home'
   },
   {
-    icon: 'mdi:school-outline',
-    title: 'Ôn luyện',
-    path: '/program'
+    icon: 'mdi:trophy-outline',
+    title: 'Chương trình',
+    path: '/program',
+    children: [
+      {
+        title: 'Lớp 6',
+        path: '/program/6/'
+      },
+      {
+        title: 'Lớp 7',
+        path: '/program/7/'
+      },
+      {
+        title: 'Lớp 8',
+        path: '/program/8/'
+      },
+      {
+        title: 'Lớp 9',
+        path: '/program/9/'
+      },
+      {
+        title: 'Lớp 10',
+        path: '/program/10/'
+      },
+      {
+        title: 'Lớp 11',
+        path: '/program/11/'
+      },
+      {
+        title: 'Lớp 12',
+        path: '/program/12/'
+      },
+      {
+        title: 'Thi thử THPT quốc gia',
+        path: '/program/15/'
+      },
+      {
+        title: 'Luyện thi TOEIC',
+        path: '/program/35/'
+      }
+    ]
   },
   {
     icon: 'mdi:cash',

@@ -11,6 +11,7 @@ import {
 import UserApi from 'api/user-api'
 import moment from 'moment'
 import AvatarEditor from 'react-avatar-editor'
+import DatePicker from 'react-datepicker'
 // ** Third Party Imports
 import {
   Controller,
@@ -19,8 +20,10 @@ import {
 import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { selectProfile } from 'store/slices/profileSlice'
+import CustomInput from 'views/forms/form-elements/pickers/PickersCustomInput'
 import * as yup from 'yup'
 
+import DatePickerWrapper from '@core/styles/libs/react-datepicker'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
   Button,
@@ -41,459 +44,455 @@ import Select from '@mui/material/Select'
 import { styled } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 
 import SelfRemoveAccount from './SelfRemoveAccount'
 
 /*
-* handle crop avatar
-*/
+ * handle crop avatar
+ */
 const boxStyle = {
-    width: "300px",
-    height: "300px",
-    display: "flex",
-    flexFlow: "column",
-    justifyContent: "center",
-    alignItems: "center"
+  width: '300px',
+  height: '300px',
+  display: 'flex',
+  flexFlow: 'column',
+  justifyContent: 'center',
+  alignItems: 'center'
 }
 const modalStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
 }
 const CropperModal = ({ src, modalOpen, setModalOpen, setPreview, setIsChangeAvatar }) => {
-    const [slideValue, setSlideValue] = useState(10);
-    const cropRef = useRef(null);
+  const [slideValue, setSlideValue] = useState(10)
+  const cropRef = useRef(null)
 
-    //handle save
-    const handleAgree = async () => {
-        if (cropRef) {
-            const dataUrl = cropRef.current.getImage().toDataURL()
-            const result = await fetch(dataUrl)
-            const blob = await result.blob()
-            setPreview(URL.createObjectURL(blob))
-            setIsChangeAvatar(true)
-            setModalOpen(false)
-        }
-    };
+  //handle save
+  const handleAgree = async () => {
+    if (cropRef) {
+      const dataUrl = cropRef.current.getImage().toDataURL()
+      const result = await fetch(dataUrl)
+      const blob = await result.blob()
+      setPreview(URL.createObjectURL(blob))
+      setIsChangeAvatar(true)
+      setModalOpen(false)
+    }
+  }
 
-    return (
-        <Modal sx={modalStyle} open={modalOpen}>
-            <Box sx={boxStyle}>
-                <AvatarEditor
-                    ref={cropRef}
-                    image={src}
-                    style={{ width: "100%", height: "100%" }}
-                    border={50}
-                    borderRadius={5}
-                    color={[0, 0, 0, 0.72]}
-                    scale={slideValue / 10}
-                    rotate={0}
-                />
+  return (
+    <Modal sx={modalStyle} open={modalOpen}>
+      <Box sx={boxStyle}>
+        <AvatarEditor
+          ref={cropRef}
+          image={src}
+          style={{ width: '100%', height: '100%' }}
+          border={50}
+          borderRadius={5}
+          color={[0, 0, 0, 0.72]}
+          scale={slideValue / 10}
+          rotate={0}
+        />
 
-                {/* MUI Slider */}
-                <Slider
-                    min={10}
-                    max={50}
-                    sx={{
-                        margin: "0 auto",
-                        width: "80%",
-                        color: "cyan"
-                    }}
-                    size="medium"
-                    defaultValue={slideValue}
-                    value={slideValue}
-                    onChange={(e) => setSlideValue(e.target.value)}
-                />
-                <Box
-                    sx={{
-                        display: "flex",
-                        padding: "10px",
-                        border: "3px solid white",
-                        background: "black"
-                    }}
-                >
-                    <Button
-                        size="small"
-                        sx={{ marginRight: "10px", color: "white", borderColor: "white" }}
-                        variant="outlined"
-                        onClick={(e) => setModalOpen(false)}
-                    >
-                        Hủy
-                    </Button>
-                    <Button
-                        sx={{ background: "#5596e6" }}
-                        size="small"
-                        variant="contained"
-                        onClick={handleAgree}
-                    >
-                        Đồng ý
-                    </Button>
-                </Box>
-            </Box>
-        </Modal>
-    );
+        {/* MUI Slider */}
+        <Slider
+          min={10}
+          max={50}
+          sx={{
+            margin: '0 auto',
+            width: '80%',
+            color: 'cyan'
+          }}
+          size='medium'
+          defaultValue={slideValue}
+          value={slideValue}
+          onChange={e => setSlideValue(e.target.value)}
+        />
+        <Box
+          sx={{
+            display: 'flex',
+            padding: '10px',
+            border: '3px solid white',
+            background: 'black'
+          }}
+        >
+          <Button
+            size='small'
+            sx={{ marginRight: '10px', color: 'white', borderColor: 'white' }}
+            variant='outlined'
+            onClick={e => setModalOpen(false)}
+          >
+            Hủy
+          </Button>
+          <Button sx={{ background: '#5596e6' }} size='small' variant='contained' onClick={handleAgree}>
+            Đồng ý
+          </Button>
+        </Box>
+      </Box>
+    </Modal>
+  )
 }
 /*
-* end handle crop avatar
-*/
+ * end handle crop avatar
+ */
 
 const initialData = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    number: '',
-    address: '',
-    gender: -1,
-    dob: null
+  firstName: '',
+  lastName: '',
+  email: '',
+  number: '',
+  address: '',
+  gender: -1,
+  dob: null
 }
 
-moment().format("DD/MM/YYYY")
+moment().format('DD/MM/YYYY')
 
 const ImgStyled = styled('img')(({ theme }) => ({
-    width: 120,
-    height: 120,
-    borderRadius: 4,
-    marginRight: theme.spacing(5)
+  width: 120,
+  height: 120,
+  borderRadius: 4,
+  marginRight: theme.spacing(5)
 }))
 
 const ButtonStyled = styled(Button)(({ theme }) => ({
-    [theme.breakpoints.down('sm')]: {
-        width: '100%',
-        textAlign: 'center'
-    }
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    textAlign: 'center'
+  }
 }))
 
 const ResetButtonStyled = styled(Button)(({ theme }) => ({
-    marginLeft: theme.spacing(4),
-    [theme.breakpoints.down('sm')]: {
-        width: '100%',
-        marginLeft: 0,
-        textAlign: 'center',
-        marginTop: theme.spacing(4)
-    }
+  marginLeft: theme.spacing(4),
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    marginLeft: 0,
+    textAlign: 'center',
+    marginTop: theme.spacing(4)
+  }
 }))
 
-const schema = yup.object().shape({
+const schema = yup.object().shape(
+  {
     firstName: yup.string().required('Họ và tên không được để trống'),
     lastName: yup.string().required('Họ và tên không được để trống'),
-    phoneNumber: yup.string().nullable().notRequired().when('phoneNumber', {
-        is: (value) => value?.length,
-        then: (rule) => rule.min(10, '* cần tối thiểu 10 số').max(11, '* Cho phép tối đa 11 số'),
-    }),
-}, ['phoneNumber', 'phoneNumber'])
+    phoneNumber: yup
+      .string()
+      .nullable()
+      .notRequired()
+      .when('phoneNumber', {
+        is: value => value?.length,
+        then: rule => rule.min(10, '* cần tối thiểu 10 số').max(11, '* Cho phép tối đa 11 số')
+      })
+  },
+  ['phoneNumber', 'phoneNumber']
+)
 
-const TabAccount = (props) => {
-    const { tab } = props
-    // ** State
-    const dispatch = useDispatch()
-    const [inputValue, setInputValue] = useState('')
-    const [formData, setFormData] = useState(initialData)
-    const [avatarFile, setAvatarFile] = useState()
-    // const [imgSrc, setImgSrc] = useState('')
+const TabAccount = props => {
+  const { tab } = props
+  // ** State
+  const dispatch = useDispatch()
+  const [inputValue, setInputValue] = useState('')
+  const [formData, setFormData] = useState(initialData)
+  const [avatarFile, setAvatarFile] = useState()
+  // const [imgSrc, setImgSrc] = useState('')
 
-    // ** Hooks
-    const {
-        setValue,
-        getValues,
-        setError,
-        reset,
-        control,
-        handleSubmit,
-        formState: { errors }
-    } = useForm({ defaultValues: initialData, mode: 'onChange', resolver: yupResolver(schema) })
+  // ** Hooks
+  const {
+    setValue,
+    getValues,
+    setError,
+    reset,
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({ defaultValues: initialData, mode: 'onChange', resolver: yupResolver(schema) })
 
-    useEffect(() => {
-        if (formData) reset(formData)
-    }, [formData])
+  useEffect(() => {
+    if (formData) reset(formData)
+  }, [formData])
 
-    useEffect(() => {
-        if (tab && tab == 'account') {
-            me()
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [tab])
-
-    const me = () => {
-        new UserApi()
-            .me()
-            .then(response => {
-                const data = response.data
-                setPreview(data.pictureUrl ? data.pictureUrl : '/images/avatars/default1.png')
-                setFormData(data)
-                dispatch(selectProfile(data))
-            })
-            .catch((e) => { console.log(e) })
+  useEffect(() => {
+    if (tab && tab == 'account') {
+      me()
     }
 
-    const onSubmit = async () => {
-        const item = getValues()
-        console.log('item-edit:', item)
-        let avatar = await fetch(preview).then(r => r.blob()).then(blobFile => new File([blobFile], "fileNameGoesHere", { type: "image/png" }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab])
 
-        const formData = new FormData()
-        formData.append("id", item.id)
-        formData.append("userName", item.userName)
-        formData.append("firstName", item.firstName)
-        formData.append("lastName", item.lastName)
-        formData.append("address", item.address)
-        formData.append("gender", item.gender)
-        if(item.dob)
-            formData.append("dob", item.dob)
-        formData.append("phoneNumber", item.phoneNumber)
-        formData.append("isChangeAvatar", isChangeAvatar)
-        formData.append("avatarFile", avatar)
+  const me = () => {
+    new UserApi()
+      .me()
+      .then(response => {
+        const data = response.data
+        setPreview(data.pictureUrl ? data.pictureUrl : '/images/avatars/default1.png')
+        setFormData(data)
+        dispatch(selectProfile(data))
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
 
-        new UserApi().updateProfile(formData)
-            .then(response => {
-                console.log(response)
-                const data = response.data
-                if (data.succeeded) {
-                    toast.success('Cập nhật dữ liệu thành công')
-                    me()
-                } else {
-                    toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu')
-                }
-            })
-            .catch((e) => console.log(e))
-    }
+  const onSubmit = async () => {
+    const item = getValues()
+    console.log('item-edit:', item)
+    let avatar = await fetch(preview)
+      .then(r => r.blob())
+      .then(blobFile => new File([blobFile], 'fileNameGoesHere', { type: 'image/png' }))
 
-    const [src, setSrc] = useState(null)
-    const [modalOpen, setModalOpen] = useState(false)
-    const [preview, setPreview] = useState(null)
-    const [isChangeAvatar, setIsChangeAvatar] = useState(false)
-    const inputRef = useRef(null)
+    const formData = new FormData()
+    formData.append('id', item.id)
+    formData.append('userName', item.userName)
+    formData.append('firstName', item.firstName)
+    formData.append('lastName', item.lastName)
+    formData.append('address', item.address)
+    formData.append('gender', item.gender)
+    if (item.dob) formData.append('dob', item.dob)
+    formData.append('phoneNumber', item.phoneNumber)
+    formData.append('isChangeAvatar', isChangeAvatar)
+    formData.append('avatarFile', avatar)
 
-    const handleImgChange = (e) => {
-        if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
-            if (e.target.files[0].size <= 500000) {
-                setSrc(URL.createObjectURL(e.target.files[0]));
-                setModalOpen(true);
-            } else {
-                toast.error('Hệ thống chỉ hỗ trợ dung lượng tối đa là 0.5mb. Bạn cần chọn ảnh phù hợp.')
-            }
+    new UserApi()
+      .updateProfile(formData)
+      .then(response => {
+        console.log(response)
+        const data = response.data
+        if (data.succeeded) {
+          toast.success('Cập nhật dữ liệu thành công')
+          me()
         } else {
-            toast.error('Hệ thống chỉ hỗ trợ định dạng PNG hoặc JPEG. Bạn cần chọn ảnh phù hợp.')
+          toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu')
         }
+      })
+      .catch(e => console.log(e))
+  }
+
+  const [src, setSrc] = useState(null)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [preview, setPreview] = useState(null)
+  const [isChangeAvatar, setIsChangeAvatar] = useState(false)
+  const inputRef = useRef(null)
+
+  const handleImgChange = e => {
+    if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+      if (e.target.files[0].size <= 500000) {
+        setSrc(URL.createObjectURL(e.target.files[0]))
+        setModalOpen(true)
+      } else {
+        toast.error('Hệ thống chỉ hỗ trợ dung lượng tối đa là 0.5mb. Bạn cần chọn ảnh phù hợp.')
+      }
+    } else {
+      toast.error('Hệ thống chỉ hỗ trợ định dạng PNG hoặc JPEG. Bạn cần chọn ảnh phù hợp.')
     }
+  }
 
-    const handleResetAvatar = () => {
-        setInputValue('')
-        setPreview(formData?.pictureUrl ? formData.pictureUrl : '/images/avatars/default1.png')
-    }
+  const handleResetAvatar = () => {
+    setInputValue('')
+    setPreview(formData?.pictureUrl ? formData.pictureUrl : '/images/avatars/default1.png')
+  }
 
-    return (
-        <Grid container spacing={6}>
-            <Grid item xs={12}>
-                <Card>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <CardContent sx={{ pb: theme => `${theme.spacing(10)}` }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <ImgStyled
-                                    src={
-                                        preview ||
-                                        " https://www.signivis.com/img/custom/avatars/member-avatar-01.png"
-                                    }
-                                    alt='Profile Pic'
-                                />
-                                <div>
-                                    <CropperModal
-                                        modalOpen={modalOpen}
-                                        src={src}
-                                        setPreview={setPreview}
-                                        setModalOpen={setModalOpen}
-                                        setIsChangeAvatar={setIsChangeAvatar}
-                                    />
-                                    <ButtonStyled component='label' variant='contained' htmlFor='account-upload-avatar'>
-                                        Chọn ảnh
-                                        <input
-                                            id='account-upload-avatar'
-                                            hidden
-                                            type="file"
-                                            accept="image/png, image/jpg, image/jpeg"
-                                            value={avatarFile}
-                                            ref={inputRef}
-                                            onChange={handleImgChange}
-                                        />
-                                    </ButtonStyled>
-                                    <ResetButtonStyled color='secondary' variant='outlined' onClick={handleResetAvatar}>
-                                        Hủy bỏ
-                                    </ResetButtonStyled>
-                                    <Typography variant='caption' sx={{ mt: 4, display: 'block', color: 'text.disabled' }}>
-                                        Chỉ cho phép ảnh có định dạng PNG, JPG hoặc JPEG. Dung lượng tối đa 0.5mb.
-                                    </Typography>
-                                </div>
-                            </Box>
-                        </CardContent>
-                        <CardContent>
-                            <Grid container spacing={5}>
-                                <Grid item xs={12} sm={6}>
-                                    <FormControl fullWidth>
-                                        <Controller
-                                            name='firstName'
-                                            control={control}
-                                            rules={{ required: true }}
-                                            render={({ field: { value, onChange } }) => (
-                                                <TextField
-                                                    fullWidth
-                                                    label='Họ & tên đệm'
-                                                    placeholder='Nguyễn Văn'
-                                                    value={value ?? ''}
-                                                    onChange={onChange}
-                                                    error={Boolean(errors.firstName)}
-                                                />
-                                            )}
-                                        />
-                                        {errors.firstName && (
-                                            <FormHelperText sx={{ color: 'error.main' }}>{errors.firstName.message}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <FormControl fullWidth>
-                                        <Controller
-                                            name='lastName'
-                                            control={control}
-                                            rules={{ required: true }}
-                                            render={({ field: { value, onChange } }) => (
-                                                <TextField
-                                                    fullWidth
-                                                    label='Tên'
-                                                    placeholder='A'
-                                                    value={value ?? ''}
-                                                    onChange={onChange}
-                                                    error={Boolean(errors.lastName)}
-                                                />
-                                            )}
-                                        />
-                                        {errors.lastName && (
-                                            <FormHelperText sx={{ color: 'error.main' }}>{errors.lastName.message}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <FormControl fullWidth>
-                                        <Controller
-                                            name='email'
-                                            control={control}
-                                            rules={{ required: true }}
-                                            render={({ field: { value, onChange } }) => (
-                                                <TextField
-                                                    disabled
-                                                    fullWidth
-                                                    type='email'
-                                                    label='Email'
-                                                    value={value ?? ''}
-                                                    placeholder='john.doe@example.com'
-                                                    onChange={onChange}
-                                                    style={{ disabled: true }}
-                                                />
-                                            )}
-                                        />
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <FormControl fullWidth>
-                                        <Controller
-                                            name='phoneNumber'
-                                            control={control}
-                                            rules={{ required: true }}
-                                            render={({ field: { value, onChange } }) => (
-                                                <TextField
-                                                    fullWidth
-                                                    type='number'
-                                                    label='Điện thoại'
-                                                    value={value ?? ''}
-                                                    placeholder='098 463 5688'
-                                                    onChange={onChange}
-                                                    error={Boolean(errors.phoneNumber)}
-                                                />
-                                            )}
-                                        />
-                                        {errors.phoneNumber && (
-                                            <FormHelperText sx={{ color: 'error.main' }}>{errors.phoneNumber.message}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <FormControl fullWidth>
-                                        <Controller
-                                            name='address'
-                                            control={control}
-                                            render={({ field: { value, onChange } }) => (
-                                                <TextField
-                                                    fullWidth
-                                                    label='Địa chỉ'
-                                                    placeholder='Số 1, Đường A, Phường B, Quận C, TP Hà Nội'
-                                                    value={value ?? ''}
-                                                    onChange={onChange}
-                                                />
-                                            )}
-                                        />
-                                    </FormControl>
+  return (
+    <DatePickerWrapper>
+      <Grid container spacing={6}>
+        <Grid item xs={12}>
+          <Card>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <CardContent sx={{ pb: theme => `${theme.spacing(10)}` }}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <ImgStyled
+                    src={preview || ' https://www.signivis.com/img/custom/avatars/member-avatar-01.png'}
+                    alt='Profile Pic'
+                  />
+                  <div>
+                    <CropperModal
+                      modalOpen={modalOpen}
+                      src={src}
+                      setPreview={setPreview}
+                      setModalOpen={setModalOpen}
+                      setIsChangeAvatar={setIsChangeAvatar}
+                    />
+                    <ButtonStyled component='label' variant='contained' htmlFor='account-upload-avatar'>
+                      Chọn ảnh
+                      <input
+                        id='account-upload-avatar'
+                        hidden
+                        type='file'
+                        accept='image/png, image/jpg, image/jpeg'
+                        value={avatarFile}
+                        ref={inputRef}
+                        onChange={handleImgChange}
+                      />
+                    </ButtonStyled>
+                    <ResetButtonStyled color='secondary' variant='outlined' onClick={handleResetAvatar}>
+                      Hủy bỏ
+                    </ResetButtonStyled>
+                    <Typography variant='caption' sx={{ mt: 4, display: 'block', color: 'text.disabled' }}>
+                      Chỉ cho phép ảnh có định dạng PNG, JPG hoặc JPEG. Dung lượng tối đa 0.5mb.
+                    </Typography>
+                  </div>
+                </Box>
+              </CardContent>
+              <CardContent>
+                <Grid container spacing={5}>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <Controller
+                        name='firstName'
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { value, onChange } }) => (
+                          <TextField
+                            fullWidth
+                            label='Họ & tên đệm'
+                            placeholder='Nguyễn Văn'
+                            value={value ?? ''}
+                            onChange={onChange}
+                            error={Boolean(errors.firstName)}
+                          />
+                        )}
+                      />
+                      {errors.firstName && (
+                        <FormHelperText sx={{ color: 'error.main' }}>{errors.firstName.message}</FormHelperText>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <Controller
+                        name='lastName'
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { value, onChange } }) => (
+                          <TextField
+                            fullWidth
+                            label='Tên'
+                            placeholder='A'
+                            value={value ?? ''}
+                            onChange={onChange}
+                            error={Boolean(errors.lastName)}
+                          />
+                        )}
+                      />
+                      {errors.lastName && (
+                        <FormHelperText sx={{ color: 'error.main' }}>{errors.lastName.message}</FormHelperText>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <Controller
+                        name='email'
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { value, onChange } }) => (
+                          <TextField
+                            disabled
+                            fullWidth
+                            type='email'
+                            label='Email'
+                            value={value ?? ''}
+                            placeholder='john.doe@example.com'
+                            onChange={onChange}
+                            style={{ disabled: true }}
+                          />
+                        )}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <Controller
+                        name='phoneNumber'
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { value, onChange } }) => (
+                          <TextField
+                            fullWidth
+                            type='number'
+                            label='Điện thoại'
+                            value={value ?? ''}
+                            placeholder='098 463 5688'
+                            onChange={onChange}
+                            error={Boolean(errors.phoneNumber)}
+                          />
+                        )}
+                      />
+                      {errors.phoneNumber && (
+                        <FormHelperText sx={{ color: 'error.main' }}>{errors.phoneNumber.message}</FormHelperText>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <Controller
+                        name='address'
+                        control={control}
+                        render={({ field: { value, onChange } }) => (
+                          <TextField
+                            fullWidth
+                            label='Địa chỉ'
+                            placeholder='Số 1, Đường A, Phường B, Quận C, TP Hà Nội'
+                            value={value ?? ''}
+                            onChange={onChange}
+                          />
+                        )}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>
+                    <FormControl fullWidth>
+                      <Controller
+                        name='gender'
+                        control={control}
+                        render={({ field: { value, onChange } }) => (
+                          <>
+                            <InputLabel>Giới tính</InputLabel>
+                            <Select label='Giới tính' value={value ?? '0'} onChange={onChange}>
+                              <MenuItem value='-1'>Chọn giới tính</MenuItem>
+                              <MenuItem value='0'>Nam</MenuItem>
+                              <MenuItem value='1'>Nữ</MenuItem>
+                            </Select>
+                          </>
+                        )}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>
+                    <FormControl fullWidth>
+                      <Controller
+                        name='dob'
+                        control={control}
+                        render={({ field }) => (
+                          <DatePicker
+                            label='Ngày sinh'
+                            dateFormat='dd-MM-yyyy'
+                            selected={field.value != null ? new Date(field.value) : new Date()}
+                            customInput={<CustomInput fullWidth label='Ngày sinh' />}
+                            onChange={date => {
+                              field.onChange(date.toISOString())
+                            }}
+                          />
+                        )}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button variant='contained' type='submit' sx={{ mr: 4 }}>
+                      Cập nhật
+                    </Button>
+                    <Button type='reset' variant='outlined' color='secondary' onClick={() => reset()}>
+                      Hủy bỏ
+                    </Button>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </form>
+          </Card>
+        </Grid>
 
-                                </Grid>
-                                <Grid item xs={6} sm={3}>
-                                    <FormControl fullWidth>
-                                        <Controller
-                                            name='gender'
-                                            control={control}
-                                            render={({ field: { value, onChange } }) => (
-                                                <>
-                                                    <InputLabel>Giới tính</InputLabel>
-                                                    <Select
-                                                        label='Giới tính'
-                                                        value={value ?? '0'}
-                                                        onChange={onChange}
-                                                    >
-                                                        <MenuItem value='-1'>Chọn giới tính</MenuItem>
-                                                        <MenuItem value='0'>Nam</MenuItem>
-                                                        <MenuItem value='1'>Nữ</MenuItem>
-                                                    </Select>
-                                                </>
-                                            )}
-                                        />
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={6} sm={3}>
-                                    <FormControl fullWidth>
-                                        <Controller
-                                            name='dob'
-                                            control={control}
-                                            render={({ field: { value, onChange } }) => (
-                                                <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                                    <DatePicker
-                                                        label="Ngày sinh"
-                                                        value={moment(value) ?? null}
-                                                        inputFormat="DD/MM/YYYY"
-                                                        onChange={onChange}
-                                                    />
-                                                </LocalizationProvider>
-                                            )}
-                                        />
-                                    </FormControl>
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <Button variant='contained' type='submit' sx={{ mr: 4 }}>
-                                        Cập nhật
-                                    </Button>
-                                    <Button type='reset' variant='outlined' color='secondary' onClick={() => reset()}>
-                                        Hủy bỏ
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </CardContent>
-                    </form>
-                </Card>
-            </Grid>
-
-            {/* Delete Account Card */}
-            <Grid item xs={12}>
-                {/* <Card>
+        {/* Delete Account Card */}
+        <Grid item xs={12}>
+          {/* <Card>
                     <CardHeader title='Xóa tài khoản của bạn' />
                     <CardContent>
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -531,10 +530,11 @@ const TabAccount = (props) => {
                         </form>
                     </CardContent>
                 </Card> */}
-                <SelfRemoveAccount />
-            </Grid>
+          <SelfRemoveAccount />
         </Grid>
-    )
+      </Grid>
+    </DatePickerWrapper>
+  )
 }
 
 export default TabAccount
