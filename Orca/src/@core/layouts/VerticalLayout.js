@@ -16,7 +16,9 @@ import { styled } from '@mui/material/styles'
 import Footer from './components/shared-components/footer'
 // ** Components
 import AppBar from './components/vertical/appBar'
-import Navigation from './components/vertical/navigation'
+// import Navigation from './components/vertical/navigation'
+import Navigation from './components/navigation'
+import VerticalAppBarContent from 'layouts/components/vertical/AppBarContent'
 
 const VerticalLayoutWrapper = styled('div')({
   height: '100%',
@@ -61,37 +63,17 @@ const VerticalLayout = props => {
 
   return (
     <>
-      <VerticalLayoutWrapper className='layout-wrapper'>
+      <VerticalLayoutWrapper className='layout-wrapper layout-content-navbar'>
         {navHidden && !(navHidden && settings.lastLayout === 'horizontal') ? null : (
           <Navigation
-            navWidth={navWidth}
-            navVisible={navVisible}
-            setNavVisible={setNavVisible}
-            collapsedNavWidth={collapsedNavWidth}
-            toggleNavVisibility={toggleNavVisibility}
-            navigationBorderWidth={navigationBorderWidth}
-            navMenuContent={verticalLayoutProps.navMenu.content}
-            navMenuBranding={verticalLayoutProps.navMenu.branding}
-            menuLockedIcon={verticalLayoutProps.navMenu.lockedIcon}
-            verticalNavItems={verticalLayoutProps.navMenu.navItems}
-            navMenuProps={verticalLayoutProps.navMenu.componentProps}
-            menuUnlockedIcon={verticalLayoutProps.navMenu.unlockedIcon}
-            afterNavMenuContent={verticalLayoutProps.navMenu.afterContent}
-            beforeNavMenuContent={verticalLayoutProps.navMenu.beforeContent}
-            {...props}
           />
         )}
         <MainContentWrapper
-          className='layout-content-wrapper'
+          className='layout-content-wrapper layout-page'
           sx={{ ...(contentHeightFixed && { maxHeight: '100vh' }) }}
         >
-          <AppBar
-            toggleNavVisibility={toggleNavVisibility}
-            appBarContent={verticalLayoutProps.appBar?.content}
-            appBarProps={verticalLayoutProps.appBar?.componentProps}
-            {...props}
-          />
-
+          <VerticalAppBarContent />
+          <br/>
           <ContentWrapper
             className='layout-page-content'
             sx={{
@@ -107,6 +89,12 @@ const VerticalLayout = props => {
             }}
             style={{ paddingTop: 0 }}
           >
+            {/* <AppBar
+              toggleNavVisibility={toggleNavVisibility}
+              appBarContent={verticalLayoutProps.appBar?.content}
+              appBarProps={verticalLayoutProps.appBar?.componentProps}
+              {...props}
+            /> */}
             {children}
           </ContentWrapper>
 

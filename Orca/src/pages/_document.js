@@ -12,7 +12,7 @@ import createEmotionServer from '@emotion/server/create-instance'
 class CustomDocument extends Document {
   render() {
     return (
-      <Html lang='en'>
+      <Html lang='en' className="light-style layout-menu-fixed layout-compact">
         <Head>
           {/* <link rel='preconnect' href='https://fonts.googleapis.com' />
           <link rel='preconnect' href='https://fonts.gstatic.com' />

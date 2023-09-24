@@ -11,8 +11,6 @@ const TestingPage = () => {
   return <>{token && <TestDetail token={token} mode={1} />}</>
 }
 
-// TestingPage.PageLayout = TestingLayout;
-
 TestingPage.getLayout = function getLayout(page) {
   return (
     <>

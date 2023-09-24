@@ -10,114 +10,119 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 
-const notifications = [
-  {
-    meta: 'Today',
-    avatarAlt: 'Flora',
-    title: 'Congratulation Flora! 🎉',
-    avatarImg: '/images/avatars/4.png',
-    subtitle: 'Won the monthly best seller badge'
-  },
-  {
-    meta: 'Yesterday',
-    avatarColor: 'primary',
-    subtitle: '5 hours ago',
-    avatarText: 'Robert Austin',
-    title: 'New user registered.'
-  },
-  {
-    meta: '11 Aug',
-    avatarAlt: 'message',
-    title: 'New message received 👋🏻',
-    avatarImg: '/images/avatars/5.png',
-    subtitle: 'You have 10 unread messages'
-  },
-  {
-    meta: '25 May',
-    title: 'Paypal',
-    avatarAlt: 'paypal',
-    subtitle: 'Received Payment',
-    avatarImg: '/images/misc/paypal.png'
-  },
-  {
-    meta: '19 Mar',
-    avatarAlt: 'order',
-    title: 'Received Order 📦',
-    avatarImg: '/images/avatars/3.png',
-    subtitle: 'New order received from John'
-  },
-  {
-    meta: '27 Dec',
-    avatarAlt: 'chart',
-    subtitle: '25 hrs ago',
-    avatarImg: '/images/misc/chart.png',
-    title: 'Finance report has been generated'
-  }
-]
-
 const AppBarContent = props => {
-  // ** Props
   const { hidden, settings, saveSettings, toggleNavVisibility } = props
 
   return (
-    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <Box className='actions-left' sx={{ mr: 2, display: 'flex', alignItems: 'center' }}>
-        {hidden && !settings.navHidden ? (
-          <IconButton color='inherit' sx={{ ml: -2.75 }} onClick={toggleNavVisibility}>
-            <Icon icon='mdi:menu' />
-          </IconButton>
-        ) : null}
-        &nbsp;
-        {/* <IconButton>
-          <MenuOpenIcon />
-        </IconButton> */}
-        &nbsp;
-        <Typography
-          sx={{
-            //styleName: 24 semibold;
-            fontFamily: 'Be Vietnam Pro',
-            fontSize: '24px',
-            fontWeight: '600',
-            lineHeight: '36px',
-            letterSpacing: '0em',
-            textAlign: 'left'
-          }}
-        >
-          Chương trình
-        </Typography>
-        {/* <Autocomplete hidden={hidden} settings={settings} /> */}
-      </Box>
-      <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
-        {/* <LanguageDropdown settings={settings} saveSettings={saveSettings} />
-        <ModeToggler settings={settings} saveSettings={saveSettings} />*/}
-        {/* <ShortcutsDropdown settings={settings} shortcuts={shortcuts} /> */}
-        {/* <ProgramSelectors /> */}
-        &nbsp;
-        <Button
-          component={Link}
-          sx={{
-            // width: '135px',
-            // height: '48px',
-            // top: '30px',
-            // left: '974px',
-            // borderRadius: '8px',
-            color: '#fff',
-            backgroundColor: '#9B51E0',
-            textDecoration: 'none',
-            marginRight: '1em',
-            ':hover': {
-              backgroundColor: '#9B51E0',
-              opacity: '0.7'
-            }
-          }}
-          href='/pricing'
-        >
-          Bảng giá
-        </Button>
-        <NotificationDropdown settings={settings} notifications={notifications} />
-        <UserDropdown settings={settings} />
-      </Box>
-    </Box>
+    <nav
+      className='layout-navbar navbar navbar-expand-xl navbar-detached align-items-center'
+      id='layout-navbar'
+      style={{ backgroundColor: '#fff' }}
+    >
+      <div className='layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0   d-xl-none '>
+        <a className='nav-item nav-link px-0 me-xl-4' href='#'>
+          <i className='mdi mdi-menu mdi-24px'></i>
+        </a>
+      </div>
+      <div className='navbar-nav-right d-flex align-items-center' id='navbar-collapse'>
+        <div className='navbar-nav align-items-center'>
+          <h3 className='mb-0 f-24'>Trang chủ</h3>
+        </div>
+        <ul className='navbar-nav flex-row align-items-center ms-auto'>
+          <li className='nav-item' style={{ marginRight: 10 }}>
+            <Link
+              href={'/pricing'}
+              className='btn btn-primary waves-effect waves-light btn-sm'
+              style={{ textTransform: 'none' }}
+            >
+              <img className='me-3' src='/themes/default/assets/img/coin.svg' />
+              Bảng giá&nbsp;&nbsp;
+            </Link>
+          </li>
+          <li style={{ marginRight: 10 }} className='nav-item navbar-dropdown dropdown-user dropdown'>
+            <a className='nav-link dropdown-toggle hide-arrow p-0' data-bs-toggle='dropdown'>
+              <div className='avatar avatar-online'>
+                <img src='/themes/default/assets/img/avatars/1.png' alt='' className='w-px-40 h-auto rounded-circle' />
+              </div>
+            </a>
+            <ul className='dropdown-menu dropdown-menu-end mt-3 py-2'>
+              <li>
+                <a className='dropdown-item pb-2 mb-1 waves-effect' href='pages-account-settings-account.html'>
+                  <div className='d-flex align-items-center'>
+                    <div className='flex-shrink-0 me-2 pe-1'>
+                      <div className='avatar avatar-online'>
+                        <img src='assets/img/avatars/1.png' alt='' className='w-px-40 h-auto rounded-circle' />
+                      </div>
+                    </div>
+                    <div className='flex-grow-1'>
+                      <h6 className='mb-0'>John Doe</h6>
+                      <small className='text-muted'>Admin</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <div className='dropdown-divider my-0'></div>
+              </li>
+              <li>
+                <a className='dropdown-item waves-effect' href='pages-profile-user.html'>
+                  <i className='mdi mdi-account-outline me-1 mdi-20px'></i>
+                  <span className='align-middle'>My Profile</span>
+                </a>
+              </li>
+              <li>
+                <a className='dropdown-item waves-effect' href='pages-account-settings-account.html'>
+                  <i className='mdi mdi-cog-outline me-1 mdi-20px'></i>
+                  <span className='align-middle'>Settings</span>
+                </a>
+              </li>
+              <li>
+                <a className='dropdown-item waves-effect' href='pages-account-settings-billing.html'>
+                  <span className='d-flex align-items-center align-middle'>
+                    <i className='flex-shrink-0 mdi mdi-credit-card-outline me-1 mdi-20px'></i>
+                    <span className='flex-grow-1 align-middle ms-1'>Billing</span>
+                    <span className='flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20'>4</span>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <div className='dropdown-divider'></div>
+              </li>
+              <li>
+                <a className='dropdown-item waves-effect' href='pages-faq.html'>
+                  <i className='mdi mdi-help-circle-outline me-1 mdi-20px'></i>
+                  <span className='align-middle'>FAQ</span>
+                </a>
+              </li>
+              <li>
+                <a className='dropdown-item waves-effect' href='pages-pricing.html'>
+                  <i className='mdi mdi-currency-usd me-1 mdi-20px'></i>
+                  <span className='align-middle'>Pricing</span>
+                </a>
+              </li>
+              <li>
+                <div className='dropdown-divider my-1'></div>
+              </li>
+              <li>
+                <a className='dropdown-item waves-effect' href='auth-login-cover.html' target='_blank'>
+                  <i className='mdi mdi-logout me-1 mdi-20px'></i>
+                  <span className='align-middle'>Log Out</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div className='navbar-search-wrapper search-input-wrapper d-none'>
+        <input
+          type='text'
+          className='form-control search-input container-xxl border-0'
+          placeholder='Search...'
+          aria-label='Search...'
+        />
+        <i className='mdi mdi-close search-toggler cursor-pointer'></i>
+      </div>
+    </nav>
   )
 }
 
