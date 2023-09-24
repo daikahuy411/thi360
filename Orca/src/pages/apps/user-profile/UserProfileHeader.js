@@ -22,7 +22,7 @@ const ProfilePicture = styled('img')(({ theme }) => ({
   width: 120,
   height: 120,
   borderRadius: theme.shape.borderRadius,
-  border: `5px solid ${theme.palette.common.white}`,
+  border: `1px solid ${theme.palette.common.white}`,
   [theme.breakpoints.down('md')]: {
     marginBottom: theme.spacing(4)
   }
@@ -34,6 +34,7 @@ const UserProfileHeader = (props) => {
   // ** State
   const [data, setData] = useState(null)
   useEffect(() => {
+    console.log('data:', data)
     if (about) {
       setData(about)
     }
@@ -50,7 +51,7 @@ const UserProfileHeader = (props) => {
         <CardMedia
           component='img'
           alt='profile-header'
-          image={'/images/banners/banner-9.jpg'}
+          image={data?.bannerUrl ? data.bannerUrl : '/images/banners/banner-9.jpg'}
           sx={{
             height: { xs: 150, md: 250 }
           }}

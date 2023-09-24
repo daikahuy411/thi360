@@ -43,6 +43,12 @@ class V1Api extends ApiBase {
     return response;
   }
 
+  getPromotions = () => {
+    const url = `${this.baseApiUrl}/Promotions`;
+    const response = axios.get(url);
+    return response;
+  }
+
   getPricingPlans = () => {
     const url = `${this.baseApiUrl}/pricingplans`;
     const response = axios.get(url);

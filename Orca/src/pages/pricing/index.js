@@ -1,22 +1,28 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
+import V1Api from 'api/v1-api'
+
+import Icon from '@core/components/icon'
+import PlanDetails from '@core/components/plan-details'
+import TabContext from '@mui/lab/TabContext'
+import TabList from '@mui/lab/TabList'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import PricingCTA from './PricingCTA'
-import PricingTable from './PricingTable'
-import PricingHeader from './PricingHeader'
-import PricingFooter from './PricingFooter'
-import TabList from '@mui/lab/TabList'
-import TabContext from '@mui/lab/TabContext'
-import Tab from '@mui/material/Tab'
-import AddPaymentDrawer from './AddPaymentDrawer'
 import Grid from '@mui/material/Grid'
-import PlanDetails from '@core/components/plan-details'
-import V1Api from 'api/v1-api'
-import Alert from '@mui/material/Alert'
-import Icon from '@core/components/icon'
-import AlertTitle from '@mui/material/AlertTitle'
+import Tab from '@mui/material/Tab'
 import Typography from '@mui/material/Typography'
+
+import AddPaymentDrawer from './AddPaymentDrawer'
+import PricingCTA from './PricingCTA'
+import PricingFooter from './PricingFooter'
+import PricingHeader from './PricingHeader'
+import PricingTable from './PricingTable'
 
 const data = {
   pricingPlans: {
@@ -215,6 +221,7 @@ const data = {
 
 const PricingPage = () => {
   const [value, setValue] = useState('student')
+  const [promotions, setPromotions] = useState([])
   const [plans, setPlans] = useState([])
   const [addPaymentOpen, setAddPaymentOpen] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState(null)
@@ -229,8 +236,40 @@ const PricingPage = () => {
   }, [])
 
   const fetchData = () => {
+    new V1Api().getPromotions().then(response => {
+      const data = response.data.value
+      setPromotions(data)
+      console.log('data-promotions:', data)
+    })
+
     new V1Api().getPricingPlans().then(response => {
-      setPlans(response.data.value)
+      const data = response.data.value
+      setPlans(data)
+      // const parm = data.student[0].planBenefitSetting
+      // const parm1 = data.student[1].planBenefitSetting
+      // const parm2 = data.teacher[0].planBenefitSetting
+      // const parm3 = data.enterprise[0].planBenefitSetting
+      // console.log('parm:', parm)
+      // console.log('parm1:', JSON.parse(parm2))
+      // console.log('parm3:', JSON.parse(parm3))
+
+      // let param = []
+      // param.push(
+      //   {
+      //     name: '30 học viên'
+      //   },
+      //   {
+      //     name: '1 tài khoản giáo viên'
+      //   },
+      //   {
+      //     name: '1000 câu hỏi'
+      //   },
+      //   {
+      //     name: 'Sử dụng ngân hàng câu hỏi Thi360'
+      //   }
+      // )
+
+      // console.log('param:', JSON.stringify(param))
     })
   }
 
@@ -246,12 +285,11 @@ const PricingPage = () => {
               <Alert severity='success' icon={<Icon icon='mdi:tag-outline' />} sx={{ mb: 4 }}>
                 <AlertTitle>Khuyến mại</AlertTitle>
                 <div>
-                  <Typography sx={{ color: 'success.main' }}>
-                    - Giảm 10% khi mua 12 tháng với tất cả các gói.
-                  </Typography>
-                  <Typography sx={{ color: 'success.main' }}>
-                    - Giảm 10% khi sử dụng mã giảm giá: "BACKTOSCHOOL"
-                  </Typography>
+                  {promotions && promotions.map(item => (
+                    <Typography key={item.id} sx={{ color: 'success.main' }}>
+                      - {item.name}
+                    </Typography>
+                  ))}
                 </div>
               </Alert>
               <TabContext value={value}>
