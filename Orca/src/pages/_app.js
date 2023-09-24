@@ -104,6 +104,38 @@ const App = props => {
               <meta name='description' content={`${themeConfig.templateName}.`} />
               <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
               <meta name='viewport' content='initial-scale=1, width=device-width' />
+              {/* Theme default v1 */}
+
+              <link rel="stylesheet" href="/themes/default/assets/vendor/fonts/materialdesignicons.css" />
+              <link rel="stylesheet" href="/themes/default/assets/vendor/fonts/flag-icons.css" />
+              <link rel="stylesheet" href="/themes/default/assets/vendor/libs/node-waves/node-waves.css" />
+
+              <link href='/themes/default/assets/vendor/css/rtl/core.css' rel='stylesheet' />
+              <link href='/themes/default/assets/vendor/css/rtl/theme-default.css' rel='stylesheet' />
+              <link href='/themes/default/assets/css/demo.css' rel='stylesheet' />
+              <link href='/themes/default/assets/css/style.css' rel='stylesheet' />
+
+              <link rel="stylesheet" href="/themes/default/assets/vendor/libs/swiper/swiper.css" />
+              <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" />
+
+              {/* <script src="/themes/default/assets/vendor/libs/jquery/jquery.js"></script>
+              <script src="/themes/default/assets/vendor/libs/popper/popper.js"></script>
+              <script src="/themes/default/assets/vendor/js/bootstrap.js"></script>
+              <script src="/themes/default/assets/vendor/libs/node-waves/node-waves.js"></script>
+              <script src="/themes/default/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+              <script src="/themes/default/assets/vendor/libs/hammer/hammer.js"></script>
+              <script src="/themes/default/assets/vendor/libs/i18n/i18n.js"></script>
+              <script src="/themes/default/assets/vendor/libs/typeahead-js/typeahead.js"></script>
+              <script src="/themes/default/assets/vendor/js/menu.js"></script>
+              <script src="/themes/default/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+              <script src="/themes/default/assets/vendor/libs/cleavejs/cleave.js"></script>
+              <script src="/themes/default/assets/vendor/libs/cleavejs/cleave-phone.js"></script>
+              <script src="/themes/default/assets/vendor/js/helpers.js"></script>
+              <script src="/themes/default/assets/js/main.js"></script>
+              <script src="/themes/default/assets/vendor/libs/swiper/swiper.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+              <script src="/themes/default/assets/js/config.js"></script>   */}
+
             </Head>
             <AuthProvider>
               <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>

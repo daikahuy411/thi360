@@ -1,0 +1,714 @@
+@font-face {
+    font-family: 'BeVietnamPro-SemiBold';
+    src: url('../fonts/BeVietnamPro-SemiBold.ttf');
+}
+
+@font-face {
+    font-family: 'BeVietnamPro-Regular';
+    src: url('../fonts/BeVietnamPro-Regular.ttf');
+}
+body{
+	font-family: 'BeVietnamPro-Regular';
+    overflow-x: hidden;
+}
+b,h1,h2,h3,h4,label{
+/*	font-weight: normal;*/
+	font-family: 'BeVietnamPro-SemiBold' !important;
+}
+aside{
+	background: #fff !important;
+}
+.f-12{font-size: 12px !important}
+.f-14{font-size: 14px !important}
+.f-16{font-size: 16px !important}
+.f-18{font-size: 18px !important}
+.f-20{font-size: 20px !important}
+.f-24{font-size: 22px !important}
+.f-26{font-size: 24px !important}
+.ba-title{}
+.ba-title h2{
+	font-size: 20px;
+	color: #333;
+}
+.ba-title h2 a{
+	color: #333;
+}
+.ba-title h2 a img{}
+.breadcrumb-item+.breadcrumb-item::before{
+	display: ;
+}
+
+.layout-navbar-fixed .layout-navbar.navbar-detached {
+/*    width: calc(100% - calc(1.5rem * 2) - 13.4rem) !important;*/
+    padding: 0 15px;
+}
+.layout-navbar-fixed .layout-navbar.navbar-detached {
+    width: calc(100% - calc(1.5rem * 2) - 15rem) !important;
+    border-radius: 0;
+}
+.layout-navbar-fixed.layout-menu-collapsed .layout-navbar.navbar-detached {
+    width: calc(100% - calc(1.5rem * 2) - 1rem) !important;
+}
+.class-detail{
+	background: #fff;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	padding: 16px;
+}
+.class-detail span{
+	display: inline-block;
+	margin-right: 10px;
+}
+.class-detail span img{}
+.class-detail article{
+	width: calc(100% - 70px);
+}
+.class-detail article label{
+    font-family: 'BeVietnamPro-SemiBold';
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 0;
+    display: inline-block;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+}
+.class-detail article p{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0;
+	color: #333;
+	font-size: 14px;
+	font-family: 'BeVietnamPro-Regular';
+}
+.class-detail article p span{}
+* {
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+.box-all{
+	position: relative;
+}
+.list-badge-all{
+	width: 100%;
+    display: inline-block;
+    height: 72px;
+    position: relative;
+}
+.box-all .list-badge-scroll{
+	transform-origin: top left;
+ 	transform: rotate(-90deg) translateX(-100vh);
+ 	overflow-x: hidden;
+ 	overflow-y: scroll;
+ 	width: 100vh;
+ 	height: 151vh;
+ 	position: absolute;
+  top: 0;
+  left: 0;
+}
+.box-all .list-badge-scroll2{
+	display: flex;
+  flex-direction: row;
+  width: fit-content;
+  height: fit-content;
+  transform-origin: top left;
+  transform: rotate(90deg) translateY(-100vh);
+}
+.list-badge{
+    display: flex;
+    overflow: scroll;
+    padding: 10px 0;
+
+}
+
+.list-badge::-webkit-scrollbar {
+  width: 0px;
+  height: 2px;
+}
+
+/* Track */
+.list-badge::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 1px transparent; 
+  border-radius: 10px;
+  border: 0px solid #dcdcdc;
+}
+ 
+/* Handle */
+.list-badge::-webkit-scrollbar-thumb {
+  background: transparent; 
+  border-radius: 10px;
+}
+.list-badge:hover::-webkit-scrollbar-thumb{
+	background: 9055fd ;
+}
+/* Handle on hover */
+.list-badge::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+}
+.list-badge li{
+	list-style: none;
+	margin-right: 10px;
+}
+.list-badge li a{
+	border: 0;
+}
+.list-badge li a span.badge{
+	background: #fff;
+	font-size: 16px;
+	color: #333;
+    padding: 16px 13px;
+    transition: all 0.5s ease;
+}
+.list-badge li a span.badge:hover,
+.list-badge li a span.badge.active,
+.list-badge li a span.badge:active{
+	background: #9B51E0;
+	color: #fff;
+	font-family: 'BeVietnamPro-SemiBold';
+}
+
+.list-left{
+	border: 1px solid #DADADA !important;
+    border-radius: 12px !important;
+    padding: 10px !important;
+}
+.list-left a{
+	border: 0;
+	border-bottom: 1px solid #DADADA;
+	border-radius: 0 !important;
+	max-height: 63px;
+	overflow-y: hidden;
+	font-size: 16px;
+	font-family: 'BeVietnamPro-Regular';
+	line-height: 19px;
+}
+.list-left a:last-child{
+	border-bottom: 0;
+}
+.TC-Title{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.TC-Title h2{
+	font-size: 20px;
+	display: flex;
+	align-items: center;
+	margin-bottom: 0;
+}
+.TC-Title h2 span{
+    display: inline-block;
+    width: 22px;
+    margin-right: 8px;
+}
+.TC-Title h2 span img{
+	width: 100%;
+}
+.TC-Title .input-group{
+	width: 30%;
+	font-family: 'BeVietnamPro-SemiBold';
+}
+.TC-Title .input-group select{}
+
+.TC-detail{
+	padding: 16px;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border: 1px solid #DADADA;
+	margin-top: 10px;
+}
+.TC-detail > .TCD-icon{}
+.TC-detail article{}
+.TC-detail article label{
+	font-size: 16px;
+	font-family: 'BeVietnamPro-SemiBold';
+	color: #333;
+	margin-bottom: 10px;
+}
+.TC-detail article p{
+	margin-bottom: 0;
+	font-size: 14px;
+	color: #333;
+}
+.TC-detail article p > span{
+	color: #9B51E0;
+}
+.TC-detail article p img{}
+.TC-detail article span.line-full{
+	display: block;
+	width: 100%;
+	height: 12px;
+	background: rgba(155, 81, 224, 0.10);
+	border-radius: 20px;
+	margin-top: 5px;
+	position: relative;
+}
+.TC-detail article span.line-full span.line-percent{
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: 20px;
+	background: #9B51E0;
+    height: 12px;
+}
+.TC-detail article span.line-full span.line-percent.lp-10{width: 10%;}
+.TC-detail article span.line-full span.line-percent.lp-20{width: 20%;}
+.TC-detail article span.line-full span.line-percent.lp-30{width: 30%;}
+.TC-detail article span.line-full span.line-percent.lp-40{width: 40%;}
+.TC-detail article span.line-full span.line-percent.lp-50{width: 50%;}
+.TC-detail article span.line-full span.line-percent.lp-60{width: 60%;}
+.TC-detail article span.line-full span.line-percent.lp-70{width: 70%;}
+.TC-detail article span.line-full span.line-percent.lp-80{width: 80%;}
+.TC-detail article span.line-full span.line-percent.lp-90{width: 90%;}
+.TC-detail article span.line-full span.line-percent.lp-100{width: 100%;}
+
+.light-style:not([dir=rtl]) .jq-ry-container .jq-ry-normal-group svg,
+.light-style:not([dir=rtl]) .jq-ry-container:not(.multi-color-ratings) .jq-ry-rated-group svg{
+	width: 20px;
+	height: 20px;
+}
+.detail-title{
+	display: flex;
+	align-items: center;
+}
+.detail-title span{
+	width: 150px;
+	height: 150px;
+	border-radius: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(155, 81, 224, 0.1);
+	margin-right: 24px;
+}
+.detail-title span img{}
+.detail-title article{
+	width: calc(100% - 174px);
+}
+.detail-title article h3{
+	font-size: 24px;
+	font-family: 'BeVietnamPro-SemiBold';
+}
+.detail-title article p{
+	font-size: 16px;
+	font-family: 'BeVietnamPro-Regular';
+}
+.nav-pills .nav-link, 
+.nav-pills .nav-link, 
+.nav-pills .nav-link{
+	border-bottom: 2px solid transparent;
+	border-radius: 0;
+}
+
+.nav-pills .nav-link.active, 
+.nav-pills .nav-link.active:hover, 
+.nav-pills .nav-link.active:focus{
+	background: transparent;
+	border-bottom: 2px solid #9055fd;
+	color: #9055fd;
+	font-family: 'BeVietnamPro-SemiBold';
+}
+
+.table-border{
+    border: 1px solid #dcdcdc;
+    border-radius: 14px;
+}
+.table-border th{
+	background: #F5EEFC;
+}
+.total-rating{
+	display: flex;
+	align-items: center;
+}
+.total-rating h1{
+	font-size: 60px;
+	width: 120px;
+}
+.total-rating h1 p{
+	font-size: 14px;
+	margin-bottom: 0;
+}
+.total-rating ul{
+	padding: 0;
+	width: calc(100% - 120px);
+}
+.total-rating ul li{
+	display: flex;
+	align-items: center;
+	
+}
+.total-rating ul li .progress{
+	width: 100%;
+	border-radius: 16px;
+}
+.total-rating ul li .progress .progress-bar{
+	border-radius: 16px;
+}
+.total-rating ul li span{
+	color: rgba(155, 81, 224, 1);
+	margin-right: 10px;
+}
+.light-style:not([dir=rtl]) .jq-ry-container:not(.multi-color-ratings) .jq-ry-rated-group svg {
+    fill: #9055fd;
+}
+
+.detail-comment{}
+.dc-list{
+	margin-bottom: 20px;
+}
+.dc-name{
+	margin-bottom: 10px;
+}
+.dc-name span{}
+.dc-name span img{}
+.dc-name label{}
+.dc-rate{
+    display: flex;
+    align-items: center;
+}
+
+.dc-rate .light-style:not([dir=rtl]) .jq-ry-container .jq-ry-normal-group svg, 
+.dc-rate .light-style:not([dir=rtl]) .jq-ry-container:not(.multi-color-ratings) .jq-ry-rated-group svg{
+
+}
+.dc-rate > p{
+	margin-bottom: 0;
+}
+.dc-text > p{
+	margin-bottom: 0;
+}
+
+.modal-comment article label{
+	font-size: 20px;
+	font-family: 'BeVietnamPro-SemiBold';
+	color: #333;
+}
+.modal-comment article p{
+	font-size: 16px;
+	color: #333;
+}
+.modal-detail-comment{
+	max-height: 500px;
+	overflow-y: scroll;
+}
+.modal-detail-comment .dc-list{}
+
+/*.icon-menu-fix{
+	    position: absolute !important;
+    left: 0px;
+    top: 2.4%;
+    width: 30px;
+    height: 30px;
+}*/
+.icon-menu-fix{
+	width: 30px;
+	display: inline-block;
+
+}
+.icon-menu-fix i{
+	font-size: 30px !important;
+}
+.icon-menu-fix i:before{
+	font-size: 30px !important;
+}
+
+.btn-close-fix{
+	position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.list-group-item.active {
+    background-color: #fff;
+    color: #9B51E0;
+    font-family: 'BeVietnamPro-SemiBold';
+    margin-top: 0 !important;
+}
+.nav-pills .nav-link{
+	text-transform: none !important;
+}
+.menu-vertical .menu-inner .menu-item.active>.menu-link {
+    font-weight: 500;
+    color: #fff;
+}
+html:not([dir=rtl]) .menu-inner>.menu-header::before{
+	width: auto;
+}
+.menu-inner>.menu-header::after {
+    width: 100%;
+}
+
+/*page home*/
+.Home-banner{
+	background: url(../img/banner-home.png);
+	background-size: cover;
+	border-radius: 12px;
+	position: relative;
+	padding: 50px;
+	margin-bottom: 20px;
+}
+.Home-banner label{
+	color: #fff;
+	font-size: 24px;
+	font-family: 'BeVietnamPro-SemiBold';
+}
+.Home-banner p{
+	color: #fff;
+	font-size: 16px;
+}
+.Home-banner a{
+	font-size: 16px;
+}
+.Home-banner img{
+	position: absolute;
+	top: 0;
+	right: 40px;
+}
+.Home-exam{
+	margin-bottom: 20px;
+}
+.He-box{}
+.Heb-detail{
+	text-align: center;
+}
+.Heb-detail span{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #9B51E01A;
+	border-radius: 12px;
+	padding: 24px 0;
+    margin-bottom: 15px;
+}
+.Heb-detail span img{
+	width: 100px;
+	height: 100px;
+}
+.Heb-detail label{
+	color: #333;
+	text-align: center;
+	max-height: 44px;
+	overflow-y: hidden;
+}
+
+.Home-tips{
+	margin-bottom: 20px;
+}
+.Ht-box{}
+.Htb-detail{
+	display: flex;
+	align-items: center;
+	background: #fff;
+	border-radius: 12px;
+	padding: 24px;
+}
+.Htb-detail span{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #9B51E01A;
+	border-radius: 12px;
+	padding: 12px 0;
+	margin-right: 16px;
+	width: 100px;
+}
+.Htb-detail span img{
+	width: 50px;
+	height: 50px;
+}
+.Htb-detail article{
+	width: calc(100% - 116px);
+}
+.Htb-detail article label{
+	color: #333;
+	font-size: 16px;
+	margin-bottom: 12px;
+	cursor: pointer;
+}
+.Htb-detail article p{
+	margin-bottom: 0;
+	font-size: 16px;
+	color: #333;
+}
+
+.Ht-box .owl-nav{
+    display: block !important;
+    position: absolute;
+    top: 33%;
+    font-size: 16px;
+    width: 100%;
+}
+.Ht-box .owl-nav .owl-prev{
+    position: absolute;
+    background: #33333399 !important;
+    color: #fff !important;
+    width: 24px;
+    border-radius: 50%;
+    left: 10px;
+}
+.Ht-box .owl-nav .owl-prev span{}
+.Ht-box .owl-nav .owl-next{
+	right: 10px;
+    position: absolute;
+    background: #33333399 !important;
+    color: #fff !important;
+    width: 24px;
+    border-radius: 50%;
+}
+.Ht-box .owl-nav .owl-next span{}
+
+.Ht-box .owl-dots{
+    display: block;
+    text-align: center;
+}
+.Ht-box .owl-dots .owl-dot{}
+.Ht-box .owl-dots .owl-dot span{
+    width: 5px;
+    display: inline-block;
+    height: 5px;
+    background: #c3c3c3;
+    border-radius: 50%;
+    margin: 0 2px;
+}
+.Ht-box .owl-dots .owl-dot.active{}
+.Ht-box .owl-dots .owl-dot.active span{
+	background: #333;
+}
+
+/*.layout-navbar{
+	height: 5rem;
+}*/
+
+.bg-menu-theme .menu-item.active>.menu-link:not(.menu-toggle),
+.light-style .menu-vertical .menu-item .menu-link:hover{
+	color: #9B51E0;
+    background: #9b51e01a;
+    margin: 0 14px;
+    border-radius: 5px;
+    font-family: 'BeVietnamPro-SemiBold';
+}
+
+
+
+
+
+
+
+
+
+
+.Home-why{
+	margin-bottom: 20px;
+}
+.Hw-box{}
+.Hwb-detail{
+	padding: 16px;
+	border-radius: 12px;
+	text-align: center;
+}
+.Hwb-detail:hover{
+	background: #9B51E01A;
+}
+.Hwb-detail span{
+	display: block;
+	width: 60px;
+	height: 60px;
+	margin: 0 auto;
+	margin-bottom: 16px;
+}
+.Hwb-detail span img{
+	width: 100%;
+}
+.Hwb-detail label{
+	font-size: 20px;
+	color: #333;
+	margin-bottom: 16px;
+}
+.Hwb-detail p{
+	margin-bottom: 0;
+	font-size: 16px;
+	color: #333;
+	max-height: 70px;
+    overflow-y: hidden;
+}
+
+.Home-num1{
+	margin-bottom: 20px;
+}
+.Hn-box{}
+.Hnb-detail{
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+.Hnb-detail > span{
+	margin-right: 10px;
+}
+.Hnb-detail > span img{}
+.Hnb-detail p{
+	margin-bottom: 0;
+	font-size: 20px;
+	font-family: 'BeVietnamPro-SemiBold';
+    line-height: 22px;
+    color: #333;
+}
+.Hnb-detail p > span{
+	display: block;
+	font-size: 16px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 1140px){
+	.box-all .list-badge-scroll{
+		    height: 151vh;
+	}
+} 
+
+@media (max-width: 768px) {
+	.layout-navbar-fixed .layout-navbar.navbar-detached {
+	    width: 100% !important;
+	}
+	.box-all .list-badge-scroll{
+		height: 91vh;
+	}
+}
+@media (max-width: 676px){
+	.box-all .list-badge-scroll{
+		height: 80vh;
+	}
+}
+@media (max-width: 533px){
+	.box-all .list-badge-scroll{
+		height: 62vh;
+	}
+}
+@media (max-width: 414px){
+	.box-all .list-badge-scroll{
+		height: 47vh;
+	}
+}
+@media (max-width: 375px){
+	.box-all .list-badge-scroll{
+		height: 42vh;
+	}
+}
