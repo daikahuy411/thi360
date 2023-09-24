@@ -1,24 +1,29 @@
 // ** React Imports
-import { useState, forwardRef, useEffect } from 'react'
-import Drawer from '@mui/material/Drawer'
+import {
+  useEffect,
+  useState
+} from 'react'
+
+import V1Api from 'api/v1-api'
+import Link from 'next/link'
+
+import Icon from '@core/components/icon'
+import CustomChip from '@core/components/mui/chip'
+import Alert from '@mui/material/Alert'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import { styled } from '@mui/material/styles'
-import TextField from '@mui/material/TextField'
+import CardContent from '@mui/material/CardContent'
+import CircularProgress from '@mui/material/CircularProgress'
+import Divider from '@mui/material/Divider'
+import Drawer from '@mui/material/Drawer'
+import FormControl from '@mui/material/FormControl'
 import IconButton from '@mui/material/IconButton'
 import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import { styled } from '@mui/material/styles'
+import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
-import Icon from '@core/components/icon'
-import Alert from '@mui/material/Alert'
-import V1Api from 'api/v1-api'
-import CardContent from '@mui/material/CardContent'
-import CustomChip from '@core/components/mui/chip'
-import Divider from '@mui/material/Divider'
-import Link from 'next/link'
-import CircularProgress from '@mui/material/CircularProgress'
 
 const Header = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -41,6 +46,8 @@ const AddPaymentDrawer = ({ open, toggle, plan }) => {
   useEffect(() => {
     if (!plan) return
     setAmount(plan.price)
+
+    console.log('plan-regs:', plan)
   }, [plan])
 
   const createOrder = () => {

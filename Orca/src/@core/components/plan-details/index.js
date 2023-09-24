@@ -31,12 +31,12 @@ const PlanDetails = props => {
   const { plan, data, isCurrentPlan } = props
 
   const renderFeatures = () => {
-    return data?.planBenefits.map((item, index) => (
+    return data?.planBenefitsObject.map((item, index) => (
       <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
         <Box component='span' sx={{ display: 'inline-flex', color: 'text.secondary', mr: 2 }}>
           <Icon icon='mdi:circle-outline' fontSize='0.75rem' />
         </Box>
-        <Typography variant='body2'>{item}</Typography>
+        <Typography variant='body2'>{item.name}</Typography>
       </Box>
     ))
   }
@@ -53,7 +53,7 @@ const PlanDetails = props => {
       {data?.isPopular ? (
         <CustomChip
           skin='light'
-          label='Popular'
+          label='Phổ biến'
           color='primary'
           sx={{
             top: 12,
