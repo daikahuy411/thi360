@@ -115,7 +115,7 @@ const Navigation = () => {
           <ul className='menu-sub'>
             {programLinks.map(item => (
               <>
-                <li className='menu-item'>
+                <li className='menu-item' key={`menu-item-${item.id}`}>
                   <Link href={item.path} className='menu-link'>
                     <div> {item.title} </div>
                   </Link>
@@ -140,7 +140,7 @@ const Navigation = () => {
           <ul className='menu-sub'>
             {classLinks.map(item => (
               <>
-                <li className='menu-item'>
+                <li className='menu-item' key={`menu-item-${item.id}`}>
                   <Link href={item.path} className='menu-link'>
                     <div> {item.title} </div>
                   </Link>
@@ -165,7 +165,7 @@ const Navigation = () => {
           <ul className='menu-sub'>
             {examLinks.map(item => (
               <>
-                <li className='menu-item'>
+                <li className='menu-item' key={`menu-item-${item.id}`}>
                   <Link href={item.path} className='menu-link'>
                     <div> {item.title} </div>
                   </Link>
@@ -190,7 +190,7 @@ const Navigation = () => {
           <ul className='menu-sub'>
             {systemLinks.map(item => (
               <>
-                <li className='menu-item'>
+                <li className='menu-item' key={`menu-item-${item.id}`}>
                   <Link href={item.path} className='menu-link'>
                     <div> {item.title} </div>
                   </Link>
