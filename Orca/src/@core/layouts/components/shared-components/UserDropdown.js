@@ -49,7 +49,7 @@ const UserDropdown = props => {
   const { logout } = useAuth()
 
   // ** Vars
-  const { direction } = settings
+  const direction = 'rtl'
 
   useEffect(() => {
     const userInfo = window.localStorage.getItem(authConfig.storageUserDataKeyName)
@@ -125,8 +125,6 @@ const UserDropdown = props => {
       <Box display='inline-block' width='134px'>
         <Typography
           sx={{
-            //styleName: 20 semibold;
-            fontFamily: 'Be Vietnam Pro',
             fontSize: '20px',
             fontWeight: '600',
             lineHeight: '30px',
@@ -134,12 +132,10 @@ const UserDropdown = props => {
             textAlign: 'start'
           }}
         >
-          {currentClass?.fullName}
+          {currentClass?.userName}
         </Typography>
         <Typography
           sx={{
-            //styleName: 20 semibold;
-            fontFamily: 'Be Vietnam Pro',
             fontSize: '16px',
             fontWeight: '400',
             lineHeight: '24px',
@@ -176,7 +172,7 @@ const UserDropdown = props => {
               />
             </Badge>
             <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography sx={{ fontWeight: 600 }}>{currentClass?.fullName}</Typography>
+              <Typography sx={{ fontWeight: 600 }}>{currentClass?.userName}</Typography>
               <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
                 {currentClass?.userName}
               </Typography>
