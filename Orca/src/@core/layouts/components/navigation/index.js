@@ -1,9 +1,21 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { systemLinks, classLinks, examLinks, programLinks } from 'navigation'
+import clsx from 'clsx'
+import { useRouter } from 'next/router'
+import { handleURLQueries } from '@core/layouts/utils'
 
 const Navigation = () => {
   const [activeMenuIndex, setActiveMenuIndex] = useState('home')
+  const router = useRouter()
+
+  const isNavLinkActive = (item) => {
+    if (router.pathname.indexOf(item.path) >= 0 || handleURLQueries(router, item.path)) {
+      return true
+    } else {
+      return false
+    }
+  }
 
   return (
     <aside
@@ -93,7 +105,11 @@ const Navigation = () => {
       </div>
       <div className='menu-inner-shadow'></div>
       <ul className='menu-inner py-1'>
-        <li className='menu-item active open'>
+        <li
+          className={clsx('menu-item', {
+            'active open': isNavLinkActive({ path: '/home' })
+          })}
+        >
           <Link href='/home' className='menu-link'>
             <i className='menu-icon tf-icons mdi mdi-home-outline'></i>
             <div>Trang chủ</div>
@@ -103,7 +119,10 @@ const Navigation = () => {
           <span className='menu-header-text'></span>
         </li>
         <li
-          className={activeMenuIndex === 'program' ? 'menu-item open' : 'menu-item'}
+          className={clsx('menu-item', {
+            'active open': isNavLinkActive({ path: '/program' }),
+            'open': activeMenuIndex === 'program'
+          })}
           onClick={() => {
             activeMenuIndex === 'program' ? setActiveMenuIndex('') : setActiveMenuIndex('program')
           }}
@@ -115,7 +134,7 @@ const Navigation = () => {
           <ul className='menu-sub'>
             {programLinks.map(item => (
               <>
-                <li className='menu-item' key={`menu-item-${item.id}`}>
+                <li className='menu-item' key={`menu-item-${item.path}`}>
                   <Link href={item.path} className='menu-link'>
                     <div> {item.title} </div>
                   </Link>
@@ -140,7 +159,7 @@ const Navigation = () => {
           <ul className='menu-sub'>
             {classLinks.map(item => (
               <>
-                <li className='menu-item' key={`menu-item-${item.id}`}>
+                <li className='menu-item' key={`menu-item-${item.path}`}>
                   <Link href={item.path} className='menu-link'>
                     <div> {item.title} </div>
                   </Link>
@@ -165,7 +184,7 @@ const Navigation = () => {
           <ul className='menu-sub'>
             {examLinks.map(item => (
               <>
-                <li className='menu-item' key={`menu-item-${item.id}`}>
+                <li className='menu-item' key={`menu-item-${item.path}`}>
                   <Link href={item.path} className='menu-link'>
                     <div> {item.title} </div>
                   </Link>
@@ -190,7 +209,7 @@ const Navigation = () => {
           <ul className='menu-sub'>
             {systemLinks.map(item => (
               <>
-                <li className='menu-item' key={`menu-item-${item.id}`}>
+                <li className='menu-item' key={`menu-item-${item.path}`}>
                   <Link href={item.path} className='menu-link'>
                     <div> {item.title} </div>
                   </Link>

@@ -1,6 +1,7 @@
 import HorizontalNavItems from 'navigation/horizontal'
 // ** Navigation Imports
 import { useAuth } from 'hooks/useAuth'
+import Head from 'next/head'
 
 // ** Hook Import
 import { useSettings } from '@core/hooks/useSettings'
@@ -74,7 +75,6 @@ const UserLayout = ({ children, contentHeightFixed }) => {
         horizontalLayoutProps: {
           navMenu: {
             navItems: HorizontalNavItems()
-
             // Uncomment the below line when using server-side menu in horizontal layout and comment the above line
             // navItems: horizontalMenuItems
           },
@@ -84,6 +84,20 @@ const UserLayout = ({ children, contentHeightFixed }) => {
         }
       })}
     >
+      <Head>
+        {/* Theme default v1 */}
+        <link rel="stylesheet" href="/themes/default/assets/vendor/fonts/materialdesignicons.css" />
+        <link rel="stylesheet" href="/themes/default/assets/vendor/fonts/flag-icons.css" />
+        <link rel="stylesheet" href="/themes/default/assets/vendor/libs/node-waves/node-waves.css" />
+
+        <link href='/themes/default/assets/vendor/css/rtl/core.css' rel='stylesheet' />
+        <link href='/themes/default/assets/vendor/css/rtl/theme-default.css' rel='stylesheet' />
+        <link href='/themes/default/assets/css/demo.css' rel='stylesheet' />
+        <link href='/themes/default/assets/css/style.css' rel='stylesheet' />
+
+        <link rel="stylesheet" href="/themes/default/assets/vendor/libs/swiper/swiper.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" />
+      </Head>
       {children}
     </Layout>
   )

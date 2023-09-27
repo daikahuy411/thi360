@@ -4,6 +4,8 @@ import ReactHtmlParser from 'react-html-parser'
 import { scroller } from 'react-scroll'
 import TestingApi from 'api/testing-api'
 import QuestionContent from '../Question/QuestionContent'
+import { withRouter } from 'next/router'
+
 // import LocalStorageService from "services/local-storage";
 
 // MODE
@@ -139,6 +141,9 @@ class TestReview extends React.Component {
   }
 
   componentDidMount() {
+
+    // this.props.token
+
     if (this.props.testId) {
       this.loadTestById(this.props.testId)
     }
@@ -447,4 +452,4 @@ class TestReview extends React.Component {
   }
 }
 
-export default TestReview
+export default withRouter(TestReview)
