@@ -3,18 +3,14 @@ import { useEffect, useState } from 'react'
 import V1Api from 'api/v1-api'
 import NavLink from 'next/link'
 import { useRouter } from 'next/router'
-import PropTypes from 'prop-types'
 import HomeIcon from '@mui/icons-material/Home'
-import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem'
-import Box from '@mui/material/Box'
+import clsx from 'clsx'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
 import Pagination from '@mui/material/Pagination'
-import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import LoadingSpinner from '@core/components/loading-spinner'
-import { useKeenSlider } from 'keen-slider/react'
 
 const SubjectPage = () => {
   const router = useRouter()
@@ -26,6 +22,7 @@ const SubjectPage = () => {
   const [totalItems, setTotalItems] = useState(0)
   const [loading, setLoading] = useState(false)
   const [curriculum, setCurriculum] = useState(null)
+  const [curriculumId, setCurriculumId] = useState(0)
 
   useEffect(() => {
     if (!programId || programId == 0) {
@@ -61,13 +58,13 @@ const SubjectPage = () => {
     }
     setLoading(true)
     new V1Api()
-      .searchExams({ subjectId: subjectId[0], curriculumId: curriculum ? curriculum.id : 0, programId: programId })
+      .searchExams({ subjectId: subjectId[0], curriculumId: curriculumId, programId: programId })
       .then(response => {
         setExams(response.data.value)
         setTotalItems(response.data.totalItems)
         setLoading(false)
       })
-  }, [curriculum])
+  }, [curriculum, curriculumId])
 
   return (
     <>
@@ -112,7 +109,7 @@ const SubjectPage = () => {
               {curriculums &&
                 curriculum &&
                 curriculums.map(item => (
-                  <li style={{ display: 'inline-block', marginBottom: 4, cursor: 'pointer' }}>
+                  <li key={`curriculum-${item.id}`} style={{ display: 'inline-block', marginBottom: 4, cursor: 'pointer' }}>
                     <a
                       onClick={() => {
                         setCurriculum(item)
@@ -145,9 +142,12 @@ const SubjectPage = () => {
                           <div className='list-group list-badge list-left'>
                             {curriculum.children.map(child => (
                               <a
-                                href='#tab1'
-                                data-bs-toggle='tab'
-                                className='list-group-item list-group-item-action active'
+                                style={{ cursor: 'pointer' }}
+                                key={`curriculum-child-${child.id}`}
+                                onClick={() => setCurriculumId(child.id)}
+                                className={clsx('list-group-item list-group-item-action', {
+                                  'active': curriculumId == child.id,
+                                })}
                               >
                                 {child.name}
                               </a>
@@ -175,7 +175,7 @@ const SubjectPage = () => {
                             </div>
                             {exams &&
                               exams.map((item, index) => (
-                                <div>
+                                <div key={`exam-${item.id}`}>
                                   <NavLink href={`/exam/${item.id}`} className='TC-detail'>
                                     <article style={{ width: '100%' }}>
                                       <label>

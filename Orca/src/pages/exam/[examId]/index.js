@@ -14,16 +14,6 @@ import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import Link from '@mui/material/Link'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Typography from '@mui/material/Typography'
 import TestingApi from 'api/testing-api'
 
 const ExamPage = () => {
@@ -64,7 +54,11 @@ const ExamPage = () => {
           {exam && (
             <Breadcrumbs aria-label='breadcrumb'>
               <Link underline='hover' color='inherit' href='/' component={NavLink}>
-                <HomeIcon sx={{ mr: 0.5 }} fontSize='inherit' />
+                {/* <HomeIcon sx={{ mr: 0.5 }} fontSize='inherit' /> */}
+                <img
+                  style={{ width: 18 }}
+                  src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQVJREFUSEvtldERgyAMhpNN7CY6ApmgnaTXSZxAGKFuUjehh2c4jCDhwbs+lEcM//cnJoBw8cKL9UENcM513vsxGELEhzFm0ZhTARLxfhNdEHHQQKoAIc6uOwBQQU4BUpyIbtveGwBUkCIgJ841b4FkAWfirZADQCPeAtkBWsS1kAiQrUhE1Q4TkE+uhaPINE0jIt75UAsgnLHW+mTwZiIa1qHkzcsBDGInnIFzrvfePwGAp5hDZ0R8GWPmNAOZ+aHOEmCtDbUNQ5VbsRTyHAdrAGttpbOMkWzcHxBL91P/4Kxrao/YEq70NCh32YW+D09jqTVLkN1cFNu0ZrH1u/pCaxXm+C/ebQ4oUTUexgAAAABJRU5ErkJggg=='
+                />
               </Link>
               <Link underline='hover' color='inherit' href={`/program/${exam.program.id}`} component={NavLink}>
                 {exam.program.name}
@@ -102,29 +96,11 @@ const ExamPage = () => {
                 ))}
             </Breadcrumbs>
           )}
-          <Divider />
           <br />
         </Grid>
         <Grid item md={12} alignContent={'center'}>
-          <div className='container-xxl flex-grow-1 container-p-y'>
-            <nav aria-label='breadcrumb'>
-              <ol className='breadcrumb'>
-                <li className='breadcrumb-item'>
-                  <a href='dashboards-crm.html'>
-                    <img
-                      style={{ width: 18 }}
-                      src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQVJREFUSEvtldERgyAMhpNN7CY6ApmgnaTXSZxAGKFuUjehh2c4jCDhwbs+lEcM//cnJoBw8cKL9UENcM513vsxGELEhzFm0ZhTARLxfhNdEHHQQKoAIc6uOwBQQU4BUpyIbtveGwBUkCIgJ841b4FkAWfirZADQCPeAtkBWsS1kAiQrUhE1Q4TkE+uhaPINE0jIt75UAsgnLHW+mTwZiIa1qHkzcsBDGInnIFzrvfePwGAp5hDZ0R8GWPmNAOZ+aHOEmCtDbUNQ5VbsRTyHAdrAGttpbOMkWzcHxBL91P/4Kxrao/YEq70NCh32YW+D09jqTVLkN1cFNu0ZrH1u/pCaxXm+C/ebQ4oUTUexgAAAABJRU5ErkJggg=='
-                    />
-                  </a>
-                </li>
-                <li className='breadcrumb-item' aria-current='page'>
-                  <a href='Page-Chuongtrinh.html'>Lớp 6</a>
-                </li>
-                <li className='breadcrumb-item active' aria-current='page'>
-                  Môn Toán
-                </li>
-              </ol>
-            </nav>
+          {/* className='container-xxl flex-grow-1 container-p-y' */}
+          <div>
             <div className='box-all'>
               <div className='box-content'>
                 {exam && (
@@ -135,15 +111,11 @@ const ExamPage = () => {
                           <img src='/themes/default/assets/img/edu-icon.svg' />
                         </span>
                         <article>
-                          <h3>
-                            {exam.name}
-                          </h3>
+                          <h3>{exam.name}</h3>
                           <div className='col-md d-flex flex-column align-items-start'>
                             <div className='onChange-event-ratings mb-3'></div>
                           </div>
-                          <p>
-                            {exam.content}
-                          </p>
+                          <p>{exam.content}</p>
                         </article>
                       </div>
                     </div>
@@ -175,8 +147,10 @@ const ExamPage = () => {
                           <div className='d-flex align-items-center justify-content-between mb-4'>
                             {exam && (
                               <p className='mb-0 text-black'>
-                                <img src='/themes/default/assets/img/icon-dethi.svg' /> <b> {exam.examItems[0].tests.length} đề thi</b>
-                              </p>)}
+                                <img src='/themes/default/assets/img/icon-dethi.svg' />{' '}
+                                <b> {exam.examItems[0].tests.length} đề thi</b>
+                              </p>
+                            )}
                             <div className='d-flex align-items-center justify-content-end'>
                               <input
                                 className='form-control me-3'
@@ -205,10 +179,10 @@ const ExamPage = () => {
                               <thead>
                                 <tr>
                                   <th style={{ width: 30 }}>STT</th>
-                                  <th style={{ width: 400 }}>Đề thi</th>
-                                  <th>Số câu hỏi</th>
-                                  <th>Loại đề thi</th>
-                                  <th style={{ textAlign: 'right' }}>Thao tác</th>
+                                  <th>Đề thi</th>
+                                  <th style={{ width: 200 }}>Số câu hỏi</th>
+                                  <th style={{ width: 200 }}>Loại đề thi</th>
+                                  <th style={{ textAlign: 'right', width: 300 }}>Thao tác</th>
                                 </tr>
                               </thead>
                               <tbody className='table-border-bottom-0'>
@@ -216,15 +190,9 @@ const ExamPage = () => {
                                   exam.examItems[0].tests.map((row, index) => (
                                     <tr key={row.id}>
                                       <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                      <td>
-                                        {row.name}
-                                      </td>
-                                      <td>
-                                        {row.totalQuestion}
-                                      </td>
-                                      <td>
-                                        {row.testTypeName}
-                                      </td>
+                                      <td>{row.name}</td>
+                                      <td>{row.totalQuestion}</td>
+                                      <td>{row.testTypeName}</td>
                                       <td className=''>
                                         <div className='d-flex align-items-center justify-content-end'>
                                           <Button
