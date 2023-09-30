@@ -1,50 +1,43 @@
 import React from 'react'
 import TestingApi from 'api/testing-api'
 import { useEffect, useState } from 'react'
-import V1Api from 'api/v1-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import LoadingSpinner from '@core/components/loading-spinner'
 import moment from 'moment'
-import ReactApexcharts from '@core/components/react-apexcharts'
-import { useTheme } from '@mui/material/styles'
-import { Button } from '@mui/material'
+import { Button, Grid } from '@mui/material'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import { Tooltip, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import NavLink from 'next/link'
+import RefreshIcon from '@mui/icons-material/Refresh'
+import Icon from '@core/components/icon'
 
-const donutColors = {
-  series1: '#fdd835',
-  series2: '#00d4bd',
-  series3: '#826bf8',
-  series4: '#32baff',
-  series5: '#ffa1a1'
+const RADIAN = Math.PI / 180
+
+const renderCustomizedLabel = props => {
+  const { cx, cy, midAngle, innerRadius, outerRadius, percent } = props
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5
+  const x = cx + radius * Math.cos(-midAngle * RADIAN)
+  const y = cy + radius * Math.sin(-midAngle * RADIAN)
+
+  return <text x={x} y={y} fill='#fff' textAnchor='middle' dominantBaseline='central'></text>
 }
 
 const TestResultPage = () => {
   const router = useRouter()
   const { token } = router.query
   const [attempt, setAttempt] = useState(null)
+  const [exam, setExam] = useState(null)
   const [loading, setLoading] = useState(true)
-  const theme = useTheme()
+  const [data, setData] = useState([])
 
-  const chart = {
-    series: [44, 55, 41, 17, 15],
-    options: {
-      chart: {
-        type: 'donut'
-      },
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: 'bottom'
-            }
-          }
-        }
-      ]
-    }
+  const createExamAttempt = () => {
+    setLoading(true)
+    new TestingApi().CreateExamAttempt(attempt.examId, attempt.examItemId, attempt.testId).then(response => {
+      router.push(`/testing/${response.data.value.token}`)
+    })
   }
 
   useEffect(() => {
@@ -52,7 +45,13 @@ const TestResultPage = () => {
     setLoading(true)
     new TestingApi().GetExamAttempt(token).then(response => {
       setAttempt(response.data.value)
+      setExam(response.data.value.exam)
       setLoading(false)
+      setData([
+        { name: 'Correct', value: response.data.value.totalCorrectQuestion, color: '#4caf50' },
+        { name: 'InCorrect', value: response.data.value.totalIncorrectQuestion, color: '#f44336' },
+        { name: 'NotAnswer', value: response.data.value.totalNoAnswerQuestion, color: '#aab8c2' }
+      ])
     })
   }, [token])
 
@@ -60,134 +59,242 @@ const TestResultPage = () => {
     <LoadingSpinner active={loading}>
       <>
         {attempt && (
-          <div className='tutor-single-course-main-content'>
-            <div className='box-result'>
-              <div className=''>
-                <div className='br-left '>
-                  <p className='br-caption'>
-                    <strong>{attempt.name}</strong>
-                  </p>
-                  <hr />
-                  <div className='br-bar'>
-                    <div className='brb-item'>
-                      <div className='brb-item-inner'>
-                        <div className='icon'>
-                          <img alt='' src='/themes/default/assets/img/icons/testing/t_icon1.png' />
-                        </div>
-                        <p>Tên đăng nhập</p>
-                        <strong>{attempt.user.userName}</strong>
-                      </div>
-                    </div>
-                    <div className='brb-item'>
-                      <div className='brb-item-inner'>
-                        <div className='icon'>
-                          <img alt='' src='/themes/default/assets/img/icons/testing/t_icon1.png' />
-                        </div>
-                        <p>Họ tên</p>
-                        <strong>{attempt.user.fullName}</strong>
-                      </div>
-                    </div>
-                  </div>
-                  <hr />
-                  <div className='br-bar'>
-                    <div className='brb-item'>
-                      <div className='brb-item-inner'>
-                        <div className='icon'>
-                          <img alt='' src='/themes/default/assets/img/icons/testing/t_icon1.png' />
-                        </div>
-                        <p>Điểm</p>
-                        <strong>{attempt.user.score}</strong>
-                      </div>
-                    </div>
-                    <div className='brb-item'>
-                      <div className='brb-item-inner'>
-                        <div className='icon'>
-                          <img alt='' src='/themes/default/assets/img/icons/testing/t_icon2.png' />
-                        </div>
-                        <p>Thời gian làm bài</p>
-                        <strong>{attempt.duration}</strong>
-                      </div>
-                    </div>
-                  </div>
-                  <hr />
-                  <div className='br-bar'>
-                    <div className='brb-item'>
-                      <div className='brb-item-inner'>
-                        <div className='icon'>
-                          <img alt='' src='/themes/default/assets/img/icons/testing/t_icon2.png' />
-                        </div>
-                        <p>Thời gian bắt đầu</p>
-                        <strong>{moment(attempt.startDate).format('DD-MM-YYYY hh:mm')}</strong>
-                      </div>
-                    </div>
-                    <div className='brb-item'>
-                      <div className='brb-item-inner'>
-                        <div className='icon'>
-                          <img alt='' src='/themes/default/assets/img/icons/testing/t_icon2.png' />
-                        </div>
-                        <p>Thời gian kết thúc</p>
-                        <strong>{moment(attempt.endDate).format('DD-MM-YYYY hh:mm')}</strong>
-                      </div>
-                    </div>
-                  </div>
-                  <hr />
-                  <div
-                    className='br-chart center-block'
-                    style={{ textAlign: 'center', display: 'block', clear: 'both' }}
-                  >
-                    <div className='row'>
-                      <div className='col-md-5 col-xs-12'>
-                        <ReactApexcharts type='donut' height={200} options={chart.options} series={chart.series} />
-                      </div>
-                      <div className='col-md-7 col-xs-12'>
-                        <div style={{ width: '100%' }}>
-                          <div className='stats-block border-green'>
-                            <span className='stats-value '>{attempt.totalCorrectQuestion}</span>{' '}
-                            <span className='stats-title'>Đúng</span>
-                          </div>
-                          <div className='stats-block border-orange'>
-                            <span className='stats-value '>{attempt.totalIncorrectQuestion}</span>{' '}
-                            <span className='stats-title'>Sai</span>
-                          </div>
-                          <div className='stats-block border-yellow'>
-                            <span className='stats-value '>{attempt.totalNoAnswerQuestion}</span>
-                            <span className='stats-title'>Chưa trả lời</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <br className='clearfix' />
-                  </div>
-                  <div className='row'>
-                    <div className='col-md-12'>
-                      <b className='text-muted'> Kết quả: </b>
-                      &nbsp;
-                      <span className='label label-danger ' style={{ color: '#f44336', fontSize: 16 }}>
-                        Không đạt
-                      </span>
-                    </div>
-                  </div>
-                  <hr />
-                  <br style={{ clear: 'both' }} />
-                  <div className='br-control'>
-                    <button className='btn btn-primary ' style={{ cursor: 'pointer' }}>
-                      Thi lại
-                    </button>
-                    &nbsp;
-                    <Link href={`/testing/review/${attempt.token}`}>
-                      <Button color='secondary'>Xem bài làm</Button>
+          <>
+            <Grid container>
+              <Grid item md={12}>
+                {exam && (
+                  <Breadcrumbs aria-label='breadcrumb'>
+                    <Link underline='hover' style={{ color: 'rgba(58, 53, 65, 0.6)' }} href='/' component={NavLink}>
+                      <img
+                        style={{ width: 18 }}
+                        src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQVJREFUSEvtldERgyAMhpNN7CY6ApmgnaTXSZxAGKFuUjehh2c4jCDhwbs+lEcM//cnJoBw8cKL9UENcM513vsxGELEhzFm0ZhTARLxfhNdEHHQQKoAIc6uOwBQQU4BUpyIbtveGwBUkCIgJ841b4FkAWfirZADQCPeAtkBWsS1kAiQrUhE1Q4TkE+uhaPINE0jIt75UAsgnLHW+mTwZiIa1qHkzcsBDGInnIFzrvfePwGAp5hDZ0R8GWPmNAOZ+aHOEmCtDbUNQ5VbsRTyHAdrAGttpbOMkWzcHxBL91P/4Kxrao/YEq70NCh32YW+D09jqTVLkN1cFNu0ZrH1u/pCaxXm+C/ebQ4oUTUexgAAAABJRU5ErkJggg=='
+                      />
                     </Link>
-                    &nbsp;
-                    <button className='btn btn-info btn-large ' style={{ cursor: 'pointer' }}>
-                      Quay lại Kỳ thi
-                    </button>
+                    <Link
+                      underline='hover'
+                      style={{ color: 'rgba(58, 53, 65, 0.6)' }}
+                      href={`/program/${exam.program.id}`}
+                      component={NavLink}
+                    >
+                      {exam.program.name}
+                    </Link>
+                    <Link
+                      underline='hover'
+                      style={{ color: 'rgba(58, 53, 65, 0.6)' }}
+                      href={`/program/${exam.program.id}/subject/${exam.subject.id}`}
+                      component={NavLink}
+                    >
+                      {exam.subject.name}
+                    </Link>
+                    {exam.curriculum && (
+                      <Link
+                        underline='hover'
+                        style={{ color: 'rgba(58, 53, 65, 0.6)' }}
+                        href={`/program/${exam.program.id}/subject/${exam.subject.id}/${exam.curriculum.id}`}
+                        component={NavLink}
+                      >
+                        {exam.curriculum.name}
+                      </Link>
+                    )}
+                    {exam.curriculum &&
+                      exam.curriculum.children &&
+                      exam.curriculum.children.map(item => (
+                        <Link
+                          underline='hover'
+                          key={item.id}
+                          style={{ color: 'rgba(58, 53, 65, 0.6)' }}
+                          href={`/program/${exam.program.id}/subject/${exam.subject.id}/${item.id}`}
+                          component={NavLink}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    {exam && (
+                      <Link
+                        underline='hover'
+                        style={{ color: 'rgba(58, 53, 65, 0.6)' }}
+                        href={`/exam/${exam.id}`}
+                        component={NavLink}
+                      >
+                        {exam.name}
+                      </Link>
+                    )}
+                  </Breadcrumbs>
+                )}
+                <br />
+              </Grid>
+              <Grid item md={12}>
+                <div className='box-result'>
+                  <div className=''>
+                    <div className='br-left '>
+                      <p className='br-caption'>
+                        <strong>{attempt.name}</strong>
+                      </p>
+                      <hr />
+                      <div className='br-bar'>
+                        <div className='brb-item'>
+                          <div className='brb-item-inner'>
+                            <div className='icon'>
+                              <img alt='' src='/themes/default/assets/img/icons/testing/t_icon1.png' />
+                            </div>
+                            <p>Tên đăng nhập</p>
+                            <strong>{attempt.user.userName}</strong>
+                          </div>
+                        </div>
+                        <div className='brb-item'>
+                          <div className='brb-item-inner'>
+                            <div className='icon'>
+                              <img alt='' src='/themes/default/assets/img/icons/testing/t_icon1.png' />
+                            </div>
+                            <p>Họ tên</p>
+                            <strong>{attempt.user.fullName}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <hr />
+                      <div className='br-bar'>
+                        <div className='brb-item'>
+                          <div className='brb-item-inner'>
+                            <div className='icon'>
+                              <img alt='' src='/themes/default/assets/img/icons/testing/t_icon1.png' />
+                            </div>
+                            <p>Điểm</p>
+                            <strong>{attempt.user.score}</strong>
+                          </div>
+                        </div>
+                        <div className='brb-item'>
+                          <div className='brb-item-inner'>
+                            <div className='icon'>
+                              <img alt='' src='/themes/default/assets/img/icons/testing/t_icon2.png' />
+                            </div>
+                            <p>Thời gian làm bài</p>
+                            <strong>{attempt.duration}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <hr />
+                      <div className='br-bar'>
+                        <div className='brb-item'>
+                          <div className='brb-item-inner'>
+                            <div className='icon'>
+                              <img alt='' src='/themes/default/assets/img/icons/testing/t_icon2.png' />
+                            </div>
+                            <p>Thời gian bắt đầu</p>
+                            <strong>{moment(attempt.startDate).format('DD-MM-YYYY hh:mm:ss')}</strong>
+                          </div>
+                        </div>
+                        <div className='brb-item'>
+                          <div className='brb-item-inner'>
+                            <div className='icon'>
+                              <img alt='' src='/themes/default/assets/img/icons/testing/t_icon2.png' />
+                            </div>
+                            <p>Thời gian kết thúc</p>
+                            <strong>{moment(attempt.endDate).format('DD-MM-YYYY hh:mm:ss')}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <hr />
+                      <div
+                        className='br-chart center-block'
+                        style={{ textAlign: 'center', display: 'block', clear: 'both' }}
+                      >
+                        <div className='row'>
+                          <div className='col-md-5 col-xs-12'>
+                            <Box sx={{ height: 220 }}>
+                              <ResponsiveContainer>
+                                <PieChart height={240} style={{ direction: 'ltr' }}>
+                                  <Pie
+                                    data={data}
+                                    innerRadius={60}
+                                    dataKey='value'
+                                    label={renderCustomizedLabel}
+                                    labelLine={false}
+                                  >
+                                    {data.map((entry, index) => (
+                                      <Cell key={`cell-${index}`} fill={entry.color} />
+                                    ))}
+                                  </Pie>
+                                  <Tooltip />
+                                </PieChart>
+                              </ResponsiveContainer>
+                            </Box>
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', mb: 4, justifyContent: 'center' }}>
+                              <Box
+                                sx={{
+                                  mr: 6,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  '& svg': { mr: 1.5, color: '#4caf50' }
+                                }}
+                              >
+                                <Icon icon='mdi:circle' fontSize='0.75rem' />
+                                <Typography variant='body2'>Đúng</Typography>
+                              </Box>
+                              <Box
+                                sx={{
+                                  mr: 6,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  '& svg': { mr: 1.5, color: '#f44336' }
+                                }}
+                              >
+                                <Icon icon='mdi:circle' fontSize='0.75rem' />
+                                <Typography variant='body2'>Sai</Typography>
+                              </Box>
+                              <Box
+                                sx={{
+                                  mr: 6,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  '& svg': { mr: 1.5, color: '#aab8c2' }
+                                }}
+                              >
+                                <Icon icon='mdi:circle' fontSize='0.75rem' />
+                                <Typography variant='body2'>Chưa trả lời</Typography>
+                              </Box>
+                            </Box>
+                          </div>
+                          <div className='col-md-7 col-xs-12'>
+                            <div style={{ width: '100%' }}>
+                              <div className='stats-block border-green'>
+                                <span className='stats-value '>{attempt.totalCorrectQuestion}</span>{' '}
+                                <span className='stats-title'>Đúng</span>
+                              </div>
+                              <div className='stats-block border-orange'>
+                                <span className='stats-value '>{attempt.totalIncorrectQuestion}</span>{' '}
+                                <span className='stats-title'>Sai</span>
+                              </div>
+                              <div className='stats-block border-yellow'>
+                                <span className='stats-value '>{attempt.totalNoAnswerQuestion}</span>
+                                <span className='stats-title'>Chưa trả lời</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <br className='clearfix' />
+                      </div>
+                      <hr />
+                      <br style={{ clear: 'both' }} />
+                      <div className='br-control'>
+                        <Button color='primary' variant='contained' onClick={createExamAttempt}>
+                          <RefreshIcon />
+                          &nbsp; Thi lại
+                        </Button>
+                        &nbsp;
+                        <Link href={`/testing/review/${attempt.token}`}>
+                          <Button color='secondary' variant='outlined'>
+                            <Icon icon='bi:eye' fontSize={22} />
+                            &nbsp; Xem bài làm
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
                   </div>
+                  <div className='clearfix'></div>
                 </div>
-              </div>
-              <div className='br-right'></div>
-              <div className='clearfix'></div>
-            </div>
-          </div>
+              </Grid>
+            </Grid>
+          </>
         )}
       </>
     </LoadingSpinner>

@@ -167,7 +167,7 @@ const UserDropdown = props => {
             >
               <Avatar
                 alt='John Doe'
-                src={currentClass?.pictureUrl ? currentClass.pictureUrl : '/images/avatars/default1.png'}
+                src={currentClass?.pictureUrl ? currentClass.pictureUrl : '/themes/default/assets/img/avatars/10.png'}
                 sx={{ width: '2.5rem', height: '2.5rem' }}
               />
             </Badge>
@@ -182,14 +182,20 @@ const UserDropdown = props => {
         <Divider sx={{ mt: '0 !important' }} />
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/user-profile/profile')}>
           <Box sx={styles}>
-            <Icon icon='mdi:account-outline' />
-            Thông tin
+            <Icon icon='mdi:account-circle-outline' />
+            Trang cá nhân
+          </Box>
+        </MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/user-profile/attemp-history')}>
+          <Box sx={styles}>
+            <Icon icon='mdi:history' />
+            Lịch sử Thi
           </Box>
         </MenuItem>
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/account-settings/account')}>
           <Box sx={styles}>
             <Icon icon='mdi:cog-outline' />
-            Cấu hình
+            Thông tin tài khoản
           </Box>
         </MenuItem>
         <Divider />

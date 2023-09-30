@@ -17,6 +17,8 @@ import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import LoadingSpinner from '@core/components/loading-spinner'
 import Link from 'next/link'
+import Icon from '@core/components/icon'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const ExamAttempHistory = () => {
   const [data, setData] = useState()
@@ -95,7 +97,7 @@ const ExamAttempHistory = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>STT</TableCell>
-                  <TableCell style={{ width: 50 }}></TableCell>
+                  <TableCell style={{ width: 50 }}>Xem</TableCell>
                   <TableCell>Tên</TableCell>
                   <TableCell style={{ width: 110 }}>Câu đúng</TableCell>
                   <TableCell style={{ width: 110 }}>Câu sai</TableCell>
@@ -124,7 +126,7 @@ const ExamAttempHistory = () => {
                         </TableCell>
                         <TableCell component='td' scope='row' style={{ width: 50 }}>
                           <IconButton aria-label='filter' component={Link} href={`/testing/review/${row.token}`}>
-                            <EditIcon />
+                            <Icon icon='bi:eye' fontSize={22} />
                           </IconButton>
                         </TableCell>
                         <TableCell component='th' scope='row'>
@@ -141,8 +143,20 @@ const ExamAttempHistory = () => {
                         <TableCell component='td' scope='row'>
                           {row.totalNoAnswerQuestion}
                         </TableCell>
-                        <TableCell component='td' scope='row'>
-                          {row.score}
+                        <TableCell>
+                          <CircularProgress
+                            size={32}
+                            value={100}
+                            thickness={5}
+                            variant='determinate'
+                            sx={{ position: 'absolute', color: 'customColors.trackBg' }}
+                          />
+                          <CircularProgress
+                            size={32}
+                            thickness={5}
+                            value={50}
+                            variant='determinate'
+                          />
                         </TableCell>
                         <TableCell style={{ textAlign: 'center' }}>
                           {moment(row.startDate).format('DD/MM/YYYY hh:mm')}
