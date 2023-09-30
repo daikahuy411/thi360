@@ -14,6 +14,7 @@ import LoadingSpinner from '@core/components/loading-spinner'
 
 const SubjectPage = () => {
   const router = useRouter()
+  //subjectId: là 1 mảng, phần tử đầu tiên là: oldId của Subject, các phần tử tiếp theo sẽ là Id của Curriculum.
   const { programId, subjectId } = router.query
   const [curriculums, setCurriculums] = useState([])
   const [program, setProgram] = useState(null)
@@ -30,7 +31,12 @@ const SubjectPage = () => {
     }
     new V1Api().getCurriculums(programId, subjectId[0]).then(response => {
       setCurriculums(response.data)
-      setCurriculum(response.data[0])
+      if (subjectId.length > 1) {
+        const cur = response.data.find(x => x.id == parseInt(subjectId[1]))
+        setCurriculum(cur)
+      } else {
+        setCurriculum(response.data[0])
+      }
     })
 
     new V1Api().getProgramCatalog(programId).then(response => {
@@ -66,6 +72,12 @@ const SubjectPage = () => {
       })
   }, [curriculum, curriculumId])
 
+  const changeCirriculum = item => {
+    setCurriculum(item)
+    router.query.subjectId = [subject.oldId, item.id, item.children[0].id]
+    router.push(router, undefined, { shallow: true })
+  }
+
   return (
     <>
       <Grid container spacing={2}>
@@ -93,26 +105,20 @@ const SubjectPage = () => {
             )}
             {subject && <Typography color='text.primary'>{subject.name}</Typography>}
           </Breadcrumbs>
-          <br />
         </Grid>
         <Grid item md={12}>
-          <div className='ba-title'>
-            <h2>
-              <a href='Page-Chuongtrinh.html'>
-                <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAALRJREFUSEvt1MENwjAMBdBvlUGSTcoGrMCBSmwBU3CECUo3YBS6CDIKEqhSD/6uFYlDe037X/TjRlD5kcr5WAGz4f+r6LJ7pgZouyHfzO0DvkMu4RuRK4AWoudDn08WQlc0DVdg7O4pW+FlnQKWhlNAJNwEouEU0Ig8BEil95fq9jjkken++455Bp+xDCAmUHYSQSgggtDADFHdM3+zC/ghta4Kz/TQU7QkdPqNuyIvuAJmY2/bdVYZoOuJcwAAAABJRU5ErkJggg==' />
-                Toán
-              </a>
-            </h2>
-          </div>
           <div>
             <ul className='list-badge px-0' style={{ display: 'block' }}>
               {curriculums &&
                 curriculum &&
                 curriculums.map(item => (
-                  <li key={`curriculum-${item.id}`} style={{ display: 'inline-block', marginBottom: 4, cursor: 'pointer' }}>
+                  <li
+                    key={`curriculum-${item.id}`}
+                    style={{ display: 'inline-block', marginBottom: 4, cursor: 'pointer' }}
+                  >
                     <a
                       onClick={() => {
-                        setCurriculum(item)
+                        changeCirriculum(item)
                       }}
                     >
                       <span className={item.id == curriculum.id ? 'badge rounded-pill active' : 'badge rounded-pill'}>
@@ -130,32 +136,32 @@ const SubjectPage = () => {
                   <div className='card-alert'></div>
                   {curriculum && (
                     <div className='card-header'>
-                      <div className='card-action-title'>
+                      <div className='card-action-title' style={{ fontSize: 22 }}>
                         <b>{curriculum.name}</b>
                       </div>
                     </div>
                   )}
                   <div className='card-body'>
                     <div className='row g-1'>
-                      <div className='col-md-4'>
-                        {curriculum && (
+                      {curriculum && (
+                        <div className='col-md-4'>
                           <div className='list-group list-badge list-left'>
-                            {curriculum.children.map(child => (
+                            {curriculum.children.map((child, index) => (
                               <a
                                 style={{ cursor: 'pointer' }}
                                 key={`curriculum-child-${child.id}`}
                                 onClick={() => setCurriculumId(child.id)}
                                 className={clsx('list-group-item list-group-item-action', {
-                                  'active': curriculumId == child.id,
+                                  active: curriculumId == child.id
                                 })}
                               >
-                                {child.name}
+                                {index + 1}.&nbsp;{child.name}
                               </a>
                             ))}
                           </div>
-                        )}
-                      </div>
-                      <div className='col-md-8'>
+                        </div>
+                      )}
+                      <div className={curriculums && curriculums.length > 0 ? 'col-md-8' : 'col-md-12'}>
                         <div className='tab-content py-0'>
                           <div className='tab-pane fade show active' id='tab1'>
                             <div className='TC-Title'>
@@ -181,14 +187,23 @@ const SubjectPage = () => {
                                       <label>
                                         {index + 1}.&nbsp;{item.name}
                                       </label>
-                                      {item.curriculum && <Typography>{item.curriculum.name}</Typography>}
-                                      <p>
-                                        <img src='/themes/default/assets/img/icon-dethi.svg' /> Hoàn thành:{' '}
-                                        <span>100</span>/1000 Đề thi
-                                      </p>
-                                      <span className='line-full' style={{ display: 'inline-block', width: '50%' }}>
-                                        <span className='line-percent lp-10'></span>
-                                      </span>
+                                      {item.curriculum && (
+                                        <div style={{ padding: 5, paddingLeft: 0 }} className='text-muted'>
+                                          <Typography variant='body1'>{item.curriculum.name}</Typography>
+                                        </div>
+                                      )}
+
+                                      {item.userExamAttemptTracking && (
+                                        <>
+                                          <p>
+                                            <img src='/themes/default/assets/img/icon-dethi.svg' /> Hoàn thành:{' '}
+                                            <span>100</span>/1000 Đề thi
+                                          </p>
+                                          <span className='line-full' style={{ display: 'inline-block', width: '50%' }}>
+                                            <span className='line-percent lp-10'></span>
+                                          </span>
+                                        </>
+                                      )}
                                     </article>
                                     <span className='TCD-icon mdi mdi-chevron-right'></span>
                                   </NavLink>

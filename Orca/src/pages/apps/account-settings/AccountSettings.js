@@ -1,28 +1,17 @@
-// ** React Imports
-import {
-  useEffect,
-  useState
-} from 'react'
-
-// ** Next Import
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-// ** Demo Tabs Imports
 import TabAccount from 'pages/apps/account-settings/account/TabAccount'
 import TabSecurity from 'pages/apps/account-settings/security/TabSecurity'
-
-// ** Icon Imports
 import Icon from '@core/components/icon'
 import TabContext from '@mui/lab/TabContext'
 import MuiTabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import Box from '@mui/material/Box'
-import CircularProgress from '@mui/material/CircularProgress'
 import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
-// ** MUI Imports
 import Tab from '@mui/material/Tab'
-import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import LoadingSpinner from '@core/components/loading-spinner'
 
 const TabList = styled(MuiTabList)(({ theme }) => ({
   '& .MuiTabs-indicator': {
@@ -45,7 +34,6 @@ const TabList = styled(MuiTabList)(({ theme }) => ({
 }))
 
 const AccountSettings = () => {
-
   // ** State
   const [activeTab, setActiveTab] = useState('account')
   const [isLoading, setIsLoading] = useState(false)
@@ -91,7 +79,7 @@ const AccountSettings = () => {
                   label={
                     <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
                       <Icon icon='mdi:account-outline' />
-                      {!hideText && 'Thông tin cá nhân'}
+                      {!hideText && 'Thông tin tài khoản'}
                     </Box>
                   }
                 />
@@ -107,16 +95,11 @@ const AccountSettings = () => {
               </TabList>
             </Grid>
             <Grid item xs={12} sx={{ pt: theme => `${theme.spacing(4)} !important` }}>
-              {isLoading ? (
-                <Box sx={{ mt: 6, display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                  <CircularProgress sx={{ mb: 4 }} />
-                  <Typography>Loading...</Typography>
-                </Box>
-              ) : (
+              <LoadingSpinner active={isLoading}>
                 <TabPanel sx={{ p: 0 }} value={activeTab}>
                   {tabContentList[activeTab]}
                 </TabPanel>
-              )}
+              </LoadingSpinner>
             </Grid>
           </Grid>
         </TabContext>

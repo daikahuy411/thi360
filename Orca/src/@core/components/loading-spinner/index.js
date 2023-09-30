@@ -8,7 +8,7 @@ const LoadingSpinner = ({ sx, children, active }) => {
 
   return (
     <LoadingOverlay
-      fadeSpeed={1500}
+      fadeSpeed={100}
       active={active}
       styles={{
         overlay: base => ({
