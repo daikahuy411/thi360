@@ -4,10 +4,14 @@ import { systemLinks, classLinks, examLinks, programLinks } from 'navigation'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { handleURLQueries } from '@core/layouts/utils'
+import { useAuth } from 'hooks/useAuth'
 
 const Navigation = () => {
   const [activeMenuIndex, setActiveMenuIndex] = useState('home')
   const router = useRouter()
+  const auth = useAuth()
+
+  // console.log(auth.user)
 
   const isNavLinkActive = item => {
     if (router.asPath.indexOf(item.path) >= 0 || handleURLQueries(router, item.path)) {
@@ -23,7 +27,7 @@ const Navigation = () => {
       className='layout-menu menu-vertical menu bg-menu-theme'
       style={{ backgroundColor: 'white!important' }}
     >
-      <div className='app-brand demo '>
+      <div className='app-brand demo ' style={{ marginBottom: 10 }}>
         <Link href='/' className='app-brand-link'>
           <span className='app-brand-logo demo me-1 logo'>
             <span>
@@ -87,81 +91,85 @@ const Navigation = () => {
             ))}
           </ul>
         </li>
-        <li className='menu-header fw-medium'>
-          <span className='menu-header-text'></span>
-        </li>
-        <li
-          className={activeMenuIndex === 'classes' ? 'menu-item open' : 'menu-item'}
-          onClick={() => {
-            activeMenuIndex === 'classes' ? setActiveMenuIndex('') : setActiveMenuIndex('classes')
-          }}
-        >
-          <a className='menu-link menu-toggle'>
-            <img className='menu-icon tf-icons' src='/themes/default/assets/img/icon-menu/menu-group.svg' />
-            <div>Lớp & Học viên</div>
-          </a>
-          <ul className='menu-sub'>
-            {classLinks.map(item => (
-              <>
-                <li className='menu-item' key={`menu-item-${item.path}`}>
-                  <Link href={item.path} className='menu-link'>
-                    <div> {item.title} </div>
-                  </Link>
-                </li>
-              </>
-            ))}
-          </ul>
-        </li>
-        <li className='menu-header fw-medium'>
-          <span className='menu-header-text'></span>
-        </li>
-        <li
-          className={activeMenuIndex === 'exams' ? 'menu-item open' : 'menu-item'}
-          onClick={() => {
-            activeMenuIndex === 'exams' ? setActiveMenuIndex('') : setActiveMenuIndex('exams')
-          }}
-        >
-          <a className='menu-link menu-toggle'>
-            <img className='menu-icon tf-icons' src='/themes/default/assets/img/icon-menu/menu-cup.svg' />
-            <div>Thi &amp; kiểm tra</div>
-          </a>
-          <ul className='menu-sub'>
-            {examLinks.map(item => (
-              <>
-                <li className='menu-item' key={`menu-item-${item.path}`}>
-                  <Link href={item.path} className='menu-link'>
-                    <div> {item.title} </div>
-                  </Link>
-                </li>
-              </>
-            ))}
-          </ul>
-        </li>
-        <li className='menu-header fw-medium'>
-          <span className='menu-header-text'></span>
-        </li>
-        <li
-          className='menu-item'
-          onClick={() => {
-            activeMenuIndex === 'exams' ? setActiveMenuIndex('') : setActiveMenuIndex('exams')
-          }}
-        >
-          <a className='menu-link menu-toggle'>
-            <img className='menu-icon tf-icons' src='/themes/default/assets/img/icon-menu/menu-setting.svg' />
-            <div>Quản lý hệ thống</div>
-          </a>
-          <ul className='menu-sub'>
-            {systemLinks.map(item => (
-              <>
-                <li className='menu-item' key={`menu-item-${item.path}`}>
-                  <Link href={item.path} className='menu-link'>
-                    <div> {item.title} </div>
-                  </Link>
-                </li>
-              </>
-            ))}
-          </ul>
-        </li>
+        {auth && auth.user && auth.user.roles && auth.user.roles.length > 0 && (
+          <>
+            <li className='menu-header fw-medium'>
+              <span className='menu-header-text'></span>
+            </li>
+            <li
+              className={activeMenuIndex === 'classes' ? 'menu-item open' : 'menu-item'}
+              onClick={() => {
+                activeMenuIndex === 'classes' ? setActiveMenuIndex('') : setActiveMenuIndex('classes')
+              }}
+            >
+              <a className='menu-link menu-toggle'>
+                <img className='menu-icon tf-icons' src='/themes/default/assets/img/icon-menu/menu-group.svg' />
+                <div>Lớp & Học viên</div>
+              </a>
+              <ul className='menu-sub'>
+                {classLinks.map(item => (
+                  <>
+                    <li className='menu-item' key={`menu-item-${item.path}`}>
+                      <Link href={item.path} className='menu-link'>
+                        <div> {item.title} </div>
+                      </Link>
+                    </li>
+                  </>
+                ))}
+              </ul>
+            </li>
+            <li className='menu-header fw-medium'>
+              <span className='menu-header-text'></span>
+            </li>
+            <li
+              className={activeMenuIndex === 'exams' ? 'menu-item open' : 'menu-item'}
+              onClick={() => {
+                activeMenuIndex === 'exams' ? setActiveMenuIndex('') : setActiveMenuIndex('exams')
+              }}
+            >
+              <a className='menu-link menu-toggle'>
+                <img className='menu-icon tf-icons' src='/themes/default/assets/img/icon-menu/menu-cup.svg' />
+                <div>Thi &amp; kiểm tra</div>
+              </a>
+              <ul className='menu-sub'>
+                {examLinks.map(item => (
+                  <>
+                    <li className='menu-item' key={`menu-item-${item.path}`}>
+                      <Link href={item.path} className='menu-link'>
+                        <div> {item.title} </div>
+                      </Link>
+                    </li>
+                  </>
+                ))}
+              </ul>
+            </li>
+            <li className='menu-header fw-medium'>
+              <span className='menu-header-text'></span>
+            </li>
+            <li
+              className='menu-item'
+              onClick={() => {
+                activeMenuIndex === 'exams' ? setActiveMenuIndex('') : setActiveMenuIndex('exams')
+              }}
+            >
+              <a className='menu-link menu-toggle'>
+                <img className='menu-icon tf-icons' src='/themes/default/assets/img/icon-menu/menu-setting.svg' />
+                <div>Quản lý hệ thống</div>
+              </a>
+              <ul className='menu-sub'>
+                {systemLinks.map(item => (
+                  <>
+                    <li className='menu-item' key={`menu-item-${item.path}`}>
+                      <Link href={item.path} className='menu-link'>
+                        <div> {item.title} </div>
+                      </Link>
+                    </li>
+                  </>
+                ))}
+              </ul>
+            </li>
+          </>
+        )}
         <li className='menu-header fw-medium'>
           <span className='menu-header-text'></span>
         </li>

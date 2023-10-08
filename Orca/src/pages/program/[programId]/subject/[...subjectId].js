@@ -29,6 +29,7 @@ const SubjectPage = () => {
     if (!programId || programId == 0) {
       return
     }
+
     new V1Api().getCurriculums(programId, subjectId[0]).then(response => {
       setCurriculums(response.data)
       if (subjectId.length > 1) {
@@ -46,36 +47,33 @@ const SubjectPage = () => {
     new V1Api().getSubjectCatalog(programId, subjectId[0]).then(response => {
       setSubject(response.data)
     })
-
-    if (subjectId && subjectId.length > 0) {
-      setLoading(true)
-      let id = subjectId.length > 1 ? subjectId[1] : 0
-      new V1Api().searchExams({ subjectId: subjectId[0], curriculumId: id, programId: programId }).then(response => {
-        setExams(response.data.value)
-        setTotalItems(response.data.totalItems)
-        setLoading(false)
-      })
-    }
   }, [programId, subjectId])
 
   useEffect(() => {
     if (!subjectId) {
       return
     }
+
+    let childCurriculumId = 0
+    if (subjectId.length >= 1) {
+      childCurriculumId = subjectId[2]
+    }
+
+    setCurriculumId(childCurriculumId)
     setLoading(true)
     new V1Api()
-      .searchExams({ subjectId: subjectId[0], curriculumId: curriculumId, programId: programId })
+      .searchExams({ subjectId: subjectId[0], curriculumId: childCurriculumId, programId: programId })
       .then(response => {
         setExams(response.data.value)
         setTotalItems(response.data.totalItems)
         setLoading(false)
       })
-  }, [curriculum, curriculumId])
+  }, [router])
 
-  const changeCirriculum = item => {
-    setCurriculum(item)
-    router.query.subjectId = [subject.oldId, item.id, item.children[0].id]
+  const changeCirriculum = (item, child = null) => {
+    router.query.subjectId = [subject.oldId, item.id, child == null ? item.children[0].id : child.id]
     router.push(router, undefined, { shallow: true })
+    setCurriculum(item)
   }
 
   return (
@@ -150,7 +148,7 @@ const SubjectPage = () => {
                               <a
                                 style={{ cursor: 'pointer' }}
                                 key={`curriculum-child-${child.id}`}
-                                onClick={() => setCurriculumId(child.id)}
+                                onClick={() => changeCirriculum(curriculum, child)}
                                 className={clsx('list-group-item list-group-item-action', {
                                   active: curriculumId == child.id
                                 })}

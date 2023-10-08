@@ -19,6 +19,7 @@ const ProfilePicture = styled('img')(({ theme }) => ({
   width: 120,
   height: 120,
   borderRadius: theme.shape.borderRadius,
+  backgroundColor: '#fff',
   border: `5px solid ${theme.palette.common.white}`,
   [theme.breakpoints.down('md')]: {
     marginBottom: theme.spacing(4)
@@ -50,12 +51,13 @@ const UserProfileHeader = () => {
           pt: 0,
           mt: -8,
           display: 'flex',
+          backgroundColor: '#fff',
           alignItems: 'flex-end',
           flexWrap: { xs: 'wrap', md: 'nowrap' },
           justifyContent: { xs: 'center', md: 'flex-start' }
         }}
       >
-        <ProfilePicture src={data.profileImg} alt='profile-picture' />
+        <ProfilePicture src={data.profileImg} style={{ backgroundColor: '#fff' }} alt='profile-picture' />
         <Box
           sx={{
             width: '100%',

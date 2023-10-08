@@ -213,18 +213,26 @@ const LoginPage = () => {
                   </div>
                 </div>
               </Link>
-              <Typography
-                variant='h6'
-                sx={{
-                  ml: 3,
-                  lineHeight: 1,
-                  fontWeight: 600,
-                  textTransform: 'uppercase',
-                  fontSize: '1.5rem !important'
+              <Link
+                href='/'
+                style={{
+                  textDecoration: 'none'
                 }}
               >
-                {themeConfig.templateName}
-              </Typography>
+                <Typography
+                  variant='h6'
+                  sx={{
+                    ml: 3,
+                    lineHeight: 1,
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    textDecoration: 'none',
+                    fontSize: '1.5rem !important'
+                  }}
+                >
+                  {themeConfig.templateName}
+                </Typography>
+              </Link>
             </Box>
             <Box sx={{ mb: 6 }}>
               <Link href='/'>
@@ -246,17 +254,17 @@ const LoginPage = () => {
                 </div>
               </Link>
               <br />
-              <TypographyStyled variant='h5'>Welcome to {themeConfig.templateName}! 👋🏻</TypographyStyled>
-              <Typography variant='body2'>Please sign-in to your account and start the adventure</Typography>
+              <TypographyStyled variant='h5'>Chào mừng bạn tới Thi360 👋🏻</TypographyStyled>
+              <Typography variant='body2'>Đăng nhập vào hệ thống để tiếp tục</Typography>
             </Box>
-            <Alert icon={false} sx={{ py: 3, mb: 6, ...bgColors.primaryLight, '& .MuiAlert-message': { p: 0 } }}>
+            {/* <Alert icon={false} sx={{ py: 3, mb: 6, ...bgColors.primaryLight, '& .MuiAlert-message': { p: 0 } }}>
               <Typography variant='caption' sx={{ mb: 2, display: 'block', color: 'primary.main' }}>
                 Admin: <strong>admin@materio.com</strong> / Pass: <strong>admin</strong>
               </Typography>
               <Typography variant='caption' sx={{ display: 'block', color: 'primary.main' }}>
                 Client: <strong>client@materio.com</strong> / Pass: <strong>client</strong>
               </Typography>
-            </Alert>
+            </Alert> */}
             <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
               <FormControl fullWidth sx={{ mb: 4 }}>
                 <Controller
@@ -318,23 +326,23 @@ const LoginPage = () => {
                 sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
               >
                 <FormControlLabel
-                  label='Remember Me'
+                  label='Ghi nhớ tôi'
                   control={<Checkbox checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />}
                 />
-                <LinkStyled href='/forgot-password'>Forgot Password?</LinkStyled>
+                <LinkStyled href='/forgot-password'>Quên mật khẩu?</LinkStyled>
               </Box>
               <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
-                Login
+                Đăng nhập
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography variant='body2' sx={{ mr: 2 }}>
-                  New on our platform?
+                  Bạn chưa có tài khoản?
                 </Typography>
                 <Typography variant='body2'>
                   <LinkStyled href='/register'>Tạo mới tài khoản</LinkStyled>
                 </Typography>
               </Box>
-              <Divider sx={{ my: theme => `${theme.spacing(5)} !important` }}>or</Divider>
+              <Divider sx={{ my: theme => `${theme.spacing(5)} !important` }}>hoặc đăng nhập bằng</Divider>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
                   <Icon icon='mdi:facebook' />

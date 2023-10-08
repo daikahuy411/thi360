@@ -599,7 +599,6 @@ const AddQuestionAnswer: React.FC<Props> = ({ isOpen, onClose, parentQuestionId,
                         onClose={() => {
                             setOpenCatalogDialog(false)
                         }}
-                        excludedId={0}
                         onNodeSelected={(nodeId: any) => { handleSelectedCategory(nodeId) }}
                     />
                 )}

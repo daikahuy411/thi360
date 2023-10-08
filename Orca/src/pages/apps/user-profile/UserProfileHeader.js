@@ -1,8 +1,5 @@
 // ** React Imports
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import moment from 'moment'
 import { useRouter } from 'next/router'
@@ -28,7 +25,7 @@ const ProfilePicture = styled('img')(({ theme }) => ({
   }
 }))
 
-const UserProfileHeader = (props) => {
+const UserProfileHeader = props => {
   const router = useRouter()
   const { about } = props
   // ** State
@@ -66,7 +63,11 @@ const UserProfileHeader = (props) => {
             justifyContent: { xs: 'center', md: 'flex-start' }
           }}
         >
-          <ProfilePicture src={ data?.pictureUrl ? data.pictureUrl : '/images/avatars/default1.png' } alt='profile-picture' />
+          <ProfilePicture
+            src={data?.pictureUrl ? data.pictureUrl : '/images/avatars/default1.png'}
+            style={{ backgroundColor: '#fff' }}
+            alt='profile-picture'
+          />
           <Box
             sx={{
               width: '100%',
@@ -79,7 +80,7 @@ const UserProfileHeader = (props) => {
           >
             <Box sx={{ mb: [6, 0], display: 'flex', flexDirection: 'column', alignItems: ['center', 'flex-start'] }}>
               <Typography variant='h5' sx={{ mb: 4 }}>
-                { data?.fullName } <span style={{ fontSize: '1.2993rem'}}>({ data?.userName })</span>
+                {data?.fullName} <span style={{ fontSize: '1.2993rem' }}>({data?.userName})</span>
               </Typography>
               <Box
                 sx={{
@@ -99,12 +100,17 @@ const UserProfileHeader = (props) => {
                 <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'text.secondary' } }}>
                   <Icon icon='mdi:calendar-blank' />
                   <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}>
-                    Tham gia { moment(data?.createdTime).format('MM-YYYY') }
+                    Tham gia {moment(data?.createdTime).format('MM-YYYY')}
                   </Typography>
                 </Box>
               </Box>
             </Box>
-            <Button variant='contained' color="success" startIcon={<Icon icon='mdi:account-check-outline' fontSize={20} />} onClick={handleChangeInfo}>
+            <Button
+              variant='contained'
+              color='success'
+              startIcon={<Icon icon='mdi:account-check-outline' fontSize={20} />}
+              onClick={handleChangeInfo}
+            >
               Thay đổi thông tin
             </Button>
           </Box>

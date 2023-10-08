@@ -16,7 +16,7 @@ const AppBarContent = props => {
     if (router.asPath.indexOf('/program') > -1) {
       currentPage = 'Chương trình'
     }
-    if (router.asPath.indexOf('/exam') > -1) {
+    if (router.asPath.indexOf('/exam') > -1) {  
       currentPage = 'Kỳ thi'
     }
     if (router.asPath.indexOf('/user-profile/profile') > -1) {
