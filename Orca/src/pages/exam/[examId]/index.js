@@ -214,6 +214,11 @@ const ExamPage = () => {
                                         </td>
                                         <td>
                                           <div>{row.name}</div>
+                                          {row.link && (
+                                            <div>
+                                              <a href={row.link} rel="noreferrer" target={'_blank'}>{row.link}</a>
+                                            </div>
+                                          )}
                                           {row.userTestAttemptTracking && (
                                             <p>{row.userTestAttemptTracking.totalPassed}</p>
                                           )}
