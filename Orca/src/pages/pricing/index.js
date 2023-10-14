@@ -276,8 +276,7 @@ const PricingPage = () => {
   return (
     <>
       <Grid container spacing={8}>
-        <Grid item md={2}></Grid>
-        <Grid item md={8}>
+        <Grid item md={12}>
           <Card>
             <CardContent>
               <br />

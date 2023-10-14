@@ -42,7 +42,7 @@ const UserDropdown = props => {
   // ** States
   const [anchorEl, setAnchorEl] = useState(null)
   const [userData, setUserData] = useState()
-  const currentClass = useSelector(selectedProfile)
+  const currentUser = useSelector(selectedProfile)
 
   // ** Hooks
   const router = useRouter()
@@ -55,10 +55,10 @@ const UserDropdown = props => {
     const userInfo = window.localStorage.getItem(authConfig.storageUserDataKeyName)
     console.log('userInfo', JSON.parse(userInfo))
     setUserData(JSON.parse(userInfo))
-    if (!currentClass) {
+    if (!currentUser) {
       me()
     }
-  }, [currentClass])
+  }, [currentUser])
 
   const me = () => {
     new UserApi()
@@ -119,20 +119,20 @@ const UserDropdown = props => {
           alt='John Doe'
           onClick={handleDropdownOpen}
           sx={{ width: 40, height: 40 }}
-          src={currentClass?.pictureUrl ? currentClass.pictureUrl : '/images/avatars/default1.png'}
+          src={currentUser?.pictureUrl ? currentUser.pictureUrl : '/images/avatars/default1.png'}
         />
       </Badge>
       <Box display='inline-block' width='134px'>
         <Typography
           sx={{
-            fontSize: '20px',
+            fontSize: '18px',
             fontWeight: '600',
             lineHeight: '30px',
             letterSpacing: '0em',
             textAlign: 'start'
           }}
         >
-          {currentClass?.userName}
+          {currentUser?.fullName}
         </Typography>
         <Typography
           sx={{
@@ -143,7 +143,7 @@ const UserDropdown = props => {
             textAlign: 'start'
           }}
         >
-          {currentClass?.organizationId}
+          {currentUser?.userName}
         </Typography>
       </Box>
 
@@ -167,14 +167,14 @@ const UserDropdown = props => {
             >
               <Avatar
                 alt='John Doe'
-                src={currentClass?.pictureUrl ? currentClass.pictureUrl : '/themes/default/assets/img/avatars/10.png'}
+                src={currentUser?.pictureUrl ? currentUser.pictureUrl : '/themes/default/assets/img/avatars/10.png'}
                 sx={{ width: '2.5rem', height: '2.5rem' }}
               />
             </Badge>
             <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography sx={{ fontWeight: 600 }}>{currentClass?.userName}</Typography>
+              <Typography sx={{ fontWeight: 600 }}>{currentUser?.fullName}</Typography>
               <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                {currentClass?.userName}
+                {currentUser?.userName}
               </Typography>
             </Box>
           </Box>

@@ -27,19 +27,23 @@ const Navigation = () => {
       className='layout-menu menu-vertical menu bg-menu-theme'
       style={{ backgroundColor: 'white!important' }}
     >
-      <div className='app-brand demo ' style={{ marginBottom: 10 }}>
+      <div className='app-brand demo ' style={{ marginBottom: 10, background: '#6A24AB' }}>
         <Link href='/' className='app-brand-link'>
           <span className='app-brand-logo demo me-1 logo'>
-            <span>
-              <img src='/themes/default/assets/img/edu-icon.svg' style={{ width: 40 }} />
-            </span>
+            {/* <span style={{background: 'none'}}> */}
+            <img src='/themes/default/assets/img/edu-icon.svg' style={{ width: 60 }} />
+            {/* </span> */}
           </span>
-          <span className='app-brand-text demo menu-text fw-semibold ms-2' style={{ color: '#9b51e0' }}>
-            Thi360
+          <br />
+          <span className='app-brand-text demo menu-text fw-semibold ms-2' style={{ color: '#fff' }}>
+            Thi360.com
           </span>
         </Link>
         <a className='layout-menu-toggle menu-link text-large ms-auto'>
-          <i className='mdi mdi-chevron-left-circle-outline d-xl-block align-middle mdi-20px'></i>
+          <i
+            className='mdi mdi-chevron-left-circle-outline d-xl-block align-middle mdi-20px'
+            style={{ color: '#fff' }}
+          ></i>
         </a>
       </div>
       <div className='menu-inner-shadow'></div>

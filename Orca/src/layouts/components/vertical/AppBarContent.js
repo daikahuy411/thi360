@@ -16,14 +16,14 @@ const AppBarContent = props => {
     if (router.asPath.indexOf('/program') > -1) {
       currentPage = 'Chương trình'
     }
-    if (router.asPath.indexOf('/exam') > -1) {  
+    if (router.asPath.indexOf('/exam') > -1) {
       currentPage = 'Kỳ thi'
     }
     if (router.asPath.indexOf('/user-profile/profile') > -1) {
       currentPage = 'Trang cá nhân'
     }
     if (router.asPath.indexOf('/account-settings') > -1) {
-      currentPage = 'Thông tin tài khoản' 
+      currentPage = 'Thông tin tài khoản'
     }
     if (router.asPath.indexOf('/attemp-history') > -1) {
       currentPage = 'Lịch sử thi'
@@ -33,6 +33,9 @@ const AppBarContent = props => {
     }
     if (router.asPath.indexOf('/pricing') > -1) {
       currentPage = 'Bảng giá'
+    }
+    if (router.asPath.indexOf('/apps') > -1) {
+      currentPage = 'LMS'
     }
     setPage(currentPage)
   }, [router])
@@ -44,12 +47,12 @@ const AppBarContent = props => {
       style={{ backgroundColor: '#fff' }}
     >
       <div className='layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0   d-xl-none '>
-        <a className='nav-item nav-link px-0 me-xl-4' href='#'>
+        <a className='nav-item nav-link px-0 me-xl-4'>
           <i className='mdi mdi-menu mdi-24px'></i>
         </a>
       </div>
       <div className='navbar-nav-right d-flex align-items-center' id='navbar-collapse'>
-        <div className='navbar-nav align-items-center'>
+        <div className='navbar-nav align-items-center' style={{ paddingLeft: 10 }}>
           <h3 className='mb-0 f-24'>{page}</h3>
           {path}
         </div>

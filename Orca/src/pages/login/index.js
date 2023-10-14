@@ -249,7 +249,7 @@ const LoginPage = () => {
                       backgroundColor: 'rgba(155, 81, 224, 0.1)'
                     }}
                   >
-                    <img src='/themes/default/assets/img/edu-icon.svg' style={{ width: 80 }} />
+                    <img src='/themes/default/assets/img/edu-icon.svg' style={{ width: 90 }} />
                   </div>
                 </div>
               </Link>

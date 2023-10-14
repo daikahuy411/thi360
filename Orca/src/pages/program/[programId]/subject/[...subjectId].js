@@ -21,6 +21,7 @@ const SubjectPage = () => {
   const [subject, setSubject] = useState(null)
   const [exams, setExams] = useState([])
   const [totalItems, setTotalItems] = useState(0)
+  const [totalPages, setTotalPages] = useState(0)
   const [loading, setLoading] = useState(false)
   const [curriculum, setCurriculum] = useState(null)
   const [curriculumId, setCurriculumId] = useState(0)
@@ -66,6 +67,7 @@ const SubjectPage = () => {
       .then(response => {
         setExams(response.data.value)
         setTotalItems(response.data.totalItems)
+        setTotalPages(Math.ceil(response.data.totalItems / 20))
         setLoading(false)
       })
   }, [router])
@@ -105,7 +107,7 @@ const SubjectPage = () => {
           </Breadcrumbs>
         </Grid>
         <Grid item md={12}>
-          <div>
+          <div style={{ paddingTop: 5 }}>
             <ul className='list-badge px-0' style={{ display: 'block' }}>
               {curriculums &&
                 curriculum &&
@@ -159,6 +161,7 @@ const SubjectPage = () => {
                           </div>
                         </div>
                       )}
+
                       <div className={curriculums && curriculums.length > 0 ? 'col-md-8' : 'col-md-12'}>
                         <div className='tab-content py-0'>
                           <div className='tab-pane fade show active' id='tab1'>
@@ -207,18 +210,20 @@ const SubjectPage = () => {
                                   </NavLink>
                                 </div>
                               ))}
-                            <div>
-                              <br />
-                              <Pagination
-                                count={totalItems}
-                                size='large'
-                                rowsPerPageOptions={[20, 50, 100]}
-                                component='div'
-                                page={1}
-                                rowsPerPage={20}
-                                color='primary'
-                              />
-                            </div>
+                            {totalPages > 1 && (
+                              <div>
+                                <br />
+                                <Pagination
+                                  count={totalPages}
+                                  size='large'
+                                  rowsPerPageOptions={[20, 50, 100]}
+                                  component='div'
+                                  page={1}
+                                  rowsPerPage={20}
+                                  color='primary'
+                                />
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>

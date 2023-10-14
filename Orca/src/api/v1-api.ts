@@ -7,6 +7,12 @@ class V1Api extends ApiBase {
     super('v1');
   }
 
+  getRecentExams = () => {
+    const url = `${this.baseApiUrl}/recentexams`;
+    const response = axios.get(url);
+    return response;
+  };
+
   getProgramCatalogs = () => {
     const url = `${this.baseApiUrl}/programcatalogs`;
     const response = axios.get(url);

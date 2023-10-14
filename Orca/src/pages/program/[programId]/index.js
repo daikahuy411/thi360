@@ -68,7 +68,6 @@ const Program = () => {
                   </Link>
                   <Typography color='#9B51E0'>{program.name}</Typography>
                 </Breadcrumbs>
-                <br />
               </Grid>
               {program.subjectCatalogs.map(item => (
                 <Grid item md={4} xs={12} sm={6} key={item.id}>

@@ -108,7 +108,7 @@ const ExamPage = () => {
                       <div className='card-body'>
                         <div className='detail-title'>
                           <span>
-                            <img src='/themes/default/assets/img/edu-icon.svg' />
+                            <img src='/themes/default/assets/img/icons/exam1.png' width={100} />
                           </span>
                           <article>
                             <h3>{exam.name}</h3>
@@ -157,16 +157,13 @@ const ExamPage = () => {
                                 </p>
                               )}
                               <div className='d-flex align-items-center justify-content-end'>
-                                <input
+                                {/* <input
                                   className='form-control me-3'
                                   type='text'
                                   placeholder='Từ khóa ...'
                                   style={{ width: 300 }}
-                                />
+                                /> */}
                                 <select className='form-select' style={{ width: 170 }}>
-                                  <option key='exam-status-0' selected>
-                                    Loại đề thi
-                                  </option>
                                   <option key='exam-status-1' value='1'>
                                     Tất cả
                                   </option>
@@ -188,7 +185,7 @@ const ExamPage = () => {
                                     <th>Đề thi</th>
                                     <th style={{ width: 200 }}>Số câu hỏi</th>
                                     <th style={{ width: 200 }}>Loại đề thi</th>
-                                    <th style={{ textAlign: 'right', width: 300 }}>Thao tác</th>
+                                    <th style={{ textAlign: 'left', width: 260 }}>Thao tác</th>
                                   </tr>
                                 </thead>
                                 <tbody className='table-border-bottom-0'>
@@ -219,12 +216,12 @@ const ExamPage = () => {
                                               <a href={row.link} rel="noreferrer" target={'_blank'}>{row.link}</a>
                                             </div>
                                           )}
-                                          {row.userTestAttemptTracking && (
+                                          {/* {row.userTestAttemptTracking && (
                                             <p>{row.userTestAttemptTracking.totalPassed}</p>
                                           )}
                                           {row.userTestAttemptTracking && (
                                             <p>{row.userTestAttemptTracking.totalFailed}</p>
-                                          )}
+                                          )} */}
                                         </td>
                                         <td>{row.totalQuestion}</td>
                                         <td>{row.testTypeName}</td>

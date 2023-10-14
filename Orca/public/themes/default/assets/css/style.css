@@ -140,7 +140,7 @@ aside {
 .list-badge {
   display: flex;
   overflow: scroll;
-  padding: 10px 0;
+  padding: 0;
 }
 
 .list-badge::-webkit-scrollbar {
@@ -660,7 +660,8 @@ html:not([dir='rtl']) .menu-inner > .menu-header::before {
 
 .bg-menu-theme .menu-item.active > .menu-link:not(.menu-toggle),
 .light-style .menu-vertical .menu-item .menu-link:hover {
-  color: #9b51e0;
+  color: #70f;
+  /* #9b51e0; */
   background: #9b51e01a;
   margin: 0 14px;
   border-radius: 5px;
@@ -1348,7 +1349,8 @@ th {
 }
 
 .bg-menu-theme .menu-item.active .menu-link.active {
-  color: #9b51e0;
+  color: #70f;
+  /* #9b51e0; */
   background: #9b51e01a;
   margin: 0 14px;
   border-radius: 5px;
