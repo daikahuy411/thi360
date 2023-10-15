@@ -198,12 +198,25 @@ export const programLinks = [
 
 export const systemLinks = [
   {
+    title: 'Tin bài',
+    path: '/apps/post'
+  },
+  {
+    title: 'Danh mục Tin bài',
+    path: '/apps/post-category'
+  },
+  {
     title: 'Tổ chức, Đơn vị',
     path: '/apps/organization'
   },
   {
-    title: 'Tenants',
+    title: 'Khách hàng',
     icon: 'eos-icons:file-system',
     path: '/apps/tenant'
-  }
+  },
+  {
+    title: 'Cấu hình',
+    icon: 'eos-icons:file-system',
+    path: '/apps/tenant'
+  },
 ]

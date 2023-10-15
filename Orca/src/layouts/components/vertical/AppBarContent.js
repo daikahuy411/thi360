@@ -16,6 +16,9 @@ const AppBarContent = props => {
     if (router.asPath.indexOf('/program') > -1) {
       currentPage = 'Chương trình'
     }
+    if (router.asPath.indexOf('/help') > -1) {
+      currentPage = 'Hướng dẫn'
+    }
     if (router.asPath.indexOf('/exam') > -1) {
       currentPage = 'Kỳ thi'
     }
@@ -37,6 +40,22 @@ const AppBarContent = props => {
     if (router.asPath.indexOf('/apps') > -1) {
       currentPage = 'LMS'
     }
+    if (router.asPath.indexOf('/apps/class') > -1) {
+      currentPage = 'Quản lý Lớp học'
+    }
+    if (router.asPath.indexOf('/apps/user') > -1) {
+      currentPage = 'Quản lý Học viên'
+    }
+    if (router.asPath.indexOf('/apps/post') > -1) {
+      currentPage = 'Quản lý Tin bài'
+    }
+    if (router.asPath.indexOf('/apps/post-category') > -1) {
+      currentPage = 'Quản lý Danh mục Tin bài'
+    }
+    if (router.asPath.indexOf('/apps/exam') > -1) {
+      currentPage = 'Quản lý Kỳ thi'
+    }
+
     setPage(currentPage)
   }, [router])
 
@@ -61,7 +80,7 @@ const AppBarContent = props => {
             <Link
               href={'/pricing'}
               className='btn btn-primary waves-effect waves-light btn-sm'
-              style={{ textTransform: 'none' }}
+              style={{ textTransform: 'none', fontSize: 16 }}
             >
               <img className='me-3' src='/themes/default/assets/img/coin.svg' />
               Bảng giá&nbsp;&nbsp;

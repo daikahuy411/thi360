@@ -26,11 +26,13 @@ const HomePage = () => {
     <>
       <div className='container-xxl flex-grow-1 container-p-y'>
         <section className='Home-banner'>
-          <label>Hãy sẵn sàng cho kỳ thi 2023 của bạn</label>
+          <label>Sẵn sàng cho kỳ thi của bạn</label>
+          <br />
           <br />
           <p>Thực hiện các bài kiểm tra thử của chúng tôi bao nhiêu tùy thích MIỄN PHÍ!</p>
           {/* <button type="button" className="btn btn-outline-primary btn-sm waves-effect text-white">Thi thử</button> */}
         </section>
+        <br />
         <LoadingSpinner active={loading}>
           <section className='Home-exam'>
             <div className='ba-title'>

@@ -180,13 +180,13 @@ const UserDropdown = props => {
           </Box>
         </Box>
         <Divider sx={{ mt: '0 !important' }} />
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/user-profile/profile')}>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/user-profile/profile')}>
           <Box sx={styles}>
             <Icon icon='mdi:account-circle-outline' />
             Trang cá nhân
           </Box>
         </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/user-profile/attemp-history')}>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/user-profile/attemp-history')}>
           <Box sx={styles}>
             <Icon icon='mdi:history' />
             Lịch sử Thi

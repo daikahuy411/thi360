@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Draggable from 'react-draggable'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import toast from 'react-hot-toast'
-
+import LoadingSpinner from '@core/components/loading-spinner'
 import Icon from '@core/components/icon'
 import CustomChip from '@core/components/mui/chip'
 import EditIcon from '@mui/icons-material/Edit'
@@ -52,6 +52,7 @@ const ExamTable = () => {
   const [treeData, setTreeData] = useState(null)
   const [status, setStatus] = useState(-1)
   const [categoryId, setCategoryId] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -67,6 +68,7 @@ const ExamTable = () => {
   }, [page, rowsPerPage])
 
   const fetchData = () => {
+    setLoading(true)
     new ExamApi()
       .searches({
         Page: page + 1,
@@ -76,6 +78,7 @@ const ExamTable = () => {
         CategoryId: categoryId
       })
       .then(response => {
+        setLoading(false)
         if (response.data.isSuccess) {
           setData(response.data.value)
           setTotalItem(response.data.totalItems)
@@ -217,82 +220,82 @@ const ExamTable = () => {
           </Grid>
         </Grid>
         <TableContainer component={Paper} style={{ marginTop: 5 }}>
-          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-            <TableHead>
-              <TableRow>
-                <TableCell padding='checkbox'>
-                  <Checkbox
-                    onChange={handleSelectAllClick}
-                    checked={data.length > 0 && selected.length === data.length}
-                    indeterminate={selected.length > 0 && selected.length < data.length}
-                    inputProps={{ 'aria-label': 'select all desserts' }}
-                  />
-                </TableCell>
-                <TableCell style={{ width: 30 }}>Sửa</TableCell>
-                <TableCell>Tên</TableCell>
-                <TableCell style={{ width: 120 }}>Hình thức</TableCell>
-                <TableCell align='right'>Lượt thi</TableCell>
-                <TableCell align='right'>Học viên</TableCell>
-                <TableCell>Trạng thái</TableCell>
-                <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data &&
-                data.map((row, index) => {
-                  const isItemSelected = isSelected(row.id)
-                  const labelId = `enhanced-table-checkbox-${index}`
+          <LoadingSpinner active={loading}>
+            <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+              <TableHead>
+                <TableRow>
+                  <TableCell padding='checkbox'>
+                    <Checkbox
+                      onChange={handleSelectAllClick}
+                      checked={data.length > 0 && selected.length === data.length}
+                      indeterminate={selected.length > 0 && selected.length < data.length}
+                      inputProps={{ 'aria-label': 'select all desserts' }}
+                    />
+                  </TableCell>
+                  <TableCell style={{ width: 30 }}>Sửa</TableCell>
+                  <TableCell>Tên</TableCell>
+                  <TableCell style={{ width: 120 }}>Hình thức</TableCell>
+                  <TableCell align='right'>Lượt thi</TableCell>
+                  <TableCell align='right'>Học viên</TableCell>
+                  <TableCell>Trạng thái</TableCell>
+                  <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data &&
+                  data.map((row, index) => {
+                    const isItemSelected = isSelected(row.id)
+                    const labelId = `enhanced-table-checkbox-${index}`
 
-                  return (
-                    <TableRow
-                      hover
-                      tabIndex={-1}
-                      role='checkbox'
-                      key={row.id}
-                      selected={isItemSelected}
-                      aria-checked={isItemSelected}
-                      sx={{
-                        '&:last-of-type td, &:last-of-type th': {
-                          border: 0
-                        }
-                      }}
-                    >
-                      <TableCell padding='checkbox'>
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                          onClick={event => handleClick(event, row.id)}
-                        />
-                      </TableCell>
-                      <TableCell component='th' scope='row'>
-                        <IconButton aria-label='filter' component={Link} href={`/apps/exam/${row.id}`}>
-                          <EditIcon />
-                        </IconButton>
-                      </TableCell>
-                      <TableCell component='th' scope='row'>
-                        <Typography variant='body1'>
-                          [{row.id}]-{row.name}
-                        </Typography>
-                        {/* <br /> <i>{row.registrationTypeName}</i> */}
-                      </TableCell>
-                      <TableCell>
-                        {row.examTypeName}
-                      </TableCell>
-                      <TableCell align='right'>{row.totalAttempt}</TableCell>
-                      <TableCell align='right'>{row.totalUser}</TableCell>
-                      <TableCell>
-                        <CustomChip
-                          skin='light'
-                          label={row.statusName}
-                          color={row.status === 3 ? 'default' : row.status === 1 ? 'secondary' : 'success'}
-                        />
-                      </TableCell>
-                      <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
-                    </TableRow>
-                  )
-                })}
-            </TableBody>
-          </Table>
+                    return (
+                      <TableRow
+                        hover
+                        tabIndex={-1}
+                        role='checkbox'
+                        key={row.id}
+                        selected={isItemSelected}
+                        aria-checked={isItemSelected}
+                        sx={{
+                          '&:last-of-type td, &:last-of-type th': {
+                            border: 0
+                          }
+                        }}
+                      >
+                        <TableCell padding='checkbox'>
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{ 'aria-labelledby': labelId }}
+                            onClick={event => handleClick(event, row.id)}
+                          />
+                        </TableCell>
+                        <TableCell component='th' scope='row'>
+                          <IconButton aria-label='filter' component={Link} href={`/apps/exam/${row.id}`}>
+                            <EditIcon />
+                          </IconButton>
+                        </TableCell>
+                        <TableCell component='th' scope='row'>
+                          <Typography variant='body1'>
+                            [{row.id}]-{row.name}
+                          </Typography>
+                          {/* <br /> <i>{row.registrationTypeName}</i> */}
+                        </TableCell>
+                        <TableCell>{row.examTypeName}</TableCell>
+                        <TableCell align='right'>{row.totalAttempt}</TableCell>
+                        <TableCell align='right'>{row.totalUser}</TableCell>
+                        <TableCell>
+                          <CustomChip
+                            skin='light'
+                            label={row.statusName}
+                            color={row.status === 3 ? 'default' : row.status === 1 ? 'secondary' : 'success'}
+                          />
+                        </TableCell>
+                        <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
+                      </TableRow>
+                    )
+                  })}
+              </TableBody>
+            </Table>
+          </LoadingSpinner>
         </TableContainer>
         <TablePagination
           labelRowsPerPage={'Hiển thị:'}

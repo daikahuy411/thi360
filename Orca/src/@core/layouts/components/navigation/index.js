@@ -151,9 +151,9 @@ const Navigation = () => {
               <span className='menu-header-text'></span>
             </li>
             <li
-              className='menu-item'
+              className={activeMenuIndex === 'systems' ? 'menu-item open' : 'menu-item'}
               onClick={() => {
-                activeMenuIndex === 'exams' ? setActiveMenuIndex('') : setActiveMenuIndex('exams')
+                activeMenuIndex === 'systems' ? setActiveMenuIndex('') : setActiveMenuIndex('systems')
               }}
             >
               <a className='menu-link menu-toggle'>
@@ -177,7 +177,15 @@ const Navigation = () => {
         <li className='menu-header fw-medium'>
           <span className='menu-header-text'></span>
         </li>
-        <li className='menu-item'>
+        <li
+          className={clsx('menu-item', {
+            'active open': isNavLinkActive({ path: '/help' }),
+            open: activeMenuIndex === 'help'
+          })}
+          onClick={() => {
+            activeMenuIndex === 'help' ? setActiveMenuIndex('') : setActiveMenuIndex('help')
+          }}
+        >
           <Link href='/help' className='menu-link'>
             <img className='menu-icon tf-icons' src='/themes/default/assets/img/icon-menu/menu-quest.svg' />
             <div>Hướng dẫn</div>
