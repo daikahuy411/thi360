@@ -15,7 +15,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { Button } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -36,6 +36,7 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import InputAdornment from '@mui/material/InputAdornment'
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import FolderIcon from '@mui/icons-material/FolderOpen'
+import ContentEditor from '@core/components/editor'
 
 const schema = yup.object().shape({
   name: yup.string().required('* bắt buộc'),
@@ -291,6 +292,28 @@ const EditPostPage = () => {
                                     label='Danh mục Tin bài'
                                   />
                                 </FormControl>
+                              </Grid>
+                              <Grid item xs={12}>
+                                <Typography>Nội dung</Typography>
+                              </Grid>
+                              <Grid item xs={12}>
+                                <FormControl fullWidth>
+                                  <Controller
+                                    name='content'
+                                    label='Nội dung'
+                                    control={control}
+                                    rules={{ required: false }}
+                                    render={({ field: { value, onChange } }) => (
+                                      <ContentEditor
+                                        content={value ?? ''}
+                                        onChange={data => {
+                                          onChange(data)
+                                        }}
+                                      />
+                                    )}
+                                  />
+                                </FormControl>
+                                <br />
                               </Grid>
                             </Grid>
                           </Grid>

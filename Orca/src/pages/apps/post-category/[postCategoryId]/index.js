@@ -279,6 +279,42 @@ const PostCategoryEditPage = () => {
                               />
                             </FormControl>
                           </Grid>
+                          <Grid item xs={12}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='imageUrl'
+                                control={control}
+                                rules={{ required: false }}
+                                render={({ field: { value, onChange } }) => (
+                                  <TextField
+                                    rows={3}
+                                    value={value ?? ''}
+                                    label='Ảnh đại diện'
+                                    InputLabelProps={{ shrink: true }}
+                                    onChange={onChange}
+                                  />
+                                )}
+                              />
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='order'
+                                control={control}
+                                rules={{ required: false }}
+                                render={({ field: { value, onChange } }) => (
+                                  <TextField
+                                    rows={3}
+                                    value={value ?? ''}
+                                    label='Thứ tự'
+                                    InputLabelProps={{ shrink: true }}
+                                    onChange={onChange}
+                                  />
+                                )}
+                              />
+                            </FormControl>
+                          </Grid>
                         </Grid>
                       </form>
                       {openCatalogDialog && (
