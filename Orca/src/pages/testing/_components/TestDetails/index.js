@@ -453,7 +453,7 @@ class TestDetails extends React.Component {
           userExamAttemptTracking: {
             ...prevState.userExamAttemptTracking,
             questionAttempteds: questionAttempteds,
-            questionVisiteds: questionVisiteds,
+            questionVisiteds: questionVisiteds
           }
         }),
         () => {
@@ -768,13 +768,13 @@ class TestDetails extends React.Component {
                       {this.state.examAttempt.testGroup.questionMaps.length -
                         this.state.userExamAttemptTracking.questionSubmitteds.length >
                         0 && (
-                          <div className='red mt2 flex tc'>
-                            Bạn đang còn{' '}
-                            {this.state.examAttempt.testGroup.questionMaps.length -
-                              this.state.userExamAttemptTracking.questionSubmitteds.length}{' '}
-                            chưa trả lời
-                          </div>
-                        )}
+                        <div className='red mt2 flex tc'>
+                          Bạn đang còn{' '}
+                          {this.state.examAttempt.testGroup.questionMaps.length -
+                            this.state.userExamAttemptTracking.questionSubmitteds.length}{' '}
+                          chưa trả lời
+                        </div>
+                      )}
                       <div className='flex flex mt3'>
                         <div
                           onClick={() => {
@@ -861,7 +861,154 @@ class TestDetails extends React.Component {
                                                 <QuestionContent question={question} />
                                               </span>
                                               <div className='flex flex-column'>
-                                                {question.answers.map(answer => (
+                                                {this.state.userExamAttemptTracking.questionSubmitteds.indexOf(
+                                                  question.id
+                                                ) < 0 &&
+                                                  this.state.mode !== 2 && (
+                                                    <>
+                                                      <div className='flex flex-column'>
+                                                        {question.answers.map(answer => (
+                                                          <div
+                                                            onClick={() => {
+                                                              this.onQuestionAttempted(question, answer.id)
+                                                            }}
+                                                            key={`answer-block1-${answer.id}`}
+                                                            className='flex items-center mb2 pa3 br2 flex-shrink-0 ques-option pointer'
+                                                          >
+                                                            <div className='flex pointer mr3 items-center '>
+                                                              {this.isSelectedAnswer(question.id, answer.id) && (
+                                                                <span
+                                                                  className={
+                                                                    question.questionTypeId != QuestionType.MC
+                                                                      ? 'w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--sky-blue pointer mr3'
+                                                                      : 'w1-5 h1-5 pa1 border-box flex items-center justify-center ba b--sky-blue pointer mr3'
+                                                                  }
+                                                                >
+                                                                  <span
+                                                                    className={
+                                                                      question.questionTypeId != QuestionType.MC
+                                                                        ? 'db w-100 h-100 border-box bg-sky-blue br-100'
+                                                                        : 'db w-100 h-100 border-box bg-sky-blue'
+                                                                    }
+                                                                  ></span>
+                                                                </span>
+                                                              )}
+                                                              {!this.isSelectedAnswer(question.id, answer.id) && (
+                                                                <span
+                                                                  className={
+                                                                    question.questionTypeId != QuestionType.MC
+                                                                      ? 'w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--silver pointer mr3'
+                                                                      : 'w1-5 h1-5 pa1 border-box flex items-center justify-center  ba b--silver pointer mr3'
+                                                                  }
+                                                                ></span>
+                                                              )}
+                                                            </div>
+                                                            <div className='pointer'>
+                                                              {ReactHtmlParser(answer.content)}
+                                                            </div>
+                                                          </div>
+                                                        ))}
+                                                      </div>
+                                                      {(this.state.mode === 2 || this.state.mode === 3) && (
+                                                        <QuestionExplain explain={question.explain} />
+                                                      )}
+                                                    </>
+                                                  )}
+                                                {(this.state.userExamAttemptTracking.questionSubmitteds.indexOf(
+                                                  question.id
+                                                ) >= 0 ||
+                                                  this.state.mode == 2) && (
+                                                  <>
+                                                    <div className='flex flex-column'>
+                                                      {question.answers.map(answer => (
+                                                        <>
+                                                          {this.state.userExamAttemptTracking.answerCorrects.indexOf(
+                                                            answer.id
+                                                          ) < 0 &&
+                                                            answer.isCorrect == false &&
+                                                            this.state.userExamAttemptTracking.answerIncorrects.indexOf(
+                                                              answer.id
+                                                            ) < 0 && (
+                                                              <div
+                                                                className='flex items-center mb2 pa3 br2 flex-shrink-0 '
+                                                                key={`answer-block2-${answer.id}`}
+                                                              >
+                                                                <div className='flex  mr3 items-center '>
+                                                                  <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-white mr3'></span>
+                                                                </div>
+                                                                <div>
+                                                                  <span>{ReactHtmlParser(answer.content)}</span>
+                                                                </div>
+                                                              </div>
+                                                            )}
+                                                          {(this.state.userExamAttemptTracking.answerCorrects.indexOf(
+                                                            answer.id
+                                                          ) >= 0 ||
+                                                            answer.isCorrect) && (
+                                                            <div
+                                                              className='flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-green'
+                                                              key={`answer-block3-${answer.id}`}
+                                                            >
+                                                              <div className='flex  mr3 items-center '>
+                                                                <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-green b--green mr3'>
+                                                                  <svg
+                                                                    className='db bg-green ba b--green br-100 svg-s-white svg-fn'
+                                                                    viewBox='0 0 32 24'
+                                                                    version='1.1'
+                                                                    xmlns='http://www.w3.org/2000/svg'
+                                                                    width='12px'
+                                                                    height='12px'
+                                                                    style={{
+                                                                      strokeWidth: '5px'
+                                                                    }}
+                                                                  >
+                                                                    <polyline points='2.6 13.4 11.3 21.4 29.7 2.9'></polyline>
+                                                                  </svg>
+                                                                </span>
+                                                              </div>
+                                                              <div>
+                                                                <span>{ReactHtmlParser(answer.content)}</span>
+                                                              </div>
+                                                            </div>
+                                                          )}
+
+                                                          {this.state.userExamAttemptTracking.answerIncorrects.indexOf(
+                                                            answer.id
+                                                          ) >= 0 && (
+                                                            <div
+                                                              key={`answer-block4-${answer.id}`}
+                                                              className='flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-red'
+                                                            >
+                                                              <div className='flex  mr3 items-center '>
+                                                                <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-red b--red mr3'>
+                                                                  <svg
+                                                                    className='svg-s-white'
+                                                                    viewBox='0 0 24 24'
+                                                                    version='1.1'
+                                                                    xmlns='http://www.w3.org/2000/svg'
+                                                                    width='12px'
+                                                                    height='12px'
+                                                                    style={{
+                                                                      strokeWidth: '4px'
+                                                                    }}
+                                                                  >
+                                                                    <line x1='2.5' y1='2.9' x2='21.5' y2='21.9'></line>
+                                                                    <line x1='21.5' y1='2.9' x2='2.5' y2='21.9'></line>
+                                                                  </svg>
+                                                                </span>
+                                                              </div>
+                                                              <div>
+                                                                <span>{ReactHtmlParser(answer.content)}</span>
+                                                              </div>
+                                                            </div>
+                                                          )}
+                                                        </>
+                                                      ))}
+                                                    </div>
+                                                    <QuestionExplain explain={question.explain} />
+                                                  </>
+                                                )}
+                                                {/* {question.answers.map(answer => (
                                                   <div
                                                     key={`a-${answer.id}`}
                                                     onClick={() => {
@@ -899,7 +1046,7 @@ class TestDetails extends React.Component {
                                                     </div>
                                                     <div className='pointer'>{answer.content}</div>
                                                   </div>
-                                                ))}
+                                                ))} */}
                                               </div>
                                             </>
                                           </div>
@@ -946,35 +1093,35 @@ class TestDetails extends React.Component {
                                                         this.state.currentQuestion.id,
                                                         answer.id
                                                       ) && (
+                                                        <span
+                                                          className={
+                                                            this.state.currentQuestion.questionTypeId != QuestionType.MC
+                                                              ? 'w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--sky-blue pointer mr3'
+                                                              : 'w1-5 h1-5 pa1 border-box flex items-center justify-center ba b--sky-blue pointer mr3'
+                                                          }
+                                                        >
                                                           <span
                                                             className={
-                                                              this.state.currentQuestion.questionTypeId != QuestionType.MC
-                                                                ? 'w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--sky-blue pointer mr3'
-                                                                : 'w1-5 h1-5 pa1 border-box flex items-center justify-center ba b--sky-blue pointer mr3'
+                                                              this.state.currentQuestion.questionTypeId !=
+                                                              QuestionType.MC
+                                                                ? 'db w-100 h-100 border-box bg-sky-blue br-100'
+                                                                : 'db w-100 h-100 border-box bg-sky-blue'
                                                             }
-                                                          >
-                                                            <span
-                                                              className={
-                                                                this.state.currentQuestion.questionTypeId !=
-                                                                  QuestionType.MC
-                                                                  ? 'db w-100 h-100 border-box bg-sky-blue br-100'
-                                                                  : 'db w-100 h-100 border-box bg-sky-blue'
-                                                              }
-                                                            ></span>
-                                                          </span>
-                                                        )}
+                                                          ></span>
+                                                        </span>
+                                                      )}
                                                       {!this.isSelectedAnswer(
                                                         this.state.currentQuestion.id,
                                                         answer.id
                                                       ) && (
-                                                          <span
-                                                            className={
-                                                              this.state.currentQuestion.questionTypeId != QuestionType.MC
-                                                                ? 'w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--silver pointer mr3'
-                                                                : 'w1-5 h1-5 pa1 border-box flex items-center justify-center  ba b--silver pointer mr3'
-                                                            }
-                                                          ></span>
-                                                        )}
+                                                        <span
+                                                          className={
+                                                            this.state.currentQuestion.questionTypeId != QuestionType.MC
+                                                              ? 'w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--silver pointer mr3'
+                                                              : 'w1-5 h1-5 pa1 border-box flex items-center justify-center  ba b--silver pointer mr3'
+                                                          }
+                                                        ></span>
+                                                      )}
                                                     </div>
                                                     <div className='pointer'>{ReactHtmlParser(answer.content)}</div>
                                                   </div>
@@ -989,96 +1136,96 @@ class TestDetails extends React.Component {
                                           this.state.currentQuestion.id
                                         ) >= 0 ||
                                           this.state.mode == 2) && (
-                                            <>
-                                              <div className='flex flex-column'>
-                                                {this.state.currentQuestion.answers.map(answer => (
-                                                  <>
-                                                    {this.state.userExamAttemptTracking.answerCorrects.indexOf(
+                                          <>
+                                            <div className='flex flex-column'>
+                                              {this.state.currentQuestion.answers.map(answer => (
+                                                <>
+                                                  {this.state.userExamAttemptTracking.answerCorrects.indexOf(
+                                                    answer.id
+                                                  ) < 0 &&
+                                                    answer.isCorrect == false &&
+                                                    this.state.userExamAttemptTracking.answerIncorrects.indexOf(
                                                       answer.id
-                                                    ) < 0 &&
-                                                      answer.isCorrect == false &&
-                                                      this.state.userExamAttemptTracking.answerIncorrects.indexOf(
-                                                        answer.id
-                                                      ) < 0 && (
-                                                        <div
-                                                          className='flex items-center mb2 pa3 br2 flex-shrink-0 '
-                                                          key={`answer-block2-${answer.id}`}
-                                                        >
-                                                          <div className='flex  mr3 items-center '>
-                                                            <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-white mr3'></span>
-                                                          </div>
-                                                          <div>
-                                                            <span>{ReactHtmlParser(answer.content)}</span>
-                                                          </div>
+                                                    ) < 0 && (
+                                                      <div
+                                                        className='flex items-center mb2 pa3 br2 flex-shrink-0 '
+                                                        key={`answer-block2-${answer.id}`}
+                                                      >
+                                                        <div className='flex  mr3 items-center '>
+                                                          <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-white mr3'></span>
                                                         </div>
-                                                      )}
-                                                    {(this.state.userExamAttemptTracking.answerCorrects.indexOf(
-                                                      answer.id
-                                                    ) >= 0 ||
-                                                      answer.isCorrect) && (
-                                                        <div
-                                                          className='flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-green'
-                                                          key={`answer-block3-${answer.id}`}
-                                                        >
-                                                          <div className='flex  mr3 items-center '>
-                                                            <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-green b--green mr3'>
-                                                              <svg
-                                                                className='db bg-green ba b--green br-100 svg-s-white svg-fn'
-                                                                viewBox='0 0 32 24'
-                                                                version='1.1'
-                                                                xmlns='http://www.w3.org/2000/svg'
-                                                                width='12px'
-                                                                height='12px'
-                                                                style={{
-                                                                  strokeWidth: '5px'
-                                                                }}
-                                                              >
-                                                                <polyline points='2.6 13.4 11.3 21.4 29.7 2.9'></polyline>
-                                                              </svg>
-                                                            </span>
-                                                          </div>
-                                                          <div>
-                                                            <span>{ReactHtmlParser(answer.content)}</span>
-                                                          </div>
+                                                        <div>
+                                                          <span>{ReactHtmlParser(answer.content)}</span>
                                                         </div>
-                                                      )}
+                                                      </div>
+                                                    )}
+                                                  {(this.state.userExamAttemptTracking.answerCorrects.indexOf(
+                                                    answer.id
+                                                  ) >= 0 ||
+                                                    answer.isCorrect) && (
+                                                    <div
+                                                      className='flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-green'
+                                                      key={`answer-block3-${answer.id}`}
+                                                    >
+                                                      <div className='flex  mr3 items-center '>
+                                                        <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-green b--green mr3'>
+                                                          <svg
+                                                            className='db bg-green ba b--green br-100 svg-s-white svg-fn'
+                                                            viewBox='0 0 32 24'
+                                                            version='1.1'
+                                                            xmlns='http://www.w3.org/2000/svg'
+                                                            width='12px'
+                                                            height='12px'
+                                                            style={{
+                                                              strokeWidth: '5px'
+                                                            }}
+                                                          >
+                                                            <polyline points='2.6 13.4 11.3 21.4 29.7 2.9'></polyline>
+                                                          </svg>
+                                                        </span>
+                                                      </div>
+                                                      <div>
+                                                        <span>{ReactHtmlParser(answer.content)}</span>
+                                                      </div>
+                                                    </div>
+                                                  )}
 
-                                                    {this.state.userExamAttemptTracking.answerIncorrects.indexOf(
-                                                      answer.id
-                                                    ) >= 0 && (
-                                                        <div
-                                                          key={`answer-block4-${answer.id}`}
-                                                          className='flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-red'
-                                                        >
-                                                          <div className='flex  mr3 items-center '>
-                                                            <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-red b--red mr3'>
-                                                              <svg
-                                                                className='svg-s-white'
-                                                                viewBox='0 0 24 24'
-                                                                version='1.1'
-                                                                xmlns='http://www.w3.org/2000/svg'
-                                                                width='12px'
-                                                                height='12px'
-                                                                style={{
-                                                                  strokeWidth: '4px'
-                                                                }}
-                                                              >
-                                                                <line x1='2.5' y1='2.9' x2='21.5' y2='21.9'></line>
-                                                                <line x1='21.5' y1='2.9' x2='2.5' y2='21.9'></line>
-                                                              </svg>
-                                                            </span>
-                                                          </div>
-                                                          <div>
-                                                            <span>{ReactHtmlParser(answer.content)}</span>
-                                                          </div>
-                                                        </div>
-                                                      )}
-                                                  </>
-                                                ))}
-                                              </div>
-                                              <QuestionExplain explain={this.state.currentQuestion.explain} />
-                                            </>
-                                          )}
+                                                  {this.state.userExamAttemptTracking.answerIncorrects.indexOf(
+                                                    answer.id
+                                                  ) >= 0 && (
+                                                    <div
+                                                      key={`answer-block4-${answer.id}`}
+                                                      className='flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-red'
+                                                    >
+                                                      <div className='flex  mr3 items-center '>
+                                                        <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-red b--red mr3'>
+                                                          <svg
+                                                            className='svg-s-white'
+                                                            viewBox='0 0 24 24'
+                                                            version='1.1'
+                                                            xmlns='http://www.w3.org/2000/svg'
+                                                            width='12px'
+                                                            height='12px'
+                                                            style={{
+                                                              strokeWidth: '4px'
+                                                            }}
+                                                          >
+                                                            <line x1='2.5' y1='2.9' x2='21.5' y2='21.9'></line>
+                                                            <line x1='21.5' y1='2.9' x2='2.5' y2='21.9'></line>
+                                                          </svg>
+                                                        </span>
+                                                      </div>
+                                                      <div>
+                                                        <span>{ReactHtmlParser(answer.content)}</span>
+                                                      </div>
+                                                    </div>
+                                                  )}
+                                                </>
+                                              ))}
+                                            </div>
+                                            <QuestionExplain explain={this.state.currentQuestion.explain} />
+                                          </>
+                                        )}
                                       </div>
                                     </div>
                                   </>
@@ -1212,27 +1359,27 @@ class TestDetails extends React.Component {
                                               {this.state.userExamAttemptTracking.questionBookmarkeds.indexOf(
                                                 question.id
                                               ) >= 0 && (
-                                                  <span
-                                                    className='ba bw1 b--white w1 h1 br-100 bg-white absolute flex items-center justify-center'
-                                                    style={{
-                                                      top: '-8px',
-                                                      right: '-8px'
-                                                    }}
+                                                <span
+                                                  className='ba bw1 b--white w1 h1 br-100 bg-white absolute flex items-center justify-center'
+                                                  style={{
+                                                    top: '-8px',
+                                                    right: '-8px'
+                                                  }}
+                                                >
+                                                  <svg
+                                                    className='db svg-f-gold'
+                                                    viewBox='0 0 32 32'
+                                                    version='1.1'
+                                                    width='14'
+                                                    height='14'
                                                   >
-                                                    <svg
-                                                      className='db svg-f-gold'
-                                                      viewBox='0 0 32 32'
-                                                      version='1.1'
-                                                      width='14'
-                                                      height='14'
-                                                    >
-                                                      <path
-                                                        fillRule='evenodd'
-                                                        d='M15.702 24.058L6.79 28.724l1.702-9.884-7.21-7 9.963-1.441 4.456-8.993 4.455 8.993 9.963 1.442-7.209 7 1.702 9.883z'
-                                                      ></path>
-                                                    </svg>
-                                                  </span>
-                                                )}
+                                                    <path
+                                                      fillRule='evenodd'
+                                                      d='M15.702 24.058L6.79 28.724l1.702-9.884-7.21-7 9.963-1.441 4.456-8.993 4.455 8.993 9.963 1.442-7.209 7 1.702 9.883z'
+                                                    ></path>
+                                                  </svg>
+                                                </span>
+                                              )}
                                             </div>
                                             {/* Show underline for current question */}
                                             {this.state.currentQuestionId === question.id && (
