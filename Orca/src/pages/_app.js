@@ -12,7 +12,7 @@ import 'iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'
 import '../../styles/main.scss'
-
+import Script from 'next/script'
 // import '../../styles/test.css'
 import { defaultACLObj } from 'configs/acl'
 import themeConfig from 'configs/themeConfig'
@@ -105,6 +105,17 @@ const App = props => {
               <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
               <meta name='viewport' content='initial-scale=1, width=device-width' />
             </Head>
+            <Script strategy='lazyOnload' src={`https://www.googletagmanager.com/gtag/js?id=G-PYF88KK7GH`} />
+            <Script strategy='lazyOnload'>
+              {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', 'G-PYF88KK7GH', {
+                    page_path: window.location.pathname,
+                    });
+                `}
+            </Script>
             <AuthProvider>
               <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
                 <SettingsConsumer>
@@ -112,11 +123,12 @@ const App = props => {
                     return (
                       <ThemeComponent settings={settings}>
                         <WindowWrapper>
-                          <Guard authGuard={authGuard} guestGuard={guestGuard}>
+                          {/* <Guard authGuard={authGuard} guestGuard={guestGuard}>
                             <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}>
                               {getLayout(<Component {...pageProps} />)}
                             </AclGuard>
-                          </Guard>
+                          </Guard> */}
+                          {getLayout(<Component {...pageProps} />)}
                         </WindowWrapper>
                         <ReactHotToast>
                           <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />

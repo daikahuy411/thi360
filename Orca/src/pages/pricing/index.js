@@ -1,8 +1,5 @@
 import * as React from 'react'
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import V1Api from 'api/v1-api'
 
@@ -275,8 +272,8 @@ const PricingPage = () => {
 
   return (
     <>
-      <Grid container spacing={8}>
-        <Grid item md={12}>
+      <Grid container spacing={8} justifyContent='center'>
+        <Grid item md={12} lg={10} xl={10}>
           <Card>
             <CardContent>
               <br />
@@ -284,11 +281,12 @@ const PricingPage = () => {
               <Alert severity='success' icon={<Icon icon='mdi:tag-outline' />} sx={{ mb: 4 }}>
                 <AlertTitle>Khuyến mại</AlertTitle>
                 <div>
-                  {promotions && promotions.map(item => (
-                    <Typography key={item.id} sx={{ color: 'success.main' }}>
-                      - {item.name}
-                    </Typography>
-                  ))}
+                  {promotions &&
+                    promotions.map(item => (
+                      <Typography key={item.id} sx={{ color: 'success.main' }}>
+                        - {item.name}
+                      </Typography>
+                    ))}
                 </div>
               </Alert>
               <TabContext value={value}>

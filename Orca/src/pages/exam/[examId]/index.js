@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, forwardRef } from 'react'
 import V1Api from 'api/v1-api'
 import NavLink from 'next/link'
 import { useRouter } from 'next/router'
@@ -12,26 +12,39 @@ import IconButton from '@mui/material/IconButton'
 import Link from '@mui/material/Link'
 import TestingApi from 'api/testing-api'
 import CircularProgress from '@mui/material/CircularProgress'
+import { useAuth } from 'hooks/useAuth'
+import Dialog from '@mui/material/Dialog'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import Slide from '@mui/material/Slide'
+import DialogContentText from '@mui/material/DialogContentText'
+import TestAttemptHistoryDialog from 'pages/shared/test-attempt-history-dialog'
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
 
 const ExamPage = () => {
   const router = useRouter()
   const { examId } = router.query
   const [exam, setExam] = useState(null)
+  const [selectedTest, setSelectedTest] = useState(null)
   const [loading, setLoading] = useState(null)
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const open = Boolean(anchorEl)
+  const [showLogin, setShowLogin] = useState(false)
+  const [anchorEls, setAnchorEls] = useState([])
+  const [openTestAttemptHistory, setOpenTestAttemptHistory] = useState(false)
+  const auth = useAuth()
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget)
-  }
+  const createExamAttempt = (examItemId, testId, mode = 1) => {
+    if (!auth.user) {
+      setShowLogin(true)
+      return
+    }
 
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-
-  const createExamAttempt = (examItemId, testId) => {
     setLoading(true)
-    new TestingApi().CreateExamAttempt(parseInt(examId), examItemId, testId).then(response => {
+    new TestingApi().CreateExamAttempt(parseInt(examId), examItemId, testId, mode).then(response => {
       router.push(`/testing/${response.data.value.token}`)
     })
   }
@@ -46,6 +59,26 @@ const ExamPage = () => {
       setLoading(false)
     })
   }, [examId])
+
+  const showTestAttemptHistory = id => {
+    anchorEls[id] = null
+    setAnchorEls([...anchorEls])
+    if (!auth.user) {
+      setShowLogin(true)
+      return
+    }
+    setOpenTestAttemptHistory(true)
+  }
+
+  const handleActionClick = (id, event) => {
+    anchorEls[id] = event.target
+    setAnchorEls([...anchorEls])
+  }
+
+  const handleActionClose = (id, event) => {
+    anchorEls[id] = null
+    setAnchorEls([...anchorEls])
+  }
 
   return (
     <>
@@ -108,7 +141,8 @@ const ExamPage = () => {
                       <div className='card-body'>
                         <div className='detail-title'>
                           <span>
-                            <img src='/themes/default/assets/img/icons/exam1.png' width={100} />
+                            <img src='/images/home/grad-icon.svg' width={100} />
+                            {/* <img src='/themes/default/assets/img/icons/exam1.png' width={100} /> */}
                           </span>
                           <article>
                             <h3>{exam.name}</h3>
@@ -185,6 +219,7 @@ const ExamPage = () => {
                                     <th>Đề thi</th>
                                     <th style={{ width: 200 }}>Số câu hỏi</th>
                                     <th style={{ width: 200 }}>Loại đề thi</th>
+                                    <th style={{ width: 160 }}>Số lượt thi</th>
                                     <th style={{ textAlign: 'left', width: 260 }}>Thao tác</th>
                                   </tr>
                                 </thead>
@@ -194,37 +229,46 @@ const ExamPage = () => {
                                       <tr key={row.id}>
                                         <td style={{ textAlign: 'center' }}>{index + 1}</td>
                                         <td>
-                                          <CircularProgress
-                                            size={32}
-                                            value={100}
-                                            thickness={5}
-                                            variant='determinate'
-                                            sx={{ position: 'absolute', color: 'customColors.trackBg' }}
-                                          />
-                                          <CircularProgress
-                                            size={32}
-                                            thickness={5}
-                                            value={50}
-                                            sx={{ color: '#4caf50' }}
-                                            variant='determinate'
-                                          />
+                                          {row.userTestAttemptTracking && (
+                                            <>
+                                              <CircularProgress
+                                                size={32}
+                                                value={100}
+                                                thickness={5}
+                                                variant='determinate'
+                                                sx={{ position: 'absolute', color: 'customColors.trackBg' }}
+                                              />
+                                              <CircularProgress
+                                                size={32}
+                                                thickness={5}
+                                                value={50}
+                                                sx={{ color: '#4caf50' }}
+                                                variant='determinate'
+                                              />
+                                            </>
+                                          )}
                                         </td>
                                         <td>
                                           <div>{row.name}</div>
                                           {row.link && (
                                             <div>
-                                              <a href={row.link} rel="noreferrer" target={'_blank'}>{row.link}</a>
+                                              <a href={row.link} rel='noreferrer' target={'_blank'}>
+                                                {row.link}
+                                              </a>
                                             </div>
                                           )}
-                                          {/* {row.userTestAttemptTracking && (
-                                            <p>{row.userTestAttemptTracking.totalPassed}</p>
-                                          )}
-                                          {row.userTestAttemptTracking && (
-                                            <p>{row.userTestAttemptTracking.totalFailed}</p>
-                                          )} */}
                                         </td>
                                         <td>{row.totalQuestion}</td>
                                         <td>{row.testTypeName}</td>
+                                        <td>
+                                          {row.userTestAttemptTracking && (
+                                            <p>
+                                              {row.userTestAttemptTracking.totalPassed +
+                                                row.userTestAttemptTracking.totalFailed}
+                                            </p>
+                                          )}
+                                          {!row.userTestAttemptTracking && <p>0</p>}
+                                        </td>
                                         <td className=''>
                                           <div className='d-flex align-items-center justify-content-end'>
                                             <Button
@@ -234,23 +278,43 @@ const ExamPage = () => {
                                                 createExamAttempt(exam.examItems[0].id, row.id)
                                               }}
                                             >
-                                              Thi thử
+                                              Vào thi
                                             </Button>
                                             &nbsp;
-                                            <Button variant='outlined' size='small'>
+                                            <Button
+                                              variant='outlined'
+                                              onClick={() => {
+                                                createExamAttempt(exam.examItems[0].id, row.id, 0)
+                                              }}
+                                              size='small'
+                                            >
                                               Luyện tập
                                             </Button>
                                             &nbsp;
                                             <IconButton
                                               aria-label='more'
-                                              id='long-button'
-                                              aria-controls={open ? 'long-menu' : undefined}
-                                              aria-expanded={open ? 'true' : undefined}
+                                              aria-controls='long-menu'
                                               aria-haspopup='true'
-                                              onClick={handleClick}
+                                              onClick={e => handleActionClick(row.id, e)}
                                             >
                                               <MoreVertIcon />
                                             </IconButton>
+                                            <Menu
+                                              id={row.id}
+                                              anchorEl={anchorEls[row.id]}
+                                              keepMounted
+                                              open={Boolean(anchorEls[row.id])}
+                                              onClose={e => handleActionClose(row.id, e)}
+                                            >
+                                              <MenuItem
+                                                onClick={e => {
+                                                  setSelectedTest(row)
+                                                  showTestAttemptHistory(row.id)
+                                                }}
+                                              >
+                                                Xem lịch sử thi
+                                              </MenuItem>
+                                            </Menu>
                                           </div>
                                         </td>
                                       </tr>
@@ -412,6 +476,32 @@ const ExamPage = () => {
           </LoadingSpinner>
         </Grid>
       </Grid>
+      <Dialog
+        open={showLogin}
+        keepMounted
+        onClose={() => setShowLogin(false)}
+        TransitionComponent={Transition}
+        aria-labelledby='alert-dialog-slide-title'
+        aria-describedby='alert-dialog-slide-description'
+      >
+        <DialogContent>
+          <DialogContentText id='alert-dialog-slide-description'>
+            Vui lòng đăng nhập hoặc đăng ký để tiếp tục
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions className='dialog-actions-dense'>
+          <NavLink href={'/login'}>
+            <Button>Đăng nhập/ Đăng ký</Button>
+          </NavLink>
+        </DialogActions>
+      </Dialog>
+      <TestAttemptHistoryDialog
+        open={openTestAttemptHistory}
+        test={selectedTest}
+        onClose={() => {
+          setOpenTestAttemptHistory(false)
+        }}
+      />
     </>
   )
 }

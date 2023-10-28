@@ -1,9 +1,5 @@
 // ** React Imports
-import {
-  createContext,
-  useEffect,
-  useState
-} from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 import UserApi from 'api/user-api'
 // ** Axios
@@ -29,7 +25,7 @@ const defaultProvider = {
 }
 const AuthContext = createContext(defaultProvider)
 
-const AuthProvider = ({ children }) => {  
+const AuthProvider = ({ children }) => {
   const dispatch = useDispatch()
   // ** States
   const [user, setUser] = useState(defaultProvider.user)
@@ -88,7 +84,6 @@ const AuthProvider = ({ children }) => {
         // params.rememberMe
         //   ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.value.token)
         //   : null
-
         me()
         const returnUrl = router.query.returnUrl
         setUser({ ...response.data.value })
@@ -108,14 +103,20 @@ const AuthProvider = ({ children }) => {
         const data = response.data
         dispatch(selectProfile(data))
       })
-      .catch((e) => { console.log(e) })
+      .catch(e => {
+        setUser(null)
+        window.localStorage.removeItem('userData')
+        window.localStorage.removeItem(authConfig.storageTokenKeyName)
+        router.push('/home')
+        console.log(e)
+      })
   }
 
   const handleLogout = () => {
     setUser(null)
     window.localStorage.removeItem('userData')
     window.localStorage.removeItem(authConfig.storageTokenKeyName)
-    router.push('/login')
+    router.push('/home')
   }
 
   const handleRegister = (params, errorCallback) => {

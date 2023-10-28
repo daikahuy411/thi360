@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
 import TestingApi from 'api/testing-api'
 import moment from 'moment'
-import TableEmpty from 'pages/shared/table/TableEmpty'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
-import EditIcon from '@mui/icons-material/Edit'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
@@ -18,7 +16,6 @@ import IconButton from '@mui/material/IconButton'
 import LoadingSpinner from '@core/components/loading-spinner'
 import Link from 'next/link'
 import Icon from '@core/components/icon'
-import CircularProgress from '@mui/material/CircularProgress'
 
 const ExamAttempHistory = () => {
   const [data, setData] = useState()
@@ -26,7 +23,6 @@ const ExamAttempHistory = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(false)
-  const [isTableEmpty, setIsTableEmpty] = useState(false)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -96,14 +92,14 @@ const ExamAttempHistory = () => {
             <Table sx={{ minWidth: 650 }} aria-label='simple table'>
               <TableHead>
                 <TableRow>
-                  <TableCell>STT</TableCell>
-                  <TableCell style={{ width: 50 }}>Xem</TableCell>
+                  <TableCell style={{ textAlign: 'center', width: 50 }}>STT</TableCell>
+                  <TableCell style={{ textAlign: 'center', width: 50 }}>Xem</TableCell>
                   <TableCell>Tên</TableCell>
-                  <TableCell style={{ width: 110 }}>Câu đúng</TableCell>
-                  <TableCell style={{ width: 110 }}>Câu sai</TableCell>
                   <TableCell style={{ width: 120 }}>Chưa trả lời</TableCell>
+                  <TableCell style={{ width: 110 }}>Câu sai</TableCell>
+                  <TableCell style={{ width: 110 }}>Câu đúng</TableCell>
                   <TableCell style={{ width: 90 }}>Điểm</TableCell>
-                  <TableCell style={{ width: 290 }}>Thời gian thi</TableCell>
+                  <TableCell style={{ width: 160 }}>Trạng thái</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -133,40 +129,34 @@ const ExamAttempHistory = () => {
                           <Typography variant='body1'>
                             [{row.id}]-{row.name}
                           </Typography>
-                        </TableCell>
-                        <TableCell component='td' scope='row'>
-                          {row.totalCorrectQuestion}
-                        </TableCell>
-                        <TableCell component='td' scope='row'>
-                          {row.totalIncorrectQuestion}
+                          <Typography variant='body1'>
+                            {moment(row.startDate).format('DD-MM-YYYY hh:mm')}
+                            &nbsp;&gt;&nbsp;
+                            {moment(row.endDate).format('DD-MM-YYYY hh:mm')}
+                          </Typography>
+                          <Link href={`/exam/${row.examId}`} style={{ fontSize: 15 }}>
+                            {row.examName}
+                          </Link>
                         </TableCell>
                         <TableCell component='td' scope='row'>
                           {row.totalNoAnswerQuestion}
                         </TableCell>
-                        <TableCell>
-                          <CircularProgress
-                            size={32}
-                            value={100}
-                            thickness={5}
-                            variant='determinate'
-                            sx={{ position: 'absolute', color: 'customColors.trackBg' }}
-                          />
-                          <CircularProgress
-                            size={32}
-                            thickness={5}
-                            value={50}
-                            variant='determinate'
-                          />
+                        <TableCell component='td' scope='row'>
+                          <b style={{ color: 'rgb(237, 91, 108)' }}>{row.totalIncorrectQuestion}</b>
                         </TableCell>
-                        <TableCell style={{ textAlign: 'center' }}>
-                          {moment(row.startDate).format('DD/MM/YYYY hh:mm')}
-                          &nbsp;&gt;&nbsp;
-                          {moment(row.endDate).format('DD/MM/YYYY hh:mm')}
+                        <TableCell component='td' scope='row'>
+                          <b style={{ color: 'rgb(80, 177, 103)' }}>{row.totalCorrectQuestion}</b>
+                        </TableCell>
+                        <TableCell>
+                          <b>{row.score}</b>
+                        </TableCell>
+                        <TableCell>
+                          {row.isPassed && <span class='attempt-result attempt-result-pass'>Đạt</span>}
+                          {!row.isPassed && <span class='attempt-result attempt-result-fail'>Không đạt</span>}
                         </TableCell>
                       </TableRow>
                     )
                   })}
-                <TableEmpty isOpen={isTableEmpty} colSpan={4} />
               </TableBody>
             </Table>
           </TableContainer>

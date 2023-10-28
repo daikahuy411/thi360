@@ -1,7 +1,6 @@
 import React from 'react'
 import Countdown from 'react-countdown'
 import ReactHtmlParser from 'react-html-parser'
-import { scroller } from 'react-scroll'
 import TestingApi from 'api/testing-api'
 import QuestionContent from '../Question/QuestionContent'
 import Clock from './Clock'
@@ -13,6 +12,7 @@ import LoadingSpinner from '@core/components/loading-spinner'
 import Help from '../Help'
 import { withRouter } from 'next/router'
 import Fullscreen from 'react-fullscreen-crossbrowser'
+import authConfig from 'configs/auth'
 
 // MODE
 // 0: Practice: hiển thị đáp án sau khi trả lời.
@@ -28,6 +28,8 @@ class TestDetails extends React.Component {
     token: '',
     lastUpdated: null,
     currentQuestion: null, // Current question, nếu là chính phụ là Parent Question.
+    curentParentQuestionId: 0,
+    currentQuestionId: 0, // Id của câu hỏi hiện tại đang selected. Nếu là câu hỏi chính phụ: curentQuestionId là Id của câu hỏi con.
     totalQuestion: 0,
     examAttempt: null,
     showConfirm: false,
@@ -56,7 +58,8 @@ class TestDetails extends React.Component {
       lastVisitedTracking: {}
     },
     disableNextButton: false,
-    fullScreen: false
+    fullScreen: false,
+    timeLeftInSeconds: 0
   }
 
   constructor(props) {
@@ -103,23 +106,48 @@ class TestDetails extends React.Component {
     examAttempt.userExamAttemptTracking.questionVisiteds = examAttempt.userExamAttemptTracking.questionVisiteds || []
 
     // Determine the question to render after initializing
+    let currentQuestionId = 0
+    let currentParentQuestionId = 0
     let question
+
     if (examAttempt.userExamAttemptTracking.lastVisitedTracking) {
       const section = _.find(examAttempt.testGroup.sections, {
-        Id: examAttempt.userExamAttemptTracking.lastVisitedTracking.sectionId
+        id: examAttempt.userExamAttemptTracking.lastVisitedTracking.sectionId
       })
 
       const sectionItem = _.find(section?.items, {
-        Id: examAttempt.userExamAttemptTracking.lastVisitedTracking.itemId
+        id: examAttempt.userExamAttemptTracking.lastVisitedTracking.itemId
       })
 
-      question = _.find(sectionItem?.questions, {
-        Id: examAttempt.userExamAttemptTracking.lastVisitedTracking.questionId
+      const questionMap = _.find(section?.questionMaps, {
+        id: examAttempt.userExamAttemptTracking.lastVisitedTracking.questionId
       })
+
+      currentQuestionId = examAttempt.userExamAttemptTracking.lastVisitedTracking.questionId
+      if (questionMap) {
+        currentParentQuestionId = questionMap.parentId
+
+        if (questionMap.parentId == 0) {
+          question = _.find(sectionItem?.questions, {
+            id: questionMap.id
+          })
+        } else {
+          question = _.find(sectionItem?.questions, {
+            id: questionMap.parentId
+          })
+        }
+      }
     }
 
     if (!question) {
+      // Nếu câu đầu tiên là câu hỏi chính phụ, select câu hỏi con đầu tiên.
       question = examAttempt.testGroup.sections[0].items[0].questions[0]
+      if (question.questionTypeId == QuestionType.GQ) {
+        question = question.children[0]
+      }
+
+      currentQuestionId = question.id
+      currentParentQuestionId = question.parentId
     }
 
     this.setState(
@@ -129,11 +157,18 @@ class TestDetails extends React.Component {
         userAnswers: examAttempt.userAnswersJSON !== '' ? JSON.parse(examAttempt.userAnswersJSON) : {},
         examAttempt: examAttempt,
         currentQuestion: question,
-        totalQuestion: examAttempt.totalQuestion
+        currentQuestionId: currentQuestionId,
+        totalQuestion: examAttempt.totalQuestion,
+        timeLeftInSeconds: examAttempt.timeLeftInSeconds
       },
       // Select the first question after setSate.
       () => {
-        this.viewQuestion(question.id, question.parentId, question.testGroupSectionItemId, question.testGroupSectionId)
+        this.viewQuestion(
+          currentQuestionId,
+          currentParentQuestionId,
+          question.testGroupSectionItemId,
+          question.testGroupSectionId
+        )
       }
     )
   }
@@ -166,28 +201,59 @@ class TestDetails extends React.Component {
     })
   }
 
-  scrollToQuestion(questionId) {
-    scroller.scrollTo(`question-${questionId}`, {
-      duration: 800,
-      delay: 0,
-      offset: -130,
-      smooth: 'easeInOutQuart'
-    })
+  onTick() {
+    var time = this.state.timeLeftInSeconds
+    this.setState({ timeLeftInSeconds: --time })
+  }
+
+  scrollToQuestion(questionId, sectionId = 0) {
+    setTimeout(() => {
+      const questionPanel = document.getElementById(`question-${questionId}`)
+      if (questionPanel) {
+        questionPanel.scrollIntoView({ behavior: 'smooth' })
+      }
+
+      if (sectionId != 0) {
+        const questionPalettePanel = document.getElementById(`section-panel-${sectionId}`)
+        if (questionPalettePanel) {
+          questionPalettePanel.scrollIntoView({ behavior: 'smooth' })
+        }
+      }
+    }, 250)
   }
 
   saveAndNext() {
     let currentQuestionIndex = 0
     currentQuestionIndex = _.findIndex(this.state.examAttempt.testGroup.questionMaps, {
-      id: this.state.currentQuestion.id
+      id: this.state.currentQuestionId
     })
 
     currentQuestionIndex++
 
-    const totalQuestion = this.state.examAttempt.totalQuestion
+    const totalQuestion = this.state.examAttempt.testGroup.questionMaps.length
     if (currentQuestionIndex == totalQuestion) {
       // this.setState({ disableNextButton: true });
       return
     }
+
+    const nextQuestion = this.state.examAttempt.testGroup.questionMaps[currentQuestionIndex]
+    this.viewQuestion(nextQuestion.id, nextQuestion.parentId, nextQuestion.itemId, nextQuestion.sectionId)
+  }
+
+  navigateQuestion(isNext) {
+    let currentQuestionIndex = 0
+    currentQuestionIndex = _.findIndex(this.state.examAttempt.testGroup.questionMaps, {
+      id: this.state.currentQuestionId
+    })
+    currentQuestionIndex = isNext ? currentQuestionIndex - 1 : currentQuestionIndex + 1
+
+    if (currentQuestionIndex < 0) return
+
+    const totalQuestion = this.state.examAttempt.testGroup.questionMaps.length
+    if (currentQuestionIndex == totalQuestion) {
+      return
+    }
+
     const nextQuestion = this.state.examAttempt.testGroup.questionMaps[currentQuestionIndex]
     this.viewQuestion(nextQuestion.id, nextQuestion.parentId, nextQuestion.itemId, nextQuestion.sectionId)
   }
@@ -218,7 +284,10 @@ class TestDetails extends React.Component {
     if (this.state.mode == 1) {
       if (this.state.userExamAttemptTracking.questionAttempteds.indexOf(questionId) > -1) {
         return answeredClassName
-      } else if (this.state.userExamAttemptTracking.questionVisiteds.indexOf(questionId) > -1) {
+      } else if (
+        this.state.userExamAttemptTracking.questionVisiteds.indexOf(questionId) > -1 &&
+        this.state.currentQuestionId !== questionId
+      ) {
         return notAnsweredClassName
       }
 
@@ -350,6 +419,11 @@ class TestDetails extends React.Component {
 
     // //Nếu câu hỏi đã submit câu trả lời thì không cho phép thay đổi
     const questionAttempteds = [...this.state.userExamAttemptTracking.questionAttempteds]
+    const questionVisiteds = [...this.state.userExamAttemptTracking.questionVisiteds]
+
+    if (this.state.mode !== 2 && questionVisiteds.indexOf(questionId) < 0) {
+      questionVisiteds.push(questionId)
+    }
 
     if (questionAttempteds.indexOf(questionId) < 0) {
       questionAttempteds.push(questionId)
@@ -375,9 +449,11 @@ class TestDetails extends React.Component {
         prevState => ({
           ...prevState,
           userAnswers: userAnswers,
+          currentQuestionId: questionId,
           userExamAttemptTracking: {
             ...prevState.userExamAttemptTracking,
-            questionAttempteds: questionAttempteds
+            questionAttempteds: questionAttempteds,
+            questionVisiteds: questionVisiteds,
           }
         }),
         () => {
@@ -393,9 +469,9 @@ class TestDetails extends React.Component {
       parentQuestionId = questionId
     }
 
-    var section = this.state.examAttempt.testGroup.sections.filter(x => x.id == sectionId)[0]
-    var sectionItem = section.items.filter(x => x.id == sectionItemId)[0]
-    var question = sectionItem.questions.filter(x => x.id == parentQuestionId)[0]
+    var section = this.state.examAttempt.testGroup.sections.find(x => x.id == sectionId)
+    var sectionItem = section.items.find(x => x.id == sectionItemId)
+    var question = sectionItem.questions.find(x => x.id == parentQuestionId)
 
     const questionVisiteds = [...this.state.userExamAttemptTracking.questionVisiteds]
 
@@ -403,27 +479,35 @@ class TestDetails extends React.Component {
       questionVisiteds.push(questionId)
     }
 
+    // Lưu câu hỏi người dùng focus gần nhất.
+    // Câu hỏi chính phụ: questionId là id của câu con, parentId lưu id của câu cha.
     let lastVisittedQuestion = {
-      questionId: question.id,
-      parentQuestionId: question.parentId,
-      testGroupSectionId: question.testGroupSectionId,
-      testGroupSectionItemId: question.testGroupSectionItemId
+      questionId: questionId,
+      parentQuestionId: parentQuestionId == questionId ? 0 : parentQuestionId,
+      sectionId: question.testGroupSectionId,
+      itemId: question.testGroupSectionItemId
     }
 
     //Save to state
-    this.setState(prevState => ({
-      ...prevState,
-      currentQuestion: question,
-      currentQuestionId: questionId,
-      userExamAttemptTracking: {
-        ...prevState.userExamAttemptTracking,
-        questionVisiteds: questionVisiteds,
-        lastVisitedTracking: lastVisittedQuestion
-      },
-      disableNextButton: false
-    }))
-
-    this.scrollToQuestion(questionId)
+    this.setState(
+      prevState => ({
+        ...prevState,
+        currentQuestionId: questionId,
+        curentParentQuestionId: parentQuestionId == questionId ? 0 : parentQuestionId,
+        currentSectionId: sectionId,
+        currentQuestion: question,
+        userExamAttemptTracking: {
+          ...prevState.userExamAttemptTracking,
+          questionVisiteds: questionVisiteds,
+          lastVisitedTracking: lastVisittedQuestion
+        },
+        disableNextButton: false
+      }),
+      () => {
+        this.updateExamAttempt()
+        this.scrollToQuestion(questionId, sectionId)
+      }
+    )
   }
 
   bookMarkQuestion() {
@@ -443,6 +527,7 @@ class TestDetails extends React.Component {
   }
 
   updateExamAttempt = function () {
+    if (this.state.examAttempt.status != 0) return
     const testingApi = new TestingApi()
     testingApi
       .UpdateExamAttempt(
@@ -451,7 +536,7 @@ class TestDetails extends React.Component {
         JSON.stringify(this.state.userExamAttemptTracking)
       )
       .then(response => {
-        if (response.data.IsSuccess) {
+        if (response.data.isSuccess) {
           this.setState({ lastUpdated: response.data.value })
           // $scope.removeSavingMarkButton();
           if (!response.data.value) {
@@ -469,8 +554,67 @@ class TestDetails extends React.Component {
     })
   }
 
+  unloadCallback = function (event) {
+    event.preventDefault()
+    event.returnValue = ''
+    return ''
+  }
+
   componentDidMount() {
     this.loadExamAttempt(this.props.token)
+
+    // // Registering the 'begin' event and logging it to the console when triggered.
+    // Events.scrollEvent.register('begin', (to, element) => {
+    //   console.log('begin', to, element)
+    // })
+
+    // // Registering the 'end' event and logging it to the console when triggered.
+    // Events.scrollEvent.register('end', (to, element) => {
+    //   console.log('end', to, element)
+    // })
+
+    // // Updating scrollSpy when the component mounts.
+    // scrollSpy.update()
+
+    // window.addEventListener('beforeunload', this.unloadCallback)
+    // return () => {
+    //   window.addEventListener('popstate', confirmation())
+    //   window.removeEventListener('beforeunload', this.unloadCallback)
+    // }
+
+    this.setState({ userProfile: JSON.parse(window.localStorage.getItem(authConfig.storageUserDataKeyName)) })
+  }
+
+  getSectionStat = function (section, type) {
+    // Type: 0: answered, 1: not answer, 2: not view, 3: bookmark
+    var tracking = this.state.userExamAttemptTracking
+    if (!tracking) return 0
+    if (type == 0) {
+      return section.questionMaps.filter(function (n) {
+        return tracking.questionAttempteds.indexOf(n.id) !== -1
+      }).length
+    }
+
+    if (type == 3) {
+      return section.questionMaps.filter(function (n) {
+        return tracking.questionBookmarkeds.indexOf(n.id) !== -1
+      }).length
+    }
+
+    if (type == 2) {
+      return section.questionMaps.filter(function (n) {
+        return tracking.questionSkippeds.indexOf(n.id) !== -1
+      }).length
+    }
+
+    if (type == 1) {
+      return (
+        section.questionMaps.length -
+        section.questionMaps.filter(function (n) {
+          return tracking.questionAttempteds.indexOf(n.id) !== -1
+        }).length
+      )
+    }
   }
 
   render() {
@@ -520,7 +664,10 @@ class TestDetails extends React.Component {
                                 onComplete={() => {
                                   this.finishExamAttempt()
                                 }}
-                                date={Date.now() + this.state.examAttempt.timeLeftInSeconds * 1000}
+                                onTick={() => {
+                                  this.onTick()
+                                }}
+                                date={Date.now() + this.state.timeLeftInSeconds * 1000}
                                 renderer={Clock}
                               />
                             </span>
@@ -536,7 +683,6 @@ class TestDetails extends React.Component {
                             </svg>
                           </div>
                         )}
-
                         {this.state.mode === 2 && (
                           <div className='flex items-center pa3 flex-grow-1'>
                             <span className='darkest-blue flex-l dn'>Thời gian làm bài:</span>
@@ -581,28 +727,38 @@ class TestDetails extends React.Component {
                               </span>
                             </div>
                             <div className='flex flex-column tc w4-5 flex-shrink-0 pa3'>
-                              <span className='sky-blue'>Đánh dấu</span>
-                              <span className='f4 fw6 mt3'>
-                                {this.state.userExamAttemptTracking.questionBookmarkeds.length}
-                              </span>
-                            </div>
-                            <div className='flex flex-column tc w4-5 flex-shrink-0 pa3'>
                               <span className='sky-blue'>Chưa xem</span>
                               <span className='f4 fw6 mt3'>
                                 {this.state.examAttempt.testGroup.questionMaps.length -
                                   this.state.userExamAttemptTracking.questionVisiteds.length}
                               </span>
                             </div>
+                            <div className='flex flex-column tc w4-5 flex-shrink-0 pa3'>
+                              <span className='sky-blue'>Đánh dấu</span>
+                              <span className='f4 fw6 mt3'>
+                                {this.state.userExamAttemptTracking.questionBookmarkeds.length}
+                              </span>
+                            </div>
                           </div>
                           <div className='flex flex-column ba b--black-20 br--bottom br3'>
                             {this.state.examAttempt.testGroup.sections.map(section => (
                               <div className='flex flex-shrink-0' key={`es-s-${section.id}`}>
-                                <div className='flex w4-5 flex-shrink-0 pa3 bg-black-05 gray'>{section.Name}</div>
-                                <div className='flex items-center justify-center w4-5 flex-shrink-0 pa3 gray'>-</div>
-                                <div className='flex items-center justify-center w4-5 flex-shrink-0 pa3 gray'>-</div>
-                                <div className='flex items-center justify-center w4-5 flex-shrink-0 pa3 gray'>-</div>
-                                <div className='flex items-center justify-center w4-5 flex-shrink-0 pa3 gray'>-</div>
-                                <div className='flex items-center justify-center w4-5 flex-shrink-0 pa3 gray'>-</div>
+                                <div className='flex w4-5 flex-shrink-0 pa3 bg-black-05 gray'>{section.name}</div>
+                                <div className='flex items-center justify-center w4-5 flex-shrink-0 pa3 gray'>
+                                  {section.questionMaps.length}
+                                </div>
+                                <div className='flex items-center justify-center w4-5 flex-shrink-0 pa3 gray'>
+                                  {this.getSectionStat(section, 0)}
+                                </div>
+                                <div className='flex items-center justify-center w4-5 flex-shrink-0 pa3 red'>
+                                  {this.getSectionStat(section, 1)}
+                                </div>
+                                <div className='flex items-center justify-center w4-5 flex-shrink-0 pa3 red'>
+                                  {this.getSectionStat(section, 2)}
+                                </div>
+                                <div className='flex items-center justify-center w4-5 flex-shrink-0 pa3 gray'>
+                                  {this.getSectionStat(section, 3)}
+                                </div>
                               </div>
                             ))}
                           </div>
@@ -612,15 +768,13 @@ class TestDetails extends React.Component {
                       {this.state.examAttempt.testGroup.questionMaps.length -
                         this.state.userExamAttemptTracking.questionSubmitteds.length >
                         0 && (
-                        <div className='red mt2 flex tc'>
-                          {' '}
-                          Bạn đang còn{' '}
-                          {this.state.examAttempt.testGroup.questionMaps.length -
-                            this.state.userExamAttemptTracking.questionSubmitteds.length}{' '}
-                          chưa trả lời &amp; {this.state.userExamAttemptTracking.questionBookmarkeds.length} đánh dấu để
-                          xem câu hỏi.
-                        </div>
-                      )}
+                          <div className='red mt2 flex tc'>
+                            Bạn đang còn{' '}
+                            {this.state.examAttempt.testGroup.questionMaps.length -
+                              this.state.userExamAttemptTracking.questionSubmitteds.length}{' '}
+                            chưa trả lời
+                          </div>
+                        )}
                       <div className='flex flex mt3'>
                         <div
                           onClick={() => {
@@ -674,7 +828,10 @@ class TestDetails extends React.Component {
                             </span>
                           </div>
                           {/* Queston detail */}
-                          <div className='ques-detail ph4-l ph3 flex mv4 flex-auto overflow-y-scroll overflow-unset-l'>
+                          <div
+                            id='question-content-panel'
+                            className='ques-detail ph4-l ph3 flex mv4 flex-auto overflow-y-scroll overflow-unset-l'
+                          >
                             {this.state.currentQuestion && (
                               <>
                                 {/* Câu hỏi chính phụ */}
@@ -697,25 +854,50 @@ class TestDetails extends React.Component {
                                       </div>
                                       <div className='flex flex-column overflow-y-auto-l overflow-unset w-50-l w-100'>
                                         {this.state.currentQuestion.children.map(question => (
-                                          <div key={`q-${question.id}`}>
+                                          <div key={`q1-${question.id}`} id={`question-${question.id}`}>
                                             <>
                                               <b>Câu: {question.order}</b>
                                               <span className='gray mb2 flex-shrink-0'>
                                                 <QuestionContent question={question} />
                                               </span>
                                               <div className='flex flex-column'>
-                                                {question.answers.map(item => (
+                                                {question.answers.map(answer => (
                                                   <div
-                                                    key={`a-${item.id}`}
+                                                    key={`a-${answer.id}`}
                                                     onClick={() => {
-                                                      this.onQuestionAttempted(this.state.currentQuestion, item.id)
+                                                      this.onQuestionAttempted(question, answer.id)
                                                     }}
                                                     className='flex items-center mb2 pa3 br2 flex-shrink-0 ques-option pointer'
                                                   >
                                                     <div className='flex pointer mr3 items-center '>
-                                                      <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--silver pointer mr3'></span>
+                                                      {this.isSelectedAnswer(question.id, answer.id) && (
+                                                        <span
+                                                          className={
+                                                            question.questionTypeId != QuestionType.MC
+                                                              ? 'w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--sky-blue pointer mr3'
+                                                              : 'w1-5 h1-5 pa1 border-box flex items-center justify-center ba b--sky-blue pointer mr3'
+                                                          }
+                                                        >
+                                                          <span
+                                                            className={
+                                                              question.questionTypeId != QuestionType.MC
+                                                                ? 'db w-100 h-100 border-box bg-sky-blue br-100'
+                                                                : 'db w-100 h-100 border-box bg-sky-blue'
+                                                            }
+                                                          ></span>
+                                                        </span>
+                                                      )}
+                                                      {!this.isSelectedAnswer(question.id, answer.id) && (
+                                                        <span
+                                                          className={
+                                                            question.questionTypeId != QuestionType.MC
+                                                              ? 'w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--silver pointer mr3'
+                                                              : 'w1-5 h1-5 pa1 border-box flex items-center justify-center  ba b--silver pointer mr3'
+                                                          }
+                                                        ></span>
+                                                      )}
                                                     </div>
-                                                    <div className='pointer'>{item.content}</div>
+                                                    <div className='pointer'>{answer.content}</div>
                                                   </div>
                                                 ))}
                                               </div>
@@ -764,137 +946,139 @@ class TestDetails extends React.Component {
                                                         this.state.currentQuestion.id,
                                                         answer.id
                                                       ) && (
-                                                        <span
-                                                          className={
-                                                            this.state.currentQuestion.questionTypeId != QuestionType.MC
-                                                              ? 'w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--sky-blue pointer mr3'
-                                                              : 'w1-5 h1-5 pa1 border-box flex items-center justify-center ba b--sky-blue pointer mr3'
-                                                          }
-                                                        >
                                                           <span
                                                             className={
-                                                              this.state.currentQuestion.questionTypeId !=
-                                                              QuestionType.MC
-                                                                ? 'db w-100 h-100 border-box bg-sky-blue br-100'
-                                                                : 'db w-100 h-100 border-box bg-sky-blue'
+                                                              this.state.currentQuestion.questionTypeId != QuestionType.MC
+                                                                ? 'w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--sky-blue pointer mr3'
+                                                                : 'w1-5 h1-5 pa1 border-box flex items-center justify-center ba b--sky-blue pointer mr3'
                                                             }
-                                                          ></span>
-                                                        </span>
-                                                      )}
+                                                          >
+                                                            <span
+                                                              className={
+                                                                this.state.currentQuestion.questionTypeId !=
+                                                                  QuestionType.MC
+                                                                  ? 'db w-100 h-100 border-box bg-sky-blue br-100'
+                                                                  : 'db w-100 h-100 border-box bg-sky-blue'
+                                                              }
+                                                            ></span>
+                                                          </span>
+                                                        )}
                                                       {!this.isSelectedAnswer(
                                                         this.state.currentQuestion.id,
                                                         answer.id
                                                       ) && (
-                                                        <span
-                                                          className={
-                                                            this.state.currentQuestion.questionTypeId != QuestionType.MC
-                                                              ? 'w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--silver pointer mr3'
-                                                              : 'w1-5 h1-5 pa1 border-box flex items-center justify-center  ba b--silver pointer mr3'
-                                                          }
-                                                        ></span>
-                                                      )}
+                                                          <span
+                                                            className={
+                                                              this.state.currentQuestion.questionTypeId != QuestionType.MC
+                                                                ? 'w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba b--silver pointer mr3'
+                                                                : 'w1-5 h1-5 pa1 border-box flex items-center justify-center  ba b--silver pointer mr3'
+                                                            }
+                                                          ></span>
+                                                        )}
                                                     </div>
                                                     <div className='pointer'>{ReactHtmlParser(answer.content)}</div>
                                                   </div>
                                                 ))}
                                               </div>
-                                              <QuestionExplain explain={this.state.currentQuestion.explain} />
+                                              {(this.state.mode === 2 || this.state.mode === 3) && (
+                                                <QuestionExplain explain={this.state.currentQuestion.explain} />
+                                              )}
                                             </>
                                           )}
                                         {(this.state.userExamAttemptTracking.questionSubmitteds.indexOf(
                                           this.state.currentQuestion.id
                                         ) >= 0 ||
                                           this.state.mode == 2) && (
-                                          <>
-                                            <div className='flex flex-column'>
-                                              {this.state.currentQuestion.answers.map(answer => (
-                                                <>
-                                                  {this.state.userExamAttemptTracking.answerCorrects.indexOf(
-                                                    answer.id
-                                                  ) < 0 &&
-                                                    answer.isCorrect == false &&
-                                                    this.state.userExamAttemptTracking.answerIncorrects.indexOf(
+                                            <>
+                                              <div className='flex flex-column'>
+                                                {this.state.currentQuestion.answers.map(answer => (
+                                                  <>
+                                                    {this.state.userExamAttemptTracking.answerCorrects.indexOf(
                                                       answer.id
-                                                    ) < 0 && (
-                                                      <div
-                                                        className='flex items-center mb2 pa3 br2 flex-shrink-0 '
-                                                        key={`answer-block2-${answer.id}`}
-                                                      >
-                                                        <div className='flex  mr3 items-center '>
-                                                          <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-white mr3'></span>
+                                                    ) < 0 &&
+                                                      answer.isCorrect == false &&
+                                                      this.state.userExamAttemptTracking.answerIncorrects.indexOf(
+                                                        answer.id
+                                                      ) < 0 && (
+                                                        <div
+                                                          className='flex items-center mb2 pa3 br2 flex-shrink-0 '
+                                                          key={`answer-block2-${answer.id}`}
+                                                        >
+                                                          <div className='flex  mr3 items-center '>
+                                                            <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-white mr3'></span>
+                                                          </div>
+                                                          <div>
+                                                            <span>{ReactHtmlParser(answer.content)}</span>
+                                                          </div>
                                                         </div>
-                                                        <div>
-                                                          <span>{ReactHtmlParser(answer.content)}</span>
+                                                      )}
+                                                    {(this.state.userExamAttemptTracking.answerCorrects.indexOf(
+                                                      answer.id
+                                                    ) >= 0 ||
+                                                      answer.isCorrect) && (
+                                                        <div
+                                                          className='flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-green'
+                                                          key={`answer-block3-${answer.id}`}
+                                                        >
+                                                          <div className='flex  mr3 items-center '>
+                                                            <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-green b--green mr3'>
+                                                              <svg
+                                                                className='db bg-green ba b--green br-100 svg-s-white svg-fn'
+                                                                viewBox='0 0 32 24'
+                                                                version='1.1'
+                                                                xmlns='http://www.w3.org/2000/svg'
+                                                                width='12px'
+                                                                height='12px'
+                                                                style={{
+                                                                  strokeWidth: '5px'
+                                                                }}
+                                                              >
+                                                                <polyline points='2.6 13.4 11.3 21.4 29.7 2.9'></polyline>
+                                                              </svg>
+                                                            </span>
+                                                          </div>
+                                                          <div>
+                                                            <span>{ReactHtmlParser(answer.content)}</span>
+                                                          </div>
                                                         </div>
-                                                      </div>
-                                                    )}
-                                                  {(this.state.userExamAttemptTracking.answerCorrects.indexOf(
-                                                    answer.id
-                                                  ) >= 0 ||
-                                                    answer.isCorrect) && (
-                                                    <div
-                                                      className='flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-green'
-                                                      key={`answer-block3-${answer.id}`}
-                                                    >
-                                                      <div className='flex  mr3 items-center '>
-                                                        <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-green b--green mr3'>
-                                                          <svg
-                                                            className='db bg-green ba b--green br-100 svg-s-white svg-fn'
-                                                            viewBox='0 0 32 24'
-                                                            version='1.1'
-                                                            xmlns='http://www.w3.org/2000/svg'
-                                                            width='12px'
-                                                            height='12px'
-                                                            style={{
-                                                              strokeWidth: '5px'
-                                                            }}
-                                                          >
-                                                            <polyline points='2.6 13.4 11.3 21.4 29.7 2.9'></polyline>
-                                                          </svg>
-                                                        </span>
-                                                      </div>
-                                                      <div>
-                                                        <span>{ReactHtmlParser(answer.content)}</span>
-                                                      </div>
-                                                    </div>
-                                                  )}
+                                                      )}
 
-                                                  {this.state.userExamAttemptTracking.answerIncorrects.indexOf(
-                                                    answer.id
-                                                  ) >= 0 && (
-                                                    <div
-                                                      key={`answer-block4-${answer.id}`}
-                                                      className='flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-red'
-                                                    >
-                                                      <div className='flex  mr3 items-center '>
-                                                        <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-red b--red mr3'>
-                                                          <svg
-                                                            className='svg-s-white'
-                                                            viewBox='0 0 24 24'
-                                                            version='1.1'
-                                                            xmlns='http://www.w3.org/2000/svg'
-                                                            width='12px'
-                                                            height='12px'
-                                                            style={{
-                                                              strokeWidth: '4px'
-                                                            }}
-                                                          >
-                                                            <line x1='2.5' y1='2.9' x2='21.5' y2='21.9'></line>
-                                                            <line x1='21.5' y1='2.9' x2='2.5' y2='21.9'></line>
-                                                          </svg>
-                                                        </span>
-                                                      </div>
-                                                      <div>
-                                                        <span>{ReactHtmlParser(answer.content)}</span>
-                                                      </div>
-                                                    </div>
-                                                  )}
-                                                </>
-                                              ))}
-                                            </div>
-                                            <QuestionExplain explain={this.state.currentQuestion.explain} />
-                                          </>
-                                        )}
+                                                    {this.state.userExamAttemptTracking.answerIncorrects.indexOf(
+                                                      answer.id
+                                                    ) >= 0 && (
+                                                        <div
+                                                          key={`answer-block4-${answer.id}`}
+                                                          className='flex items-center mb2 pa3 br2 flex-shrink-0 bg-washed-red'
+                                                        >
+                                                          <div className='flex  mr3 items-center '>
+                                                            <span className='w1-5 h1-5 pa1 border-box flex items-center justify-center br-100 ba bg-red b--red mr3'>
+                                                              <svg
+                                                                className='svg-s-white'
+                                                                viewBox='0 0 24 24'
+                                                                version='1.1'
+                                                                xmlns='http://www.w3.org/2000/svg'
+                                                                width='12px'
+                                                                height='12px'
+                                                                style={{
+                                                                  strokeWidth: '4px'
+                                                                }}
+                                                              >
+                                                                <line x1='2.5' y1='2.9' x2='21.5' y2='21.9'></line>
+                                                                <line x1='21.5' y1='2.9' x2='2.5' y2='21.9'></line>
+                                                              </svg>
+                                                            </span>
+                                                          </div>
+                                                          <div>
+                                                            <span>{ReactHtmlParser(answer.content)}</span>
+                                                          </div>
+                                                        </div>
+                                                      )}
+                                                  </>
+                                                ))}
+                                              </div>
+                                              <QuestionExplain explain={this.state.currentQuestion.explain} />
+                                            </>
+                                          )}
                                       </div>
                                     </div>
                                   </>
@@ -915,7 +1099,7 @@ class TestDetails extends React.Component {
                               >
                                 Đánh dấu để xem sau
                               </div>
-                              {this.state.mode !== 2 && (
+                              {/* {this.state.mode !== 2 && (
                                 <div
                                   onClick={() => {
                                     this.clearCurrentAttemptedQuestion()
@@ -925,7 +1109,7 @@ class TestDetails extends React.Component {
                                 >
                                   Xóa trả lời
                                 </div>
-                              )}
+                              )} */}
                             </div>
                             <div
                               onClick={() => {
@@ -939,19 +1123,43 @@ class TestDetails extends React.Component {
                           </div>
                         )}
                         {this.state.mode === 2 && (
-                          <div className='w-100 flex ph4-l ph3 pv2 bg-light-sky-blue'>
+                          <div className='w-100 flex ph4-l ph3 pv2 justify-between bg-light-sky-blue flex-shrink-0'>
+                            <div className='flex'>
+                              <div
+                                className='flex pointer br2 ba bg-transparent ttu sky-blue b--sky-blue f6-l f7 ph2 ph3-l pv2'
+                                data-s='mfr'
+                                onClick={() => {
+                                  this.navigateQuestion(false)
+                                }}
+                              >
+                                Câu trước
+                              </div>
+                            </div>
                             <div
                               onClick={() => {
-                                this.saveAndNext()
+                                this.navigateQuestion(true)
                               }}
-                              className='flex pointer br2 ba ml-auto bg-transparent ttu sky-blue b--sky-blue f6-l f7 ph2 ph3-l pv2'
-                              data-s='next'
+                              className='flex pointer br2 ba bg-transparent ttu sky-blue b--sky-blue f6-l f7 ph2 ph3-l pv2'
                             >
-                              Lưu và Tiếp tục &gt;
+                              <span>Câu tiếp theo</span>
                             </div>
                           </div>
                         )}
+                        {/* {this.state.mode === 2 && (
+                          <div className='w-100 flex ph4-l ph3 pv2 bg-light-sky-blue'>
+                            <div
+                              className='flex pointer br2 ba ml-auto bg-transparent ttu sky-blue b--sky-blue f6-l f7 ph2 ph3-l pv2'
+                              data-s='next'
+                              onClick={() => {
+                                this.saveAndNext()
+                              }}
+                            >
+                              Câu tiếp theo
+                            </div>
+                          </div>
+                        )} */}
                       </div>
+                      {/* Question Palette */}
                       <div className='flex-l dn w-20'>
                         <div className='flex flex-column flex-grow-1 content-container overflow-hidden'>
                           <div className='ph3 pv2 flex justify-between bt bb bw1 b--white'>
@@ -977,7 +1185,7 @@ class TestDetails extends React.Component {
                           </div>
                           <div style={{ overflowY: 'auto' }}>
                             {this.state.examAttempt.testGroup.sections.map(section => (
-                              <div key={`section-panel-${section.id}`}>
+                              <div key={`section-panel-${section.id}`} id={`section-panel-${section.id}`}>
                                 <>
                                   <div className='flex pv2 ph3 f6 overflow-ellipsis flex-shrink-0 bg-light-sky-blue darkest-blue'>
                                     <span className='ml1 overflow-ellipsis'>{section.name}</span>
@@ -1004,29 +1212,30 @@ class TestDetails extends React.Component {
                                               {this.state.userExamAttemptTracking.questionBookmarkeds.indexOf(
                                                 question.id
                                               ) >= 0 && (
-                                                <span
-                                                  className='ba bw1 b--white w1 h1 br-100 bg-white absolute flex items-center justify-center'
-                                                  style={{
-                                                    top: '-8px',
-                                                    right: '-8px'
-                                                  }}
-                                                >
-                                                  <svg
-                                                    className='db svg-f-gold'
-                                                    viewBox='0 0 32 32'
-                                                    version='1.1'
-                                                    width='14'
-                                                    height='14'
+                                                  <span
+                                                    className='ba bw1 b--white w1 h1 br-100 bg-white absolute flex items-center justify-center'
+                                                    style={{
+                                                      top: '-8px',
+                                                      right: '-8px'
+                                                    }}
                                                   >
-                                                    <path
-                                                      fillRule='evenodd'
-                                                      d='M15.702 24.058L6.79 28.724l1.702-9.884-7.21-7 9.963-1.441 4.456-8.993 4.455 8.993 9.963 1.442-7.209 7 1.702 9.883z'
-                                                    ></path>
-                                                  </svg>
-                                                </span>
-                                              )}
+                                                    <svg
+                                                      className='db svg-f-gold'
+                                                      viewBox='0 0 32 32'
+                                                      version='1.1'
+                                                      width='14'
+                                                      height='14'
+                                                    >
+                                                      <path
+                                                        fillRule='evenodd'
+                                                        d='M15.702 24.058L6.79 28.724l1.702-9.884-7.21-7 9.963-1.441 4.456-8.993 4.455 8.993 9.963 1.442-7.209 7 1.702 9.883z'
+                                                      ></path>
+                                                    </svg>
+                                                  </span>
+                                                )}
                                             </div>
-                                            {this.state.currentQuestion.id === question.id && (
+                                            {/* Show underline for current question */}
+                                            {this.state.currentQuestionId === question.id && (
                                               <span
                                                 className='w2 bg-sky-blue absolute left-0'
                                                 style={{

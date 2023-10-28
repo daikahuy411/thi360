@@ -12,7 +12,15 @@ const UserThemeOptions = () => {
   return {
     typography: {
       fontFamily: '"Source Sans 3", sans-serif'
-    }
+    },
+    // palette: {
+    //   primary: {
+    //     light: '#3366FF',
+    //     main: '#3366FF',
+    //     dark: '#804BDF',
+    //     contrastText: '#FFF'
+    //   }
+    // }
     /*
     palette:{
       primary: {

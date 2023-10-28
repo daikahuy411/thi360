@@ -100,7 +100,7 @@ const UserProfileHeader = props => {
                 <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'text.secondary' } }}>
                   <Icon icon='mdi:calendar-blank' />
                   <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}>
-                    Tham gia {moment(data?.createdTime).format('MM-YYYY')}
+                    Tham gia ngày: {moment(data?.createdTime).format('DD-MM-YYYY')}
                   </Typography>
                 </Box>
               </Box>

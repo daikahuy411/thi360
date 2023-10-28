@@ -82,7 +82,7 @@ const SubjectPage = () => {
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Breadcrumbs aria-label='breadcrumb'>
+          <Breadcrumbs aria-label='breadcrumb' style={{marginBottom: 5}}>
             <Link
               underline='hover'
               component={NavLink}

@@ -8,55 +8,101 @@ import Grid from '@mui/material/Grid'
 import Pagination from '@mui/material/Pagination'
 import Typography from '@mui/material/Typography'
 import LoadingSpinner from '@core/components/loading-spinner'
+import { useAuth } from 'hooks/useAuth'
 
 const HomePage = () => {
   const router = useRouter()
+  const auth = useAuth()
   const [exams, setExams] = useState([])
+  const [postCates, setPostCates] = useState([])
   const [loading, setLoading] = useState(false)
+  const [postLoading, setPostLoading] = useState(false)
 
   useEffect(() => {
-    setLoading(true)
-    new V1Api().getRecentExams().then(response => {
-      setExams(response.data)
-      setLoading(false)
-    })
+    if (auth.user) {
+      setLoading(true)
+      new V1Api().getRecentExams().then(response => {
+        setExams(response.data)
+        setLoading(false)
+      })
+    }
+
+    // setPostLoading(true)
+    // new V1Api().getHomePagePosts().then(response => {
+    //   setPostCates(response.data)
+    //   setPostLoading(false)
+    // })
   }, [])
 
   return (
     <>
       <div className='container-xxl flex-grow-1 container-p-y'>
-        <section className='Home-banner'>
+        {/* <section className='Home-banner'>
           <label>Sẵn sàng cho kỳ thi của bạn</label>
           <br />
           <br />
           <p>Thực hiện các bài kiểm tra thử của chúng tôi bao nhiêu tùy thích MIỄN PHÍ!</p>
-          {/* <button type="button" className="btn btn-outline-primary btn-sm waves-effect text-white">Thi thử</button> */}
+          <button type="button" className="btn btn-outline-primary btn-sm waves-effect text-white">Thi thử</button>
         </section>
-        <br />
-        <LoadingSpinner active={loading}>
-          <section className='Home-exam'>
-            <div className='ba-title'>
-              <h2> Kỳ thi xem gần đây </h2>
-            </div>
-            <div className='He-box'>
-              <div className='row g2'>
-                {exams &&
-                  exams.map(item => (
-                    <div className='col-md-3 col-sm-6' key={`recent-exam-${item.id}`}>
-                      <Link href={`/exam/${item.id}`} style={{ cursor: 'pointer' }}>
-                        <div className='Heb-detail'>
-                          <span>
-                            <img src='/themes/default/assets/img/icons/exam1.png' />
-                          </span>
-                          <label>{item.name}</label>
+        <br /> */}
+
+        <LoadingSpinner active={loading} minHeight={0}>
+          <>
+            {auth.user && (
+              <section className='Home-exam'>
+                <div className='ba-title'>
+                  <h2> Kỳ thi xem gần đây </h2>
+                </div>
+                <div className='He-box'>
+                  <div className='row g2'>
+                    {exams &&
+                      exams.map(item => (
+                        <div className='col-md-3 col-sm-6' key={`recent-exam-${item.id}`}>
+                          <Link href={`/exam/${item.id}`} style={{ cursor: 'pointer' }}>
+                            <div className='Heb-detail'>
+                              <span>
+                                <img src='/images/home/grad-icon.svg' />
+                              </span>
+                              <label>{item.name}</label>
+                            </div>
+                          </Link>
                         </div>
-                      </Link>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          </section>
+                      ))}
+                  </div>
+                </div>
+              </section>
+            )}
+          </>
         </LoadingSpinner>
+        {/* <LoadingSpinner active={postLoading} minHeight={0}>
+          <>
+            {postCates &&
+              postCates.map(item => (
+                <section className='Home-exam'>
+                  <div className='ba-title'>
+                    <h2> {item.name} </h2>
+                  </div>
+                  <div className='He-box'>
+                    <div className='row g2'>
+                      {item.posts &&
+                        item.posts.map(p => (
+                          <div className='col-md-3 col-sm-6' key={`recent-exam-${p.id}`}>
+                            <Link href={`/exam/${p.id}`} style={{ cursor: 'pointer' }}>
+                              <div className='Heb-detail'>
+                                <span>
+                                  <img src='/themes/default/assets/img/icons/exam1.png' />
+                                </span>
+                                <label>{p.name}</label>
+                              </div>
+                            </Link>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </section>
+              ))}
+          </>
+        </LoadingSpinner> */}
         {/* <section className="Home-tips">
           <div className="ba-title">
             <h2> Mẹo trong ngày </h2>
@@ -85,79 +131,72 @@ const HomePage = () => {
             </a>
           </div>
         </section> */}
-        <br />
+
         <section className='Home-why'>
           <div className='ba-title'>
             <h2> Tại sao nên sử dụng Thi360.com? </h2>
           </div>
           <div className='Hw-box'>
             <div className='row g-2'>
-              <div className='col-md-4 col-sm-6'>
+              <div className='col-md-12 col-sm-12'>
+                {/* <br />
+                <img src='/images/home/Screenshot_316.png' style={{ width: 900 }} />
+                <br /> */}
+                <img src='/images/home/Screenshot_315.png' style={{ width: 1392 }} />
+                <br />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className='Home-why'>
+          <div className='ba-title'>
+            <h2> Tại sao nên sử dụng Thi360.com? </h2>
+          </div>
+          <div className='Hw-box'>
+            <div className='row g-2'>
+              <div className='col-md-3 col-sm-6'>
                 <div className='Hwb-detail'>
-                  <span style={{ background: '#D9D9D9' }}>
-                    <img src='' />
+                  <span>
+                    <img src='/images/home/why-folders_0_0.png' />
                   </span>
-                  <label>Take recent actual IELTS Tests</label>
+                  <label>Ngân hàng Câu hỏi lớn, chất lượng</label>
                   <p>
                     Real IELTS Listening and IELTS Reading tests based on actual IELTS tests and following the Cambridge
                     IELTS book format.
                   </p>
                 </div>
               </div>
-              <div className='col-md-4 col-sm-6'>
+              <div className='col-md-3 col-sm-6'>
                 <div className='Hwb-detail'>
-                  <span style={{ background: '#D9D9D9' }}>
-                    <img src='' />
+                  <span>
+                    <img src='/images/home/why-online-meeting_0_0.png' />
                   </span>
-                  <label>Take recent actual IELTS Tests</label>
+                  <label>Dễ dàng sử dụng</label>
                   <p>
                     Real IELTS Listening and IELTS Reading tests based on actual IELTS tests and following the Cambridge
                     IELTS book format.
                   </p>
                 </div>
               </div>
-              <div className='col-md-4 col-sm-6'>
+              <div className='col-md-3 col-sm-6'>
                 <div className='Hwb-detail'>
-                  <span style={{ background: '#D9D9D9' }}>
-                    <img src='' />
+                  <span>
+                    <img src='/images/home/why-bullets_0_0.png' />
                   </span>
-                  <label>Take recent actual IELTS Tests</label>
+                  <label>Chế độ Luyện tập và Thi thử</label>
                   <p>
                     Real IELTS Listening and IELTS Reading tests based on actual IELTS tests and following the Cambridge
                     IELTS book format.
                   </p>
                 </div>
               </div>
-              <div className='col-md-4 col-sm-6'>
+              <div className='col-md-3 col-sm-6'>
                 <div className='Hwb-detail'>
-                  <span style={{ background: '#D9D9D9' }}>
-                    <img src='' />
+                  <span>
+                    <img src='/images/home/why-chart_0_0.png' style={{ width: 60, height: 60 }} />
                   </span>
-                  <label>Take recent actual IELTS Tests</label>
-                  <p>
-                    Real IELTS Listening and IELTS Reading tests based on actual IELTS tests and following the Cambridge
-                    IELTS book format.
-                  </p>
-                </div>
-              </div>
-              <div className='col-md-4 col-sm-6'>
-                <div className='Hwb-detail'>
-                  <span style={{ background: '#D9D9D9' }}>
-                    <img src='' />
-                  </span>
-                  <label>Take recent actual IELTS Tests</label>
-                  <p>
-                    Real IELTS Listening and IELTS Reading tests based on actual IELTS tests and following the Cambridge
-                    IELTS book format.
-                  </p>
-                </div>
-              </div>
-              <div className='col-md-4 col-sm-6'>
-                <div className='Hwb-detail'>
-                  <span style={{ background: '#D9D9D9' }}>
-                    <img src='' />
-                  </span>
-                  <label>Take recent actual IELTS Tests</label>
+                  <label>Theo dõi tiến trình ôn luyện</label>
                   <p>
                     Real IELTS Listening and IELTS Reading tests based on actual IELTS tests and following the Cambridge
                     IELTS book format.
@@ -180,7 +219,7 @@ const HomePage = () => {
                     <img src='/themes/default/assets/img/icon-numb/countri.svg' />
                   </span>
                   <p>
-                    120+<span>Countries</span>
+                    10+<span>Chương trình</span>
                   </p>
                 </div>
               </div>
@@ -190,7 +229,7 @@ const HomePage = () => {
                     <img src='/themes/default/assets/img/icon-numb/test.svg' />
                   </span>
                   <p>
-                    28.000.000+<span>Test Takers</span>
+                    10.000+<span>Thành viên</span>
                   </p>
                 </div>
               </div>
@@ -200,7 +239,7 @@ const HomePage = () => {
                     <img src='/themes/default/assets/img/icon-numb/complete.svg' />
                   </span>
                   <p>
-                    7.000.000+<span>Completed Tests</span>
+                    10,000+<span>Lượt thi</span>
                   </p>
                 </div>
               </div>
@@ -210,7 +249,7 @@ const HomePage = () => {
                     <img src='/themes/default/assets/img/icon-numb/academic.svg' />
                   </span>
                   <p>
-                    100+<span>Academic Tests</span>
+                    100+<span>Chủ đề</span>
                   </p>
                 </div>
               </div>
@@ -220,7 +259,7 @@ const HomePage = () => {
                     <img src='/themes/default/assets/img/icon-numb/general.svg' />
                   </span>
                   <p>
-                    20+<span>General Training Tests</span>
+                    30,000+<span>Đề thi</span>
                   </p>
                 </div>
               </div>
@@ -230,7 +269,7 @@ const HomePage = () => {
                     <img src='/themes/default/assets/img/icon-numb/quest.svg' />
                   </span>
                   <p>
-                    10,000+<span>Total Questions</span>
+                    1,000,0000+<span>Câu hỏi</span>
                   </p>
                 </div>
               </div>
