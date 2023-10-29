@@ -110,42 +110,53 @@ class TestDetails extends React.Component {
     let currentParentQuestionId = 0
     let question
 
-    if (examAttempt.userExamAttemptTracking.lastVisitedTracking) {
-      const section = _.find(examAttempt.testGroup.sections, {
-        id: examAttempt.userExamAttemptTracking.lastVisitedTracking.sectionId
-      })
+    if (this.state.mode === 0 || this.state.mode === 1) {
+      if (examAttempt.userExamAttemptTracking.lastVisitedTracking) {
+        const section = _.find(examAttempt.testGroup.sections, {
+          id: examAttempt.userExamAttemptTracking.lastVisitedTracking.sectionId
+        })
 
-      const sectionItem = _.find(section?.items, {
-        id: examAttempt.userExamAttemptTracking.lastVisitedTracking.itemId
-      })
+        const sectionItem = _.find(section?.items, {
+          id: examAttempt.userExamAttemptTracking.lastVisitedTracking.itemId
+        })
 
-      const questionMap = _.find(section?.questionMaps, {
-        id: examAttempt.userExamAttemptTracking.lastVisitedTracking.questionId
-      })
+        const questionMap = _.find(section?.questionMaps, {
+          id: examAttempt.userExamAttemptTracking.lastVisitedTracking.questionId
+        })
 
-      currentQuestionId = examAttempt.userExamAttemptTracking.lastVisitedTracking.questionId
-      if (questionMap) {
-        currentParentQuestionId = questionMap.parentId
+        currentQuestionId = examAttempt.userExamAttemptTracking.lastVisitedTracking.questionId
+        if (questionMap) {
+          currentParentQuestionId = questionMap.parentId
 
-        if (questionMap.parentId == 0) {
-          question = _.find(sectionItem?.questions, {
-            id: questionMap.id
-          })
-        } else {
-          question = _.find(sectionItem?.questions, {
-            id: questionMap.parentId
-          })
+          if (questionMap.parentId == 0) {
+            question = _.find(sectionItem?.questions, {
+              id: questionMap.id
+            })
+          } else {
+            question = _.find(sectionItem?.questions, {
+              id: questionMap.parentId
+            })
+          }
         }
+      }
+
+      if (!question) {
+        // Nếu câu đầu tiên là câu hỏi chính phụ, select câu hỏi con đầu tiên.
+        question = examAttempt.testGroup.sections[0].items[0].questions[0]
+        if (question.questionTypeId == QuestionType.GQ) {
+          question = question.children[0]
+        }
+
+        currentQuestionId = question.id
+        currentParentQuestionId = question.parentId
       }
     }
 
-    if (!question) {
-      // Nếu câu đầu tiên là câu hỏi chính phụ, select câu hỏi con đầu tiên.
+    if (this.state.mode === 2 || this.state.mode === 3) {
       question = examAttempt.testGroup.sections[0].items[0].questions[0]
       if (question.questionTypeId == QuestionType.GQ) {
         question = question.children[0]
       }
-
       currentQuestionId = question.id
       currentParentQuestionId = question.parentId
     }
@@ -245,7 +256,7 @@ class TestDetails extends React.Component {
     currentQuestionIndex = _.findIndex(this.state.examAttempt.testGroup.questionMaps, {
       id: this.state.currentQuestionId
     })
-    currentQuestionIndex = isNext ? currentQuestionIndex - 1 : currentQuestionIndex + 1
+    currentQuestionIndex = isNext ? currentQuestionIndex + 1 : currentQuestionIndex - 1
 
     if (currentQuestionIndex < 0) return
 

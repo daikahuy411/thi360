@@ -27,25 +27,29 @@ const HomePage = () => {
       })
     }
 
-    // setPostLoading(true)
-    // new V1Api().getHomePagePosts().then(response => {
-    //   setPostCates(response.data)
-    //   setPostLoading(false)
-    // })
+    setPostLoading(true)
+    new V1Api().getHomePagePosts().then(response => {
+      setPostCates(response.data)
+      setPostLoading(false)
+    })
   }, [])
 
   return (
     <>
       <div className='container-xxl flex-grow-1 container-p-y'>
-        {/* <section className='Home-banner'>
-          <label>Sẵn sàng cho kỳ thi của bạn</label>
-          <br />
-          <br />
-          <p>Thực hiện các bài kiểm tra thử của chúng tôi bao nhiêu tùy thích MIỄN PHÍ!</p>
-          <button type="button" className="btn btn-outline-primary btn-sm waves-effect text-white">Thi thử</button>
+        <section className='Home-banner' style={{ backgroundColor: '#6F2F74', color: 'white' }}>
+          {/* <img src='/themes/default/assets/img/intro.png' /> */}
+          {/* <label>Sẵn sàng cho kỳ thi của bạn</label> */}
+          <h1 className='' style={{ color: 'white', fontSize: 36 }}>
+            Thi360 Testing online
+          </h1>
+          <h2 class="" style={{ color: 'white', fontSize: 20 }}>The Most Comprehensive Preparation App for All Exams </h2>
+          {/* <p>Thực hiện các bài kiểm tra thử của chúng tôi bao nhiêu tùy thích MIỄN PHÍ!</p> */}
+          {/* <button type='button' className='btn btn-outline-primary btn-sm waves-effect text-white'>
+            Thi thử
+          </button> */}
         </section>
-        <br /> */}
-
+        <br />
         <LoadingSpinner active={loading} minHeight={0}>
           <>
             {auth.user && (
@@ -57,7 +61,7 @@ const HomePage = () => {
                   <div className='row g2'>
                     {exams &&
                       exams.map(item => (
-                        <div className='col-md-3 col-sm-6' key={`recent-exam-${item.id}`}>
+                        <div className='col-md-2 col-sm-4' key={`recent-exam-${item.id}`}>
                           <Link href={`/exam/${item.id}`} style={{ cursor: 'pointer' }}>
                             <div className='Heb-detail'>
                               <span>
@@ -74,7 +78,8 @@ const HomePage = () => {
             )}
           </>
         </LoadingSpinner>
-        {/* <LoadingSpinner active={postLoading} minHeight={0}>
+
+        <LoadingSpinner active={postLoading} minHeight={0}>
           <>
             {postCates &&
               postCates.map(item => (
@@ -102,7 +107,7 @@ const HomePage = () => {
                 </section>
               ))}
           </>
-        </LoadingSpinner> */}
+        </LoadingSpinner>
         {/* <section className="Home-tips">
           <div className="ba-title">
             <h2> Mẹo trong ngày </h2>
@@ -139,10 +144,10 @@ const HomePage = () => {
           <div className='Hw-box'>
             <div className='row g-2'>
               <div className='col-md-12 col-sm-12'>
-                {/* <br />
-                <img src='/images/home/Screenshot_316.png' style={{ width: 900 }} />
-                <br /> */}
-                <img src='/images/home/Screenshot_315.png' style={{ width: 1392 }} />
+                <br />
+                <img src='/images/home/Screenshot_316.png' style={{ width: '100%' }} />
+                <br />
+                <img src='/images/home/Screenshot_315.png' style={{ width: '100%' }} />
                 <br />
               </div>
             </div>

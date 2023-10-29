@@ -21,9 +21,11 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
+import Checkbox from '@mui/material/Checkbox'
 import DialogTitle from '@mui/material/DialogTitle'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -314,6 +316,27 @@ const PostCategoryEditPage = () => {
                                 )}
                               />
                             </FormControl>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <FormControlLabel
+                              name='showOnHomePage'
+                              control={
+                                <Controller
+                                  name='showOnHomePage'
+                                  control={control}
+                                  rules={{ required: false }}
+                                  render={({ field: { value, onChange } }) => (
+                                    <Checkbox
+                                      checked={value ?? false}
+                                      onChange={e => {
+                                        onChange(e)
+                                      }}
+                                    />
+                                  )}
+                                />
+                              }
+                              label='Hiển thị ở trang chủ'
+                            />
                           </Grid>
                         </Grid>
                       </form>

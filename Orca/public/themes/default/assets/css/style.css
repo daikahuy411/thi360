@@ -511,7 +511,8 @@ html:not([dir='rtl']) .menu-inner > .menu-header::before {
 
 /*page home*/
 .Home-banner {
-  background: url(../img/banner-home.png);
+  /* background: url(../img/banner-home.png); */
+  /* background: url(../img/intro.png); */
   background-size: cover;
   border-radius: 12px;
   position: relative;
