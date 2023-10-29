@@ -48,9 +48,9 @@ const UserProfileHeader = props => {
         <CardMedia
           component='img'
           alt='profile-header'
-          image={'/themes/default/assets/img/backgrounds/16.jpg'}
+          image={'/themes/default/assets/img/backgrounds/19.jpg'}
           sx={{
-            height: { xs: 150, md: 250 }
+            height: { xs: 150, md: 280 }
           }}
         />
         <CardContent
@@ -100,7 +100,7 @@ const UserProfileHeader = props => {
                 <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'text.secondary' } }}>
                   <Icon icon='mdi:calendar-blank' />
                   <Typography sx={{ ml: 1, color: 'text.secondary', fontWeight: 600 }}>
-                    Tham gia ngày: {moment(data?.createdTime).format('DD-MM-YYYY')}
+                    Tham gia ngày: {moment(data?.createdTime).format('DD-MM-YYYY HH:mm')}
                   </Typography>
                 </Box>
               </Box>
