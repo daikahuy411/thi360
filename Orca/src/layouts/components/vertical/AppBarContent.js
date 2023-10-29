@@ -13,6 +13,9 @@ const AppBarContent = props => {
     if (router.asPath.indexOf('/home') > -1) {
       currentPage = 'Trang chủ'
     }
+    if (router.asPath.indexOf('/apps') > -1) {
+      currentPage = 'LMS'
+    }
     if (router.asPath.indexOf('/program') > -1) {
       currentPage = 'Chương trình'
     }
@@ -37,8 +40,8 @@ const AppBarContent = props => {
     if (router.asPath.indexOf('/pricing') > -1) {
       currentPage = 'Bảng giá'
     }
-    if (router.asPath.indexOf('/apps') > -1) {
-      currentPage = 'LMS'
+    if (router.asPath.indexOf('/post/') > -1) {
+      currentPage = 'Tin bài'
     }
     if (router.asPath.indexOf('/apps/class') > -1) {
       currentPage = 'Quản lý Lớp học'

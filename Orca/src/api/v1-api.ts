@@ -25,6 +25,18 @@ class V1Api extends ApiBase {
     return response
   }
 
+  getHelpPagePosts = () => {
+    const url = `${this.baseApiUrl}/helppageposts`
+    const response = axios.get(url)
+    return response
+  }
+
+  getPost = (id: number) => {
+    const url = `${this.baseApiUrl}/posts/${id}`
+    const response = axios.get(url)
+    return response
+  }
+
   getProgramCatalog = (id: number) => {
     const url = `${this.baseApiUrl}/programcatalogs/${id}`
     const response = axios.get(url)

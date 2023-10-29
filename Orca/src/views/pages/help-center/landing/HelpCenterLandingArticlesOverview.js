@@ -1,20 +1,17 @@
-// ** Next Import
 import Link from 'next/link'
-
-// ** MUI Imports
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 const HelpCenterLandingArticlesOverview = props => {
-  const { articles } = props
+  const { featurePosts } = props
 
   const renderArticles = () => {
-    if (articles && articles.length) {
-      return articles.map(article => {
+    if (featurePosts && featurePosts.length) {
+      return featurePosts.map(article => {
         return (
-          <Grid item xs={12} sm={6} md={4} key={article.slug}>
+          <Grid item xs={12} sm={6} md={4} key={article.id}>
             <Box
               sx={{
                 p: 5,
@@ -27,12 +24,11 @@ const HelpCenterLandingArticlesOverview = props => {
                 border: theme => `1px solid ${theme.palette.divider}`
               }}
             >
-              <Box sx={{ minHeight: 58, display: 'flex' }}>
-                <img height='58' src={article.img} alt={article.title} />
-              </Box>
-
+              {/* <Box sx={{ minHeight: 58, display: 'flex' }}>
+                <img height='58' src={article.img} alt={article.name} />
+              </Box> */}
               <Typography variant='h6' sx={{ my: 3, fontWeight: 600 }}>
-                {article.title}
+                {article.name}
               </Typography>
               <Typography
                 sx={{
@@ -45,15 +41,10 @@ const HelpCenterLandingArticlesOverview = props => {
                   WebkitBoxOrient: 'vertical'
                 }}
               >
-                {article.subtitle}
+                {article.description}
               </Typography>
-              <Button
-                sx={{ mt: 3 }}
-                component={Link}
-                variant='outlined'
-                href='/pages/help-center/getting-started/account/changing-your-username'
-              >
-                Read More
+              <Button sx={{ mt: 3 }} component={Link} variant='outlined' href={`/post/${article.id}`}>
+                Chi tiết
               </Button>
             </Box>
           </Grid>

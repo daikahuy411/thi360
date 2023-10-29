@@ -7,6 +7,8 @@ import HelpCenterLandingFooter from 'views/pages/help-center/landing/HelpCenterL
 import HelpCenterLandingKnowledgeBase from 'views/pages/help-center/landing/HelpCenterLandingKnowledgeBase'
 import HelpCenterLandingArticlesOverview from 'views/pages/help-center/landing/HelpCenterLandingArticlesOverview'
 import themeConfig from 'configs/themeConfig'
+import V1Api from 'api/v1-api'
+import { useEffect, useState } from 'react'
 
 const StyledCardContent = styled(CardContent)(({ theme }) => ({
   paddingTop: `${theme.spacing(10)} !important`,
@@ -613,6 +615,17 @@ const data = {
 }
 
 const HelpCenter = ({ apiData }) => {
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    setLoading(true)
+    new V1Api().getHelpPagePosts().then(response => {
+      setData(response.data)
+      setLoading(false)
+    })
+  }, [])
+
   return (
     <Card>
       {apiData !== null ? (
@@ -622,13 +635,17 @@ const HelpCenter = ({ apiData }) => {
             <Typography variant='h5' sx={{ mb: 6, textAlign: 'center' }}>
               Bắt đầu với Thi360
             </Typography>
-            <HelpCenterLandingArticlesOverview articles={apiData.popularArticles} />
+            {data && (
+            <HelpCenterLandingArticlesOverview  featurePosts={data.featurePosts} />
+            )}
           </StyledCardContent>
           <StyledCardContent sx={{ backgroundColor: 'action.hover' }}>
             <Typography variant='h5' sx={{ mb: 6, textAlign: 'center' }}>
               Hướng dẫn
             </Typography>
-            <HelpCenterLandingKnowledgeBase categories={apiData.categories} />
+            {data && (
+            <HelpCenterLandingKnowledgeBase categories={data.postCategories} />
+            )}
           </StyledCardContent>
           <StyledCardContent sx={{ textAlign: 'center', backgroundColor: 'action.hover' }}>
             <HelpCenterLandingFooter />
@@ -640,7 +657,6 @@ const HelpCenter = ({ apiData }) => {
 }
 
 export const getStaticProps = async () => {
-  // const res = await axios.get('/pages/help-center/landing')
   const allArticles = []
   data.categories.map(category =>
     category.subCategories.map(subCategory => subCategory.articles.map(article => allArticles.push(article)))

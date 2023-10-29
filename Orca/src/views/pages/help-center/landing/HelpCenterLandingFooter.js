@@ -1,4 +1,3 @@
-// ** MUI Imports
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
@@ -7,7 +6,7 @@ const HelpCenterLandingFooter = () => {
   return (
     <>
       <Typography variant='h5' sx={{ mb: 4 }}>
-        Bạn cần trợ giúp, chúng tôi luôn sẵn sàng?
+        Bạn cần trợ giúp? Chúng tôi luôn sẵn sàng!
       </Typography>
       <Typography variant='body2'>Our specialists are always happy to help.</Typography>
       <Typography variant='body2' sx={{ mb: 4 }}>

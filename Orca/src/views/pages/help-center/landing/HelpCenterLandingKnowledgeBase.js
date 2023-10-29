@@ -1,25 +1,14 @@
-// ** Next Import
 import Link from 'next/link'
-
-// ** MUI Imports
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-
-// ** Icon Imports
 import Icon from '@core/components/icon'
-
-// ** Custom Components Import
 import CustomAvatar from '@core/components/mui/avatar'
 
 const HelpCenterLandingKnowledgeBase = ({ categories }) => {
   const renderCategories = () => {
     if (categories && categories.length) {
       return categories.map(category => {
-        const totalArticles = category.subCategories
-          .map(subCategory => subCategory.articles.length)
-          .reduce((partialSum, a) => partialSum + a, 0)
-
         return (
           <Grid item xs={12} sm={6} md={4} key={category.slug}>
             <Box
@@ -45,33 +34,32 @@ const HelpCenterLandingKnowledgeBase = ({ categories }) => {
                 </CustomAvatar>
                 <Typography
                   variant='h6'
-                  component={Link}
-                  href={`/pages/help-center/${category.slug}/${category.subCategories[0].slug}`}
+                  // component={Link}
+                  // href={`/pages/help-center/${category.id}/`}
                   sx={{ fontWeight: 600, textDecoration: 'none', '&:hover': { color: 'primary.main' } }}
                 >
-                  {category.title}
+                  {category.name}
                 </Typography>
               </Box>
               <Box component='ul' sx={{ mt: 0, mb: 5, pl: 6.75, '& li': { mb: 2, color: 'primary.main' } }}>
-                {category.subCategories.map(subcategory => (
-                  <li key={subcategory.title}>
+                {category.posts.map(post => (
+                  <li key={post.name}>
                     <Typography
                       component={Link}
                       sx={{ color: 'inherit', textDecoration: 'none' }}
-                      href={`/pages/help-center/${category.slug}/${subcategory.slug}`}
+                      href={`/post/${post.id}`}
                     >
-                      {subcategory.title}
+                      {post.name}
                     </Typography>
                   </li>
                 ))}
               </Box>
               <Typography
                 variant='body2'
-                component={Link}
-                href={`/pages/help-center/${category.slug}/${category.subCategories[0].slug}`}
+                // href={`/pages/help-center/${category.id}`}
                 sx={{ mt: 'auto', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}
               >
-                {`${totalArticles} Articles`}
+                {`${category.totalPost} bài viết`}
               </Typography>
             </Box>
           </Grid>

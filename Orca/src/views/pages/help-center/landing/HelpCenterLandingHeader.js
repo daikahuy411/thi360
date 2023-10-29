@@ -1,10 +1,6 @@
 // ** React Imports
 import { useState } from 'react'
-
-// ** Next Import
 import { useRouter } from 'next/router'
-
-// ** MUI Imports
 import { styled } from '@mui/material/styles'
 import ListItem from '@mui/material/ListItem'
 import TextField from '@mui/material/TextField'
@@ -13,8 +9,6 @@ import CardContent from '@mui/material/CardContent'
 import ListItemButton from '@mui/material/ListItemButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiAutocomplete from '@mui/material/Autocomplete'
-
-// ** Icon Imports
 import Icon from '@core/components/icon'
 
 // Styled Autocomplete component
@@ -82,9 +76,8 @@ const HelpCenterLandingHeader = ({ data, allArticles }) => {
       }}
     >
       <Typography variant='h5' sx={{ color: 'primary.main', fontWeight: 600 }}>
-        Hello, how can we help?
+        Xin chào. Bạn cần trợ giúp?
       </Typography>
-
       <Autocomplete
         open={open}
         disablePortal
@@ -96,14 +89,15 @@ const HelpCenterLandingHeader = ({ data, allArticles }) => {
         isOptionEqualToValue={(option, value) => value === option}
         onChange={(event, option) => handleRedirection(option)}
         onInputChange={(event, value) => {
-          // setValue(value)
-          // setOpen(!!event.target.value)
+          setValue(value)
+          setOpen(event ? !!event.target.value : false)
         }}
         renderInput={params => (
           <TextField
             {...params}
             value={value}
-            placeholder='Search a question...'
+            autoComplete="new-password"
+            placeholder='Tìm kiếm hướng dẫn...'
             onChange={event => setValue(event.target.value)}
             InputProps={{
               ...params.InputProps,
