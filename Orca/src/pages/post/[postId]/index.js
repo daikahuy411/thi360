@@ -81,7 +81,12 @@ const PostPage = () => {
       category &&
       category.posts &&
       category.posts.map(article => (
-        <Tab key={article.id.toString()} value={article.id.toString()} label={article.name} />
+        <Tab
+          key={article.id.toString()}
+          value={article.id.toString()}
+          label={article.name}
+          style={{ textTransform: 'unset', fontSize: '1rem' }}
+        />
       ))
     )
   }
@@ -103,6 +108,7 @@ const PostPage = () => {
           </Box>
           <Box sx={{ '& p': { color: 'text.secondary' } }} dangerouslySetInnerHTML={{ __html: post.content }} />
         </CardContent>
+        <br/>
         <Divider sx={{ m: '0 !important' }} />
         <CardContent
           sx={{

@@ -6,9 +6,14 @@ import { useRouter } from 'next/router'
 import clsx from 'clsx'
 import Grid from '@mui/material/Grid'
 import Pagination from '@mui/material/Pagination'
-import Typography from '@mui/material/Typography'
 import LoadingSpinner from '@core/components/loading-spinner'
 import { useAuth } from 'hooks/useAuth'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 
 const HomePage = () => {
   const router = useRouter()
@@ -90,21 +95,42 @@ const HomePage = () => {
                     <h2> {item.name} </h2>
                   </div>
                   <div className='He-box'>
-                    <div className='row g2'>
+                    <Grid container md={12} spacing={6}>
                       {item.posts &&
                         item.posts.map(p => (
-                          <div className='col-md-3 col-sm-6' key={`recent-exam-${p.id}`}>
-                            <Link href={`/exam/${p.id}`} style={{ cursor: 'pointer' }}>
-                              <div className='Heb-detail'>
-                                <span>
-                                  <img src='/themes/default/assets/img/icons/exam1.png' />
-                                </span>
-                                <label>{p.name}</label>
-                              </div>
-                            </Link>
-                          </div>
+                          <Grid item xs={12} md={3} lg={3} xl={3}>
+                            <Card>
+                              <CardMedia
+                                sx={{ height: 140 }}
+                                image='/themes/default/assets/img/icons/exam1.png'
+                                title='green iguana'
+                              />
+                              <CardContent>
+                                <Typography gutterBottom variant='hh6' component={Link} href={`/post/${p.id}`}>
+                                  {p.name}
+                                </Typography>
+                                <Typography variant='body2' color='text.secondary'>
+                                  {p.descritpion}
+                                </Typography>
+                              </CardContent>
+                              {/* <CardActions>
+                                <Button size='small'>Share</Button>
+                                <Button size='small'>Learn More</Button>
+                              </CardActions> */}
+                            </Card>
+                          </Grid>
+                          // <div className='col-md-3 col-sm-6' key={`recent-exam-${p.id}`}>
+                          //   <Link href={`/exam/${p.id}`} style={{ cursor: 'pointer' }}>
+                          //     <div className='Heb-detail'>
+                          //       <span>
+                          //         <img src='/themes/default/assets/img/icons/exam1.png' />
+                          //       </span>
+                          //       <label>{p.name}</label>
+                          //     </div>
+                          //   </Link>
+                          // </div>
                         ))}
-                    </div>
+                    </Grid>
                   </div>
                 </section>
               ))}
@@ -139,62 +165,137 @@ const HomePage = () => {
           </div>
         </section> */}
         <br />
-        <section className="mb5-l mb4-5 fixed-width-container ph3 ph0-l">
-          <div className="flex flex-column w-100">
-            <h3 className="home_head__DVePE tc mb3 mt0">Start your preparation</h3>
-            <div className="home-section-container">
-              <div className="home-section-item" style={{ backgroundImage: "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')" }}>
-                <span className="white fw7 f4-l f5">Online Classroom Program</span>
-                <span className="white mb4 f6 w-70 h2-5">Live &amp; Recorded courses by Top Faculty</span>
-                <a className="mt-auto link" href="/">
-                  <span className="secondary mr2 f5 f6-l">Explore Courses</span>
-                  <svg version="1.1" width="8" height="8" className="svg-f-secondary" viewBox="0 0 30 48" preserveAspectRatio="" style={{ strokeWwidth: 1 }}>
-                    <path d="M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z"></path>
-                    <path d="M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z"></path>
+        <section className='mb5-l mb4-5 fixed-width-container ph3 ph0-l'>
+          <div className='flex flex-column w-100'>
+            <div className='ba-title'>
+              <h2> Start your preparation</h2>
+            </div>
+            {/* <h3 className="home_head__DVePE tc mb3 mt0">Start your preparation</h3> */}
+            <div className='home-section-container'>
+              <div
+                className='home-section-item'
+                style={{
+                  backgroundImage:
+                    "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')"
+                }}
+              >
+                <span className='white fw7 f4-l f5'>Online Classroom Program</span>
+                <span className='white mb4 f6 w-70 h2-5'>Live &amp; Recorded courses by Top Faculty</span>
+                <a className='mt-auto link' href='/'>
+                  <span className='secondary mr2 f5 f6-l'>Explore Courses</span>
+                  <svg
+                    version='1.1'
+                    width='8'
+                    height='8'
+                    className='svg-f-secondary'
+                    viewBox='0 0 30 48'
+                    preserveAspectRatio=''
+                    style={{ strokeWwidth: 1 }}
+                  >
+                    <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
+                    <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
                   </svg>
                 </a>
               </div>
-              <div className="home-section-item" style={{ backgroundImage: "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')" }}>
-                <span className="white fw7 f4-l f5">Test Series</span>
-                <span className="white mb4 f6 w-70 h2-5">Practice unlimited mock tests and get your All India Rank</span>
-                <a className="mt-auto link" href="/">
-                  <span className="secondary mr2 f5 f6-l">Explore Test Series</span>
-                  <svg version="1.1" width="8" height="8" className="svg-f-secondary" viewBox="0 0 30 48" preserveAspectRatio="" style={{ strokeWwidth: 1 }}>
-                    <path d="M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z"></path>
-                    <path d="M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z"></path>
+              <div
+                className='home-section-item'
+                style={{
+                  backgroundImage:
+                    "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')"
+                }}
+              >
+                <span className='white fw7 f4-l f5'>Test Series</span>
+                <span className='white mb4 f6 w-70 h2-5'>
+                  Practice unlimited mock tests and get your All India Rank
+                </span>
+                <a className='mt-auto link' href='/'>
+                  <span className='secondary mr2 f5 f6-l'>Explore Test Series</span>
+                  <svg
+                    version='1.1'
+                    width='8'
+                    height='8'
+                    className='svg-f-secondary'
+                    viewBox='0 0 30 48'
+                    preserveAspectRatio=''
+                    style={{ strokeWwidth: 1 }}
+                  >
+                    <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
+                    <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
                   </svg>
                 </a>
               </div>
-              <div className="home-section-item" style={{ backgroundImage: "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')" }}>
-                <span className="white fw7 f4-l f5">Free Videos</span>
-                <span className="white mb4 f6 w-70 h2-5">High Quality Content for Complete Conceptual Clarity</span>
-                <a className="mt-auto link" href="/">
-                  <span className="secondary mr2 f5 f6-l">Explore Free Videos</span>
-                  <svg version="1.1" width="8" height="8" className="svg-f-secondary" viewBox="0 0 30 48" preserveAspectRatio="" style={{ strokeWwidth: 1 }}>
-                    <path d="M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z"></path>
-                    <path d="M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z"></path>
+              <div
+                className='home-section-item'
+                style={{
+                  backgroundImage:
+                    "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')"
+                }}
+              >
+                <span className='white fw7 f4-l f5'>Free Videos</span>
+                <span className='white mb4 f6 w-70 h2-5'>High Quality Content for Complete Conceptual Clarity</span>
+                <a className='mt-auto link' href='/'>
+                  <span className='secondary mr2 f5 f6-l'>Explore Free Videos</span>
+                  <svg
+                    version='1.1'
+                    width='8'
+                    height='8'
+                    className='svg-f-secondary'
+                    viewBox='0 0 30 48'
+                    preserveAspectRatio=''
+                    style={{ strokeWwidth: 1 }}
+                  >
+                    <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
+                    <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
                   </svg>
                 </a>
               </div>
-              <div className="home-section-item" style={{ backgroundImage: "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')" }}>
-                <span className="white fw7 f4-l f5">Previous Year Papers</span>
-                <span className="white mb4 f6 w-70 h2-5">Practice past years' question papers and get exam ready</span>
-                <a className="mt-auto link" href="/">
-                  <span className="secondary mr2 f5 f6-l">Explore Papers</span>
-                  <svg version="1.1" width="8" height="8" className="svg-f-secondary" viewBox="0 0 30 48" preserveAspectRatio="" style={{ strokeWwidth: 1 }}>
-                    <path d="M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z"></path>
-                    <path d="M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z"></path>
+              <div
+                className='home-section-item'
+                style={{
+                  backgroundImage:
+                    "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')"
+                }}
+              >
+                <span className='white fw7 f4-l f5'>Previous Year Papers</span>
+                <span className='white mb4 f6 w-70 h2-5'>Practice past years' question papers and get exam ready</span>
+                <a className='mt-auto link' href='/'>
+                  <span className='secondary mr2 f5 f6-l'>Explore Papers</span>
+                  <svg
+                    version='1.1'
+                    width='8'
+                    height='8'
+                    className='svg-f-secondary'
+                    viewBox='0 0 30 48'
+                    preserveAspectRatio=''
+                    style={{ strokeWwidth: 1 }}
+                  >
+                    <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
+                    <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
                   </svg>
                 </a>
               </div>
-              <div className="home-section-item" style={{ backgroundImage: "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')" }}>
-                <span className="white fw7 f4-l f5">Free Quizzes</span>
-                <span className="white mb4 f6 w-70 h2-5">Attempt topic wise quizzes for improving your score</span>
-                <a className="mt-auto link" href="/">
-                  <span className="secondary mr2 f5 f6-l">Explore Quizzes</span>
-                  <svg version="1.1" width="8" height="8" className="svg-f-secondary" viewBox="0 0 30 48" preserveAspectRatio="" style={{ strokeWwidth: 1 }}>
-                    <path d="M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z"></path>
-                    <path d="M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z"></path>
+              <div
+                className='home-section-item'
+                style={{
+                  backgroundImage:
+                    "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')"
+                }}
+              >
+                <span className='white fw7 f4-l f5'>Free Quizzes</span>
+                <span className='white mb4 f6 w-70 h2-5'>Attempt topic wise quizzes for improving your score</span>
+                <a className='mt-auto link' href='/'>
+                  <span className='secondary mr2 f5 f6-l'>Explore Quizzes</span>
+                  <svg
+                    version='1.1'
+                    width='8'
+                    height='8'
+                    className='svg-f-secondary'
+                    viewBox='0 0 30 48'
+                    preserveAspectRatio=''
+                    style={{ strokeWwidth: 1 }}
+                  >
+                    <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
+                    <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
                   </svg>
                 </a>
               </div>
@@ -324,6 +425,7 @@ const HomePage = () => {
             </div>
           </div>
         </section> */}
+        <br />
         <br />
         <section className='Home-num1'>
           <div className='ba-title'>

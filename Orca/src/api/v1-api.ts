@@ -13,6 +13,12 @@ class V1Api extends ApiBase {
     return response
   }
 
+  getAttemptActivityReport = () => {
+    const url = `${this.baseApiUrl}/attemptactivityreport`
+    const response = axios.get(url)
+    return response
+  }
+
   getProgramCatalogs = () => {
     const url = `${this.baseApiUrl}/programcatalogs`
     const response = axios.get(url)

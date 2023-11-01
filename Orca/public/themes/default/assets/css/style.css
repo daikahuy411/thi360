@@ -34,8 +34,7 @@ aside {
   font-size: 24px !important;
 }
 
-.ba-title {
-}
+.ba-title {}
 
 .ba-title h2 {
   font-size: 20px;
@@ -46,8 +45,7 @@ aside {
   color: #333;
 }
 
-.ba-title h2 a img {
-}
+.ba-title h2 a img {}
 
 .layout-navbar-fixed .layout-navbar.navbar-detached {
   padding: 0 15px;
@@ -276,7 +274,7 @@ padding: 10px; */
   color: #333;
 }
 
-.TC-detail article p > span {
+.TC-detail article p>span {
   color: #9b51e0;
 }
 
@@ -453,11 +451,11 @@ padding: 10px; */
   align-items: center;
 }
 
-.dc-rate > p {
+.dc-rate>p {
   margin-bottom: 0;
 }
 
-.dc-text > p {
+.dc-text>p {
   margin-bottom: 0;
 }
 
@@ -505,11 +503,11 @@ padding: 10px; */
   text-transform: none !important;
 }
 
-html:not([dir='rtl']) .menu-inner > .menu-header::before {
+html:not([dir='rtl']) .menu-inner>.menu-header::before {
   width: auto;
 }
 
-.menu-inner > .menu-header::after {
+.menu-inner>.menu-header::after {
   width: 100%;
 }
 
@@ -667,7 +665,7 @@ html:not([dir='rtl']) .menu-inner > .menu-header::before {
   margin: 0 14px;
 }
 
-.bg-menu-theme .menu-item.active > .menu-link:not(.menu-toggle),
+.bg-menu-theme .menu-item.active>.menu-link:not(.menu-toggle),
 .light-style .menu-vertical .menu-item .menu-link:hover {
   color: #70f;
   /* #9b51e0; */
@@ -726,7 +724,7 @@ html:not([dir='rtl']) .menu-inner > .menu-header::before {
   margin-bottom: 20px;
 }
 
-.Hnb-detail > span {
+.Hnb-detail>span {
   margin-right: 10px;
 }
 
@@ -738,7 +736,7 @@ html:not([dir='rtl']) .menu-inner > .menu-header::before {
   color: #333;
 }
 
-.Hnb-detail p > span {
+.Hnb-detail p>span {
   display: block;
   font-size: 16px;
 }
@@ -783,7 +781,7 @@ html:not([dir='rtl']) .menu-inner > .menu-header::before {
   }
 }
 
-.menu-item.active > .menu-link {
+.menu-item.active>.menu-link {
   color: #9b51e0;
   background: #9b51e01a;
   margin: 0 14px;
@@ -1355,8 +1353,8 @@ th {
   background: rgba(155, 81, 224, 0.1);
 }
 
-.light-style .menu-vertical .menu-item.active > .menu-toggle,
-.light-style .menu-vertical .menu-item.open > .menu-toggle {
+.light-style .menu-vertical .menu-item.active>.menu-toggle,
+.light-style .menu-vertical .menu-item.open>.menu-toggle {
   background-color: unset;
 }
 
@@ -1911,6 +1909,15 @@ th {
   margin-bottom: 2rem;
 }
 
-.secondary {
+.secondary,
+.svg-f-secondary {
   color: #ef6c00;
+}
+
+.svg-f-secondary {
+  fill: #ef6c00;
+}
+
+.mr2 {
+  margin-right: 0.5rem;
 }

@@ -31,7 +31,6 @@ const UserProfileHeader = props => {
   // ** State
   const [data, setData] = useState(null)
   useEffect(() => {
-    console.log('data:', data)
     if (about) {
       setData(about)
     }
