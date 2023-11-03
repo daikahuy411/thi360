@@ -17,25 +17,26 @@ import IconDeThi from '../../../../public/images/icon-dethi.svg'
 import LoadingSpinner from '@core/components/loading-spinner'
 
 const catalogImages = {
-  "7": "/themes/default/assets/img/img-monhoc/mon-congnghe.svg",
-  "11": "/themes/default/assets/img/img-monhoc/mon-dia.svg",
-  "10": "/themes/default/assets/img/img-monhoc/mon-gdcd.svg",
-  "3": "/themes/default/assets/img/img-monhoc/mon-hoa.svg",
-  "5": "/themes/default/assets/img/img-monhoc/mon-lichsu.svg",
-  "4": "/themes/default/assets/img/img-monhoc/mon-nguvan.svg",
-  "9": "/themes/default/assets/img/img-monhoc/mon-sinhhoc.svg",
-  "6": "/themes/default/assets/img/img-monhoc/mon-tienganh.svg",
-  "8": "/themes/default/assets/img/img-monhoc/mon-tinhoc.svg",
-  "1": "/themes/default/assets/img/img-monhoc/mon-toan.svg",
-  "2": "/themes/default/assets/img/img-monhoc/mon-vatly.svg",
-  "77": "/themes/default/assets/img/img-monhoc/mon-tienganh.svg",
-  "78": "/themes/default/assets/img/img-monhoc/mon-tienganh.svg",
-  "79": "/themes/default/assets/img/img-monhoc/mon-tienganh.svg",
-  "196": "/themes/default/assets/img/img-monhoc/mon-tienganh.svg",
-  "197": "/themes/default/assets/img/img-monhoc/mon-tienganh.svg",
-  "198": "/themes/default/assets/img/img-monhoc/mon-tienganh.svg",
-  "199": "/themes/default/assets/img/img-monhoc/mon-tienganh.svg",
-  "200": "/themes/default/assets/img/img-monhoc/mon-tienganh.svg",
+  7: '/themes/default/assets/img/img-monhoc/mon-congnghe.svg',
+  11: '/themes/default/assets/img/img-monhoc/mon-dia.svg',
+  10: '/themes/default/assets/img/img-monhoc/mon-gdcd.svg',
+  3: '/themes/default/assets/img/img-monhoc/mon-hoa.svg',
+  5: '/themes/default/assets/img/img-monhoc/mon-lichsu.svg',
+  4: '/themes/default/assets/img/img-monhoc/mon-nguvan.svg',
+  9: '/themes/default/assets/img/img-monhoc/mon-sinhhoc.svg',
+  6: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
+  8: '/themes/default/assets/img/img-monhoc/mon-tinhoc.svg',
+  1: '/themes/default/assets/img/img-monhoc/mon-toan.svg',
+  2: '/themes/default/assets/img/img-monhoc/mon-vatly.svg',
+  77: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
+  78: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
+  79: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
+  196: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
+  197: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
+  198: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
+  199: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
+  200: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
+  201: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
 }
 
 const Program = () => {
@@ -62,13 +63,12 @@ const Program = () => {
           {program && (
             <>
               <Grid item xs={12}>
-                <Breadcrumbs aria-label='breadcrumb'>
+                <Breadcrumbs aria-label='breadcrumb' style={{ marginBottom: 5 }}>
                   <Link underline='hover' color='inherit' component={NavLink} href='/'>
                     <Icon icon='mdi-light:home'></Icon>
                   </Link>
                   <Typography color='#9B51E0'>{program.name}</Typography>
                 </Breadcrumbs>
-                <br />
               </Grid>
               {program.subjectCatalogs.map(item => (
                 <Grid item md={4} xs={12} sm={6} key={item.id}>

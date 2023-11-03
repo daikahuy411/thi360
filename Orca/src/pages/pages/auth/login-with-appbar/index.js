@@ -177,7 +177,7 @@ const LoginWithAppBar = () => {
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography variant='body2' sx={{ mr: 2 }}>
-                  New on our platform?
+                  Bạn chưa có tài khoản?
                 </Typography>
                 <Typography variant='body2'>
                   <LinkStyled href='/pages/auth/register-v2'>Create an account</LinkStyled>

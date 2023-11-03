@@ -22,7 +22,7 @@ const FooterContent = () => {
       </Typography>
       {hidden ? null : (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
-          <Link target='_blank' href='https://mui.com/store/license/'>
+          {/* <Link target='_blank' href='https://mui.com/store/license/'>
             License
           </Link>
           <Link target='_blank' href='https://mui.com/store/contributors/themeselection/'>
@@ -36,7 +36,7 @@ const FooterContent = () => {
           </Link>
           <Link target='_blank' href='https://themeselection.com/support/'>
             Support
-          </Link>
+          </Link> */}
         </Box>
       )}
     </Box>

@@ -11,8 +11,16 @@ const UserThemeOptions = () => {
   // const palette = corePalette(mode, skin, themeColor)
   return {
     typography: {
-      fontFamily: '"Open Sans", sans-serif'
-    }
+      fontFamily: '"Source Sans 3", sans-serif'
+    },
+    // palette: {
+    //   primary: {
+    //     light: '#3366FF',
+    //     main: '#3366FF',
+    //     dark: '#804BDF',
+    //     contrastText: '#FFF'
+    //   }
+    // }
     /*
     palette:{
       primary: {

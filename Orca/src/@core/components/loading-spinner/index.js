@@ -3,12 +3,12 @@ import Box from '@mui/material/Box'
 import LoadingOverlay from 'react-loading-overlay'
 import ClipLoader from 'react-spinners/ClipLoader'
 
-const LoadingSpinner = ({ sx, children, active }) => {
+const LoadingSpinner = ({ sx, children, active, minHeight = 300 }) => {
   const theme = useTheme()
 
   return (
     <LoadingOverlay
-      fadeSpeed={1500}
+      fadeSpeed={100}
       active={active}
       styles={{
         overlay: base => ({
@@ -27,7 +27,7 @@ const LoadingSpinner = ({ sx, children, active }) => {
         />
       }
     >
-      <div style={{ minHeight: 300 }}>{children}</div>
+      <div style={{ minHeight: active ? 300 : minHeight }}>{children}</div>
     </LoadingOverlay>
   )
 }

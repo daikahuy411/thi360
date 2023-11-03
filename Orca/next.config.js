@@ -13,6 +13,9 @@ const withTM = require('next-transpile-modules')([
 ])
 
 module.exports = withTM({
+  images: {
+    unoptimized: true
+  },
   trailingSlash: true,
   reactStrictMode: false,
   experimental: {

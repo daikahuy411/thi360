@@ -7,12 +7,12 @@ import {
 import UserApi from 'api/user-api'
 // ** Next Import
 import { useRouter } from 'next/router'
-import AttemHistory from 'pages/apps/user-profile/[tab]/attemp-history'
-// import Connections from 'pages/apps/user-profile/[tab]/connections'
-import Profile from 'pages/apps/user-profile/[tab]/profile'
+import AttemHistory from 'pages/user-profile/[tab]/attemp-history'
+// import Connections from 'pages/user-profile/[tab]/connections'
+import Profile from 'pages/user-profile/[tab]/profile'
 // ** Demo Components
-import Teams from 'pages/apps/user-profile/[tab]/teams'
-import UserProfileHeader from 'pages/apps/user-profile/UserProfileHeader'
+import Teams from 'pages/user-profile/[tab]/teams'
+import UserProfileHeader from 'pages/user-profile/UserProfileHeader'
 
 // ** Icon Imports
 import Icon from '@core/components/icon'
@@ -63,7 +63,7 @@ const UserProfile = ({ tab }) => {
         setActiveTab(value)
         router
             .push({
-                pathname: `/apps/user-profile/${value.toLowerCase()}`
+                pathname: `/user-profile/${value.toLowerCase()}`
             })
             .then(() => setIsLoading(false))
     }
@@ -134,11 +134,10 @@ const UserProfile = ({ tab }) => {
                                         }
                                     />
                                     <Tab
-
                                         value='attemp-history'
                                         label={
                                             <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
-                                                <Icon fontSize={20} icon='mdi:chart-timeline-variant' />
+                                                <Icon fontSize={20} icon='mdi:history' />
                                                 {!hideText && 'Lịch sử thi'}
                                             </Box>
                                         }
@@ -147,7 +146,7 @@ const UserProfile = ({ tab }) => {
                                         value='orders'
                                         label={
                                             <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
-                                                <Icon fontSize={20} icon='mdi:account-multiple-outline' />
+                                                <Icon fontSize={20} icon='mdi:currency-usd' />
                                                 {!hideText && 'Lịch sử thanh toán'}
                                             </Box>
                                         }

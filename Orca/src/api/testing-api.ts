@@ -64,14 +64,12 @@ export default class TestingApi extends ApiBase {
   UpdateExamAttempt = (
     token: any,
     userAnswers: any,
-    userMediaAnswers: any,
-    userAttemptStat: any
+    userExamAttemptTracking: any,
   ) => {
     var request = {
       token: token,
-      userAttemptStat: userAttemptStat,
       userAnswers: userAnswers,
-      userMediaAnswers: userMediaAnswers,
+      userExamAttemptTracking: userExamAttemptTracking,
     };
     return axios.post(this.baseApiUrl + "/UpdateExamAttempt/", request);
   };

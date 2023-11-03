@@ -9,10 +9,9 @@ const QuestionContent = ({ question }) => {
       {question.files &&
         question.files.map((file, index) => (
           <div key={index}>
-            {file.MediaType == 'image' && <img src={file.downloadLink} />}
-            {file.mediaType == 'audio' && (
+             {file.mediaType == 'audio' && (
               <>
-                <audio autoplay controls src={file.downloadLink}>
+                <audio autoPlay controls src={file.downloadLink}>
                   Your browser does not support the
                   <code>audio</code> element.
                 </audio>
@@ -23,6 +22,7 @@ const QuestionContent = ({ question }) => {
               //   controls
               // />
             )}
+            {file.mediaType == 'image' && <img src={file.downloadLink} />}
           </div>
         ))}
     </>

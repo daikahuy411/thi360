@@ -11,6 +11,9 @@ import { testGroupSectionItemSlice } from './slices/testGroupSectionItemSlice'
 import { testGroupSectionSlice } from './slices/testGroupSectionSlice'
 import { testGroupSlice } from './slices/testGroupSlice'
 import { userSlice } from './slices/userSlice'
+import { postSlice } from './slices/postSlice'
+import { blockSlice } from './slices/blockSlice'
+import { postCategorySlice } from './slices/postCategorySlice'
 
 export const store = configureStore({
   reducer: {
@@ -24,7 +27,10 @@ export const store = configureStore({
     [examCategorySlice.name]: examCategorySlice.reducer,
     [testGroupSectionSlice.name]: testGroupSectionSlice.reducer,
     [examItemSlice.name]: examItemSlice.reducer,
-    [testGroupSectionItemSlice.name]: testGroupSectionItemSlice.reducer
+    [testGroupSectionItemSlice.name]: testGroupSectionItemSlice.reducer,
+    [postSlice.name]: postSlice.reducer,
+    [postCategorySlice.name]: postCategorySlice.reducer,
+    [blockSlice.name]: blockSlice.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

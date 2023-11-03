@@ -8,14 +8,19 @@ const Home = () => {
   const router = useRouter()
 
   useEffect(() => {
-    if (auth.user) {
-      router.replace('/home')
-    } else {
-      router.replace('/login')
-    }
+    router.replace('/home')
   }, [])
 
-  return <Spinner sx={{ height: '100%' }} />
+  // useEffect(() => {
+  //   if (auth.user) {
+  //     router.replace('/home')
+  //   } else {
+  //     router.replace('/login')
+  //   }
+  // }, [])
+
+  // return <Spinner sx={{ height: '100%' }} />
+  return <></>
 }
 
 export default Home

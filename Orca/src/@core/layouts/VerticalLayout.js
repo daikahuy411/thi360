@@ -102,7 +102,7 @@ const VerticalLayout = props => {
         </MainContentWrapper>
       </VerticalLayoutWrapper>
 
-      {disableCustomizer || hidden ? null : <Customizer />}
+      {/* {disableCustomizer || hidden ? null : <Customizer />} */}
 
       {scrollToTop ? (
         scrollToTop(props)

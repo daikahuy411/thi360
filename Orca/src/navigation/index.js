@@ -193,16 +193,37 @@ export const programLinks = [
   {
     title: 'Luyện thi TOEIC',
     path: '/program/35/'
+  },
+  {
+    title: 'Tiếng Anh cơ bản',
+    path: '/program/37/'
   }
 ]
 
 export const systemLinks = [
   {
+    title: 'Tin bài',
+    path: '/apps/post'
+  },
+  {
+    title: 'Danh mục Tin bài',
+    path: '/apps/post-category'
+  },
+  {
+    title: 'Block',
+    path: '/apps/block'
+  },
+  {
     title: 'Tổ chức, Đơn vị',
     path: '/apps/organization'
   },
   {
-    title: 'Tenants',
+    title: 'Khách hàng',
+    icon: 'eos-icons:file-system',
+    path: '/apps/tenant'
+  },
+  {
+    title: 'Cấu hình',
     icon: 'eos-icons:file-system',
     path: '/apps/tenant'
   }
