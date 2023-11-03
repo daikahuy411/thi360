@@ -127,15 +127,15 @@ const Confirmation = (props) => {
   }, [countDownValue])
 
   const handleStatusAlert = () => {
-    if(isSuccess){
+    if (isSuccess) {
       setCountDownValue(50000)
-    }else{
+    } else {
       if (!isSuccess && status == 1) {
         setCountDownValue(50000)
       } else if (!isSuccess && status == 404) {
         setCountDownValue(5)
       }
-    }    
+    }
   }
   const handleRedirect = (link) => {
     router.push(link)
@@ -274,7 +274,7 @@ const Confirmation = (props) => {
                 </Grid>
               </ListItem>
             </StyledList>
-            <Box sx={{ mt: 10, display: 'flex', textAlign: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'center', gap: '5px'}}>
+            <Box sx={{ mt: 10, display: 'flex', textAlign: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'center', gap: '5px' }}>
               <Button variant="contained" onClick={() => handleRedirect('/')}>Về trang chủ</Button>
               <Button variant="contained" color="success" onClick={() => handleRedirect('/')}>Lịch sử giao dịch</Button>
               <Button variant="contained" color="info" onClick={() => handleRedirect('/program')}>Luyện đề ngay</Button>
@@ -324,6 +324,7 @@ const Confirmation = (props) => {
                   {orderDetailPromotion.length > 0 && orderDetailPromotion.map((item, index) => {
                     return (
                       <Box
+                        key={`box-${item.id}`}
                         sx={{
                           gap: 2,
                           display: 'flex',

@@ -105,8 +105,8 @@ const App = props => {
               <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
               <meta name='viewport' content='initial-scale=1, width=device-width' />
             </Head>
-            <Script strategy='lazyOnload' src={`https://www.googletagmanager.com/gtag/js?id=G-PYF88KK7GH`} />
-            <Script strategy='lazyOnload'>
+            <Script strategy='lazyOnload' id='gt' src={`https://www.googletagmanager.com/gtag/js?id=G-PYF88KK7GH`} />
+            <Script strategy='lazyOnload' id='ga'>
               {`
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}

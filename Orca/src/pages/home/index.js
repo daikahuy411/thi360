@@ -90,7 +90,7 @@ const HomePage = () => {
           <>
             {postCates &&
               postCates.map(item => (
-                <section className='Home-exam'>
+                <section className='Home-exam' key={`postcate-${item.id}`}>
                   <div className='ba-title'>
                     <h2> {item.name} </h2>
                   </div>
@@ -98,7 +98,7 @@ const HomePage = () => {
                     <Grid container md={12} spacing={6}>
                       {item.posts &&
                         item.posts.map(p => (
-                          <Grid item xs={12} md={3} lg={3} xl={3}>
+                          <Grid item xs={12} md={3} lg={3} xl={3} key={`post-${p.id}`}>
                             <Card>
                               <CardMedia
                                 sx={{ height: 140 }}
@@ -181,7 +181,7 @@ const HomePage = () => {
               >
                 <span className='white fw7 f4-l f5'>Online Classroom Program</span>
                 <span className='white mb4 f6 w-70 h2-5'>Live &amp; Recorded courses by Top Faculty</span>
-                <a className='mt-auto link' href='/'>
+                <Link className='mt-auto link' href='/'>
                   <span className='secondary mr2 f5 f6-l'>Explore Courses</span>
                   <svg
                     version='1.1'
@@ -195,7 +195,7 @@ const HomePage = () => {
                     <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
                     <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
                   </svg>
-                </a>
+                </Link>
               </div>
               <div
                 className='home-section-item'
@@ -208,7 +208,7 @@ const HomePage = () => {
                 <span className='white mb4 f6 w-70 h2-5'>
                   Practice unlimited mock tests and get your All India Rank
                 </span>
-                <a className='mt-auto link' href='/'>
+                <Link className='mt-auto link' href='/'>
                   <span className='secondary mr2 f5 f6-l'>Explore Test Series</span>
                   <svg
                     version='1.1'
@@ -222,7 +222,7 @@ const HomePage = () => {
                     <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
                     <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
                   </svg>
-                </a>
+                </Link>
               </div>
               <div
                 className='home-section-item'
@@ -233,7 +233,7 @@ const HomePage = () => {
               >
                 <span className='white fw7 f4-l f5'>Free Videos</span>
                 <span className='white mb4 f6 w-70 h2-5'>High Quality Content for Complete Conceptual Clarity</span>
-                <a className='mt-auto link' href='/'>
+                <Link className='mt-auto link' href='/'>
                   <span className='secondary mr2 f5 f6-l'>Explore Free Videos</span>
                   <svg
                     version='1.1'
@@ -247,7 +247,7 @@ const HomePage = () => {
                     <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
                     <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
                   </svg>
-                </a>
+                </Link>
               </div>
               <div
                 className='home-section-item'
@@ -258,7 +258,7 @@ const HomePage = () => {
               >
                 <span className='white fw7 f4-l f5'>Previous Year Papers</span>
                 <span className='white mb4 f6 w-70 h2-5'>Practice past years' question papers and get exam ready</span>
-                <a className='mt-auto link' href='/'>
+                <Link className='mt-auto link' href='/'>
                   <span className='secondary mr2 f5 f6-l'>Explore Papers</span>
                   <svg
                     version='1.1'
@@ -272,7 +272,7 @@ const HomePage = () => {
                     <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
                     <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
                   </svg>
-                </a>
+                </Link>
               </div>
               <div
                 className='home-section-item'
@@ -283,7 +283,7 @@ const HomePage = () => {
               >
                 <span className='white fw7 f4-l f5'>Free Quizzes</span>
                 <span className='white mb4 f6 w-70 h2-5'>Attempt topic wise quizzes for improving your score</span>
-                <a className='mt-auto link' href='/'>
+                <Link className='mt-auto link' href='/'>
                   <span className='secondary mr2 f5 f6-l'>Explore Quizzes</span>
                   <svg
                     version='1.1'
@@ -297,7 +297,7 @@ const HomePage = () => {
                     <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
                     <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
