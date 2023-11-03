@@ -193,6 +193,10 @@ export const programLinks = [
   {
     title: 'Luyện thi TOEIC',
     path: '/program/35/'
+  },
+  {
+    title: 'Tiếng Anh cơ bản',
+    path: '/program/37/'
   }
 ]
 
@@ -204,6 +208,10 @@ export const systemLinks = [
   {
     title: 'Danh mục Tin bài',
     path: '/apps/post-category'
+  },
+  {
+    title: 'Block',
+    path: '/apps/block'
   },
   {
     title: 'Tổ chức, Đơn vị',
@@ -218,5 +226,5 @@ export const systemLinks = [
     title: 'Cấu hình',
     icon: 'eos-icons:file-system',
     path: '/apps/tenant'
-  },
+  }
 ]

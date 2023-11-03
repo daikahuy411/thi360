@@ -35,7 +35,8 @@ const catalogImages = {
   197: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
   198: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
   199: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
-  200: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg'
+  200: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
+  201: '/themes/default/assets/img/img-monhoc/mon-tienganh.svg',
 }
 
 const Program = () => {

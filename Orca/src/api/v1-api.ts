@@ -31,6 +31,12 @@ class V1Api extends ApiBase {
     return response
   }
 
+  getHomePageBlocks = () => {
+    const url = `${this.baseApiUrl}/homepageblocks`
+    const response = axios.get(url)
+    return response
+  }
+
   getHelpPagePosts = () => {
     const url = `${this.baseApiUrl}/helppageposts`
     const response = axios.get(url)
