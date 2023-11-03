@@ -88,3 +88,46 @@ export const formatCVC = (value, cardNumber, Payment) => {
 
   return clearValue.slice(0, maxLength)
 }
+
+//format money
+export const formatCurrency = (money, fixed) => {
+  return money.toFixed(fixed).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+export const formatNumber_Add0 = (number) => {
+  if (number < 10 && number > 0) {
+    return `0${number}`
+  }
+  return number;
+}
+
+export class FormatNumber {
+  add0 = ((number) => {
+    if (number < 10 && number > 0) {
+      return `0${number}`
+    }
+    return number;
+  });
+}
+
+// format phone number
+export class FormatPhoneNumber {
+  phoneNumber_VN = ((phoneNumberString) => {
+    const cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+    const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      const intlCode = (match[1] ? '+1 ' : '');
+      return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+    }
+    return null;
+  });
+
+  phoneNumber = ((phoneNumberString) => {
+    const cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    }
+    return null;
+  });
+}

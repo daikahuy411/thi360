@@ -242,34 +242,13 @@ const PricingPage = () => {
     new V1Api().getPricingPlans().then(response => {
       const data = response.data.value
       setPlans(data)
-      // const parm = data.student[0].planBenefitSetting
-      // const parm1 = data.student[1].planBenefitSetting
-      // const parm2 = data.teacher[0].planBenefitSetting
-      // const parm3 = data.enterprise[0].planBenefitSetting
-      // console.log('parm:', parm)
-      // console.log('parm1:', JSON.parse(parm2))
-      // console.log('parm3:', JSON.parse(parm3))
-
-      // let param = []
-      // param.push(
-      //   {
-      //     name: '30 học viên'
-      //   },
-      //   {
-      //     name: '1 tài khoản giáo viên'
-      //   },
-      //   {
-      //     name: '1000 câu hỏi'
-      //   },
-      //   {
-      //     name: 'Sử dụng ngân hàng câu hỏi Thi360'
-      //   }
-      // )
-
-      // console.log('param:', JSON.stringify(param))
     })
   }
 
+  function addPayment(item, flag) {
+    setSelectedPlan(item)
+    setAddPaymentOpen(flag)
+  }
   return (
     <>
       <Grid container spacing={8} justifyContent='center'>
@@ -307,10 +286,14 @@ const PricingPage = () => {
                           return x.pricingPlanId == item.id
                         }).length > 0
                       }
+                      currentPlanItem={
+                        plans.userCurrentPlans.filter(x => x.pricingPlanId == item.id)
+                      }
                       addPayment={() => {
                         setSelectedPlan(item)
                         setAddPaymentOpen(true)
                       }}
+                      // addPayment={addPayment(item, true)}
                       data={item}
                     />
                   </Grid>
@@ -327,7 +310,7 @@ const PricingPage = () => {
           </Card>
         </Grid>
       </Grid>
-      <AddPaymentDrawer open={addPaymentOpen} plan={selectedPlan} toggle={toggleAddPaymentDrawer} />
+      <AddPaymentDrawer open={addPaymentOpen} plan={selectedPlan} toggle={toggleAddPaymentDrawer} promotions={promotions} />
     </>
   )
 }
