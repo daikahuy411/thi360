@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 // ** Configs
 import themeConfig from 'configs/themeConfig'
@@ -10,7 +13,10 @@ import Icon from '@core/components/icon'
 import Box from '@mui/material/Box'
 // ** MUI Imports
 import IconButton from '@mui/material/IconButton'
-import { styled, useTheme } from '@mui/material/styles'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 // ** Styled Components

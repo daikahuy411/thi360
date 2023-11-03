@@ -49,21 +49,33 @@ class V1Api extends ApiBase {
     return response;
   }
 
+  verifyCodePromotion = (request: any) => {
+    const url = `${this.baseApiUrl}/VerifyCodePromotions`;
+    const response = axios.post(url, request);
+    return response;
+  }
+
   getPricingPlans = () => {
     const url = `${this.baseApiUrl}/pricingplans`;
     const response = axios.get(url);
     return response;
   }
 
-  createOrder = (planId: number, month: number) => {
+  createOrder = (request) => {
     const url = `${this.baseApiUrl}/Orders`;
-    const response = axios.post(url, { planId: planId, month: month });
+    const response = axios.post(url, request);
     return response;
   }
 
-  completeOrder = (id: number) => {
+  completeOrder = (request: any) => {
     const url = `${this.baseApiUrl}/CompleteOrder`;
-    const response = axios.post(url, { id: id });
+    const response = axios.post(url, request);
+    return response;
+  }
+
+  cancelOrder = (param: any) => {
+    const url = `${this.baseApiUrl}/CancelOrder`;
+    const response = axios.post(url, param);
     return response;
   }
 }

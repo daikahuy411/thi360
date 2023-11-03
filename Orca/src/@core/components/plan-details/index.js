@@ -1,12 +1,9 @@
 // ** Icon Imports
 import Icon from '@core/components/icon'
-// ** Custom Components Imports
 import CustomChip from '@core/components/mui/chip'
-// ** Util Import
 import { hexToRGBA } from '@core/utils/hex-to-rgba'
+import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
-// ** MUI Imports
-import Button from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
@@ -28,7 +25,11 @@ const BoxFeature = styled(Box)(({ theme }) => ({
 
 const PlanDetails = props => {
   // ** Props
-  const { plan, data, isCurrentPlan } = props
+  const { plan, data, isCurrentPlan, currentPlanItem, addPayment } = props
+
+  console.log('isCurrentPlan:', isCurrentPlan)
+  console.log('currentPlanItem:', currentPlanItem)
+  console.log('data:', data)
 
   const renderFeatures = () => {
     return data?.planBenefitsObject.map((item, index) => (
@@ -41,6 +42,18 @@ const PlanDetails = props => {
     ))
   }
 
+  const handleClick = () => {
+    if (!isCurrentPlan) {
+
+      props.addPayment()
+    } else {
+      if (data.price != 0) {
+        props.addPayment()
+      }
+    }
+
+
+  }
   return (
     <BoxWrapper
       sx={{
@@ -70,6 +83,7 @@ const PlanDetails = props => {
       ) : null}
       <Box sx={{ mb: 5, display: 'flex', justifyContent: 'center' }}>
         <img
+          style={{ width: '230px', height: '205px' }}
           width={data?.imgWidth}
           src={`${data?.imageSrc}`}
           height={data?.imgHeight}
@@ -84,7 +98,6 @@ const PlanDetails = props => {
         <Box sx={{ my: 7, position: 'relative' }}>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Typography variant='h3' sx={{ fontWeight: 600, color: 'primary.main', lineHeight: 1.17 }}>
-              {/* {plan === 'monthly' ? data?.monthlyPrice : data?.yearlyPlan.perMonth} */}
               {data.totalVN}
             </Typography>
             <Typography variant='body2' sx={{ mt: 1.6, fontWeight: 600, alignSelf: 'flex-start' }}>
@@ -94,24 +107,21 @@ const PlanDetails = props => {
               /tháng
             </Typography>
           </Box>
-          {/* {plan !== 'monthly' && data?.monthlyPrice !== 0 ? (
-            <Typography
-              variant='caption'
-              sx={{ top: 50, left: '50%', position: 'absolute', transform: 'translateX(-50%)' }}
-            >{`USD ${data?.yearlyPlan.totalAnnual}/year`}</Typography>
-          ) : null} */}
         </Box>
       </Box>
       <BoxFeature>{renderFeatures()}</BoxFeature>
       <Button
-        onClick={isCurrentPlan ? null : () => props.addPayment()}
+        onClick={
+          handleClick
+          // (isCurrentPlan) ? null : () => props.addPayment()
+        }
         fullWidth
-        color={isCurrentPlan ? 'success' : 'primary'}
+        color={(isCurrentPlan && currentPlanItem[0].status == 1) ? 'success' : 'primary'}
         variant={isCurrentPlan ? 'contained' : 'outlined'}
       >
-        {isCurrentPlan ? 'Your Current Plan' : 'Đăng ký'}
+        {(isCurrentPlan && currentPlanItem[0].status == 1) ? 'Đang sử dụng' : (isCurrentPlan && currentPlanItem[0].status == 5) ? 'Đã đăng ký' : 'Đăng ký'}
       </Button>
-    </BoxWrapper>
+    </BoxWrapper >
   )
 }
 
