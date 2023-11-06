@@ -233,7 +233,7 @@ const ExamPage = () => {
                                     <th style={{ width: 200 }}>Số câu hỏi</th>
                                     <th style={{ width: 200 }}>Loại đề thi</th>
                                     <th style={{ width: 160 }}>Số lượt thi</th>
-                                    <th style={{ textAlign: 'left', width: 260 }}>Thao tác</th>
+                                    <th style={{ textAlign: 'left', width: 280 }}>Thao tác</th>
                                   </tr>
                                 </thead>
                                 <tbody className='table-border-bottom-0'>

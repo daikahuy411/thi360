@@ -126,23 +126,9 @@ const UserDropdown = props => {
             />
           </Badge>
           <Box display='inline-block' width='134px'>
+            <Typography>{currentUser?.fullName}</Typography>
             <Typography
               sx={{
-                fontSize: '18px',
-                fontWeight: '600',
-                lineHeight: '30px',
-                letterSpacing: '0em',
-                textAlign: 'start'
-              }}
-            >
-              {currentUser?.fullName}
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: '16px',
-                fontWeight: '400',
-                lineHeight: '24px',
-                letterSpacing: '0em',
                 textAlign: 'start'
               }}
             >
