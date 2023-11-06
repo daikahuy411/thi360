@@ -1,26 +1,34 @@
 import * as React from 'react'
-import { useEffect, useState, forwardRef } from 'react'
+import {
+  forwardRef,
+  useEffect,
+  useState
+} from 'react'
+
+import TestingApi from 'api/testing-api'
 import V1Api from 'api/v1-api'
+import themeConfig from 'configs/themeConfig'
+import { useAuth } from 'hooks/useAuth'
+import Head from 'next/head'
 import NavLink from 'next/link'
 import { useRouter } from 'next/router'
+import TestAttemptHistoryDialog from 'pages/shared/test-attempt-history-dialog'
+
 import LoadingSpinner from '@core/components/loading-spinner'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import Link from '@mui/material/Link'
-import TestingApi from 'api/testing-api'
-import CircularProgress from '@mui/material/CircularProgress'
-import { useAuth } from 'hooks/useAuth'
-import Dialog from '@mui/material/Dialog'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
 import Slide from '@mui/material/Slide'
-import DialogContentText from '@mui/material/DialogContentText'
-import TestAttemptHistoryDialog from 'pages/shared/test-attempt-history-dialog'
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
@@ -82,6 +90,11 @@ const ExamPage = () => {
 
   return (
     <>
+      <Head>
+        {exam && (
+          <title>{`${exam.subject.name} ${exam.program?.name}: ${exam.name} - ${themeConfig.templateName}`}</title>
+        )}
+      </Head>
       <Grid container>
         <Grid item md={12}>
           {exam && (
