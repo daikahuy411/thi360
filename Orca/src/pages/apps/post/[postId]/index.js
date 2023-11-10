@@ -57,6 +57,7 @@ const EditPostPage = () => {
   const { postId } = router.query
   const currentPost = useSelector(selectedPost)
   const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
+  const [imageUrl, setImageUrl] = useState('')
 
   const [categorySelected, setCategorySelected] = useState({ categoryId: 0, categoryName: '' })
   const handleSelectedOrganization = selectedId => {
@@ -91,6 +92,7 @@ const EditPostPage = () => {
     }
     new PostApi().get(postId).then(response => {
       dispatch(selectPost(response.data))
+      setImageUrl(response.data.imageUrl)
       setCategorySelected({
         categoryId: response.data.categoryId,
         categoryName: response.data.categoryName
@@ -107,7 +109,8 @@ const EditPostPage = () => {
    */
   const save = code => {
     const item = getValues()
-    item.CategoryId = categorySelected.categoryId
+    item.categoryId = categorySelected.categoryId
+    item.imageUrl= imageUrl
 
     new PostApi()
       .save(item)
@@ -157,6 +160,21 @@ const EditPostPage = () => {
   /*
    * handle remove exam
    */
+
+  const selectFile = () => {
+    CKFinder.modal({
+      chooseFiles: true,
+      width: 800,
+      height: 600,
+      onInit: function (finder) {
+        finder.on('files:choose', function (evt) {
+          var file = evt.data.files.first()
+          setImageUrl(file.getUrl())
+
+        })
+      }
+    })
+  }
 
   return (
     <>
@@ -316,6 +334,35 @@ const EditPostPage = () => {
                                 <br />
                               </Grid>
                             </Grid>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <FormControl fullWidth variant='outlined'>
+                              <InputLabel htmlFor='outlined-adornment-image-url'>Ảnh đại diện</InputLabel>
+                              <OutlinedInput
+                                id='outlined-adornment-image-url'
+                                inputprops={{
+                                  readOnly: true,
+                                  className: 'Mui-disabled'
+                                }}
+                                value={imageUrl}
+                                endAdornment={
+                                  <InputAdornment position='end'>
+                                    <IconButton
+                                      aria-label='toggle password visibility'
+                                      edge='end'
+                                      onClick={() => setImageUrl('')}
+                                    >
+                                      <DeleteOutline />
+                                    </IconButton>
+                                    &nbsp;
+                                    <IconButton edge='end' onClick={selectFile}>
+                                      <FolderIcon />
+                                    </IconButton>
+                                  </InputAdornment>
+                                }
+                                label='Ảnh đại diện'
+                              />
+                            </FormControl>
                           </Grid>
                           <Grid item xs={12} md={4}>
                             <Grid container spacing={5}></Grid>

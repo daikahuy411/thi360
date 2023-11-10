@@ -11,7 +11,9 @@ const PricingHeader = props => {
 
   return (
     <Box sx={{ mb: [8, 9], textAlign: 'center' }}>
-      <Typography variant='h4'>Bảng Giá Dịch Vụ</Typography>
+      <Typography variant='h5' >
+        Bảng Giá Dịch Vụ
+      </Typography>
       <Box sx={{ mt: 2.5, mb: 2 }}>
         <Typography variant='body2'>
           Tất cả các gói dịch vụ được phân loại tính năng để phù hợp với từng đối tượng người dùng.

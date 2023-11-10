@@ -199,8 +199,15 @@ const UserDropdown = props => {
       )}
       {!auth.user && (
         <>
-          <Link href='/login' style={{ paddingRight: 24 }}>
-            <Button variant='outlined'>Đăng nhập/ đăng ký</Button>&nbsp;
+          <Link href='/login' style={{ paddingRight: 10 }}>
+            <Button variant='contained' color='primary' style={{ textTransform: 'none' }}>
+              Đăng nhập
+            </Button>
+          </Link>
+          <Link href='/register' style={{ paddingRight: 24 }}>
+            <Button variant='outlined' style={{ textTransform: 'none' }}>
+              Đăng ký
+            </Button>
           </Link>
         </>
       )}
