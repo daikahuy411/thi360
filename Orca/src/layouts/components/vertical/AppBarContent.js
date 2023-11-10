@@ -83,7 +83,7 @@ const AppBarContent = props => {
             <Link
               href={'/pricing'}
               className='btn btn-primary waves-effect waves-light btn-sm'
-              style={{ textTransform: 'none', fontSize: 16 }}
+              style={{ textTransform: 'none', fontSize: 14 }}
             >
               <img className='me-3' src='/themes/default/assets/img/coin.svg' />
               Bảng giá&nbsp;&nbsp;
