@@ -166,7 +166,7 @@ const LoginPage = () => {
   return (
     <>
     <Head>
-      <title>{`${themeConfig.templateName} - Đăng nhập`}</title>
+      <title>{`Đăng nhập - ${themeConfig.templateName}`}</title>
     </Head>
     <Box className='content-right'>
       {!hidden ? (

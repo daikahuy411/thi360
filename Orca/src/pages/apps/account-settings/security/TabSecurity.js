@@ -1,3 +1,6 @@
+import { Fragment } from 'react'
+
+import Head from 'next/head'
 // ** Demo Components
 // import CreateApiKey from 'src/views/pages/account-settings/security/CreateApiKey'
 import ChangePasswordCard from 'pages/apps/account-settings/security/ChangePasswordCard'
@@ -47,19 +50,23 @@ const recentDeviceData = [
 
 const TabSecurity = () => {
   return (
-    <Grid container spacing={6}>
-      <Grid item xs={12}>
-        <ChangePasswordCard />
-      </Grid>
-      {/* <Grid item xs={12}>
+    <Fragment>
+      <Head>
+        <title>{`Thiết lập thông tin bảo mật`}</title>
+      </Head>
+      <Grid container spacing={6}>
+        <Grid item xs={12}>
+          <ChangePasswordCard />
+        </Grid>
+        {/* <Grid item xs={12}>
         <TwoFactorAuthentication />
       </Grid> */}
-      {/* <Grid item xs={12}>
+        {/* <Grid item xs={12}>
         <CreateApiKey />
       </Grid> */}
 
-      {/* Recent Devices Card*/}
-      {/* <Grid item xs={12}>
+        {/* Recent Devices Card*/}
+        {/* <Grid item xs={12}>
         <Card>
           <CardHeader title='Lịch sử đăng nhập' />
           <TableContainer>
@@ -103,7 +110,8 @@ const TabSecurity = () => {
           </TableContainer>
         </Card>
       </Grid> */}
-    </Grid>
+      </Grid>
+    </Fragment>
   )
 }
 

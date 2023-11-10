@@ -1,18 +1,22 @@
 import React from 'react'
-import Countdown from 'react-countdown'
-import ReactHtmlParser from 'react-html-parser'
+
 import TestingApi from 'api/testing-api'
-import QuestionContent from '../Question/QuestionContent'
-import Clock from './Clock'
+import authConfig from 'configs/auth'
 import _ from 'lodash'
 import moment from 'moment'
-import QuestionExplain from './QuestionExplain'
-import { QuestionType } from 'types/QuestionType'
-import LoadingSpinner from '@core/components/loading-spinner'
-import Help from '../Help'
+import Head from 'next/head'
 import { withRouter } from 'next/router'
+import Countdown from 'react-countdown'
 import Fullscreen from 'react-fullscreen-crossbrowser'
-import authConfig from 'configs/auth'
+import ReactHtmlParser from 'react-html-parser'
+import { QuestionType } from 'types/QuestionType'
+
+import LoadingSpinner from '@core/components/loading-spinner'
+
+import Help from '../Help'
+import QuestionContent from '../Question/QuestionContent'
+import Clock from './Clock'
+import QuestionExplain from './QuestionExplain'
 
 // MODE
 // 0: Practice: hiển thị đáp án sau khi trả lời.
@@ -631,6 +635,11 @@ class TestDetails extends React.Component {
   render() {
     return (
       <>
+      <Head>
+      {this.state.examAttempt && (
+        <title>{this.state.mode == 1 ? `Làm bài thi: ${this.state.examAttempt.name}` : `Xem lại kết quả: ${this.state.examAttempt.name}`}</title>
+      )}
+      </Head>
         <LoadingSpinner active={this.state.loading}>
           {this.state.examAttempt && (
             <Fullscreen enabled={this.state.fullScreen} onChange={fullScreen => this.setState({ fullScreen })}>
