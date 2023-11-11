@@ -1,18 +1,20 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
 import V1Api from 'api/v1-api'
+import { useAuth } from 'hooks/useAuth'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import clsx from 'clsx'
-import Grid from '@mui/material/Grid'
-import Pagination from '@mui/material/Pagination'
+
 import LoadingSpinner from '@core/components/loading-spinner'
-import { useAuth } from 'hooks/useAuth'
 import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
-import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
 const HomePage = () => {
@@ -41,6 +43,9 @@ const HomePage = () => {
 
   return (
     <>
+      <Head>
+        <title>Trang chủ Thi360 - Trang tài liệu, đề thi, luyện đề online, website giáo dục tại Việt Nam</title>
+      </Head>
       <div className='container-xxl flex-grow-1 container-p-y'>
         <section className='Home-banner' style={{ backgroundColor: '#6F2F74', color: 'white' }}>
           {/* <img src='/themes/default/assets/img/intro.png' /> */}

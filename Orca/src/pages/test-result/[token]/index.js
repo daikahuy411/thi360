@@ -1,18 +1,33 @@
-import React from 'react'
+import React, {
+  useEffect,
+  useState
+} from 'react'
+
 import TestingApi from 'api/testing-api'
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import LoadingSpinner from '@core/components/loading-spinner'
+import themeConfig from 'configs/themeConfig'
 import moment from 'moment'
-import { Button, Grid } from '@mui/material'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import { Tooltip, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
-import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Head from 'next/head'
+import Link from 'next/link'
 import NavLink from 'next/link'
-import RefreshIcon from '@mui/icons-material/Refresh'
+import { useRouter } from 'next/router'
+import {
+  Cell,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip
+} from 'recharts'
+
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
+import RefreshIcon from '@mui/icons-material/Refresh'
+import {
+  Button,
+  Grid
+} from '@mui/material'
+import Box from '@mui/material/Box'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Typography from '@mui/material/Typography'
 
 const RADIAN = Math.PI / 180
 
@@ -60,6 +75,9 @@ const TestResultPage = () => {
       <>
         {attempt && (
           <>
+          <Head>
+            <title>{`Kết quả thi: ${attempt.name} - ${themeConfig.templateName}`}</title>
+          </Head>
             <Grid container>
               <Grid item md={12}>
                 {exam && (

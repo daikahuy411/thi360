@@ -1,16 +1,22 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
 import V1Api from 'api/v1-api'
+import clsx from 'clsx'
+import Head from 'next/head'
 import NavLink from 'next/link'
 import { useRouter } from 'next/router'
+
+import LoadingSpinner from '@core/components/loading-spinner'
 import HomeIcon from '@mui/icons-material/Home'
-import clsx from 'clsx'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
 import Pagination from '@mui/material/Pagination'
 import Typography from '@mui/material/Typography'
-import LoadingSpinner from '@core/components/loading-spinner'
 
 const SubjectPage = () => {
   const router = useRouter()
@@ -80,9 +86,14 @@ const SubjectPage = () => {
 
   return (
     <>
+      <Head>
+        {(program && subject && curriculum) && (
+          <title>{`${subject.name} ${program.name} - ${curriculum.name}`}</title>
+        )}
+      </Head>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Breadcrumbs aria-label='breadcrumb' style={{marginBottom: 5}}>
+          <Breadcrumbs aria-label='breadcrumb' style={{ marginBottom: 5 }}>
             <Link
               underline='hover'
               component={NavLink}

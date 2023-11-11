@@ -1,15 +1,24 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
 import axios from 'axios'
 import authConfig from 'configs/auth'
 import themeConfig from 'configs/themeConfig'
 import { useAuth } from 'hooks/useAuth'
+import Head from 'next/head'
 import Link from 'next/link'
 import { router } from 'next/router'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
 import * as yup from 'yup'
-import LoadingSpinner from '@core/components/loading-spinner'
+
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import useBgColor from '@core/hooks/useBgColor'
 import { useSettings } from '@core/hooks/useSettings'
 import BlankLayout from '@core/layouts/BlankLayout'
@@ -25,7 +34,10 @@ import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -152,6 +164,10 @@ const LoginPage = () => {
   }
 
   return (
+    <>
+    <Head>
+      <title>{`Đăng nhập - ${themeConfig.templateName}`}</title>
+    </Head>
     <Box className='content-right'>
       {!hidden ? (
         <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
@@ -352,6 +368,7 @@ const LoginPage = () => {
         </Box>
       </RightWrapper>
     </Box>
+    </>    
   )
 }
 

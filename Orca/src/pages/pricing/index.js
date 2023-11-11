@@ -1,7 +1,12 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import V1Api from 'api/v1-api'
+import themeConfig from 'configs/themeConfig'
+import Head from 'next/head'
 
 import Icon from '@core/components/icon'
 import PlanDetails from '@core/components/plan-details'
@@ -251,6 +256,9 @@ const PricingPage = () => {
   }
   return (
     <>
+    <Head>
+        <title>{`Danh sách gói đăng ký, Chương trình khuyến mãi - ${themeConfig.templateName}`}</title>
+      </Head>
       <Grid container spacing={8} justifyContent='center'>
         <Grid item md={12} lg={10} xl={10}>
           <Card>

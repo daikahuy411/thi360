@@ -1,8 +1,21 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
 import TestingApi from 'api/testing-api'
+import themeConfig from 'configs/themeConfig'
 import moment from 'moment'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
+import Link from 'next/link'
+import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
+
+import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -12,10 +25,6 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import LoadingSpinner from '@core/components/loading-spinner'
-import Link from 'next/link'
-import Icon from '@core/components/icon'
 
 const ExamAttempHistory = () => {
   const [data, setData] = useState()
@@ -69,7 +78,7 @@ const ExamAttempHistory = () => {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Lịch sử thi</title>
+          <title>{`Lịch sử thi trên ${themeConfig.templateName}`}</title>
         </Helmet>
         <Grid container>
           <Grid item md={3}></Grid>

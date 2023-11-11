@@ -1,14 +1,20 @@
+import {
+  useEffect,
+  useState
+} from 'react'
+
+import V1Api from 'api/v1-api'
+import themeConfig from 'configs/themeConfig'
+import Head from 'next/head'
+import HelpCenterLandingArticlesOverview from 'views/pages/help-center/landing/HelpCenterLandingArticlesOverview'
+import HelpCenterLandingFooter from 'views/pages/help-center/landing/HelpCenterLandingFooter'
+import HelpCenterLandingHeader from 'views/pages/help-center/landing/HelpCenterLandingHeader'
+import HelpCenterLandingKnowledgeBase from 'views/pages/help-center/landing/HelpCenterLandingKnowledgeBase'
+
 import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
-import HelpCenterLandingHeader from 'views/pages/help-center/landing/HelpCenterLandingHeader'
-import HelpCenterLandingFooter from 'views/pages/help-center/landing/HelpCenterLandingFooter'
-import HelpCenterLandingKnowledgeBase from 'views/pages/help-center/landing/HelpCenterLandingKnowledgeBase'
-import HelpCenterLandingArticlesOverview from 'views/pages/help-center/landing/HelpCenterLandingArticlesOverview'
-import themeConfig from 'configs/themeConfig'
-import V1Api from 'api/v1-api'
-import { useEffect, useState } from 'react'
 
 const StyledCardContent = styled(CardContent)(({ theme }) => ({
   paddingTop: `${theme.spacing(10)} !important`,
@@ -627,32 +633,40 @@ const HelpCenter = ({ apiData }) => {
   }, [])
 
   return (
-    <Card>
-      {apiData !== null ? (
-        <>
-          <HelpCenterLandingHeader data={apiData.categories} allArticles={apiData.allArticles} />
-          <StyledCardContent>
-            <Typography variant='h5' sx={{ mb: 6, textAlign: 'center' }}>
-              Bắt đầu với Thi360
-            </Typography>
-            {data && (
-            <HelpCenterLandingArticlesOverview  featurePosts={data.featurePosts} />
-            )}
-          </StyledCardContent>
-          <StyledCardContent sx={{ backgroundColor: 'action.hover' }}>
-            <Typography variant='h5' sx={{ mb: 6, textAlign: 'center' }}>
-              Hướng dẫn
-            </Typography>
-            {data && (
-            <HelpCenterLandingKnowledgeBase categories={data.postCategories} />
-            )}
-          </StyledCardContent>
-          <StyledCardContent sx={{ textAlign: 'center', backgroundColor: 'action.hover' }}>
-            <HelpCenterLandingFooter />
-          </StyledCardContent>
-        </>
-      ) : null}
-    </Card>
+    <>
+      <Head>
+        <title>Hướng dẫn sử dụng hệ thống Thi360.com</title>
+        <meta name="author" content="Thi360.com" />
+        <meta property="og:image" content="/images/meta-page.jpg"></meta>
+      </Head>
+      <Card>
+        {apiData !== null ? (
+          <>
+            <HelpCenterLandingHeader data={apiData.categories} allArticles={apiData.allArticles} />
+            <StyledCardContent>
+              <Typography variant='h5' sx={{ mb: 6, textAlign: 'center' }}>
+                Bắt đầu với Thi360
+              </Typography>
+              {data && (
+                <HelpCenterLandingArticlesOverview featurePosts={data.featurePosts} />
+              )}
+            </StyledCardContent>
+            <StyledCardContent sx={{ backgroundColor: 'action.hover' }}>
+              <Typography variant='h5' sx={{ mb: 6, textAlign: 'center' }}>
+                Hướng dẫn
+              </Typography>
+              {data && (
+                <HelpCenterLandingKnowledgeBase categories={data.postCategories} />
+              )}
+            </StyledCardContent>
+            <StyledCardContent sx={{ textAlign: 'center', backgroundColor: 'action.hover' }}>
+              <HelpCenterLandingFooter />
+            </StyledCardContent>
+          </>
+        ) : null}
+      </Card>
+    </>
+
   )
 }
 

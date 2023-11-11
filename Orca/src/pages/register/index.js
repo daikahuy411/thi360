@@ -1,20 +1,28 @@
 // ** React Imports
-import { Fragment, useState } from 'react'
+import {
+  Fragment,
+  useState
+} from 'react'
+
 // ** Configs
 import themeConfig from 'configs/themeConfig'
 // ** Hooks
 import { useAuth } from 'hooks/useAuth'
+import Head from 'next/head'
 // ** Next Imports
 import Link from 'next/link'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 // ** Demo Imports
 import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
 // ** Third Party Imports
 import * as yup from 'yup'
-import LoadingSpinner from '@core/components/loading-spinner'
 
 // ** Icon Imports
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import { useSettings } from '@core/hooks/useSettings'
 // ** Layout Import
 import BlankLayout from '@core/layouts/BlankLayout'
@@ -24,7 +32,6 @@ import Box from '@mui/material/Box'
 // ** MUI Components
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
-import Divider from '@mui/material/Divider'
 import FormControl from '@mui/material/FormControl'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormHelperText from '@mui/material/FormHelperText'
@@ -33,7 +40,10 @@ import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
@@ -168,233 +178,237 @@ const Register = () => {
   const imageSource = skin === 'bordered' ? 'auth-v2-register-illustration-bordered' : 'auth-v2-register-illustration'
 
   return (
-    <Box className='content-right'>
-      {!hidden ? (
-        <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
-          <RegisterIllustrationWrapper>
-            <RegisterIllustration
-              alt='register-illustration'
-              src={`/images/pages/misc-coming-soon.png`}
-            />
-          </RegisterIllustrationWrapper>
-          <FooterIllustrationsV2 image={<TreeIllustration alt='tree' src='/images/pages/tree-2.png' />} />
-        </Box>
-      ) : null}
-      <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
-        <Box
-          sx={{
-            p: 12,
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'background.paper'
-          }}
-        >
-          <BoxWrapper>
-            <Box
-              sx={{
-                top: 30,
-                left: 40,
-                display: 'flex',
-                position: 'absolute',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <Link href='/'>
-                <div style={{ textAlign: 'center' }}>
-                  <div
-                    style={{
-                      borderRadius: 15,
-                      width: 50,
-                      height: 50,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      margin: '0 auto',
-                      backgroundColor: 'rgba(155, 81, 224, 0.1)'
-                    }}
-                  >
-                    <img src='/themes/default/assets/img/edu-icon.svg' style={{ width: 30 }} />
-                  </div>
-                </div>
-              </Link>
-              <Link
-                href='/'
-                style={{
-                  textDecoration: 'none'
+    <Fragment>
+      <Head>
+        <title>{`${themeConfig.templateName} - Đăng ký tài khoản`}</title>
+      </Head>
+      <Box className='content-right'>
+        {!hidden ? (
+          <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
+            <RegisterIllustrationWrapper>
+              <RegisterIllustration
+                alt='register-illustration'
+                src={`/images/pages/misc-coming-soon.png`}
+              />
+            </RegisterIllustrationWrapper>
+            <FooterIllustrationsV2 image={<TreeIllustration alt='tree' src='/images/pages/tree-2.png' />} />
+          </Box>
+        ) : null}
+        <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
+          <Box
+            sx={{
+              p: 12,
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'background.paper'
+            }}
+          >
+            <BoxWrapper>
+              <Box
+                sx={{
+                  top: 30,
+                  left: 40,
+                  display: 'flex',
+                  position: 'absolute',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}
               >
-                <Typography
-                  variant='h6'
-                  sx={{
-                    ml: 3,
-                    lineHeight: 1,
-                    fontWeight: 600,
-                    textTransform: 'uppercase',
-                    textDecoration: 'none',
-                    fontSize: '1.5rem !important'
+                <Link href='/'>
+                  <div style={{ textAlign: 'center' }}>
+                    <div
+                      style={{
+                        borderRadius: 15,
+                        width: 50,
+                        height: 50,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto',
+                        backgroundColor: 'rgba(155, 81, 224, 0.1)'
+                      }}
+                    >
+                      <img src='/themes/default/assets/img/edu-icon.svg' style={{ width: 30 }} />
+                    </div>
+                  </div>
+                </Link>
+                <Link
+                  href='/'
+                  style={{
+                    textDecoration: 'none'
                   }}
                 >
-                  {themeConfig.templateName}
-                </Typography>
-              </Link>
-            </Box>
-            <Box sx={{ mb: 6 }}>
-              <TypographyStyled variant='h5'>Bắt đầu với Thi360 🚀</TypographyStyled>
-              <Typography variant='body2'>Tạo tài khoản để sử dụng toàn bộ chức năng!</Typography>
-            </Box>
-            <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
-              <LoadingSpinner active={loading}>
-                <Grid container spacing={2} maxWidth={'sm'}>
-                  <Grid item xs={12} md={12}>
-                    <FormControl fullWidth sx={{ mb: 4 }}>
-                      <InputLabel htmlFor='auth-username' error={Boolean(errors.username)}>
-                        Tên đăng nhập
-                      </InputLabel>
-                      <Controller
-                        name='username'
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { value, onChange } }) => (
-                          <OutlinedInput
-                            autoFocus
-                            autoComplete='off'
-                            value={value ?? ''}
-                            label='Tên đăng nhập'
-                            required
-                            // onBlur={onBlur}
-                            onChange={onChange}
-                            id='auth-username'
-                            error={Boolean(errors.username)}
-                            endAdornment={
-                              <InputAdornment position='end'>
-                                <Tooltip
-                                  placement='right-start'
-                                  title='Tên người dùng viết chữ thường, không có dấu cách, có tối thiểu 3 ký tự.'
-                                >
-                                  <IconButton>
-                                    <InfoOutlinedIcon />
+                  <Typography
+                    variant='h6'
+                    sx={{
+                      ml: 3,
+                      lineHeight: 1,
+                      fontWeight: 600,
+                      textTransform: 'uppercase',
+                      textDecoration: 'none',
+                      fontSize: '1.5rem !important'
+                    }}
+                  >
+                    {themeConfig.templateName}
+                  </Typography>
+                </Link>
+              </Box>
+              <Box sx={{ mb: 6 }}>
+                <TypographyStyled variant='h5'>Bắt đầu với Thi360 🚀</TypographyStyled>
+                <Typography variant='body2'>Tạo tài khoản để sử dụng toàn bộ chức năng!</Typography>
+              </Box>
+              <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+                <LoadingSpinner active={loading}>
+                  <Grid container spacing={2} maxWidth={'sm'}>
+                    <Grid item xs={12} md={12}>
+                      <FormControl fullWidth sx={{ mb: 4 }}>
+                        <InputLabel htmlFor='auth-username' error={Boolean(errors.username)}>
+                          Tên đăng nhập
+                        </InputLabel>
+                        <Controller
+                          name='username'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field: { value, onChange } }) => (
+                            <OutlinedInput
+                              autoFocus
+                              autoComplete='off'
+                              value={value ?? ''}
+                              label='Tên đăng nhập'
+                              required
+                              // onBlur={onBlur}
+                              onChange={onChange}
+                              id='auth-username'
+                              error={Boolean(errors.username)}
+                              endAdornment={
+                                <InputAdornment position='end'>
+                                  <Tooltip
+                                    placement='right-start'
+                                    title='Tên người dùng viết chữ thường, không có dấu cách, có tối thiểu 3 ký tự.'
+                                  >
+                                    <IconButton>
+                                      <InfoOutlinedIcon />
+                                    </IconButton>
+                                  </Tooltip>
+                                </InputAdornment>
+                              }
+                            />
+                          )}
+                        />
+                        {errors.username && (
+                          <FormHelperText sx={{ color: 'error.main' }}>{errors.username.message}</FormHelperText>
+                        )}
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={8}>
+                      <FormControl fullWidth sx={{ mb: 4 }}>
+                        <Controller
+                          name='lastName'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field: { value, onChange } }) => (
+                            <TextField
+                              value={value ?? ''}
+                              label='Họ & Tên đệm'
+                              onChange={onChange}
+                              error={Boolean(errors.lastName)}
+                              aria-describedby='validation-schema-lastName'
+                            />
+                          )}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <FormControl fullWidth sx={{ mb: 4 }}>
+                        <Controller
+                          name='firstName'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field: { value, onChange } }) => (
+                            <TextField
+                              value={value ?? ''}
+                              label='Tên'
+                              onChange={onChange}
+                              error={Boolean(errors.firstName)}
+                              aria-describedby='validation-schema-firstName'
+                            />
+                          )}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={12}>
+                      <FormControl fullWidth sx={{ mb: 4 }}>
+                        <Controller
+                          name='email'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field: { value, onChange, onBlur } }) => (
+                            <TextField
+                              value={value}
+                              label='Email'
+                              required
+                              onBlur={onBlur}
+                              onChange={onChange}
+                              error={Boolean(errors.email)}
+                              placeholder='user@gmail.com'
+                            />
+                          )}
+                        />
+                        {errors.email && (
+                          <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>
+                        )}
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={12}>
+                      <FormControl fullWidth sx={{ mb: 4 }}>
+                        <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.passwordHash)}>
+                          Mật khẩu
+                        </InputLabel>
+                        <Controller
+                          name='passwordHash'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field: { value, onChange, onBlur } }) => (
+                            <OutlinedInput
+                              autoComplete='new-password'
+                              value={value ?? ''}
+                              label='Mật khẩu'
+                              onBlur={onBlur}
+                              onChange={onChange}
+                              id='auth-login-v2-password'
+                              error={Boolean(errors.passwordHash)}
+                              type={showPassword ? 'text' : 'password'}
+                              endAdornment={
+                                <InputAdornment position='end'>
+                                  <IconButton
+                                    edge='end'
+                                    onMouseDown={e => e.preventDefault()}
+                                    onClick={() => setShowPassword(!showPassword)}
+                                  >
+                                    <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
                                   </IconButton>
-                                </Tooltip>
-                              </InputAdornment>
-                            }
-                          />
+                                  &nbsp;
+                                  <Tooltip
+                                    placement='right-start'
+                                    title='Mật khẩu có tối thiểu 5 ký tự, bao gồm ít nhất 1 chữ in hoa, 1 ký tự đặc biệt và ít nhất 1 ký tự không phải là số.'
+                                  >
+                                    <IconButton>
+                                      <InfoOutlinedIcon />
+                                    </IconButton>
+                                  </Tooltip>
+                                </InputAdornment>
+                              }
+                            />
+                          )}
+                        />
+                        {errors.passwordHash && (
+                          <FormHelperText sx={{ color: 'error.main' }}>{errors.passwordHash.message}</FormHelperText>
                         )}
-                      />
-                      {errors.username && (
-                        <FormHelperText sx={{ color: 'error.main' }}>{errors.username.message}</FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} md={8}>
-                    <FormControl fullWidth sx={{ mb: 4 }}>
-                      <Controller
-                        name='lastName'
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { value, onChange } }) => (
-                          <TextField
-                            value={value ?? ''}
-                            label='Họ & Tên đệm'
-                            onChange={onChange}
-                            error={Boolean(errors.lastName)}
-                            aria-describedby='validation-schema-lastName'
-                          />
-                        )}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <FormControl fullWidth sx={{ mb: 4 }}>
-                      <Controller
-                        name='firstName'
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { value, onChange } }) => (
-                          <TextField
-                            value={value ?? ''}
-                            label='Tên'
-                            onChange={onChange}
-                            error={Boolean(errors.firstName)}
-                            aria-describedby='validation-schema-firstName'
-                          />
-                        )}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} md={12}>
-                    <FormControl fullWidth sx={{ mb: 4 }}>
-                      <Controller
-                        name='email'
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { value, onChange, onBlur } }) => (
-                          <TextField
-                            value={value}
-                            label='Email'
-                            required
-                            onBlur={onBlur}
-                            onChange={onChange}
-                            error={Boolean(errors.email)}
-                            placeholder='user@gmail.com'
-                          />
-                        )}
-                      />
-                      {errors.email && (
-                        <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} md={12}>
-                    <FormControl fullWidth sx={{ mb: 4 }}>
-                      <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.passwordHash)}>
-                        Mật khẩu
-                      </InputLabel>
-                      <Controller
-                        name='passwordHash'
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { value, onChange, onBlur } }) => (
-                          <OutlinedInput
-                            autoComplete='new-password'
-                            value={value ?? ''}
-                            label='Mật khẩu'
-                            onBlur={onBlur}
-                            onChange={onChange}
-                            id='auth-login-v2-password'
-                            error={Boolean(errors.passwordHash)}
-                            type={showPassword ? 'text' : 'password'}
-                            endAdornment={
-                              <InputAdornment position='end'>
-                                <IconButton
-                                  edge='end'
-                                  onMouseDown={e => e.preventDefault()}
-                                  onClick={() => setShowPassword(!showPassword)}
-                                >
-                                  <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
-                                </IconButton>
-                                &nbsp;
-                                <Tooltip
-                                  placement='right-start'
-                                  title='Mật khẩu có tối thiểu 5 ký tự, bao gồm ít nhất 1 chữ in hoa, 1 ký tự đặc biệt và ít nhất 1 ký tự không phải là số.'
-                                >
-                                  <IconButton>
-                                    <InfoOutlinedIcon />
-                                  </IconButton>
-                                </Tooltip>
-                              </InputAdornment>
-                            }
-                          />
-                        )}
-                      />
-                      {errors.passwordHash && (
-                        <FormHelperText sx={{ color: 'error.main' }}>{errors.passwordHash.message}</FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                  {/* <Grid item xs={12} md={12}>
+                      </FormControl>
+                    </Grid>
+                    {/* <Grid item xs={12} md={12}>
                     <FormControl fullWidth sx={{ mb: 4 }}>
                       <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.passwordConfirmation)}>
                         Xác nhận mật khẩu
@@ -433,71 +447,71 @@ const Register = () => {
                       )}
                     </FormControl>
                   </Grid> */}
-                  <Grid item xs={12} md={12}>
-                    <FormControl sx={{ mt: 1.5, mb: 4 }} error={Boolean(errors.terms)}>
-                      <Controller
-                        name='terms'
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { value, onChange } }) => {
-                          return (
-                            <FormControlLabel
-                              sx={{
-                                ...(errors.terms ? { color: 'error.main' } : null),
-                                '& .MuiFormControlLabel-label': { fontSize: '0.875rem' }
-                              }}
-                              control={
-                                <Checkbox
-                                  checked={value}
-                                  onChange={onChange}
-                                  sx={errors.terms ? { color: 'error.main' } : null}
-                                />
-                              }
-                              label={
-                                <Fragment>
-                                  <Typography
-                                    variant='body2'
-                                    component='span'
-                                    sx={{ color: errors.terms ? 'error.main' : '' }}
-                                  >
-                                    Tôi đồng ý{' '}
-                                  </Typography>
-                                  <LinkStyled href='/' onClick={e => e.preventDefault()}>
-                                    chính sách & điều khoản
-                                  </LinkStyled>
-                                </Fragment>
-                              }
-                            />
-                          )
+                    <Grid item xs={12} md={12}>
+                      <FormControl sx={{ mt: 1.5, mb: 4 }} error={Boolean(errors.terms)}>
+                        <Controller
+                          name='terms'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field: { value, onChange } }) => {
+                            return (
+                              <FormControlLabel
+                                sx={{
+                                  ...(errors.terms ? { color: 'error.main' } : null),
+                                  '& .MuiFormControlLabel-label': { fontSize: '0.875rem' }
+                                }}
+                                control={
+                                  <Checkbox
+                                    checked={value}
+                                    onChange={onChange}
+                                    sx={errors.terms ? { color: 'error.main' } : null}
+                                  />
+                                }
+                                label={
+                                  <Fragment>
+                                    <Typography
+                                      variant='body2'
+                                      component='span'
+                                      sx={{ color: errors.terms ? 'error.main' : '' }}
+                                    >
+                                      Tôi đồng ý{' '}
+                                    </Typography>
+                                    <LinkStyled href='/' onClick={e => e.preventDefault()}>
+                                      chính sách & điều khoản
+                                    </LinkStyled>
+                                  </Fragment>
+                                }
+                              />
+                            )
+                          }}
+                        />
+                        {errors.terms && (
+                          <FormHelperText sx={{ mt: 0, color: 'error.main' }}>{errors.terms.message}</FormHelperText>
+                        )}
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={12}>
+                      <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
+                        Đăng ký
+                      </Button>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          textAlign: 'center',
+                          alignItems: 'center',
+                          flexWrap: 'wrap',
+                          justifyContent: 'center'
                         }}
-                      />
-                      {errors.terms && (
-                        <FormHelperText sx={{ mt: 0, color: 'error.main' }}>{errors.terms.message}</FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} md={12}>
-                    <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
-                      Đăng ký
-                    </Button>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        textAlign: 'center',
-                        alignItems: 'center',
-                        flexWrap: 'wrap',
-                        justifyContent: 'center'
-                      }}
-                    >
-                      <Typography variant='body2' sx={{ mr: 2 }}>
-                        Bạn đã có tài khoản?
-                      </Typography>
-                      <Typography variant='body2'>
-                        <LinkStyled href='/login'>Đăng nhập</LinkStyled>
-                      </Typography>
-                    </Box>
-                  </Grid>
-                  {/* <Divider sx={{ my: theme => `${theme.spacing(5)} !important` }}>or</Divider>
+                      >
+                        <Typography variant='body2' sx={{ mr: 2 }}>
+                          Bạn đã có tài khoản?
+                        </Typography>
+                        <Typography variant='body2'>
+                          <LinkStyled href='/login'>Đăng nhập</LinkStyled>
+                        </Typography>
+                      </Box>
+                    </Grid>
+                    {/* <Divider sx={{ my: theme => `${theme.spacing(5)} !important` }}>or</Divider>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
                     <Icon icon='mdi:facebook' />
@@ -506,13 +520,15 @@ const Register = () => {
                     <Icon icon='mdi:google' />
                   </IconButton>
                 </Box> */}
-                </Grid>
-              </LoadingSpinner>
-            </form>
-          </BoxWrapper>
-        </Box>
-      </RightWrapper>
-    </Box>
+                  </Grid>
+                </LoadingSpinner>
+              </form>
+            </BoxWrapper>
+          </Box>
+        </RightWrapper>
+      </Box>
+    </Fragment>
+
   )
 }
 Register.getLayout = page => <BlankLayout>{page}</BlankLayout>
