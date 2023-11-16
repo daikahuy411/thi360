@@ -1,19 +1,25 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import ExamApi from 'api/exam-api'
 import moment from 'moment'
 import Link from 'next/link'
 import Draggable from 'react-draggable'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
+import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
 import toast from 'react-hot-toast'
-import LoadingSpinner from '@core/components/loading-spinner'
+
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import CustomChip from '@core/components/mui/chip'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
-import Chip from '@mui/material/Chip'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
@@ -45,7 +51,7 @@ function PaperComponent(props) {
 
 const ExamTable = () => {
   const [data, setData] = useState([])
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [totalItem, setTotalItem] = useState(0)
   const [keyword, setKeyword] = useState('')
