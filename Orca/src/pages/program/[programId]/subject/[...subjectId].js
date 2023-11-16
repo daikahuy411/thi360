@@ -86,11 +86,6 @@ const SubjectPage = () => {
     setPage(newPage)
   }
 
-  const handleChangeRowsPerPage = event => {
-    setRowsPerPage(+event.target.value)
-    setPage(0)
-  }
-
   const changeCirriculum = (item, child = null) => {
     router.query.subjectId = [subject.oldId, item.id, child == null ? item.children[0].id : child.id]
     router.push(router, undefined, { shallow: true })
@@ -241,10 +236,8 @@ const SubjectPage = () => {
                                 <Pagination
                                   count={totalPages}
                                   size='large'
-                                  rowsPerPageOptions={[20, 50, 100]}
                                   component='div'
                                   color='primary'
-                                  // rowsPerPage={rowsPerPage}
                                   page={page}
                                   onChange={handleChangePage}
                                 />
