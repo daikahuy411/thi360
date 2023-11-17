@@ -86,7 +86,7 @@ const UserLayout = ({ children, contentHeightFixed }) => {
     >
       <Head>
         {/* Theme default v1 */}
-        <link rel="stylesheet" href="/themes/default/assets/vendor/fonts/materialdesignicons.css" />
+        {/* <link rel="stylesheet" href="/themes/default/assets/vendor/fonts/materialdesignicons.css" />
         <link rel="stylesheet" href="/themes/default/assets/vendor/fonts/flag-icons.css" />
         <link rel="stylesheet" href="/themes/default/assets/vendor/libs/node-waves/node-waves.css" />
 
@@ -96,7 +96,7 @@ const UserLayout = ({ children, contentHeightFixed }) => {
         <link href='/themes/default/assets/css/style.css' rel='stylesheet' />
 
         <link rel="stylesheet" href="/themes/default/assets/vendor/libs/swiper/swiper.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" /> */}
       </Head>
       {children}
     </Layout>

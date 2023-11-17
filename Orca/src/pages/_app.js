@@ -12,6 +12,15 @@ import 'iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'
 import '../../styles/main.scss'
+
+import '../../styles/themes/default/assets/vendor/fonts/materialdesignicons.css'
+import '../../styles/themes/default/assets/vendor/fonts/flag-icons.css'
+import '../../styles/themes/default/assets/vendor/css/rtl/core.css'
+import '../../styles/themes/default/assets/vendor/css/rtl/theme-default.css'
+import '../../styles/themes/default/assets/css/demo.css'
+import '../../styles/themes/default/assets/css/style.css'
+import '../../styles/test.css'
+
 import Script from 'next/script'
 // import '../../styles/test.css'
 import { defaultACLObj } from 'configs/acl'
@@ -125,9 +134,7 @@ const App = props => {
                       <ThemeComponent settings={settings}>
                         <WindowWrapper>
                           {/* <Guard authGuard={authGuard} guestGuard={guestGuard}>
-                            <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}>
                               {getLayout(<Component {...pageProps} />)}
-                            </AclGuard>
                           </Guard> */}
                           {getLayout(<Component {...pageProps} />)}
                         </WindowWrapper>
