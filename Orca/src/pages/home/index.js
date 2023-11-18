@@ -47,13 +47,13 @@ const HomePage = () => {
         <title>Trang chủ Thi360 - Trang tài liệu, đề thi, luyện đề online, website giáo dục tại Việt Nam</title>
       </Head>
       <div className='container-xxl flex-grow-1 container-p-y'>
-        <section className='Home-banner' style={{ backgroundColor: '#6F2F74', color: 'white' }}>
+        <section className='Home-banner' style={{ color: '#6F2F74' }}>
           {/* <img src='/themes/default/assets/img/intro.png' /> */}
           {/* <label>Sẵn sàng cho kỳ thi của bạn</label> */}
-          <h1 className='' style={{ color: 'white', fontSize: 36 }}>
+          <h1 className='' style={{ fontSize: 28, color: '#813588' }}>
             Thi360 Testing online
           </h1>
-          <h2 class='' style={{ color: 'white', fontSize: 20 }}>
+          <h2 class='' style={{ fontSize: 18, color: '#813588' }}>
             The Most Comprehensive Preparation App for All Exams{' '}
           </h2>
           {/* <p>Thực hiện các bài kiểm tra thử của chúng tôi bao nhiêu tùy thích MIỄN PHÍ!</p> */}
@@ -103,25 +103,31 @@ const HomePage = () => {
                     <Grid container md={12} spacing={6}>
                       {item.posts &&
                         item.posts.map(p => (
-                          <Grid item xs={12} md={3} lg={3} xl={3} key={`post-${p.id}`}>
+                          <Grid item xs={12} md={2} lg={2} xl={2} key={`post-${p.id}`}>
                             <Card>
                               <CardMedia
                                 sx={{ height: 140 }}
-                                image='/themes/default/assets/img/icons/exam1.png'
+                                image='https://api.baitaptracnghiem.com/storage/images/3ujEqtFPnNZoqfmzMy2MHQXGS31GQGXRVZricLaz.webp'
                                 title='green iguana'
                               />
                               <CardContent>
-                                <Typography gutterBottom variant='hh6' component={Link} href={`/post/${p.id}`}>
-                                  {p.name}
+                                <Typography
+                                  gutterBottom
+                                  variant='hh6'
+                                  color='text.primary'
+                                  component={Link}
+                                  href={`/post/${p.id}`}
+                                >
+                                  {/* {p.name} */}
+                                  Hướng dẫn cách học trên Tiếng Anh Mỗi Ngày
                                 </Typography>
-                                <Typography variant='body2' color='text.secondary'>
+                                {/* <Typography variant='body2' color='text.secondary'>
                                   {p.descritpion}
-                                </Typography>
+                                  Các chính sách ưu đãi khi mua theo nhóm, dành cho sinh viên, cho học viên gửi bảng
+                                  điểm thi TOEIC, ưu đãi dành cho học viên thân thiết và tặng ngày học khi đánh giá cho
+                                  Tiếng Anh Mỗi Ngày
+                                </Typography> */}
                               </CardContent>
-                              {/* <CardActions>
-                                <Button size='small'>Share</Button>
-                                <Button size='small'>Learn More</Button>
-                              </CardActions> */}
                             </Card>
                           </Grid>
                           // <div className='col-md-3 col-sm-6' key={`recent-exam-${p.id}`}>
@@ -170,145 +176,67 @@ const HomePage = () => {
           </div>
         </section> */}
         <br />
-        <section className='mb5-l mb4-5 fixed-width-container ph3 ph0-l'>
-          <div className='flex flex-column w-100'>
-            <div className='ba-title'>
-              <h2> Start your preparation</h2>
-            </div>
-            {/* <h3 className="home_head__DVePE tc mb3 mt0">Start your preparation</h3> */}
-            <div className='home-section-container'>
-              <div
-                className='home-section-item'
-                style={{
-                  backgroundImage:
-                    "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')"
-                }}
-              >
-                <span className='white fw7 f4-l f5'>Online Classroom Program</span>
-                <span className='white mb4 f6 w-70 h2-5'>Live &amp; Recorded courses by Top Faculty</span>
-                <Link className='mt-auto link' href='/'>
-                  <span className='secondary mr2 f5 f6-l'>Explore Courses</span>
-                  <svg
-                    version='1.1'
-                    width='8'
-                    height='8'
-                    className='svg-f-secondary'
-                    viewBox='0 0 30 48'
-                    preserveAspectRatio=''
-                    style={{ strokeWwidth: 1 }}
-                  >
-                    <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
-                    <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
-                  </svg>
-                </Link>
-              </div>
-              <div
-                className='home-section-item'
-                style={{
-                  backgroundImage:
-                    "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')"
-                }}
-              >
-                <span className='white fw7 f4-l f5'>Test Series</span>
-                <span className='white mb4 f6 w-70 h2-5'>
-                  Practice unlimited mock tests and get your All India Rank
-                </span>
-                <Link className='mt-auto link' href='/'>
-                  <span className='secondary mr2 f5 f6-l'>Explore Test Series</span>
-                  <svg
-                    version='1.1'
-                    width='8'
-                    height='8'
-                    className='svg-f-secondary'
-                    viewBox='0 0 30 48'
-                    preserveAspectRatio=''
-                    style={{ strokeWwidth: 1 }}
-                  >
-                    <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
-                    <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
-                  </svg>
-                </Link>
-              </div>
-              <div
-                className='home-section-item'
-                style={{
-                  backgroundImage:
-                    "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')"
-                }}
-              >
-                <span className='white fw7 f4-l f5'>Free Videos</span>
-                <span className='white mb4 f6 w-70 h2-5'>High Quality Content for Complete Conceptual Clarity</span>
-                <Link className='mt-auto link' href='/'>
-                  <span className='secondary mr2 f5 f6-l'>Explore Free Videos</span>
-                  <svg
-                    version='1.1'
-                    width='8'
-                    height='8'
-                    className='svg-f-secondary'
-                    viewBox='0 0 30 48'
-                    preserveAspectRatio=''
-                    style={{ strokeWwidth: 1 }}
-                  >
-                    <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
-                    <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
-                  </svg>
-                </Link>
-              </div>
-              <div
-                className='home-section-item'
-                style={{
-                  backgroundImage:
-                    "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')"
-                }}
-              >
-                <span className='white fw7 f4-l f5'>Previous Year Papers</span>
-                <span className='white mb4 f6 w-70 h2-5'>Practice past years' question papers and get exam ready</span>
-                <Link className='mt-auto link' href='/'>
-                  <span className='secondary mr2 f5 f6-l'>Explore Papers</span>
-                  <svg
-                    version='1.1'
-                    width='8'
-                    height='8'
-                    className='svg-f-secondary'
-                    viewBox='0 0 30 48'
-                    preserveAspectRatio=''
-                    style={{ strokeWwidth: 1 }}
-                  >
-                    <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
-                    <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
-                  </svg>
-                </Link>
-              </div>
-              <div
-                className='home-section-item'
-                style={{
-                  backgroundImage:
-                    "url('https://gs-post-images.grdp.co/2021/3/group-38-2x-img1614867563918-41.png-rs-high-webp.png')"
-                }}
-              >
-                <span className='white fw7 f4-l f5'>Free Quizzes</span>
-                <span className='white mb4 f6 w-70 h2-5'>Attempt topic wise quizzes for improving your score</span>
-                <Link className='mt-auto link' href='/'>
-                  <span className='secondary mr2 f5 f6-l'>Explore Quizzes</span>
-                  <svg
-                    version='1.1'
-                    width='8'
-                    height='8'
-                    className='svg-f-secondary'
-                    viewBox='0 0 30 48'
-                    preserveAspectRatio=''
-                    style={{ strokeWwidth: 1 }}
-                  >
-                    <path d='M0 4.7C6.4 11.1 12.8 17.5 19.4 24 12.9 30.4 6.5 36.7 0.1 43.1c1.7 1.7 3.3 3.3 4.7 4.7 8-8 16.1-16 24.2-24 -8.1-8-16.1-16-24.2-24C3.4 1.3 1.8 2.9 0 4.7z'></path>
-                    <path d='M0 4.7c1.8-1.8 3.4-3.4 4.9-4.9 8 8 16.1 16 24.2 24 -8.1 8-16.1 16-24.2 24 -1.5-1.5-3.1-3.1-4.7-4.7C6.5 36.7 12.9 30.4 19.4 24 12.8 17.5 6.4 11.1 0 4.7z'></path>
-                  </svg>
-                </Link>
-              </div>
-            </div>
+
+        <section className='Home-exam'>
+          <div className='ba-title'>
+            <h2> Start your preparation</h2>
+          </div>
+          {/* <h3 className="home_head__DVePE tc mb3 mt0">Start your preparation</h3> */}
+          <div className='He-box'>
+            <Grid container md={12} spacing={6}>
+              <Grid item xs={12} md={6} lg={6} xl={6}>
+                <Card>
+                  <CardContent>
+                    <Typography gutterBottom variant='h6' color='text.primary'>
+                      Online Classroom Program
+                    </Typography>
+                    <Typography variant='body2' color='text.secondary'>
+                      Live &amp; Recorded courses by Top Faculty
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={6} lg={6} xl={6}>
+                <Card>
+                  <CardContent>
+                    <Typography gutterBottom variant='h6' color='text.primary'>
+                      Online Classroom Program
+                    </Typography>
+                    <Typography variant='body2' color='text.secondary'>
+                      Live &amp; Recorded courses by Top Faculty
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={6} lg={6} xl={6}>
+                <Card>
+                  <CardContent>
+                    <Typography gutterBottom variant='h6' color='text.primary'>
+                      Online Classroom Program
+                    </Typography>
+                    <Typography variant='body2' color='text.secondary'>
+                      Live &amp; Recorded courses by Top Faculty
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={6} lg={6} xl={6}>
+                <Card>
+                  <CardContent>
+                    <Typography gutterBottom variant='h6' color='text.primary'>
+                      Online Classroom Program
+                    </Typography>
+                    <Typography variant='body2' color='text.secondary'>
+                      Live &amp; Recorded courses by Top Faculty
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
           </div>
         </section>
         <br />
-        <section className='mb5-l mb4-5 fixed-width-container ph3 ph0-l'>
+        <section className='mb5-l mb4-5  ph3 ph0-l'>
           <div className='flex flex-column w-100'>
             <div className='ba-title'>
               <h2> Tại sao nên sử dụng Thi360.com? </h2>
@@ -317,7 +245,7 @@ const HomePage = () => {
               <div className='flex flex-column items-center w-30'>
                 <img
                   src='https://grdp.co/cdn-cgi/image/quality=100,width=200,f=auto/https://gs-post-images.grdp.co/2021/8/group-6-2x-img1629283053211-98.png-rs-high-webp.png'
-                  className='w4-2-l h4-l w3 h2-5 mb3 '
+                  className=''
                   alt='Online Classroom Program'
                 />
                 <p
@@ -331,7 +259,7 @@ const HomePage = () => {
               <div className='flex flex-column items-center w-30'>
                 <img
                   src='https://grdp.co/cdn-cgi/image/quality=100,width=200,f=auto/https://gs-post-images.grdp.co/2021/8/illustrations-live-courses-2x-img1629272458441-51.png-rs-high-webp.png'
-                  className='w4-2-l h4-l w3 h2-5 mb3 mh2 mh4-l'
+                  className='mh2 mh4-l'
                   alt='Comprehensive Study Material'
                 />
                 <p
@@ -345,7 +273,7 @@ const HomePage = () => {
               <div className='flex flex-column items-center w-30'>
                 <img
                   src='https://grdp.co/cdn-cgi/image/quality=100,width=200,f=auto/https://gs-post-images.grdp.co/2021/8/group-19-woman-mask-2-2x-img1629283123665-66.png-rs-high-webp.png'
-                  className='w4-2-l h4-l w3 h2-5 mb3 '
+                  className=''
                   alt='Latest Pattern Test Series'
                 />
                 <p

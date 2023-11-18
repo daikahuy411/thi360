@@ -33,7 +33,7 @@ const MainContentWrapper = styled(Box)({
   flexDirection: 'column'
 })
 
-const ContentWrapper = styled('main')(({ theme }) => ({
+const ContentWrapper = styled('div')(({ theme }) => ({
   flexGrow: 1,
   width: '100%',
   padding: theme.spacing(6),

@@ -172,16 +172,12 @@ const LoginPage = () => {
       {!hidden ? (
         <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
           <LoginIllustrationWrapper>
-            <LoginIllustration
-              alt='login-illustration'
-              src={`/images/pages/misc-coming-soon.png`}
-            />
+            <LoginIllustration alt='login-illustration' src={`/images/pages/misc-coming-soon.png`} />
           </LoginIllustrationWrapper>
           <FooterIllustrationsV2 />
         </Box>
       ) : null}
       <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
-
         <Box
           sx={{
             p: 12,
@@ -208,38 +204,15 @@ const LoginPage = () => {
                   <div
                     style={{
                       borderRadius: 15,
-                      width: 50,
-                      height: 50,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      margin: '0 auto',
-                      backgroundColor: 'rgba(155, 81, 224, 0.1)'
+                      margin: '0 auto'
                     }}
                   >
-                    <img src='/themes/default/assets/img/edu-icon.svg' style={{ width: 30 }} />
+                    <img src='/themes/default/assets/img/edu-icon.svg' />
                   </div>
                 </div>
-              </Link>
-              <Link
-                href='/'
-                style={{
-                  textDecoration: 'none'
-                }}
-              >
-                <Typography
-                  variant='h6'
-                  sx={{
-                    ml: 3,
-                    lineHeight: 1,
-                    fontWeight: 600,
-                    textTransform: 'uppercase',
-                    textDecoration: 'none',
-                    fontSize: '1.5rem !important'
-                  }}
-                >
-                  {themeConfig.templateName}
-                </Typography>
               </Link>
             </Box>
             <Box sx={{ mb: 6 }}>
@@ -253,11 +226,10 @@ const LoginPage = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      margin: '0 auto',
-                      backgroundColor: 'rgba(155, 81, 224, 0.1)'
+                      margin: '0 auto'
                     }}
                   >
-                    <img src='/themes/default/assets/img/edu-icon.svg' style={{ width: 90 }} />
+                    <img src='/themes/default/assets/img/edu-icon.svg' />
                   </div>
                 </div>
               </Link>
@@ -285,7 +257,9 @@ const LoginPage = () => {
                         />
                       )}
                     />
-                    {errors.email && <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>}
+                    {errors.email && (
+                      <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>
+                    )}
                   </FormControl>
                   <FormControl fullWidth>
                     <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>
@@ -325,7 +299,13 @@ const LoginPage = () => {
                     )}
                   </FormControl>
                   <Box
-                    sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
+                    sx={{
+                      mb: 4,
+                      display: 'flex',
+                      alignItems: 'center',
+                      flexWrap: 'wrap',
+                      justifyContent: 'space-between'
+                    }}
                   >
                     <FormControlLabel
                       label='Ghi nhớ tôi'

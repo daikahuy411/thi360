@@ -226,33 +226,12 @@ const Register = () => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        margin: '0 auto',
-                        backgroundColor: 'rgba(155, 81, 224, 0.1)'
+                      margin: '0 auto'
                       }}
                     >
-                      <img src='/themes/default/assets/img/edu-icon.svg' style={{ width: 30 }} />
+                    <img src='/themes/default/assets/img/edu-icon.svg' />
                     </div>
                   </div>
-                </Link>
-                <Link
-                  href='/'
-                  style={{
-                    textDecoration: 'none'
-                  }}
-                >
-                  <Typography
-                    variant='h6'
-                    sx={{
-                      ml: 3,
-                      lineHeight: 1,
-                      fontWeight: 600,
-                      textTransform: 'uppercase',
-                      textDecoration: 'none',
-                      fontSize: '1.5rem !important'
-                    }}
-                  >
-                    {themeConfig.templateName}
-                  </Typography>
                 </Link>
               </Box>
               <Box sx={{ mb: 6 }}>
