@@ -1,10 +1,13 @@
-import _ from 'lodash'
 import React from 'react'
+
+import TestingApi from 'api/testing-api'
+import _ from 'lodash'
+import Head from 'next/head'
+import { withRouter } from 'next/router'
 import ReactHtmlParser from 'react-html-parser'
 import { scroller } from 'react-scroll'
-import TestingApi from 'api/testing-api'
+
 import QuestionContent from '../Question/QuestionContent'
-import { withRouter } from 'next/router'
 
 // import LocalStorageService from "services/local-storage";
 
@@ -156,6 +159,9 @@ class TestReview extends React.Component {
     const userProfile = {} // LocalStorageService.getUserProfile();
     return (
       <>
+      <Head>
+        <title>{`Xem lại bài làm: `}</title>
+      </Head>
         {this.state.test && (
           <div id='__next'>
             <div className='flex flex-column flex-grow-1 bg-white'>

@@ -3,6 +3,7 @@ import 'dayjs/locale/vi'
 // import 'moment/locale/vi'
 // ** React Imports
 import {
+  Fragment,
   useEffect,
   useRef,
   useState
@@ -10,6 +11,7 @@ import {
 
 import UserApi from 'api/user-api'
 import moment from 'moment'
+import Head from 'next/head'
 import AvatarEditor from 'react-avatar-editor'
 import DatePicker from 'react-datepicker'
 // ** Third Party Imports
@@ -292,207 +294,211 @@ const TabAccount = props => {
   }
 
   return (
-    <DatePickerWrapper>
-      <Grid container spacing={6}>
-        <Grid item xs={12}>
-          <Card>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <CardContent sx={{ pb: theme => `${theme.spacing(10)}` }}>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <ImgStyled
-                    src={preview || ' https://www.signivis.com/img/custom/avatars/member-avatar-01.png'}
-                    alt='Profile Pic'
-                  />
-                  <div>
-                    <CropperModal
-                      modalOpen={modalOpen}
-                      src={src}
-                      setPreview={setPreview}
-                      setModalOpen={setModalOpen}
-                      setIsChangeAvatar={setIsChangeAvatar}
+    <Fragment>
+      <Head>
+        <title>{`Cập nhật thông tin tài khoản`}</title>
+      </Head>
+      <DatePickerWrapper>
+        <Grid container spacing={6}>
+          <Grid item xs={12}>
+            <Card>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <CardContent sx={{ pb: theme => `${theme.spacing(10)}` }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <ImgStyled
+                      src={preview || ' https://www.signivis.com/img/custom/avatars/member-avatar-01.png'}
+                      alt='Profile Pic'
                     />
-                    <ButtonStyled component='label' variant='contained' htmlFor='account-upload-avatar'>
-                      Chọn ảnh
-                      <input
-                        id='account-upload-avatar'
-                        hidden
-                        type='file'
-                        accept='image/png, image/jpg, image/jpeg'
-                        value={avatarFile}
-                        ref={inputRef}
-                        onChange={handleImgChange}
+                    <div>
+                      <CropperModal
+                        modalOpen={modalOpen}
+                        src={src}
+                        setPreview={setPreview}
+                        setModalOpen={setModalOpen}
+                        setIsChangeAvatar={setIsChangeAvatar}
                       />
-                    </ButtonStyled>
-                    <ResetButtonStyled color='secondary' variant='outlined' onClick={handleResetAvatar}>
-                      Hủy bỏ
-                    </ResetButtonStyled>
-                    <Typography variant='caption' sx={{ mt: 4, display: 'block', color: 'text.disabled' }}>
-                      Chỉ cho phép ảnh có định dạng PNG, JPG hoặc JPEG. Dung lượng tối đa 0.5mb.
-                    </Typography>
-                  </div>
-                </Box>
-              </CardContent>
-              <CardContent>
-                <Grid container spacing={5}>
-                  <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                      <Controller
-                        name='firstName'
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { value, onChange } }) => (
-                          <TextField
-                            fullWidth
-                            label='Họ & tên đệm'
-                            placeholder='Nguyễn Văn'
-                            value={value ?? ''}
-                            onChange={onChange}
-                            error={Boolean(errors.firstName)}
-                          />
+                      <ButtonStyled component='label' variant='contained' htmlFor='account-upload-avatar'>
+                        Chọn ảnh
+                        <input
+                          id='account-upload-avatar'
+                          hidden
+                          type='file'
+                          accept='image/png, image/jpg, image/jpeg'
+                          value={avatarFile}
+                          ref={inputRef}
+                          onChange={handleImgChange}
+                        />
+                      </ButtonStyled>
+                      <ResetButtonStyled color='secondary' variant='outlined' onClick={handleResetAvatar}>
+                        Hủy bỏ
+                      </ResetButtonStyled>
+                      <Typography variant='caption' sx={{ mt: 4, display: 'block', color: 'text.disabled' }}>
+                        Chỉ cho phép ảnh có định dạng PNG, JPG hoặc JPEG. Dung lượng tối đa 0.5mb.
+                      </Typography>
+                    </div>
+                  </Box>
+                </CardContent>
+                <CardContent>
+                  <Grid container spacing={5}>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth>
+                        <Controller
+                          name='firstName'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field: { value, onChange } }) => (
+                            <TextField
+                              fullWidth
+                              label='Họ & tên đệm'
+                              placeholder='Nguyễn Văn'
+                              value={value ?? ''}
+                              onChange={onChange}
+                              error={Boolean(errors.firstName)}
+                            />
+                          )}
+                        />
+                        {errors.firstName && (
+                          <FormHelperText sx={{ color: 'error.main' }}>{errors.firstName.message}</FormHelperText>
                         )}
-                      />
-                      {errors.firstName && (
-                        <FormHelperText sx={{ color: 'error.main' }}>{errors.firstName.message}</FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                      <Controller
-                        name='lastName'
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { value, onChange } }) => (
-                          <TextField
-                            fullWidth
-                            label='Tên'
-                            placeholder='A'
-                            value={value ?? ''}
-                            onChange={onChange}
-                            error={Boolean(errors.lastName)}
-                          />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth>
+                        <Controller
+                          name='lastName'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field: { value, onChange } }) => (
+                            <TextField
+                              fullWidth
+                              label='Tên'
+                              placeholder='A'
+                              value={value ?? ''}
+                              onChange={onChange}
+                              error={Boolean(errors.lastName)}
+                            />
+                          )}
+                        />
+                        {errors.lastName && (
+                          <FormHelperText sx={{ color: 'error.main' }}>{errors.lastName.message}</FormHelperText>
                         )}
-                      />
-                      {errors.lastName && (
-                        <FormHelperText sx={{ color: 'error.main' }}>{errors.lastName.message}</FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                      <Controller
-                        name='email'
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { value, onChange } }) => (
-                          <TextField
-                            disabled
-                            fullWidth
-                            type='email'
-                            label='Email'
-                            value={value ?? ''}
-                            placeholder='john.doe@example.com'
-                            onChange={onChange}
-                            style={{ disabled: true }}
-                          />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth>
+                        <Controller
+                          name='email'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field: { value, onChange } }) => (
+                            <TextField
+                              disabled
+                              fullWidth
+                              type='email'
+                              label='Email'
+                              value={value ?? ''}
+                              placeholder='john.doe@example.com'
+                              onChange={onChange}
+                              style={{ disabled: true }}
+                            />
+                          )}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth>
+                        <Controller
+                          name='phoneNumber'
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field: { value, onChange } }) => (
+                            <TextField
+                              fullWidth
+                              type='number'
+                              label='Điện thoại'
+                              value={value ?? ''}
+                              placeholder='098 463 5688'
+                              onChange={onChange}
+                              error={Boolean(errors.phoneNumber)}
+                            />
+                          )}
+                        />
+                        {errors.phoneNumber && (
+                          <FormHelperText sx={{ color: 'error.main' }}>{errors.phoneNumber.message}</FormHelperText>
                         )}
-                      />
-                    </FormControl>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth>
+                        <Controller
+                          name='address'
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <TextField
+                              fullWidth
+                              label='Địa chỉ'
+                              placeholder='Số 1, Đường A, Phường B, Quận C, TP Hà Nội'
+                              value={value ?? ''}
+                              onChange={onChange}
+                            />
+                          )}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                      <FormControl fullWidth>
+                        <Controller
+                          name='gender'
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <>
+                              <InputLabel>Giới tính</InputLabel>
+                              <Select label='Giới tính' value={value ?? '0'} onChange={onChange}>
+                                <MenuItem value='-1'>Chọn giới tính</MenuItem>
+                                <MenuItem value='0'>Nam</MenuItem>
+                                <MenuItem value='1'>Nữ</MenuItem>
+                              </Select>
+                            </>
+                          )}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                      <FormControl fullWidth>
+                        <Controller
+                          name='dob'
+                          control={control}
+                          render={({ field }) => (
+                            <DatePicker
+                              label='Ngày sinh'
+                              dateFormat='dd-MM-yyyy'
+                              selected={field.value != null ? new Date(field.value) : new Date()}
+                              customInput={<CustomInput fullWidth label='Ngày sinh' />}
+                              onChange={date => {
+                                field.onChange(date.toISOString())
+                              }}
+                            />
+                          )}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Button variant='contained' type='submit' sx={{ mr: 4 }}>
+                        Cập nhật
+                      </Button>
+                      <Button type='reset' variant='outlined' color='secondary' onClick={() => reset()}>
+                        Hủy bỏ
+                      </Button>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                      <Controller
-                        name='phoneNumber'
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { value, onChange } }) => (
-                          <TextField
-                            fullWidth
-                            type='number'
-                            label='Điện thoại'
-                            value={value ?? ''}
-                            placeholder='098 463 5688'
-                            onChange={onChange}
-                            error={Boolean(errors.phoneNumber)}
-                          />
-                        )}
-                      />
-                      {errors.phoneNumber && (
-                        <FormHelperText sx={{ color: 'error.main' }}>{errors.phoneNumber.message}</FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                      <Controller
-                        name='address'
-                        control={control}
-                        render={({ field: { value, onChange } }) => (
-                          <TextField
-                            fullWidth
-                            label='Địa chỉ'
-                            placeholder='Số 1, Đường A, Phường B, Quận C, TP Hà Nội'
-                            value={value ?? ''}
-                            onChange={onChange}
-                          />
-                        )}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={6} sm={3}>
-                    <FormControl fullWidth>
-                      <Controller
-                        name='gender'
-                        control={control}
-                        render={({ field: { value, onChange } }) => (
-                          <>
-                            <InputLabel>Giới tính</InputLabel>
-                            <Select label='Giới tính' value={value ?? '0'} onChange={onChange}>
-                              <MenuItem value='-1'>Chọn giới tính</MenuItem>
-                              <MenuItem value='0'>Nam</MenuItem>
-                              <MenuItem value='1'>Nữ</MenuItem>
-                            </Select>
-                          </>
-                        )}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={6} sm={3}>
-                    <FormControl fullWidth>
-                      <Controller
-                        name='dob'
-                        control={control}
-                        render={({ field }) => (
-                          <DatePicker
-                            label='Ngày sinh'
-                            dateFormat='dd-MM-yyyy'
-                            selected={field.value != null ? new Date(field.value) : new Date()}
-                            customInput={<CustomInput fullWidth label='Ngày sinh' />}
-                            onChange={date => {
-                              field.onChange(date.toISOString())
-                            }}
-                          />
-                        )}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Button variant='contained' type='submit' sx={{ mr: 4 }}>
-                      Cập nhật
-                    </Button>
-                    <Button type='reset' variant='outlined' color='secondary' onClick={() => reset()}>
-                      Hủy bỏ
-                    </Button>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </form>
-          </Card>
-        </Grid>
+                </CardContent>
+              </form>
+            </Card>
+          </Grid>
 
-        {/* Delete Account Card */}
-        <Grid item xs={12}>
-          {/* <Card>
+          {/* Delete Account Card */}
+          <Grid item xs={12}>
+            {/* <Card>
                     <CardHeader title='Xóa tài khoản của bạn' />
                     <CardContent>
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -530,10 +536,11 @@ const TabAccount = props => {
                         </form>
                     </CardContent>
                 </Card> */}
-          <SelfRemoveAccount />
+            <SelfRemoveAccount />
+          </Grid>
         </Grid>
-      </Grid>
-    </DatePickerWrapper>
+      </DatePickerWrapper>
+    </Fragment>
   )
 }
 

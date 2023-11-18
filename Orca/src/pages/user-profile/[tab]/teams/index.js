@@ -1,3 +1,6 @@
+import { Fragment } from 'react'
+
+import Head from 'next/head'
 // ** Next Imports
 import Link from 'next/link'
 
@@ -19,6 +22,10 @@ import Typography from '@mui/material/Typography'
 
 const Teams = ({ data }) => {
   return (
+    <Fragment>
+      <Head>
+        <title>{`Thông tin lớp học`}</title>
+      </Head>
     <Grid container spacing={6}>
       {data &&
         Array.isArray(data) &&
@@ -87,6 +94,7 @@ const Teams = ({ data }) => {
           )
         })}
     </Grid>
+    </Fragment>
   )
 }
 

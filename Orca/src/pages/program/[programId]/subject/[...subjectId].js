@@ -1,19 +1,27 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
 import V1Api from 'api/v1-api'
+import clsx from 'clsx'
+import Head from 'next/head'
 import NavLink from 'next/link'
 import { useRouter } from 'next/router'
+
+import LoadingSpinner from '@core/components/loading-spinner'
+import { FormatNumber } from '@core/utils/format'
 import HomeIcon from '@mui/icons-material/Home'
-import clsx from 'clsx'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
 import Pagination from '@mui/material/Pagination'
 import Typography from '@mui/material/Typography'
-import LoadingSpinner from '@core/components/loading-spinner'
 
 const SubjectPage = () => {
   const router = useRouter()
+  const formatNumber = new FormatNumber()
   //subjectId: là 1 mảng, phần tử đầu tiên là: oldId của Subject, các phần tử tiếp theo sẽ là Id của Curriculum.
   const { programId, subjectId } = router.query
   const [curriculums, setCurriculums] = useState([])
@@ -22,6 +30,8 @@ const SubjectPage = () => {
   const [exams, setExams] = useState([])
   const [totalItems, setTotalItems] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
+  const [page, setPage] = useState(1)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const [loading, setLoading] = useState(false)
   const [curriculum, setCurriculum] = useState(null)
   const [curriculumId, setCurriculumId] = useState(0)
@@ -70,19 +80,29 @@ const SubjectPage = () => {
         setTotalPages(Math.ceil(response.data.totalItems / 20))
         setLoading(false)
       })
-  }, [router])
+  }, [router, page])
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage)
+  }
 
   const changeCirriculum = (item, child = null) => {
     router.query.subjectId = [subject.oldId, item.id, child == null ? item.children[0].id : child.id]
     router.push(router, undefined, { shallow: true })
     setCurriculum(item)
+    setPage(1)
   }
 
   return (
     <>
+      <Head>
+        {(program && subject && curriculum) && (
+          <title>{`${subject.name} ${program.name} - ${curriculum.name}`}</title>
+        )}
+      </Head>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Breadcrumbs aria-label='breadcrumb' style={{marginBottom: 5}}>
+          <Breadcrumbs aria-label='breadcrumb' style={{ marginBottom: 5 }}>
             <Link
               underline='hover'
               component={NavLink}
@@ -170,9 +190,9 @@ const SubjectPage = () => {
                                 <span>
                                   <img src='/themes/default/assets/img/icon-kythi.svg' />
                                 </span>
-                                {totalItems} kỳ thi
+                                {formatNumber.add0(totalItems)} kỳ thi
                               </h2>
-                              <div className='input-group'>
+                              <div className='input-group' style={{ display: 'none' }}>
                                 <select className='form-select' id='inputGroupSelect03'>
                                   <option selected=''>Tất cả</option>
                                   <option value='1'>Hoàn thành</option>
@@ -186,7 +206,7 @@ const SubjectPage = () => {
                                   <NavLink href={`/exam/${item.id}`} className='TC-detail'>
                                     <article style={{ width: '100%' }}>
                                       <label>
-                                        {index + 1}.&nbsp;{item.name}
+                                        {(page-1)*rowsPerPage + index + 1}.&nbsp;{item.name}
                                       </label>
                                       {item.curriculum && (
                                         <div style={{ padding: 5, paddingLeft: 0 }} className='text-muted'>
@@ -216,11 +236,10 @@ const SubjectPage = () => {
                                 <Pagination
                                   count={totalPages}
                                   size='large'
-                                  rowsPerPageOptions={[20, 50, 100]}
                                   component='div'
-                                  page={1}
-                                  rowsPerPage={20}
                                   color='primary'
+                                  page={page}
+                                  onChange={handleChangePage}
                                 />
                               </div>
                             )}

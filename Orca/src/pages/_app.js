@@ -21,7 +21,6 @@ import '../../styles/themes/default/assets/css/demo.css'
 import '../../styles/themes/default/assets/css/style.css'
 import '../../styles/test.css'
 
-import Script from 'next/script'
 // import '../../styles/test.css'
 import { defaultACLObj } from 'configs/acl'
 import themeConfig from 'configs/themeConfig'
@@ -34,6 +33,7 @@ import UserLayout from 'layouts/UserLayout'
 // ** Next Imports
 import Head from 'next/head'
 import { Router } from 'next/router'
+import Script from 'next/script'
 // ** Loader Import
 import NProgress from 'nprogress'
 // ** Third Party Import
@@ -42,13 +42,15 @@ import { Provider } from 'react-redux'
 // ** Store Imports
 import { store } from 'store'
 
-import AclGuard from '@core/components/auth/AclGuard'
 import AuthGuard from '@core/components/auth/AuthGuard'
 import GuestGuard from '@core/components/auth/GuestGuard'
 // ** Spinner Import
 import Spinner from '@core/components/spinner'
 import WindowWrapper from '@core/components/window-wrapper'
-import { SettingsConsumer, SettingsProvider } from '@core/context/settingsContext'
+import {
+  SettingsConsumer,
+  SettingsProvider
+} from '@core/context/settingsContext'
 // ** Styled Components
 import ReactHotToast from '@core/styles/libs/react-hot-toast'
 import ThemeComponent from '@core/theme/ThemeComponent'
@@ -109,10 +111,13 @@ const App = props => {
         <Provider store={store}>
           <CacheProvider value={emotionCache}>
             <Head>
-              <title>{`${themeConfig.templateName} - `}</title>
-              <meta name='description' content={`${themeConfig.templateName}.`} />
-              <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
+              <title>{`${themeConfig.templateName} - Trang tài liệu, đề thi, luyện đề online, website giáo dục tại Việt Nam`}</title>
+              <meta name='description' content={`Trang tài liệu, đề thi, luyện đề online, website giáo dục tại Việt Nam`} />
+              <meta name='keywords' content='Thi360.com, luyện đề online, thi trắc nghiệm online, luyện đề toeic online' />
               <meta name='viewport' content='initial-scale=1, width=device-width' />
+              <meta charset="utf-8" />
+              <meta property="og:image" content="/images/meta-page.jpg"></meta>
+              <meta name="author" content={`${themeConfig.templateName}`} />
             </Head>
             <Script strategy='lazyOnload' id='ckfinder' src={`/ckfinder/ckfinder.js`} />
             <Script strategy='lazyOnload' id='gt' src={`https://www.googletagmanager.com/gtag/js?id=G-PYF88KK7GH`} />

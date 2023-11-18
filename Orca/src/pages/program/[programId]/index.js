@@ -1,20 +1,28 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
 import V1Api from 'api/v1-api'
+import themeConfig from 'configs/themeConfig'
+import Head from 'next/head'
+import Image from 'next/image'
 import NavLink from 'next/link'
 import { useRouter } from 'next/router'
+
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import Box from '@mui/material/Box'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
-import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
-import Image from 'next/image'
-import IconKyThi from '../../../../public/images/icon-kythi.svg'
+
 import IconDeThi from '../../../../public/images/icon-dethi.svg'
-import LoadingSpinner from '@core/components/loading-spinner'
+import IconKyThi from '../../../../public/images/icon-kythi.svg'
 
 const catalogImages = {
   7: '/themes/default/assets/img/img-monhoc/mon-congnghe.svg',
@@ -59,6 +67,11 @@ const Program = () => {
   return (
     <>
       <LoadingSpinner active={loading}>
+        <Head>
+          {program && (
+            <title>{`Chương trình ${program.name} - ${themeConfig.templateName}`}</title>
+          )}
+        </Head>
         <Grid container spacing={2}>
           {program && (
             <>
