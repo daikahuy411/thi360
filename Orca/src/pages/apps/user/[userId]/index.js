@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import OrganizationApi from 'api/organization-api'
 import UserApi from 'api/user-api'
@@ -6,10 +9,19 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import CategoryDialog from 'pages/shared/category-dialog'
 import Draggable from 'react-draggable'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedUser, selectUser } from 'store/slices/userSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedUser,
+  selectUser
+} from 'store/slices/userSlice'
 import { CategoryType } from 'types/CategoryType'
 import * as yup from 'yup'
 
@@ -289,7 +301,7 @@ const EditStudentPage = () => {
                 <div className='grid-block'>
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
-                    <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', height: '100vh', paddingTop: 10 }}>
+                    <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', paddingTop: 10 }}>
                       <Grid container spacing={5} maxWidth={'sm'}>
                         <Grid item xs={12} md={6}>
                           <FormControl fullWidth>

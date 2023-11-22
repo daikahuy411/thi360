@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react'
-
 import TenantApi from 'api/tenant-api'
 import moment from 'moment'
 import Link from 'next/link'
-import TableLoading from 'pages/shared/loading/TableLoading'
-import TableEmpty from 'pages/shared/table/TableEmpty'
 import Draggable from 'react-draggable'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import toast from 'react-hot-toast'
-
+import LoadingSpinner from '@core/components/loading-spinner'
 import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
@@ -215,66 +212,67 @@ const TenantTable = () => {
           </Grid>
         </Grid>
         <TableContainer component={Paper} style={{ marginTop: 5 }}>
-          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-            <TableHead>
-              <TableRow>
-                <TableCell padding='checkbox'>
-                  <Checkbox
-                    onChange={handleSelectAllClick}
-                    checked={data.length > 0 && selected.length === data.length}
-                    indeterminate={selected.length > 0 && selected.length < data.length}
-                    inputProps={{ 'aria-label': 'select all desserts' }}
-                  />
-                </TableCell>
-                <TableCell style={{ width: 30 }}>Sửa</TableCell>
-                <TableCell>Tên</TableCell>
-                <TableCell style={{ width: 20 }}>Ngày tạo</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data &&
-                data.map((row, index) => {
-                  const isItemSelected = isSelected(row.id)
-                  const labelId = `enhanced-table-checkbox-${index}`
+          <LoadingSpinner active={loading} minHeight={0}>
+            <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+              <TableHead>
+                <TableRow>
+                  <TableCell padding='checkbox'>
+                    <Checkbox
+                      onChange={handleSelectAllClick}
+                      checked={data.length > 0 && selected.length === data.length}
+                      indeterminate={selected.length > 0 && selected.length < data.length}
+                      inputProps={{ 'aria-label': 'select all desserts' }}
+                    />
+                  </TableCell>
+                  <TableCell style={{ width: 30 }}>Sửa</TableCell>
+                  <TableCell>Tên</TableCell>
+                  <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data &&
+                  data.map((row, index) => {
+                    const isItemSelected = isSelected(row.id)
+                    const labelId = `enhanced-table-checkbox-${index}`
 
-                  return (
-                    <TableRow
-                      hover
-                      tabIndex={-1}
-                      role='checkbox'
-                      key={row.id}
-                      selected={isItemSelected}
-                      aria-checked={isItemSelected}
-                      sx={{
-                        '&:last-of-type td, &:last-of-type th': {
-                          border: 0
-                        }
-                      }}
-                    >
-                      <TableCell padding='checkbox'>
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                          onClick={event => handleClick(event, row.id)}
-                        />
-                      </TableCell>
-                      <TableCell component='th' scope='row'>
-                        <IconButton aria-label='filter' component={Link} href={`/apps/tenant/${row.id}`}>
-                          <EditIcon />
-                        </IconButton>
-                      </TableCell>
-                      <TableCell component='th' scope='row'>
-                        [{row.id}]-{row.name}
-                        <br /> <i>{row.description}</i>
-                      </TableCell>
-                      <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
-                    </TableRow>
-                  )
-                })}
-              <TableLoading isOpen={loading} colSpan={4} />
-              <TableEmpty isOpen={isTableEmpty} colSpan={4} />
-            </TableBody>
-          </Table>
+                    return (
+                      <TableRow
+                        hover
+                        tabIndex={-1}
+                        role='checkbox'
+                        key={row.id}
+                        selected={isItemSelected}
+                        aria-checked={isItemSelected}
+                        sx={{
+                          '&:last-of-type td, &:last-of-type th': {
+                            border: 0
+                          }
+                        }}
+                      >
+                        <TableCell padding='checkbox'>
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{ 'aria-labelledby': labelId }}
+                            onClick={event => handleClick(event, row.id)}
+                          />
+                        </TableCell>
+                        <TableCell component='th' scope='row'>
+                          <IconButton aria-label='filter' component={Link} href={`/apps/tenant/${row.id}`}>
+                            <EditIcon />
+                          </IconButton>
+                        </TableCell>
+                        <TableCell component='th' scope='row'>
+                          <Typography variant='body1'>
+                            [{row.id}]-{row.name}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
+                      </TableRow>
+                    )
+                  })}
+              </TableBody>
+            </Table>
+          </LoadingSpinner>
         </TableContainer>
         <TablePagination
           labelRowsPerPage={'Hiển thị:'}
