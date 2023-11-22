@@ -10,9 +10,8 @@ import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectedExam, selectExam } from 'store/slices/examSlice'
+import { selectedTenant, selectTenant } from 'store/slices/tenantSlice'
 import * as yup from 'yup'
-
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -48,8 +47,8 @@ function PaperComponent(props) {
 const EditTenantPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { tenantId } = router.query
-  const currentTenant = useSelector(selectedExam)
+  const { tenantid } = router.query
+  const currentTenant = useSelector(selectedTenant)
 
   const {
     control,
@@ -65,14 +64,14 @@ const EditTenantPage = () => {
   })
 
   useEffect(() => {
-    if (!tenantId || tenantId == 0) {
-      dispatch(selectExam({ id: 0, name: '', description: '' }))
+    if (!tenantid || tenantid == 0) {
+      dispatch(selectTenant({ id: 0, name: '', description: '' }))
       return
     }
-    new TenantApi().get(tenantId).then(response => {
-      dispatch(selectExam(response.data))
+    new TenantApi().get(tenantid).then(response => {
+      dispatch(selectTenant(response.data))
     })
-  }, [tenantId])
+  }, [tenantid])
 
   useEffect(() => {
     if (currentTenant) reset(currentTenant)
@@ -115,9 +114,9 @@ const EditTenantPage = () => {
   const handleClickOpenDelete = () => setOpenDelete(true)
   const handleCloseDelete = () => setOpenDelete(false)
   const handleDelete = () => {
-    if (!tenantId || tenantId > 0) {
+    if (!tenantid || tenantid > 0) {
       new TenantApi()
-        .delete({ id: tenantId })
+        .delete({ id: tenantid })
         .then(response => {
           setOpenDelete(false)
           toast.success('Xóa dữ liệu thành công.')
