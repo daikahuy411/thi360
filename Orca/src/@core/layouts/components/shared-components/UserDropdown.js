@@ -126,7 +126,7 @@ const UserDropdown = props => {
             />
           </Badge>
           <Box display='inline-block' width='134px'>
-            <Typography>{currentUser?.fullName}</Typography>
+            <Typography sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{currentUser?.fullName}</Typography>
             <Typography
               sx={{
                 textAlign: 'start'
