@@ -75,7 +75,7 @@ const AppBarContent = props => {
       </div>
       <div className='navbar-nav-right d-flex align-items-center' id='navbar-collapse'>
         <div className='navbar-nav align-items-center' style={{ paddingLeft: 10 }}>
-          <h3 className='mb-0 f-24'>{page}</h3>
+          <h3 className='mb-0' style={{fontSize: '1.2rem'}}>{page}</h3>
           {path}
         </div>
         <ul className='navbar-nav flex-row align-items-center ms-auto'>

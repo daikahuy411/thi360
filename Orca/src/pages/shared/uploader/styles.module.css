@@ -1,0 +1,215 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+}
+
+.container > p {
+  font-size: 1rem;
+}
+
+.container > em {
+  font-size: 0.8rem;
+}
+
+.dropzone {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-width: 2px;
+  border-radius: 2px;
+  border-color: #eeeeee;
+  border-style: dashed;
+  background-color: #fafafa;
+  color: #bdbdbd;
+  outline: none;
+  transition: border 0.24s ease-in-out;
+}
+
+.dropzone:focus {
+  border-color: #2196f3;
+}
+
+.dropzone.disabled {
+  opacity: 0.6;
+}
+
+.uploadmodal {
+  z-index: 999;
+  display: none;
+  overflow: hidden;
+}
+
+.uploadmodal .overlay {
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.66);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.progresscontainer {
+  background: white;
+  width: 500px;
+  height: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+.progresscontainer span {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  font-size: 20px;
+}
+
+.progress {
+  width: 90%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #efefef;
+  height: 20px;
+  border-radius: 5px;
+}
+
+.progressbar {
+  position: absolute;
+  background-color: #4aa1f3;
+  height: 20px;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+}
+
+.filedisplaycontainer {
+  position: fixed;
+}
+
+.filestatusbar {
+  width: 100%;
+  vertical-align: top;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  position: relative;
+  line-height: 50px;
+  height: 50px;
+}
+
+.filestatusbar > div {
+  overflow: hidden;
+}
+
+.filetype {
+  display: inline-block !important;
+  position: absolute;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 13px;
+  margin-top: 25px;
+  padding: 0 4px;
+  border-radius: 2px;
+  box-shadow: 1px 1px 2px #abc;
+  color: #fff;
+  background: #0080c8;
+  text-transform: uppercase;
+}
+
+.filename {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 50px;
+  color: #4aa1f3;
+}
+
+.fileerror {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 50px;
+  color: #9aa9bb;
+}
+
+.fileerror-message {
+  color: red;
+}
+
+.filetypelogo {
+  width: 50px;
+  height: 50px;
+  /* background: url(../images/generic.png) no-repeat center center;  */
+  background-size: 100%;
+  position: absolute;
+}
+
+.filesize {
+  display: inline-block;
+  vertical-align: top;
+  color: #30693d;
+  margin-left: 10px;
+  margin-right: 5px;
+  margin-left: 10px;
+  color: #444242;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.fileremove {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  line-height: 15px;
+  cursor: pointer;
+  color: red;
+  margin-right: -10px;
+}
+
+.modal {
+  z-index: 999;
+  display: none;
+  overflow: hidden;
+}
+
+.modal .overlay {
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.66);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.modal .modalimage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  object-fit: cover;
+  width: 100%;
+  height: 300px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}

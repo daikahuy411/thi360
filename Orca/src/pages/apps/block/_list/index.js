@@ -43,7 +43,7 @@ function PaperComponent(props) {
 const BlockDataTable = () => {
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const [totalItem, setTotalItem] = useState(0)
   const [keyword, setKeyword] = useState('')
   const [status, setStatus] = useState(-1)
@@ -60,7 +60,7 @@ const BlockDataTable = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, keyword])
 
   const fetchData = () => {
     setLoading(true)
@@ -186,17 +186,17 @@ const BlockDataTable = () => {
         <Divider />
         <Grid container>
           <Grid item md={4}>
-            <IconButton aria-label='filter'>
+            <IconButton aria-label='filter' style={{display: 'none'}}>
               <FilterAltOutlinedIcon />
             </IconButton>
           </Grid>
           <Grid item md={4}>
-            <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+            <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
           </Grid>
           <Grid item md={4} alignContent={'right'}>
             <TablePagination
               labelRowsPerPage={'Hiển thị:'}
-              rowsPerPageOptions={[10, 25, 100]}
+              rowsPerPageOptions={[20, 30, 50]}
               component='div'
               count={totalItem}
               rowsPerPage={rowsPerPage}
@@ -251,7 +251,7 @@ const BlockDataTable = () => {
                           />
                         </TableCell>
                         <TableCell component='th' scope='row'>
-                          <IconButton aria-label='filter' component={Link} href={`/apps/block/${row.id}`}>
+                          <IconButton aria-label='edit' component={Link} href={`/apps/block/${row.id}`}>
                             <EditIcon />
                           </IconButton>
                         </TableCell>
@@ -268,7 +268,7 @@ const BlockDataTable = () => {
         </TableContainer>
         <TablePagination
           labelRowsPerPage={'Hiển thị:'}
-          rowsPerPageOptions={[10, 25, 100]}
+          rowsPerPageOptions={[20, 30, 50]}
           component='div'
           count={totalItem}
           rowsPerPage={rowsPerPage}

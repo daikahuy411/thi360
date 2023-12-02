@@ -32,7 +32,7 @@ const CategoryTable = () => {
   const [page, setPage] = useState(0)
   const [totalItem, setTotalItem] = useState(0)
   const [totalParentItem, setTotalParentItem] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const { questionCatalogId } = router.query
   const [loading, setLoading] = useState(false)
 
@@ -49,7 +49,7 @@ const CategoryTable = () => {
     if (!questionCatalogId || questionCatalogId == 0) return
 
     const param = {
-      keyword: '',
+      keyword: keyword,
       catalogId: Number(questionCatalogId),
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
@@ -110,17 +110,17 @@ const CategoryTable = () => {
       <Divider />
       <Grid container>
         <Grid item md={2}>
-          <IconButton aria-label='filter'>
+          <IconButton aria-label='filter' style={{display: 'none'}}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={4}>
-          <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+          <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
         </Grid>
         <Grid item md={6} alignContent={'right'}>
           <TablePagination
             labelRowsPerPage='Số dòng/trang'
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[20, 30, 50]}
             component='div'
             count={totalParentItem}
             rowsPerPage={rowsPerPage}
@@ -153,7 +153,7 @@ const CategoryTable = () => {
       </TableContainer>
       <TablePagination
         labelRowsPerPage='Số dòng/trang'
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[20, 30, 50]}
         component='div'
         count={totalParentItem}
         rowsPerPage={rowsPerPage}

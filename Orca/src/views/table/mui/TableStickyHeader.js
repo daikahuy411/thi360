@@ -63,7 +63,7 @@ const rows = [
 const TableStickyHeader = () => {
   // ** States
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -107,7 +107,7 @@ const TableStickyHeader = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[20, 30, 50]}
         component='div'
         count={rows.length}
         rowsPerPage={rowsPerPage}

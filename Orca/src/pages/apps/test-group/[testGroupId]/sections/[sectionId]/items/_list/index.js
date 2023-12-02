@@ -76,12 +76,12 @@ const ItemsTable = ({ data }) => {
       <Divider />
       <Grid container>
         <Grid item md={3} lg={3}>
-          <IconButton aria-label='filter'>
+          <IconButton aria-label='filter' style={{display: 'none'}}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={3} lg={3}>
-          <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+          <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
         </Grid>
       </Grid>
       <TableContainer component={Paper} style={{ marginTop: 5 }}>
@@ -119,7 +119,7 @@ const ItemsTable = ({ data }) => {
                   </TableCell>
                   <TableCell component='th' scope='row'>
                     <IconButton
-                      aria-label='filter'
+                      aria-label='filter' style={{display: 'none'}}
                       component={Link}
                       href={`/apps/test-group/${testGroupId}/sections/${sectionId}/items/${row.id}`}
                     >

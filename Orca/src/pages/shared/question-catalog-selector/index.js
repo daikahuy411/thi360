@@ -43,7 +43,7 @@ export default function QuestionCatalogSelector({ onClose, onOk, type = 2 }) {
   })
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const [selectedData, setSelectedData] = useState([])
   const [selectedUsers, setSelectedUsers] = useState([])
   const [selectedQuestionCatalog, setSelectedQuestionCatalog] = useState(null)
@@ -114,7 +114,7 @@ export default function QuestionCatalogSelector({ onClose, onOk, type = 2 }) {
 
   const loadQuestionCates = item => {
     const param = {
-      keyword: '',
+      keyword: keyword,
       catalogId: item.id,
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
@@ -246,12 +246,12 @@ export default function QuestionCatalogSelector({ onClose, onOk, type = 2 }) {
         {step == 1 && (
           <Grid container>
             <Grid item md={4}>
-              <IconButton aria-label='filter'>
+              <IconButton aria-label='filter' style={{display: 'none'}}>
                 <FilterAltOutlinedIcon />
               </IconButton>
             </Grid>
             <Grid item md={4}>
-              <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+              <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
             </Grid>
             <Grid item md={4} alignContent={'right'} alignItems={'right'}></Grid>
             <Grid item xs={12}>
@@ -304,7 +304,7 @@ export default function QuestionCatalogSelector({ onClose, onOk, type = 2 }) {
               </TableContainer>
               <Divider />
               <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
+                rowsPerPageOptions={[20, 30, 50]}
                 labelRowsPerPage='Hiển thị'
                 component='div'
                 count={data.length}
@@ -320,12 +320,12 @@ export default function QuestionCatalogSelector({ onClose, onOk, type = 2 }) {
           <>
             <Grid container>
               <Grid item md={4}>
-                <IconButton aria-label='filter'>
+                <IconButton aria-label='filter' style={{display: 'none'}}>
                   <FilterAltOutlinedIcon />
                 </IconButton>
               </Grid>
               <Grid item md={4}>
-                <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+                <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
               </Grid>
               <Grid item md={4} alignContent={'right'} alignItems={'right'}>
                 <Button
@@ -384,7 +384,7 @@ export default function QuestionCatalogSelector({ onClose, onOk, type = 2 }) {
             </TableContainer>
             <TablePagination
               labelRowsPerPage='Hiển thị'
-              rowsPerPageOptions={[10, 25, 100]}
+              rowsPerPageOptions={[20, 30, 50]}
               component='div'
               count={totalQuestionCates}
               rowsPerPage={rowsPerPage}

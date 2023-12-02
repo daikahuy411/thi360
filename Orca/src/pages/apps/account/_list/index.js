@@ -50,6 +50,7 @@ const UserTable = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [loading, setLoading] = useState(false)
+  const [keyword, setKeyword] = useState('')
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -62,11 +63,11 @@ const UserTable = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, keyword])
 
   const fetchData = () => {
     const param = {
-      keyword: '',
+      keyword: keyword,
       organizationId: 0,
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
@@ -181,12 +182,12 @@ const UserTable = () => {
       <Divider />
       <Grid container>
         <Grid item md={4}>
-          <IconButton aria-label='filter'>
+          <IconButton aria-label='filter' style={{display: 'none'}}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={4}>
-          <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+          <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
@@ -246,7 +247,7 @@ const UserTable = () => {
                         <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                       </TableCell>
                       <TableCell component='th' scope='row'>
-                        <IconButton aria-label='filter' component={Link} href={`/apps/account/${row.id}`}>
+                        <IconButton aria-label='edit' component={Link} href={`/apps/account/${row.id}`}>
                           <EditIcon />
                         </IconButton>
                       </TableCell>

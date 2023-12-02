@@ -48,7 +48,7 @@ export default function TenantSelector({ onClose, onNodeSelected = null }) {
   const [data, setData] = useState([])
   const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const [selectedData, setSelectedData] = useState()
   const [selectedValue, setSelectedValue] = React.useState(null)
 
@@ -69,7 +69,7 @@ export default function TenantSelector({ onClose, onNodeSelected = null }) {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, keyword])
 
   const fetchData = () => {
     new TenantApi().searches({ page: page + 1, limit: rowsPerPage }).then(response => {
@@ -121,12 +121,12 @@ export default function TenantSelector({ onClose, onNodeSelected = null }) {
         </Box>
         <Grid container>
           <Grid item md={4}>
-            <IconButton aria-label='filter'>
+            <IconButton aria-label='filter' style={{display: 'none'}}>
               <FilterAltOutlinedIcon />
             </IconButton>
           </Grid>
           <Grid item md={4}>
-            <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+            <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
           </Grid>
           <Grid item md={4} alignContent={'right'} alignItems={'right'}>
             <Button
@@ -189,7 +189,7 @@ export default function TenantSelector({ onClose, onNodeSelected = null }) {
             </TableContainer>
             <TablePagination
               labelRowsPerPage={'Hiển thị:'}
-              rowsPerPageOptions={[10, 25, 100]}
+              rowsPerPageOptions={[20, 30, 50]}
               component='div'
               count={totalItem}
               rowsPerPage={rowsPerPage}

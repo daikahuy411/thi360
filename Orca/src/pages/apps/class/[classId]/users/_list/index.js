@@ -45,7 +45,7 @@ const UserTable = () => {
   const [data, setData] = useState([])
   const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const { classId } = router.query
   const [keyword, setKeyword] = useState('')
 
@@ -186,16 +186,16 @@ const UserTable = () => {
       <Divider />
       <Grid container>
         <Grid item md={3} lg={3}>
-          <IconButton aria-label='filter'>
+          <IconButton aria-label='filter' style={{display: 'none'}}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={3} lg={3}>
-          <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+          <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
         </Grid>
         <Grid item md={6} lg={6} alignContent={'right'}>
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[20, 30, 50]}
             labelRowsPerPage='Hiển thị'
             component='div'
             count={totalItem}
@@ -252,7 +252,7 @@ const UserTable = () => {
                       />
                     </TableCell>
                     <TableCell component='th' scope='row'>
-                      <IconButton aria-label='filter' component={Link} href={`/apps/user/${row.id}`}>
+                      <IconButton aria-label='edit' component={Link} href={`/apps/user/${row.id}`}>
                         <EditIcon />
                       </IconButton>
                     </TableCell>
@@ -269,7 +269,7 @@ const UserTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[20, 30, 50]}
         component='div'
         count={totalItem}
         labelRowsPerPage='Hiển thị'
