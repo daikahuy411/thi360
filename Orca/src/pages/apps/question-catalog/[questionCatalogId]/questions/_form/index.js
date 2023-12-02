@@ -873,7 +873,7 @@ const QuestionEditForm = () => {
                                               action={
                                                 <>
                                                   <IconButton
-                                                    aria-label='filter'
+                                                    aria-label='filter' style={{display: 'none'}}
                                                     onClick={() => {
                                                       handleCloseChildQuestion()
                                                       setChildQuestionSelected(item)
@@ -883,7 +883,7 @@ const QuestionEditForm = () => {
                                                     <Icon icon='mdi:delete-outline' />
                                                   </IconButton>
                                                   <IconButton
-                                                    aria-label='filter'
+                                                    aria-label='filter' style={{display: 'none'}}
                                                     onClick={e => {
                                                       handleCloseChildQuestion()
                                                       setChildQuestionSelected(item)
@@ -911,7 +911,7 @@ const QuestionEditForm = () => {
                                                   }}
                                                 >
                                                   <IconButton
-                                                    aria-label='filter'
+                                                    aria-label='filter' style={{display: 'none'}}
                                                   >
                                                     <EditIcon />
                                                   </IconButton>
@@ -926,7 +926,7 @@ const QuestionEditForm = () => {
                                                   }}
                                                 >
                                                   <IconButton
-                                                    aria-label='filter'
+                                                    aria-label='filter' style={{display: 'none'}}
                                                   >
                                                     <Icon icon='mdi:delete-outline' />
                                                   </IconButton>

@@ -180,7 +180,7 @@ const CustomInput = forwardRef((props, ref) => {
 const BillingHistoryTable = () => {
   // ** State
   const [value, setValue] = useState('')
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(20)
   const [statusValue, setStatusValue] = useState('')
 
   // ** Hooks

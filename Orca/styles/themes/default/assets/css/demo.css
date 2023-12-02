@@ -143,3 +143,8 @@
   background: #fdf3f4;
   border-color: #f8cfd5;
 }
+
+input,
+input::placeholder {
+  font-size: 0.95rem;
+}

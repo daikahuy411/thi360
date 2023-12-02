@@ -32,7 +32,7 @@ const Questions = props => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
   const [selected, setSelected] = useState([]) //selected ids
   const isSelected = id => selected.indexOf(id) !== -1
@@ -47,7 +47,7 @@ const Questions = props => {
         catalogId: catalogId,
         questionType: 0,
         categoryId: 0,
-        keyword: '',
+        keyword: keyword,
         page: page + 1,
         limit: rowsPerPage
       })
@@ -113,12 +113,12 @@ const Questions = props => {
     <>
       <Grid container>
         <Grid item md={4}>
-          <IconButton aria-label='filter'>
+          <IconButton aria-label='filter' style={{display: 'none'}}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={4}>
-          <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+          <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
         </Grid>
         <Grid item md={4} alignContent={'right'} alignItems={'right'}>
           <Button
@@ -221,7 +221,7 @@ const Questions = props => {
         <Divider />
         <TablePagination
           labelRowsPerPage='Hiển thị'
-          rowsPerPageOptions={[10, 25, 100]}
+          rowsPerPageOptions={[20, 30, 50]}
           component='div'
           count={totalItems}
           rowsPerPage={rowsPerPage}

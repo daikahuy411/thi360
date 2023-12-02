@@ -29,7 +29,7 @@ import Typography from '@mui/material/Typography'
 const ExamAttempHistory = () => {
   const [data, setData] = useState()
   const [totalItem, setTotalItem] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(false)
 
@@ -44,7 +44,7 @@ const ExamAttempHistory = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, keyword])
 
   const fetchData = () => {
     setLoading(true)
@@ -86,7 +86,7 @@ const ExamAttempHistory = () => {
           <Grid item md={5} alignContent={'right'}>
             <TablePagination
               labelRowsPerPage={'Hiển thị:'}
-              rowsPerPageOptions={[10, 25, 100]}
+              rowsPerPageOptions={[20, 30, 50]}
               component='div'
               count={totalItem}
               rowsPerPage={rowsPerPage}
@@ -130,7 +130,7 @@ const ExamAttempHistory = () => {
                           <Typography variant='body1'>{index + 1}</Typography>
                         </TableCell>
                         <TableCell component='td' scope='row' style={{ width: 50 }}>
-                          <IconButton aria-label='filter' component={Link} href={`/testing/review/${row.token}`}>
+                          <IconButton aria-label='edit' component={Link} href={`/testing/review/${row.token}`}>
                             <Icon icon='bi:eye' fontSize={22} />
                           </IconButton>
                         </TableCell>
@@ -172,7 +172,7 @@ const ExamAttempHistory = () => {
         </LoadingSpinner>
         <TablePagination
           labelRowsPerPage={'Hiển thị:'}
-          rowsPerPageOptions={[10, 25, 100]}
+          rowsPerPageOptions={[20, 30, 50]}
           component='div'
           count={totalItem}
           rowsPerPage={rowsPerPage}

@@ -44,7 +44,8 @@ const ClassTable = () => {
   const [data, setData] = useState([])
   const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
+  const [keyword, setKeyword] = useState('')
 
   const [selected, setSelected] = useState([])
 
@@ -59,11 +60,11 @@ const ClassTable = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, keyword])
 
   const fetchData = () => {
     const param = {
-      keyword: '',
+      keyword: keyword,
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
     }
@@ -184,16 +185,16 @@ const ClassTable = () => {
       <Divider />
       <Grid container>
         <Grid item md={4}>
-          <IconButton aria-label='filter'>
+          <IconButton aria-label='filter' style={{display: 'none'}}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={4}>
-          <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+          <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[20, 30, 50]}
             component='div'
             count={totalItem}
             rowsPerPage={rowsPerPage}
@@ -255,7 +256,7 @@ const ClassTable = () => {
                       />
                     </TableCell>
                     <TableCell component='th' scope='row'>
-                      <IconButton aria-label='filter' component={Link} href={`/apps/class/${row.id}`}>
+                      <IconButton aria-label='edit' component={Link} href={`/apps/class/${row.id}`}>
                         <Tooltip title='Sửa lớp học'>
                           <EditIcon />
                         </Tooltip>
@@ -276,7 +277,7 @@ const ClassTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[20, 30, 50]}
         component='div'
         count={totalItem}
         rowsPerPage={rowsPerPage}
