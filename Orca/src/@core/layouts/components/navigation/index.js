@@ -178,7 +178,7 @@ const Navigation = () => {
             activeMenuIndex === 'help' ? setActiveMenuIndex('') : setActiveMenuIndex('help')
           }}
         >
-          <Link href='/help' className='menu-link'>
+          <Link href='http://help.thi360.com' target='_blank' className='menu-link'>
             <img className='menu-icon tf-icons' src='/themes/default/assets/img/icon-menu/menu-quest.svg' />
             <div>Hướng dẫn</div>
           </Link>
