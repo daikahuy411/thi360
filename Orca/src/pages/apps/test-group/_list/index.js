@@ -47,6 +47,7 @@ const TestGroupTable = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [loading, setLoading] = useState(false)
+  const [keyword, setKeyword] = useState('')
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
