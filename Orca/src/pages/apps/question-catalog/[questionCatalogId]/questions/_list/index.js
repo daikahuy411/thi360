@@ -304,7 +304,7 @@ const QuestionTable = () => {
                       </TableCell>
                       <TableCell component='th' scope='row'>
                         <IconButton
-                          aria-label='filter' style={{display: 'none'}}
+                          aria-label='filter'
                           component={Link}
                           href={`/apps/question-catalog/${questionCatalogId}/questions/${row.id}`}
                         >

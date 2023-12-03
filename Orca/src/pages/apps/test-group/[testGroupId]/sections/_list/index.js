@@ -49,6 +49,7 @@ const SectionsTable = ({ testGroup }) => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const { testGroupId } = router.query
+  const [keyword, setKeyword] = useState('')
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -262,7 +263,7 @@ const SectionsTable = ({ testGroup }) => {
                           </TableCell>
                           <TableCell component='th' scope='row'>
                             <IconButton
-                              aria-label='filter' style={{display: 'none'}}
+                              aria-label='filter'
                               component={Link}
                               href={`/apps/test-group/${testGroupId}/sections/${row.id}`}
                             >

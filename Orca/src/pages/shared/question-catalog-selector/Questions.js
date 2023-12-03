@@ -37,6 +37,7 @@ const Questions = props => {
   const [selected, setSelected] = useState([]) //selected ids
   const isSelected = id => selected.indexOf(id) !== -1
   const [selectedRecords, setSelectedRecords] = useState([])
+  const [keyword, setKeyword] = useState('')
 
   const searchQuestion = () => {
     if (!catalogId || catalogId == 0) return

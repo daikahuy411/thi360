@@ -103,7 +103,7 @@ const TreeRow: React.FC<TreeRowProps> = (props: TreeRowProps) => {
           <IconButton aria-label='edit' component={Link} href={`/apps/exam-category/${item.key}`}>
             <EditIcon />
           </IconButton>
-          <IconButton aria-label='filter' style={{display: 'none'}} onClick={() => handleClickOpenFormDelete(item)}>
+          <IconButton aria-label='filter' onClick={() => handleClickOpenFormDelete(item)}>
             <DeleteIcon />
           </IconButton>
         </TableCell>

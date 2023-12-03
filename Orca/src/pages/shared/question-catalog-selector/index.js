@@ -55,6 +55,7 @@ export default function QuestionCatalogSelector({ onClose, onOk, type = 2 }) {
   const [selectedNode, setSelectedNode] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState(null)
   const [step, setStep] = useState(1)
+  const [keyword, setKeyword] = useState('')
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)

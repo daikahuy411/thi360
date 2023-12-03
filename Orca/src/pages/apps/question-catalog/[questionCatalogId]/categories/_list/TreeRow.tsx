@@ -94,13 +94,13 @@ const handleDelete = (item) => {
       <TableRow key={`${item.key}-row`} onClick={() => setIsCollapsed(!isCollapsed)}>
         <TableCell component='th' scope='row'>
           <IconButton
-            aria-label='filter' style={{display: 'none'}}
+            aria-label='filter'
             component={Link}
             href={`/apps/question-catalog/${questionCatalogId}/categories/${item.key}`}
           >
             <EditIcon />
           </IconButton>
-          <IconButton aria-label='filter' style={{display: 'none'}} onClick={() => handleClickOpenDelete()}>
+          <IconButton aria-label='filter' onClick={() => handleClickOpenDelete()}>
             <DeleteIcon />
           </IconButton>
         </TableCell>
