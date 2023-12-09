@@ -1,14 +1,20 @@
 import { useEffect } from 'react'
 
 import TestGroupSectionApi from 'api/test-group-section-api'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedTestGroupSection, selectTestGroupSection } from 'store/slices/testGroupSectionSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedTestGroupSection,
+  selectTestGroupSection
+} from 'store/slices/testGroupSectionSlice'
 import { selectedTestGroup } from 'store/slices/testGroupSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
-import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
 const TopNav = () => {
@@ -36,11 +42,16 @@ const TopNav = () => {
         Bộ Đề thi
       </Link>
       {currentTestGroup && (
-        <Link underline='hover' color='inherit' href={`/apps/test-group/${testGroupId}/configs`}>
+        <Link underline='hover' color='inherit' href={`/apps/test-group/${testGroupId}`}>
           {currentTestGroup.name}
         </Link>
       )}
-      <Typography color='text.primary'>Phần thi</Typography>
+      {currentTestGroup && (
+        <Link underline='hover' color='inherit' href={`/apps/test-group/${testGroupId}/sections`}>
+          Cấu trúc đề thi
+        </Link>
+      )}
+      {currentTestGroupSection && <Typography color='text.primary'>{currentTestGroupSection.name}</Typography>}
     </Breadcrumbs>
   )
 }

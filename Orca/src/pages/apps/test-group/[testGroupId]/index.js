@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { useEffect } from 'react'
-
 import TestGroupApi from 'api/test-group-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -82,12 +81,14 @@ const EditTestGroupPage = () => {
    */
   const save = code => {
     const item = getValues()
+    // item.parentId = isNaN(parentId) ? 0 : parseInt(parentId)
     new TestGroupApi()
       .save(item)
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code === 1) {
-          router.push('/apps/test-group/')
+          router.query.testGroupId = response.data.id
+          router.push(router)
         } else {
           reset()
         }

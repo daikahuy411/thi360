@@ -8,22 +8,17 @@ import V1Api from 'api/v1-api'
 import { useAuth } from 'hooks/useAuth'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import LoadingSpinner from '@core/components/loading-spinner'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
 const HomePage = () => {
-  const router = useRouter()
   const auth = useAuth()
   const [exams, setExams] = useState([])
-  const [postCates, setPostCates] = useState([])
   const [loading, setLoading] = useState(false)
-  const [postLoading, setPostLoading] = useState(false)
 
   useEffect(() => {
     if (auth.user) {
@@ -33,12 +28,6 @@ const HomePage = () => {
         setLoading(false)
       })
     }
-
-    setPostLoading(true)
-    new V1Api().getHomePagePosts().then(response => {
-      setPostCates(response.data)
-      setPostLoading(false)
-    })
   }, [])
 
   return (
@@ -91,62 +80,6 @@ const HomePage = () => {
           </>
         </LoadingSpinner>
 
-        <LoadingSpinner active={postLoading} minHeight={0}>
-          <>
-            {postCates &&
-              postCates.map(item => (
-                <section className='Home-exam' key={`postcate-${item.id}`}>
-                  <div className='ba-title'>
-                    <h2> {item.name} </h2>
-                  </div>
-                  <div className='He-box'>
-                    <Grid container md={12} spacing={6}>
-                      {item.posts &&
-                        item.posts.map(p => (
-                          <Grid item xs={12} md={2} lg={2} xl={2} key={`post-${p.id}`}>
-                            <Card>
-                              <CardMedia
-                                sx={{ height: 140 }}
-                                image='https://api.baitaptracnghiem.com/storage/images/3ujEqtFPnNZoqfmzMy2MHQXGS31GQGXRVZricLaz.webp'
-                                title='green iguana'
-                              />
-                              <CardContent>
-                                <Typography
-                                  gutterBottom
-                                  variant='hh6'
-                                  color='text.primary'
-                                  component={Link}
-                                  href={`/post/${p.id}`}
-                                >
-                                  {/* {p.name} */}
-                                  Hướng dẫn cách học trên Tiếng Anh Mỗi Ngày
-                                </Typography>
-                                {/* <Typography variant='body2' color='text.secondary'>
-                                  {p.descritpion}
-                                  Các chính sách ưu đãi khi mua theo nhóm, dành cho sinh viên, cho học viên gửi bảng
-                                  điểm thi TOEIC, ưu đãi dành cho học viên thân thiết và tặng ngày học khi đánh giá cho
-                                  Tiếng Anh Mỗi Ngày
-                                </Typography> */}
-                              </CardContent>
-                            </Card>
-                          </Grid>
-                          // <div className='col-md-3 col-sm-6' key={`recent-exam-${p.id}`}>
-                          //   <Link href={`/exam/${p.id}`} style={{ cursor: 'pointer' }}>
-                          //     <div className='Heb-detail'>
-                          //       <span>
-                          //         <img src='/themes/default/assets/img/icons/exam1.png' />
-                          //       </span>
-                          //       <label>{p.name}</label>
-                          //     </div>
-                          //   </Link>
-                          // </div>
-                        ))}
-                    </Grid>
-                  </div>
-                </section>
-              ))}
-          </>
-        </LoadingSpinner>
         {/* <section className="Home-tips">
           <div className="ba-title">
             <h2> Mẹo trong ngày </h2>

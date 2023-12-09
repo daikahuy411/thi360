@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import UserApi from 'api/user-api'
 import Link from 'next/link'
@@ -174,7 +177,7 @@ const UserTable = () => {
         &nbsp; &nbsp;
         <Button
           component={Link}
-          href={`/apps/user/0`}
+          href={`/apps/class/${classId}/users/0`}
           variant='contained'
           style={{ width: 180 }}
           color='primary'
@@ -186,12 +189,17 @@ const UserTable = () => {
       <Divider />
       <Grid container>
         <Grid item md={3} lg={3}>
-          <IconButton aria-label='filter' style={{display: 'none'}}>
+          <IconButton aria-label='filter' style={{ display: 'none' }}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={3} lg={3}>
-          <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
+          <TextField
+            fullWidth
+            placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+            onChange={e => setKeyword(e.target.value)}
+            size='small'
+          />
         </Grid>
         <Grid item md={6} lg={6} alignContent={'right'}>
           <TablePagination
@@ -252,16 +260,22 @@ const UserTable = () => {
                       />
                     </TableCell>
                     <TableCell component='th' scope='row'>
-                      <IconButton aria-label='edit' component={Link} href={`/apps/user/${row.id}`}>
+                      <IconButton aria-label='edit' component={Link} href={`/apps/class/${classId}/users/${row.id}`}>
                         <EditIcon />
                       </IconButton>
                     </TableCell>
                     <TableCell component='th' scope='row'>
-                      {row.userName}
+                      <Typography variant='body1'>{row.userName}</Typography>
                     </TableCell>
-                    <TableCell>{row.fullName}</TableCell>
-                    <TableCell>{row.genderName}</TableCell>
-                    <TableCell>{row.organizationName}</TableCell>
+                    <TableCell>
+                      <Typography variant='body1'>{row.fullName}</Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant='body1'>{row.genderName}</Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant='body1'>{row.organizationName}</Typography>
+                    </TableCell>
                   </TableRow>
                 )
               })}
@@ -295,8 +309,7 @@ const UserTable = () => {
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleCloseDelete}>
-            {' '}
-            Hủy bỏ{' '}
+            Hủy bỏ
           </Button>
           <Button onClick={handleDelete} color='error'>
             Đồng ý

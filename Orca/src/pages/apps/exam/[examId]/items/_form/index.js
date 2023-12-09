@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import ExamItemApi from 'api/exam-item-api'
 import TestGroupApi from 'api/test-group-api'
@@ -7,10 +10,19 @@ import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import TestGroupSelector from 'pages/shared/test-group-selector'
 import Draggable from 'react-draggable'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedExamItem, selectExamItem } from 'store/slices/examItemSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedExamItem,
+  selectExamItem
+} from 'store/slices/examItemSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -101,8 +113,6 @@ const ExamItemEditForm = () => {
 
     new ExamItemApi().get(itemId).then(response => {
       dispatch(selectExamItem(response.data))
-      console.log(response.data)
-      console.log(response.data.testGroup.name)
       setTestGroupSelected({ testGroupId: response.data.testGroupId, testGroupName: response.data.testGroup?.name })
       setStateSetting({
         ...stateSetting,
@@ -130,7 +140,9 @@ const ExamItemEditForm = () => {
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code === 1) {
-          router.push(`/apps/exam/${examId}/items`)
+          router.query.itemId = response.data.id
+          router.push(router)
+          // router.push(`/apps/exam/${examId}/items`)
         } else {
           cleanTestGroup()
           reset()
@@ -271,7 +283,7 @@ const ExamItemEditForm = () => {
 
                         {!loading && (
                           <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', paddingTop: 10 }}>
-                            <Grid container spacing={5}>
+                            <Grid container spacing={5} maxWidth={"lg"}>
                               <Grid item xs={12}>
                                 <FormControl fullWidth>
                                   <Controller
@@ -309,6 +321,24 @@ const ExamItemEditForm = () => {
                                         rows={3}
                                         value={value ?? ''}
                                         label='Mô tả'
+                                        InputLabelProps={{ shrink: true }}
+                                        onChange={onChange}
+                                      />
+                                    )}
+                                  />
+                                </FormControl>
+                              </Grid>
+                              <Grid item xs={12}>
+                                <FormControl fullWidth>
+                                  <Controller
+                                    name='order'
+                                    control={control}
+                                    rules={{ required: false }}
+                                    render={({ field: { value, onChange } }) => (
+                                      <TextField
+                                        type='number'
+                                        value={value ?? ''}
+                                        label='Thứ tự'
                                         InputLabelProps={{ shrink: true }}
                                         onChange={onChange}
                                       />
@@ -363,6 +393,7 @@ const ExamItemEditForm = () => {
                                         label='Thời gian làm bài (phút)'
                                         InputLabelProps={{ shrink: true }}
                                         required
+                                        type='number'
                                         onChange={onChange}
                                         error={Boolean(errors.duration)}
                                         aria-describedby='validation-schema-name'
@@ -386,6 +417,7 @@ const ExamItemEditForm = () => {
                                       <TextField
                                         value={value ?? ''}
                                         label='Điểm đạt'
+                                        type='number'
                                         InputLabelProps={{ shrink: true }}
                                         required
                                         onChange={onChange}
@@ -411,7 +443,7 @@ const ExamItemEditForm = () => {
                                       <TextField
                                         value={value ?? ''}
                                         label='Số lần thi cho phép'
-                                        // type='number'
+                                        type='number'
                                         InputLabelProps={{ shrink: true }}
                                         InputProps={{
                                           inputProps: {

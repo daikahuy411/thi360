@@ -1,13 +1,19 @@
 import { useEffect } from 'react'
 
 import OrganizationApi from 'api/organization-api'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectClass, selectedClass } from 'store/slices/classSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectClass,
+  selectedClass
+} from 'store/slices/classSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
-import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
 const TopNav = props => {
@@ -17,10 +23,12 @@ const TopNav = props => {
   const currentClass = useSelector(selectedClass)
 
   useEffect(() => {
-    if (classId && parseInt(classId) > 0 && !currentClass) {
+    if (classId && parseInt(classId) > 0) {
       new OrganizationApi().get(classId).then(response => {
         dispatch(selectClass(response.data))
       })
+    } else {
+      dispatch(selectClass(null))
     }
   }, [classId])
 
@@ -29,7 +37,17 @@ const TopNav = props => {
       <Link underline='hover' color='inherit' href='/'>
         <HomeOutlinedIcon />
       </Link>
-      <Typography color='text.primary'>Lớp học</Typography>
+      <Link underline='hover' color='inherit' href='/apps/class/'>
+        Lớp học
+      </Link>
+      {currentClass &&
+        currentClass.ancestors &&
+        currentClass.ancestors.map(item => (
+          <Link underline='hover' color='inherit' href={`/apps/class/view/${item.id}`}>
+            {item.name}
+          </Link>
+        ))}
+      {currentClass && <Typography color='text.primary'>{currentClass.name}</Typography>}
     </Breadcrumbs>
   )
 }

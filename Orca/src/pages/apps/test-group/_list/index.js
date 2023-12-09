@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
 import moment from 'moment'
+import { useRouter } from 'next/router'
 
 import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
@@ -32,6 +33,8 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import LoadingSpinner from '@core/components/loading-spinner'
+import FolderIcon from '@mui/icons-material/Folder'
+import EditFolderDialog from 'pages/shared/folder/edit-folder-dialog'
 
 function PaperComponent(props) {
   return (
@@ -45,9 +48,14 @@ const TestGroupTable = () => {
   const [data, setData] = useState([])
   const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
+  const [keyword, setKeyword] = useState(null)
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [loading, setLoading] = useState(false)
-  const [keyword, setKeyword] = useState('')
+  const [editFolder, setEditFolder] = useState(false)
+  const [currentFolder, setCurrentFolder] = useState(null)
+
+  const router = useRouter()
+  const { folderId } = router.query ?? '0'
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -60,11 +68,12 @@ const TestGroupTable = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage, keyword])
+  }, [page, rowsPerPage, folderId, keyword])
 
   const fetchData = () => {
     const param = {
       keyword: keyword,
+      folderId: folderId,
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
     }
@@ -144,6 +153,14 @@ const TestGroupTable = () => {
   /*
    * handle remove test-group
    */
+
+  const handleEditFolderClose = hasChanged => {
+    setEditFolder(false)
+    if (hasChanged) {
+      fetchData()
+    }
+  }
+
   return (
     <>
       <Divider />
@@ -180,17 +197,30 @@ const TestGroupTable = () => {
           component={Link}
           href={`/apps/test-group/0`}
           variant='contained'
-          style={{ width: 180 }}
+          style={{ width: 210 }}
           color='primary'
           startIcon={<Icon icon='mdi:plus' />}
         >
           Bộ Đề thi
         </Button>
+        &nbsp;
+        <Button
+          variant='contained'
+          onClick={() => {
+            setCurrentFolder(null)
+            setEditFolder(true)
+          }}
+          style={{ width: 210 }}
+          color='primary'
+          startIcon={<Icon icon='mdi:plus' />}
+        >
+          Thư mục
+        </Button>
       </Toolbar>
       <Divider />
       <Grid container>
         <Grid item md={4}>
-          <IconButton aria-label='filter' style={{display: 'none'}}>
+          <IconButton aria-label='filter'>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
@@ -212,7 +242,7 @@ const TestGroupTable = () => {
       </Grid>
       <TableContainer component={Paper} style={{ marginTop: 5 }}>
         <LoadingSpinner active={loading}>
-          <div style={{ minHeight: 300 }}>
+          <div>
             <Table sx={{ minWidth: 650 }} aria-label='simple table'>
               <TableHead>
                 <TableRow>
@@ -256,14 +286,37 @@ const TestGroupTable = () => {
                           />
                         </TableCell>
                         <TableCell component='th' scope='row'>
-                          <IconButton aria-label='edit' component={Link} href={`/apps/test-group/${row.id}`}>
-                            <EditIcon />
-                          </IconButton>
+                          {row.type === 1 && (
+                            <IconButton
+                              aria-label='filter'
+                              onClick={() => {
+                                setCurrentFolder(row)
+                                setEditFolder(true)
+                              }}
+                            >
+                              <EditIcon />
+                            </IconButton>
+                          )}
+                          {row.type !== 1 && (
+                            <IconButton aria-label='filter' component={Link} href={`/apps/test-group/${row.id}`}>
+                              <EditIcon />
+                            </IconButton>
+                          )}
                         </TableCell>
                         <TableCell component='th' scope='row'>
-                          <Typography variant='body1'>{row.name}</Typography>
+                          {row.type == 1 && (
+                            <Typography variant='body1' component={Link} href={`/apps/test-group/view/${row.id}`}>
+                              <FolderIcon /> &nbsp;
+                              {row.name}
+                            </Typography>
+                          )}
+                          {row.type != 1 && <Typography variant='body1'>{row.name}</Typography>}
                         </TableCell>
-                        <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
+                        <TableCell>
+                            <Typography variant='body1'>
+                              {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
+                            </Typography>
+                          </TableCell>
                       </TableRow>
                     )
                   })}
@@ -282,7 +335,14 @@ const TestGroupTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-
+      {editFolder && (
+        <EditFolderDialog
+          onClose={hasChanged => handleEditFolderClose(hasChanged)}
+          entity={currentFolder}
+          parentId={folderId}
+          api={new TestGroupApi()}
+        />
+      )}
       <Dialog
         open={openDelete}
         onClose={handleCloseDelete}

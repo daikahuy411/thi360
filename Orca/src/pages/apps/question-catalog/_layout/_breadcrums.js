@@ -7,7 +7,7 @@ import { selectedQuestionCatalog, selectQuestionCatalog } from 'store/slices/que
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
-import Link from '@mui/material/Link'
+import Link from 'next/link'
 import Typography from '@mui/material/Typography'
 
 const TopNav = props => {
@@ -17,10 +17,12 @@ const TopNav = props => {
   const currentQuestionCatalog = useSelector(selectedQuestionCatalog)
 
   useEffect(() => {
-    if (questionCatalogId && parseInt(questionCatalogId) > 0 && !currentQuestionCatalog) {
+    if (questionCatalogId && parseInt(questionCatalogId) > 0) {
       new QuestionCatalogApi().get(questionCatalogId).then(response => {
         dispatch(selectQuestionCatalog(response.data))
       })
+    } else {
+      dispatch(selectQuestionCatalog(null))
     }
   }, [questionCatalogId])
 
@@ -29,7 +31,17 @@ const TopNav = props => {
       <Link underline='hover' color='inherit' href='/'>
         <HomeOutlinedIcon />
       </Link>
-      <Typography color='text.primary'>Bộ Câu hỏi</Typography>
+      <Link underline='hover' color='inherit' href='/apps/question-catalog/'>
+        Bộ Câu hỏi
+      </Link>
+      {currentQuestionCatalog &&
+        currentQuestionCatalog.ancestors &&
+        currentQuestionCatalog.ancestors.map(item => (
+          <Link underline='hover' color='inherit' href={`/apps/question-catalog/view/${item.id}`}>
+            {item.name}
+          </Link>
+        ))}
+      {currentQuestionCatalog && <Typography color='text.primary'>{currentQuestionCatalog.name}</Typography>}
     </Breadcrumbs>
   )
 }

@@ -7,29 +7,51 @@ import { selectedTestGroup, selectTestGroup } from 'store/slices/testGroupSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
-import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
+import Link from 'next/link'
 
 const TopNav = props => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { testGroupId } = router.query
+  const { testGroupId, folderId } = router.query
   const currentTestGroup = useSelector(selectedTestGroup)
 
   useEffect(() => {
-    if (testGroupId && parseInt(testGroupId) > 0 && !currentTestGroup) {
+    if (testGroupId && parseInt(testGroupId) > 0) {
       new TestGroupApi().get(testGroupId).then(response => {
         dispatch(selectTestGroup(response.data))
       })
+    } else {
+      dispatch(selectTestGroup(null))
     }
   }, [testGroupId])
+
+  useEffect(() => {
+    if (folderId && parseInt(folderId) > 0) {
+      new TestGroupApi().get(folderId).then(response => {
+        dispatch(selectTestGroup(response.data))
+      })
+    } else {
+      dispatch(selectTestGroup(null))
+    }
+  }, [folderId])
 
   return (
     <Breadcrumbs aria-label='breadcrumb' style={{ borderTop: '0px solid rgba(58, 53, 65, 0.12)', paddingTop: 0 }}>
       <Link underline='hover' color='inherit' href='/'>
         <HomeOutlinedIcon />
       </Link>
-      <Typography color='text.primary'>Bộ Đề thi</Typography>
+      <Link underline='hover' color='inherit' href='/apps/test-group/'>
+        Bộ Đề thi
+      </Link>
+      {currentTestGroup &&
+        currentTestGroup.ancestors &&
+        currentTestGroup.ancestors.map(item => (
+          <Link underline='hover' color='inherit' href={`/apps/test-group/view/${item.id}`}>
+            {item.name}
+          </Link>
+        ))}
+      {currentTestGroup && <Typography color='text.primary'>{currentTestGroup.name}</Typography>}
     </Breadcrumbs>
   )
 }

@@ -1,15 +1,29 @@
 import * as React from 'react'
-import { useEffect } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import OrganizationApi from 'api/organization-api'
+import { FolderType } from 'enum/FolderType'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
+import ParentFolderField from 'pages/shared/folder/parent-folder-field'
 import Draggable from 'react-draggable'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectClass, selectedClass } from 'store/slices/classSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectClass,
+  selectedClass
+} from 'store/slices/classSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -52,8 +66,9 @@ function PaperComponent(props) {
 const EditClassPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { classId } = router.query
+  const { classId, folderId } = router.query
   const currentClass = useSelector(selectedClass)
+  const [parentId, setParentId] = useState(0)
 
   const {
     control,
@@ -68,14 +83,19 @@ const EditClassPage = () => {
   })
 
   useEffect(() => {
-    if (!classId || classId == 0) {
+    if (!classId || classId === '0') {
       dispatch(selectClass({ id: 0, name: '', description: '', group: 0 }))
       return
     }
     new OrganizationApi().get(classId).then(response => {
       dispatch(selectClass(response.data))
     })
+    setParentId(parseInt(classId))
   }, [classId])
+
+  useEffect(() => {
+    setParentId(parseInt(folderId))
+  }, [folderId])
 
   useEffect(() => {
     if (currentClass) reset(currentClass)
@@ -89,18 +109,19 @@ const EditClassPage = () => {
 
   const save = code => {
     const item = getValues()
+    item.parentId = parentId
     new OrganizationApi()
       .save({ ...item, type: 2 })
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code === 1) {
-          router.push('/apps/class/')
+          router.query.classId = response.data.id
+          router.push(router)
         } else {
           reset()
         }
       })
       .catch(e => {
-        console.log(e)
         toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu.')
       })
   }
@@ -129,6 +150,10 @@ const EditClassPage = () => {
    * remove class
    */
 
+  const handleParentChanged = parentId => {
+    setParentId(parentId)
+  }
+
   return (
     <>
       <div style={{ padding: 0 }}>
@@ -154,7 +179,11 @@ const EditClassPage = () => {
                         &nbsp;
                       </>
                     )}
-                    <Button variant='outlined' component={Link} href='/apps/class/'>
+                    <Button
+                      variant='outlined'
+                      component={Link}
+                      href={folderId > 0 ? `/apps/class/view/${folderId}` : `/apps/class/`}
+                    >
                       <ArrowBackIcon />
                       &nbsp;Quay lại
                     </Button>
@@ -201,6 +230,18 @@ const EditClassPage = () => {
                               </FormHelperText>
                             )}
                           </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <ParentFolderField
+                            api={new OrganizationApi()}
+                            type={FolderType.CLASS}
+                            onSave={handleParentChanged}
+                            parentId={
+                              !currentClass || currentClass.id == 0
+                                ? parseInt(isNaN(folderId) ? '0' : folderId)
+                                : currentClass.parentId
+                            }
+                          />
                         </Grid>
                         <Grid item xs={12}>
                           <FormControl fullWidth>
@@ -268,7 +309,6 @@ const EditClassPage = () => {
                         </Grid>
                       </Grid>
                     </form>
-
                     <Dialog
                       open={openDelete}
                       onClose={handleCloseDelete}

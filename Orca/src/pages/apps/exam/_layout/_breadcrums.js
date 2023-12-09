@@ -1,13 +1,19 @@
 import { useEffect } from 'react'
 
 import ExamApi from 'api/exam-api'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedExam, selectExam } from 'store/slices/examSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedExam,
+  selectExam
+} from 'store/slices/examSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
-import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
 const TopNav = props => {
@@ -29,7 +35,14 @@ const TopNav = props => {
       <Link underline='hover' color='inherit' href='/'>
         <HomeOutlinedIcon />
       </Link>
-      <Typography color='text.primary'>Môn thi</Typography>
+      {currentExam &&
+        currentExam.ancestors &&
+        currentExam.ancestors.map(item => (
+          <Link underline='hover' color='inherit' href={`/apps/exam/view/${item.id}`}>
+            {item.name}
+          </Link>
+        ))}
+      {currentExam && <Typography color='text.primary'>{currentExam.name}</Typography>}
     </Breadcrumbs>
   )
 }

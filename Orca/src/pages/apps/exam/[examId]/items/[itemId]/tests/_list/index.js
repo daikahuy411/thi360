@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import TestApi from 'api/test-api'
 import Link from 'next/link'
@@ -73,19 +76,30 @@ const TestsTable = () => {
           </IconButton>
         </Tooltip>
         &nbsp; &nbsp;
-        <Button variant='contained' style={{ width: 180 }} color='primary' startIcon={<Icon icon='mdi:send' />}>
+        <Button
+          variant='contained'
+          style={{ width: 180 }}
+          onClick={() => setShowGenTest(true)}
+          color='primary'
+          startIcon={<Icon icon='mdi:send' />}
+        >
           Sinh đề
         </Button>
       </Toolbar>
       <Divider />
       <Grid container>
         <Grid item md={3} lg={3}>
-          <IconButton aria-label='filter' style={{display: 'none'}}>
+          <IconButton aria-label='filter' style={{ display: 'none' }}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={3} lg={3}>
-          <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
+          <TextField
+            fullWidth
+            placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+            onChange={e => setKeyword(e.target.value)}
+            size='small'
+          />
         </Grid>
         <Grid item md={6} lg={6} alignContent={'right'}>
           <TablePagination
@@ -137,9 +151,11 @@ const TestsTable = () => {
                     </IconButton>
                   </TableCell>
                   <TableCell component='th' scope='row'>
-                    {row.name}
+                    <Typography variant='body1'> {row.name}</Typography>
                   </TableCell>
-                  <TableCell>{row.createdTime}</TableCell>
+                  <TableCell>
+                    <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>

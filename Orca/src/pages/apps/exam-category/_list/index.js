@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import { ExamCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
@@ -44,7 +47,7 @@ const ExamCategoryTable = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage, keyword])
+  }, [page, rowsPerPage])
 
   useEffect(() => {
     router.prefetch('/apps/exam-category/')
@@ -52,7 +55,6 @@ const ExamCategoryTable = () => {
 
   const fetchData = () => {
     const param = {
-      keyword: keyword,
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
     }
@@ -99,12 +101,17 @@ const ExamCategoryTable = () => {
       <Divider />
       <Grid container>
         <Grid item md={4}>
-          <IconButton aria-label='filter' style={{display: 'none'}}>
+          <IconButton aria-label='filter' style={{ display: 'none' }}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={4}>
-          <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
+          <TextField
+            fullWidth
+            placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+            onChange={e => setKeyword(e.target.value)}
+            size='small'
+          />
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination

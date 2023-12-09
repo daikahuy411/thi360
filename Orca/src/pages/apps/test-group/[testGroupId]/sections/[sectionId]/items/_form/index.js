@@ -30,6 +30,8 @@ import LoadingSpinner from '@core/components/loading-spinner'
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
+import DeleteOutline from '@mui/icons-material/DeleteOutline'
+import FolderIcon from '@mui/icons-material/FolderOpen'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
@@ -38,6 +40,9 @@ import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
+import OutlinedInput from '@mui/material/OutlinedInput'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -65,7 +70,7 @@ const itemTypes = [
 ]
 
 const schema = yup.object().shape({
-  name: yup.string().required('* bắt buộc'),
+  name: yup.string().required('* bắt buộc')
   //numberOfQuestion: yup.number().required('* bắt buộc').moreThan(0, '* bắt buộc') //depends on type
 })
 
@@ -133,9 +138,9 @@ const ItemEditForm = () => {
 
   const save = () => {
     const item = getValues()
-    item.TestGroupId = testGroupId
-    item.TestGroupSectionId = sectionId
-    item.Type = itemType
+    item.testGroupId = parseInt(testGroupId)
+    item.testGroupSectionId = parseInt(sectionId)
+    item.type = itemType
     if (itemType == 2) {
       item.value = selectedQuestions.map(n => n.id).join(',')
     } else if (itemType == 4) {
@@ -153,6 +158,7 @@ const ItemEditForm = () => {
     } else {
       var newSelectedQuestions = selectedQuestions || []
       setSelectedQuestions(newSelectedQuestions.concat(items))
+      toast.success('Cập nhật thành công')
       setOpenQuestionCatalogSelector(false)
     }
   }
@@ -238,99 +244,111 @@ const ItemEditForm = () => {
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                     <form onSubmit={handleSubmit(save)} style={{ paddingTop: 10 }}>
                       <Grid container spacing={5}>
-                        <Grid item xs={12}>
-                          <FormControl fullWidth>
-                            <Controller
-                              name='name'
-                              control={control}
-                              rules={{ required: true }}
-                              render={({ field: { value, onChange } }) => (
-                                <TextField
-                                  value={value}
-                                  label='Tên'
-                                  InputLabelProps={{ shrink: true }}
-                                  required
-                                  autoComplete='false'
-                                  onChange={onChange}
-                                  error={Boolean(errors.name)}
-                                  aria-describedby='validation-schema-name'
-                                />
-                              )}
-                            />
-                            {errors.name && (
-                              <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
-                                {errors.name.message}
-                              </FormHelperText>
-                            )}
-                          </FormControl>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Grid container spacing={4}>
-                            {currentTestGroupSectionItem &&
-                              itemTypes.map((item, index) => (
-                                <CustomRadioBasic
-                                  disabled={currentTestGroupSectionItem.id != 0}
-                                  key={index}
-                                  data={itemTypes[index]}
-                                  selected={itemType}
-                                  name='custom-radios-basic'
-                                  handleChange={handleChangeItemType}
-                                  gridProps={{ sm: 6, xs: 12 }}
-                                />
-                              ))}
-                          </Grid>
-                        </Grid>
-                        {itemType == 4 && (
-                          <>
-                            <Grid item xs={12}>
-                              <Button
-                                size='small'
-                                variant='contained'
-                                style={{ width: 250 }}
-                                color='primary'
-                                startIcon={<Icon icon='mdi:plus' />}
-                                onClick={() => setOpenQuestionCatalogSelector(true)}
-                              >
-                                Chọn Danh mục câu hỏi
-                              </Button>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <TextField
-                                fullWidth
-                                value={selectedQuestionCategory?.title}
-                                label='Danh mục câu hỏi'
-                                InputLabelProps={{ shrink: true }}
-                                required
-                                aria-describedby='validation-schema-name'
-                              />
-                            </Grid>
+                        <Grid item md={8}>
+                          <Grid container spacing={5}>
                             <Grid item xs={12}>
                               <FormControl fullWidth>
                                 <Controller
-                                  name='numberOfQuestion'
+                                  name='name'
                                   control={control}
                                   rules={{ required: true }}
                                   render={({ field: { value, onChange } }) => (
                                     <TextField
                                       value={value}
-                                      label='Số câu hỏi'
+                                      label='Tên'
                                       InputLabelProps={{ shrink: true }}
                                       required
+                                      autoComplete='false'
                                       onChange={onChange}
-                                      error={Boolean(errors.numberOfQuestion)}
+                                      error={Boolean(errors.name)}
                                       aria-describedby='validation-schema-name'
                                     />
                                   )}
                                 />
-                                {errors.numberOfQuestion && (
+                                {errors.name && (
                                   <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
-                                    {errors.numberOfQuestion.message}
+                                    {errors.name.message}
                                   </FormHelperText>
                                 )}
                               </FormControl>
                             </Grid>
-                          </>
-                        )}
+                            <Grid item xs={12}>
+                              <Grid container spacing={4}>
+                                {currentTestGroupSectionItem &&
+                                  itemTypes.map((item, index) => (
+                                    <CustomRadioBasic
+                                      key={index}
+                                      data={itemTypes[index]}
+                                      selected={itemType}
+                                      name='custom-radios-basic'
+                                      handleChange={handleChangeItemType}
+                                      gridProps={{ sm: 6, xs: 12 }}
+                                    />
+                                  ))}
+                              </Grid>
+                            </Grid>
+                            {itemType == 4 && (
+                              <>
+                                <Grid item xs={12}>
+                                  <FormControl fullWidth variant='outlined'>
+                                    <InputLabel htmlFor='outlined-adornment-parent-category'>
+                                      Danh mục Câu hỏi
+                                    </InputLabel>
+                                    <OutlinedInput
+                                      id='outlined-adornment-parent-category'
+                                      inputprops={{
+                                        readOnly: true,
+                                        className: 'Mui-disabled'
+                                      }}
+                                      value={selectedQuestionCategory?.title ?? ''}
+                                      endAdornment={
+                                        <InputAdornment position='end'>
+                                          <IconButton
+                                            aria-label='toggle password visibility'
+                                            edge='end'
+                                            // onClick={cleanOrganization}
+                                          >
+                                            <DeleteOutline />
+                                          </IconButton>
+                                          &nbsp;
+                                          <IconButton edge='end' onClick={() => setOpenQuestionCatalogSelector(true)}>
+                                            <FolderIcon />
+                                          </IconButton>
+                                        </InputAdornment>
+                                      }
+                                      label='Danh mục Câu hỏi'
+                                    />
+                                  </FormControl>
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <FormControl fullWidth>
+                                    <Controller
+                                      name='numberOfQuestion'
+                                      control={control}
+                                      rules={{ required: true }}
+                                      render={({ field: { value, onChange } }) => (
+                                        <TextField
+                                          value={value}
+                                          label='Số câu hỏi'
+                                          InputLabelProps={{ shrink: true }}
+                                          required
+                                          onChange={onChange}
+                                          error={Boolean(errors.numberOfQuestion)}
+                                          aria-describedby='validation-schema-name'
+                                        />
+                                      )}
+                                    />
+                                    {errors.numberOfQuestion && (
+                                      <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
+                                        {errors.numberOfQuestion.message}
+                                      </FormHelperText>
+                                    )}
+                                  </FormControl>
+                                </Grid>
+                              </>
+                            )}
+                          </Grid>
+                        </Grid>
                         {itemType == 2 && (
                           <>
                             <Grid item xs={12}>
@@ -457,19 +475,6 @@ const ItemEditForm = () => {
                             </Grid>
                           </>
                         )}
-                        <Grid item>
-                          {openQuestionCatalogSelector && (
-                            <QuestionCatalogSelector
-                              type={itemType}
-                              onOk={items => {
-                                onCategoryOrQuestionsSelected(items)
-                              }}
-                              onClose={() => {
-                                setOpenQuestionCatalogSelector(false)
-                              }}
-                            />
-                          )}
-                        </Grid>
                       </Grid>
                     </form>
                   </div>
@@ -479,6 +484,17 @@ const ItemEditForm = () => {
           </>
         </div>
       </div>
+
+      <QuestionCatalogSelector
+        type={itemType}
+        open={openQuestionCatalogSelector}
+        onOk={items => {
+          onCategoryOrQuestionsSelected(items)
+        }}
+        onClose={() => {
+          setOpenQuestionCatalogSelector(false)
+        }}
+      />
     </>
   )
 }
