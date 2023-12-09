@@ -1,5 +1,9 @@
 // ** React Imports
-import { createContext, useEffect, useState } from 'react'
+import {
+  createContext,
+  useEffect,
+  useState
+} from 'react'
 
 import UserApi from 'api/user-api'
 // ** Axios
@@ -108,7 +112,6 @@ const AuthProvider = ({ children }) => {
         window.localStorage.removeItem('userData')
         window.localStorage.removeItem(authConfig.storageTokenKeyName)
         router.push('/home')
-        console.log(e)
       })
   }
 

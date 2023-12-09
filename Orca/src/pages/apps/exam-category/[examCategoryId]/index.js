@@ -1,14 +1,27 @@
-import { Fragment, useEffect, useState } from 'react'
+import {
+  Fragment,
+  useEffect,
+  useState
+} from 'react'
 
 import { ExamCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import CategoryDialog from 'pages/shared/category-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedExamCategory, selectExamCategory } from 'store/slices/examCategorySlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedExamCategory,
+  selectExamCategory
+} from 'store/slices/examCategorySlice'
 import { CategoryType } from 'types/CategoryType'
 import * as yup from 'yup'
 

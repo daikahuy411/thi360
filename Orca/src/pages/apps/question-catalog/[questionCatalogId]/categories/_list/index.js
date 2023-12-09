@@ -35,6 +35,7 @@ const CategoryTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const { questionCatalogId } = router.query
   const [loading, setLoading] = useState(false)
+  const [keyword, setKeyword] = useState(null)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)

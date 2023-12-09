@@ -1,15 +1,30 @@
-import { Fragment, useEffect, useState } from 'react'
+import {
+  Fragment,
+  useEffect,
+  useState
+} from 'react'
+
 import { PostCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import CategoryDialog from 'pages/shared/category-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedPostCategory, selectPostCategory } from 'store/slices/postCategorySlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedPostCategory,
+  selectPostCategory
+} from 'store/slices/postCategorySlice'
 import { CategoryType } from 'types/CategoryType'
 import * as yup from 'yup'
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -17,21 +32,22 @@ import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import FolderIcon from '@mui/icons-material/FolderOpen'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
+import Checkbox from '@mui/material/Checkbox'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
-import Checkbox from '@mui/material/Checkbox'
 import DialogTitle from '@mui/material/DialogTitle'
 import FormControl from '@mui/material/FormControl'
-import FormHelperText from '@mui/material/FormHelperText'
 import FormControlLabel from '@mui/material/FormControlLabel'
+import FormHelperText from '@mui/material/FormHelperText'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import TextField from '@mui/material/TextField'
+
 import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
 

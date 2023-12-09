@@ -328,7 +328,11 @@ const QuestionTable = () => {
                         ) : null}
                       </TableCell>
                       <TableCell>{row.questionTypeName}</TableCell>
-                      <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
+                      <TableCell>
+                            <Typography variant='body1'>
+                              {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
+                            </Typography>
+                          </TableCell>
                     </TableRow>
                   )
                 })}

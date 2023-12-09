@@ -102,7 +102,8 @@ const ExamCategoryTable = () => {
           <TextField
             fullWidth
             placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
-            onChange={e => setKeyword(e.target.value)} size='small'
+            onChange={e => setKeyword(e.target.value)}
+            size='small'
           />
         </Grid>
         <Grid item md={4} alignContent={'right'}>

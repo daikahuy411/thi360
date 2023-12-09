@@ -1,42 +1,63 @@
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
+import { PostCategoryApi } from 'api/catalog-api'
 import PostApi from 'api/post-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import CategoryDialog from 'pages/shared/category-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
-import { CategoryType } from 'types/CategoryType'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedPost, selectPost } from 'store/slices/postSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedPost,
+  selectPost
+} from 'store/slices/postSlice'
+import { CategoryType } from 'types/CategoryType'
 import * as yup from 'yup'
+
+import ContentEditor from '@core/components/editor'
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { Button, Typography } from '@mui/material'
+import DeleteOutline from '@mui/icons-material/DeleteOutline'
+import FolderIcon from '@mui/icons-material/FolderOpen'
+import {
+  Button,
+  Typography
+} from '@mui/material'
 import Box from '@mui/material/Box'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
-import CategoryDialog from 'pages/shared/category-dialog'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
-import Paper from '@mui/material/Paper'
-import TextField from '@mui/material/TextField'
-import { PostCategoryApi } from 'api/catalog-api'
-import TopNav from '../_layout/_breadcrums'
+import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import InputAdornment from '@mui/material/InputAdornment'
-import DeleteOutline from '@mui/icons-material/DeleteOutline'
-import FolderIcon from '@mui/icons-material/FolderOpen'
-import ContentEditor from '@core/components/editor'
+import Paper from '@mui/material/Paper'
+import TextField from '@mui/material/TextField'
+
+import TopNav from '../_layout/_breadcrums'
 
 const schema = yup.object().shape({
   name: yup.string().required('* bắt buộc'),

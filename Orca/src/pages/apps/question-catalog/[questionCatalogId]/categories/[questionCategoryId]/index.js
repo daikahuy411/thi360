@@ -1,4 +1,8 @@
-import { Fragment, useEffect, useState } from 'react'
+import {
+  Fragment,
+  useEffect,
+  useState
+} from 'react'
 
 import { QuestionCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
@@ -6,7 +10,10 @@ import { useRouter } from 'next/router'
 import CategoryDialog from 'pages/shared/category-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { CategoryType } from 'types/CategoryType'
 import * as yup from 'yup'

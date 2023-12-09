@@ -27,7 +27,8 @@ const LoadingSpinner = ({ sx, children, active, minHeight = 300 }) => {
         />
       }
     >
-      <div style={{ minHeight: active ? 300 : minHeight }}>{children}</div>
+      <div>{children}</div>
+      {/* <div style={{ minHeight: active ? 100 : minHeight }}>{children}</div> */}
     </LoadingOverlay>
   )
 }

@@ -191,12 +191,17 @@ const TenantTable = () => {
         <Divider />
         <Grid container>
           <Grid item md={4}>
-            <IconButton aria-label='filter' style={{display: 'none'}}>
+            <IconButton aria-label='filter' style={{ display: 'none' }}>
               <FilterAltOutlinedIcon />
             </IconButton>
           </Grid>
           <Grid item md={4}>
-            <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
+            <TextField
+              fullWidth
+              placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+              onChange={e => setKeyword(e.target.value)}
+              size='small'
+            />
           </Grid>
           <Grid item md={4} alignContent={'right'}>
             <TablePagination
@@ -266,7 +271,9 @@ const TenantTable = () => {
                             [{row.id}]-{row.name}
                           </Typography>
                         </TableCell>
-                        <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
+                        <TableCell>
+                          <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                        </TableCell>
                       </TableRow>
                     )
                   })}
