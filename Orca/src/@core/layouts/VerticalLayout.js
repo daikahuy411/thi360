@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 // ** Theme Config Import
 import themeConfig from 'configs/themeConfig'
+import VerticalAppBarContent from 'layouts/components/vertical/AppBarContent'
 
 import Customizer from '@core/components/customizer'
 // ** Icon Imports
@@ -13,12 +14,9 @@ import Box from '@mui/material/Box'
 import Fab from '@mui/material/Fab'
 import { styled } from '@mui/material/styles'
 
+// import Navigation from './components/navigation'
 import Footer from './components/shared-components/footer'
-// ** Components
-import AppBar from './components/vertical/appBar'
-// import Navigation from './components/vertical/navigation'
-import Navigation from './components/navigation'
-import VerticalAppBarContent from 'layouts/components/vertical/AppBarContent'
+import Navigation from './components/vertical/navigation'
 
 const VerticalLayoutWrapper = styled('div')({
   height: '100%',
@@ -66,6 +64,21 @@ const VerticalLayout = props => {
       <VerticalLayoutWrapper className='layout-wrapper layout-content-navbar'>
         {navHidden && !(navHidden && settings.lastLayout === 'horizontal') ? null : (
           <Navigation
+            navWidth={navWidth}
+            navVisible={navVisible}
+            setNavVisible={setNavVisible}
+            collapsedNavWidth={collapsedNavWidth}
+            toggleNavVisibility={toggleNavVisibility}
+            navigationBorderWidth={navigationBorderWidth}
+            navMenuContent={verticalLayoutProps.navMenu.content}
+            navMenuBranding={verticalLayoutProps.navMenu.branding}
+            menuLockedIcon={verticalLayoutProps.navMenu.lockedIcon}
+            verticalNavItems={verticalLayoutProps.navMenu.navItems}
+            navMenuProps={verticalLayoutProps.navMenu.componentProps}
+            menuUnlockedIcon={verticalLayoutProps.navMenu.unlockedIcon}
+            afterNavMenuContent={verticalLayoutProps.navMenu.afterContent}
+            beforeNavMenuContent={verticalLayoutProps.navMenu.beforeContent}
+            {...props}
           />
         )}
         <MainContentWrapper
@@ -73,7 +86,16 @@ const VerticalLayout = props => {
           sx={{ ...(contentHeightFixed && { maxHeight: '100vh' }) }}
         >
           <VerticalAppBarContent />
-          <br/>
+          <br />
+          {/* AppBar Component */}
+          {/* <AppBar
+            toggleNavVisibility={toggleNavVisibility}
+            appBarContent={verticalLayoutProps.appBar?.content}
+            appBarProps={verticalLayoutProps.appBar?.componentProps}
+            {...props}
+          /> */}
+
+          {/* Content */}
           <ContentWrapper
             className='layout-page-content'
             sx={{
@@ -87,7 +109,7 @@ const VerticalLayout = props => {
                 '@media (min-width:1200px)': { maxWidth: '100%' }
               })
             }}
-            style={{ paddingTop: 0 }}
+            // style={{ paddingTop: 0 }}
           >
             {/* <AppBar
               toggleNavVisibility={toggleNavVisibility}
@@ -103,6 +125,7 @@ const VerticalLayout = props => {
       </VerticalLayoutWrapper>
 
       {/* {disableCustomizer || hidden ? null : <Customizer />} */}
+      {themeConfig.disableCustomizer || hidden ? null : <Customizer />}
 
       {scrollToTop ? (
         scrollToTop(props)

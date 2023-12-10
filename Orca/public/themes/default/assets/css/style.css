@@ -1921,3 +1921,7 @@ th {
 .mr2 {
   margin-right: 0.5rem;
 }
+
+.layout-menu-fixed:not(.layout-menu-collapsed) .layout-page, .layout-menu-fixed-offcanvas:not(.layout-menu-collapsed) .layout-page {
+  padding-left: 0rem !important;
+}

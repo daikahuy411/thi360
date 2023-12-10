@@ -108,9 +108,9 @@ const Customizer = () => {
           }}
         >
           <Typography variant='h6' sx={{ fontWeight: 600, textTransform: 'uppercase' }}>
-            Theme Customizer
+            Tùy chỉnh Chủ đề
           </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>Customize & Preview in Real Time</Typography>
+          <Typography sx={{ color: 'text.secondary' }}>Cá nhân hóa theo sở thích của bạn!</Typography>
           <IconButton
             onClick={() => setOpen(false)}
             sx={{
@@ -131,7 +131,7 @@ const Customizer = () => {
               variant='caption'
               sx={{ mb: 4, color: 'text.disabled', textTransform: 'uppercase' }}
             >
-              Theming
+              Chủ đề
             </Typography>
 
             <Box sx={{ mb: 4 }}>
@@ -142,29 +142,29 @@ const Customizer = () => {
                 onChange={e => handleChange('skin', e.target.value)}
                 sx={{ '& .MuiFormControlLabel-label': { fontSize: '.875rem', color: 'text.secondary' } }}
               >
-                <FormControlLabel value='default' label='Default' control={<Radio />} />
-                <FormControlLabel value='bordered' label='Bordered' control={<Radio />} />
+                <FormControlLabel value='default' label='Mặc đinh' control={<Radio />} />
+                <FormControlLabel value='bordered' label='Bo viền' control={<Radio />} />
               </RadioGroup>
             </Box>
 
             <Box sx={{ mb: 4 }}>
-              <Typography>Mode</Typography>
+              <Typography>Chế độ</Typography>
               <RadioGroup
                 row
                 value={mode}
                 onChange={e => handleChange('mode', e.target.value)}
                 sx={{ '& .MuiFormControlLabel-label': { fontSize: '.875rem', color: 'text.secondary' } }}
               >
-                <FormControlLabel value='light' label='Light' control={<Radio />} />
-                <FormControlLabel value='dark' label='Dark' control={<Radio />} />
+                <FormControlLabel value='light' label='Sáng' control={<Radio />} />
+                <FormControlLabel value='dark' label='Tối' control={<Radio />} />
                 {layout === 'horizontal' ? null : (
-                  <FormControlLabel value='semi-dark' label='Semi Dark' control={<Radio />} />
+                  <FormControlLabel value='semi-dark' label='Menu đậm' control={<Radio />} />
                 )}
               </RadioGroup>
             </Box>
 
             <div>
-              <Typography sx={{ mb: 2.5 }}>Primary Color</Typography>
+              <Typography sx={{ mb: 2.5 }}>Màu sắc chủ đạo</Typography>
               <Box sx={{ display: 'flex' }}>
                 <ColorBox
                   onClick={() => handleChange('themeColor', 'primary')}
@@ -234,49 +234,49 @@ const Customizer = () => {
               variant='caption'
               sx={{ mb: 4, color: 'text.disabled', textTransform: 'uppercase' }}
             >
-              Layout
+              Bố cục
             </Typography>
 
             <Box sx={{ mb: 4 }}>
-              <Typography>Content Width</Typography>
+              <Typography>Tùy chỉnh độ rộng trang</Typography>
               <RadioGroup
                 row
                 value={contentWidth}
                 onChange={e => handleChange('contentWidth', e.target.value)}
                 sx={{ '& .MuiFormControlLabel-label': { fontSize: '.875rem', color: 'text.secondary' } }}
               >
-                <FormControlLabel value='full' label='Full' control={<Radio />} />
-                <FormControlLabel value='boxed' label='Boxed' control={<Radio />} />
+                <FormControlLabel value='full' label='Tối đa' control={<Radio />} />
+                <FormControlLabel value='boxed' label='Thu hẹp' control={<Radio />} />
               </RadioGroup>
             </Box>
 
             <Box sx={{ mb: 4 }}>
-              <Typography>AppBar Type</Typography>
+              <Typography>Tùy chỉnh AppBar</Typography>
               <RadioGroup
                 row
                 value={appBar}
                 onChange={e => handleChange('appBar', e.target.value)}
                 sx={{ '& .MuiFormControlLabel-label': { fontSize: '.875rem', color: 'text.secondary' } }}
               >
-                <FormControlLabel value='fixed' label='Fixed' control={<Radio />} />
-                <FormControlLabel value='static' label='Static' control={<Radio />} />
+                <FormControlLabel value='fixed' label='Cố đinh' control={<Radio />} />
+                <FormControlLabel value='static' label='Mặc đinh' control={<Radio />} />
                 {layout === 'horizontal' ? null : (
-                  <FormControlLabel value='hidden' label='Hidden' control={<Radio />} />
+                  <FormControlLabel value='hidden' label='Ẩn' control={<Radio />} />
                 )}
               </RadioGroup>
             </Box>
 
             <Box sx={{ mb: 4 }}>
-              <Typography>Footer Type</Typography>
+              <Typography>Tùy chỉnh Footer</Typography>
               <RadioGroup
                 row
                 value={footer}
                 onChange={e => handleChange('footer', e.target.value)}
                 sx={{ '& .MuiFormControlLabel-label': { fontSize: '.875rem', color: 'text.secondary' } }}
               >
-                <FormControlLabel value='fixed' label='Fixed' control={<Radio />} />
-                <FormControlLabel value='static' label='Static' control={<Radio />} />
-                <FormControlLabel value='hidden' label='Hidden' control={<Radio />} />
+                <FormControlLabel value='fixed' label='Cố đinh' control={<Radio />} />
+                <FormControlLabel value='static' label='Mặc định' control={<Radio />} />
+                <FormControlLabel value='hidden' label='Ẩn' control={<Radio />} />
               </RadioGroup>
             </Box>
 
@@ -289,7 +289,7 @@ const Customizer = () => {
               />
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', display: 'none' }}>
               <Typography>RTL</Typography>
               <Switch
                 name='direction'

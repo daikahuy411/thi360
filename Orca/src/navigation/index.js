@@ -5,63 +5,63 @@ export const studentLinks = [
     path: '/home'
   },
   {
-    icon: 'mdi:trophy-outline',
+    icon: 'bi:book',
     title: 'Chương trình',
-    path: '/program',
+    // path: '/program',
     children: [
       {
         title: 'Lớp 6',
-        path: '/program/6/'
+        path: '/program/6'
       },
       {
         title: 'Lớp 7',
-        path: '/program/7/'
+        path: '/program/7'
       },
       {
         title: 'Lớp 8',
-        path: '/program/8/'
+        path: '/program/8'
       },
       {
         title: 'Lớp 9',
-        path: '/program/9/'
+        path: '/program/9'
       },
       {
         title: 'Lớp 10',
-        path: '/program/10/'
+        path: '/program/10'
       },
       {
         title: 'Lớp 11',
-        path: '/program/11/'
+        path: '/program/11'
       },
       {
         title: 'Lớp 12',
-        path: '/program/12/'
+        path: '/program/12'
       },
       {
         title: 'Thi thử THPT quốc gia',
-        path: '/program/15/'
+        path: '/program/15'
       },
       {
         title: 'Luyện thi TOEIC',
-        path: '/program/35/'
+        path: '/program/35'
       }
     ]
   },
-  {
-    icon: 'mdi:cash',
-    title: 'Bảng giá',
-    path: '/pricing'
-  },
+  // {
+  //   icon: 'mdi:cash',
+  //   title: 'Bảng giá',
+  //   path: '/pricing'
+  // },
   {
     icon: 'mdi:help-circle-outline',
     title: 'Hướng dẫn',
     path: '/help'
   },
-  {
-    title: 'Thời khóa biểu',
-    icon: 'mdi:calendar-blank-outline',
-    path: '/apps/calendar'
-  }
+  // {
+  //   title: 'Thời khóa biểu',
+  //   icon: 'mdi:calendar-blank-outline',
+  //   path: '/apps/calendar'
+  // }
 ]
 
 export const hostLinks = [

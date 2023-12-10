@@ -1,6 +1,5 @@
 // ** Configs Import
 import themeConfig from 'configs/themeConfig'
-import CanViewNavLink from 'layouts/components/acl/CanViewNavLink'
 import Translations from 'layouts/components/Translations'
 // ** Custom Components Imports
 import UserIcon from 'layouts/components/UserIcon'
@@ -14,7 +13,10 @@ import Chip from '@mui/material/Chip'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import { styled, useTheme } from '@mui/material/styles'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 // ** Styled Components
@@ -58,7 +60,6 @@ const VerticalNavLink = ({
   // ** Hooks
   const theme = useTheme()
   const router = useRouter()
-
   // ** Vars
   const { mode, navCollapsed } = settings
   const icon = parent && !item.icon ? themeConfig.navSubItemIcon : item.icon
@@ -75,7 +76,7 @@ const VerticalNavLink = ({
   }
 
   const isNavLinkActive = () => {
-    if ((router.pathname + '/').indexOf(item.path + '/') >= 0) {
+    if ((router.pathname + '/').indexOf(item.path + '/') >= 0 || (router.asPath).indexOf(item.path + '/') >= 0) {
       return true
     } else {
       return false
@@ -83,7 +84,7 @@ const VerticalNavLink = ({
   }
 
   return (
-    <CanViewNavLink navLink={item}>
+    // <CanViewNavLink navLink={item}>
       <ListItem
         disablePadding
         className='nav-link'
@@ -126,8 +127,9 @@ const VerticalNavLink = ({
                   ...(parent && item.icon ? { fontSize: '0.875rem' } : {})
                 }
               }}
+              style={{minWidth: 0}}
             >
-              <UserIcon icon={icon} />
+              <UserIcon icon={icon}/>
             </ListItemIcon>
           )}
 
@@ -160,7 +162,7 @@ const VerticalNavLink = ({
           </MenuItemTextMetaWrapper>
         </MenuNavLink>
       </ListItem>
-    </CanViewNavLink>
+    // </CanViewNavLink>
   )
 }
 
