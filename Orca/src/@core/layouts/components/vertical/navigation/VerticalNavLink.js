@@ -62,7 +62,7 @@ const VerticalNavLink = ({
   const router = useRouter()
   // ** Vars
   const { mode, navCollapsed } = settings
-  const icon = parent && !item.icon ? themeConfig.navSubItemIcon : item.icon
+  const icon = parent && !item.icon ? themeConfig.navSubItemIcon : item?.icon
 
   const conditionalColors = () => {
     if (mode === 'semi-dark') {
@@ -76,7 +76,7 @@ const VerticalNavLink = ({
   }
 
   const isNavLinkActive = () => {
-    if ((router.pathname + '/').indexOf(item.path + '/') >= 0 || (router.asPath).indexOf(item.path + '/') >= 0) {
+    if ((router.pathname + '/').indexOf(item?.path + '/') >= 0 || (router.asPath).indexOf(item?.path + '/') >= 0) {
       return true
     } else {
       return false
@@ -88,15 +88,15 @@ const VerticalNavLink = ({
       <ListItem
         disablePadding
         className='nav-link'
-        disabled={item.disabled || false}
+        disabled={item?.disabled || false}
         sx={{ mt: 1.5, px: '0 !important' }}
       >
         <MenuNavLink
           component={Link}
-          {...(item.disabled && { tabIndex: -1 })}
+          {...(item?.disabled && { tabIndex: -1 })}
           className={isNavLinkActive() ? 'active' : ''}
-          href={item.path === undefined ? '/' : `${item.path}`}
-          {...(item.openInNewTab ? { target: '_blank' } : null)}
+          href={item?.path === undefined ? '/' : `${item.path}`}
+          {...(item?.openInNewTab ? { target: '_blank' } : null)}
           onClick={e => {
             if (item.path === undefined) {
               e.preventDefault()
@@ -109,7 +109,7 @@ const VerticalNavLink = ({
           sx={{
             py: 2.25,
             ...conditionalColors(),
-            ...(item.disabled ? { pointerEvents: 'none' } : { cursor: 'pointer' }),
+            ...(item?.disabled ? { pointerEvents: 'none' } : { cursor: 'pointer' }),
             pl: navCollapsed && !navHover ? (collapsedNavWidth - navigationBorderWidth - 24) / 8 : 5.5,
             pr: navCollapsed && !navHover ? ((collapsedNavWidth - navigationBorderWidth - 24) / 2 - 5) / 4 : 3.5
           }}
@@ -145,9 +145,9 @@ const VerticalNavLink = ({
                 noWrap: true
               })}
             >
-              <Translations text={item.title} />
+              <Translations text={item?.title} />
             </Typography>
-            {item.badgeContent ? (
+            {item?.badgeContent ? (
               <Chip
                 label={item.badgeContent}
                 color={item.badgeColor || 'primary'}
