@@ -1,7 +1,12 @@
+import {
+  useEffect,
+  useState
+} from 'react'
+
 import Link from 'next/link'
-import UserDropdown from '@core/layouts/components/shared-components/UserDropdown'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+
+import UserDropdown from '@core/layouts/components/shared-components/UserDropdown'
 
 const AppBarContent = props => {
   const [path, setPath] = useState('')
@@ -66,13 +71,13 @@ const AppBarContent = props => {
     <nav
       className='layout-navbar navbar navbar-expand-xl navbar-detached align-items-center'
       id='layout-navbar'
-      style={{ backgroundColor: '#fff' }}
+      // style={{ backgroundColor: '#fff' }}
     >
-      <div className='layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0   d-xl-none '>
+      {/* <div className='layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0   d-xl-none '>
         <a className='nav-item nav-link px-0 me-xl-4'>
           <i className='mdi mdi-menu mdi-24px'></i>
         </a>
-      </div>
+      </div> */}
       <div className='navbar-nav-right d-flex align-items-center' id='navbar-collapse'>
         <div className='navbar-nav align-items-center' style={{ paddingLeft: 10 }}>
           <h3 className='mb-0' style={{fontSize: '1.2rem'}}>{page}</h3>

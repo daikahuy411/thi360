@@ -1923,3 +1923,7 @@ th {
 .mr2 {
   margin-right: 0.5rem;
 }
+
+.layout-wrapper, .layout-container {
+  display: inline-block;
+}

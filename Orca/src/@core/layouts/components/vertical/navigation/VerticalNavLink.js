@@ -1,6 +1,5 @@
 // ** Configs Import
 import themeConfig from 'configs/themeConfig'
-import CanViewNavLink from 'layouts/components/acl/CanViewNavLink'
 import Translations from 'layouts/components/Translations'
 // ** Custom Components Imports
 import UserIcon from 'layouts/components/UserIcon'
@@ -14,7 +13,10 @@ import Chip from '@mui/material/Chip'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import { styled, useTheme } from '@mui/material/styles'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 // ** Styled Components
@@ -58,10 +60,9 @@ const VerticalNavLink = ({
   // ** Hooks
   const theme = useTheme()
   const router = useRouter()
-
   // ** Vars
   const { mode, navCollapsed } = settings
-  const icon = parent && !item.icon ? themeConfig.navSubItemIcon : item.icon
+  const icon = parent && !item.icon ? themeConfig.navSubItemIcon : item?.icon
 
   const conditionalColors = () => {
     if (mode === 'semi-dark') {
@@ -75,7 +76,7 @@ const VerticalNavLink = ({
   }
 
   const isNavLinkActive = () => {
-    if ((router.pathname + '/').indexOf(item.path + '/') >= 0) {
+    if ((router.pathname + '/').indexOf(item?.path + '/') >= 0 || (router.asPath).indexOf(item?.path + '/') >= 0) {
       return true
     } else {
       return false
@@ -83,19 +84,19 @@ const VerticalNavLink = ({
   }
 
   return (
-    <CanViewNavLink navLink={item}>
+    // <CanViewNavLink navLink={item}>
       <ListItem
         disablePadding
         className='nav-link'
-        disabled={item.disabled || false}
+        disabled={item?.disabled || false}
         sx={{ mt: 1.5, px: '0 !important' }}
       >
         <MenuNavLink
           component={Link}
-          {...(item.disabled && { tabIndex: -1 })}
+          {...(item?.disabled && { tabIndex: -1 })}
           className={isNavLinkActive() ? 'active' : ''}
-          href={item.path === undefined ? '/' : `${item.path}`}
-          {...(item.openInNewTab ? { target: '_blank' } : null)}
+          href={item?.path === undefined ? '/' : `${item.path}`}
+          {...(item?.openInNewTab ? { target: '_blank' } : null)}
           onClick={e => {
             if (item.path === undefined) {
               e.preventDefault()
@@ -108,7 +109,7 @@ const VerticalNavLink = ({
           sx={{
             py: 2.25,
             ...conditionalColors(),
-            ...(item.disabled ? { pointerEvents: 'none' } : { cursor: 'pointer' }),
+            ...(item?.disabled ? { pointerEvents: 'none' } : { cursor: 'pointer' }),
             pl: navCollapsed && !navHover ? (collapsedNavWidth - navigationBorderWidth - 24) / 8 : 5.5,
             pr: navCollapsed && !navHover ? ((collapsedNavWidth - navigationBorderWidth - 24) / 2 - 5) / 4 : 3.5
           }}
@@ -126,8 +127,9 @@ const VerticalNavLink = ({
                   ...(parent && item.icon ? { fontSize: '0.875rem' } : {})
                 }
               }}
+              style={{minWidth: 0}}
             >
-              <UserIcon icon={icon} />
+              <UserIcon icon={icon}/>
             </ListItemIcon>
           )}
 
@@ -143,9 +145,9 @@ const VerticalNavLink = ({
                 noWrap: true
               })}
             >
-              <Translations text={item.title} />
+              <Translations text={item?.title} />
             </Typography>
-            {item.badgeContent ? (
+            {item?.badgeContent ? (
               <Chip
                 label={item.badgeContent}
                 color={item.badgeColor || 'primary'}
@@ -160,7 +162,7 @@ const VerticalNavLink = ({
           </MenuItemTextMetaWrapper>
         </MenuNavLink>
       </ListItem>
-    </CanViewNavLink>
+    // </CanViewNavLink>
   )
 }
 

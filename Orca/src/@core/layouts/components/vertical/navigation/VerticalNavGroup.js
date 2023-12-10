@@ -1,11 +1,13 @@
 // ** React Imports
-import { Fragment, useEffect } from 'react'
+import {
+  Fragment,
+  useEffect
+} from 'react'
 
 // ** Third Party Imports
 import clsx from 'clsx'
 // ** Configs Import
 import themeConfig from 'configs/themeConfig'
-import CanViewNavGroup from 'layouts/components/acl/CanViewNavGroup'
 import Translations from 'layouts/components/Translations'
 import UserIcon from 'layouts/components/UserIcon'
 // ** Next Import
@@ -14,7 +16,10 @@ import { useRouter } from 'next/router'
 // ** Icon Imports
 import Icon from '@core/components/icon'
 // ** Utils
-import { hasActiveChild, removeChildren } from '@core/layouts/utils'
+import {
+  hasActiveChild,
+  removeChildren
+} from '@core/layouts/utils'
 import Box from '@mui/material/Box'
 // ** MUI Imports
 import Chip from '@mui/material/Chip'
@@ -22,7 +27,10 @@ import Collapse from '@mui/material/Collapse'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import { styled, useTheme } from '@mui/material/styles'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 // ** Custom Components Imports
@@ -52,6 +60,8 @@ const VerticalNavGroup = props => {
     setCurrentActiveGroup,
     navigationBorderWidth
   } = props
+
+
 
   // ** Hooks & Vars
   const theme = useTheme()
@@ -174,7 +184,7 @@ const VerticalNavGroup = props => {
   }
 
   return (
-    <CanViewNavGroup navGroup={item}>
+    // <CanViewNavGroup navGroup={item}>
       <Fragment>
         <ListItem
           disablePadding
@@ -212,6 +222,7 @@ const VerticalNavGroup = props => {
                   ...(navCollapsed && !navHover ? { mr: 0 } : {}),
                   ...(parent && item.children ? { ml: 1.25, mr: 3.75 } : {})
                 }}
+                style={{minWidth: 0}}
               >
                 <UserIcon icon={icon} {...(parent && { fontSize: '0.875rem' })} />
               </ListItemIcon>
@@ -277,7 +288,7 @@ const VerticalNavGroup = props => {
           </Collapse>
         </ListItem>
       </Fragment>
-    </CanViewNavGroup>
+    // </CanViewNavGroup>
   )
 }
 

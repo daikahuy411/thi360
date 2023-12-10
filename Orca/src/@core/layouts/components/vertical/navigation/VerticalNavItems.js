@@ -1,11 +1,11 @@
+import VerticalNavGroup from './VerticalNavGroup'
 // ** Custom Menu Components
 import VerticalNavLink from './VerticalNavLink'
-import VerticalNavGroup from './VerticalNavGroup'
 import VerticalNavSectionTitle from './VerticalNavSectionTitle'
 
 const resolveNavItemComponent = item => {
-  if (item.sectionTitle) return VerticalNavSectionTitle
-  if (item.children) return VerticalNavGroup
+  if (item?.sectionTitle) return VerticalNavSectionTitle
+  if (item?.children) return VerticalNavGroup
 
   return VerticalNavLink
 }
@@ -13,7 +13,6 @@ const resolveNavItemComponent = item => {
 const VerticalNavItems = props => {
   // ** Props
   const { verticalNavItems } = props
-
   const RenderMenuItems = verticalNavItems?.map((item, index) => {
     const TagName = resolveNavItemComponent(item)
 

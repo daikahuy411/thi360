@@ -30,3 +30,8 @@ textarea:disabled {
         border: 1px solid rgba(231, 230, 232, 1);
     }
 }
+@media (min-width: 1200px){
+    .layout-menu-fixed:not(.layout-menu-collapsed) .layout-page, .layout-menu-fixed-offcanvas:not(.layout-menu-collapsed) .layout-page {
+        padding-left: 0rem !important;
+    }
+}
