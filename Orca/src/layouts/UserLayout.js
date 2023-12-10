@@ -1,6 +1,11 @@
-import HorizontalNavItems from 'navigation/horizontal'
 // ** Navigation Imports
 import { useAuth } from 'hooks/useAuth'
+import {
+  hostLinks,
+  studentLinks,
+  teacherLinks
+} from 'navigation'
+import HorizontalNavItems from 'navigation/horizontal'
 import Head from 'next/head'
 
 // ** Hook Import
@@ -16,8 +21,6 @@ import HorizontalAppBarContent from './components/horizontal/AppBarContent'
 // import ServerSideVerticalNavItems from './components/vertical/ServerSideNavItems'
 // import ServerSideHorizontalNavItems from './components/horizontal/ServerSideNavItems'
 import VerticalAppBarContent from './components/vertical/AppBarContent'
-
-import { studentLinks, teacherLinks, hostLinks } from 'navigation'
 
 const UserLayout = ({ children, contentHeightFixed }) => {
   // ** Hooks
