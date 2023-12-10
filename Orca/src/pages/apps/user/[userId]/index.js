@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import OrganizationApi from 'api/organization-api'
 import UserApi from 'api/user-api'
@@ -6,10 +9,20 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import CategoryDialog from 'pages/shared/category-dialog'
 import Draggable from 'react-draggable'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedUser, selectUser } from 'store/slices/userSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import { selectClass } from 'store/slices/classSlice'
+import {
+  selectedUser,
+  selectUser
+} from 'store/slices/userSlice'
 import { CategoryType } from 'types/CategoryType'
 import * as yup from 'yup'
 
@@ -79,10 +92,10 @@ function PaperComponent(props) {
   )
 }
 
-const EditStudentPage = () => {
+const EditUserPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { userId } = router.query
+  const { userId, classId } = router.query
   const currentUser = useSelector(selectedUser)
   const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
   const [cbChangePassword, setCbChangePassword] = useState(false)
@@ -108,6 +121,16 @@ const EditStudentPage = () => {
     }
     fetchData()
   }, [userId])
+
+  useEffect(() => {
+    if (!classId || classId == 0) {
+      dispatch(selectClass({ id: 0, name: '', description: '', group: 0 }))
+      return
+    }
+    new OrganizationApi().get(classId).then(response => {
+      dispatch(selectClass(response.data))
+    })
+  }, [classId])
 
   useEffect(() => {
     if (currentUser) reset(currentUser)
@@ -153,7 +176,7 @@ const EditStudentPage = () => {
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code === 1) {
-          router.push('/apps/user/')
+          router.push(classId ? `/apps/class/${classId}/users` : `/apps/user`)
         } else {
           reset()
         }
@@ -268,7 +291,11 @@ const EditStudentPage = () => {
                         &nbsp;
                       </>
                     )}
-                    <Button variant='outlined' component={Link} href='/apps/user/'>
+                    <Button
+                      variant='outlined'
+                      component={Link}
+                      href={classId ? `/apps/class/${classId}/users` : `/apps/user`}
+                    >
                       <ArrowBackIcon />
                       &nbsp;Quay lại
                     </Button>
@@ -289,7 +316,7 @@ const EditStudentPage = () => {
                 <div className='grid-block'>
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
-                    <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', height: '100vh', paddingTop: 10 }}>
+                    <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', paddingTop: 10 }}>
                       <Grid container spacing={5} maxWidth={'sm'}>
                         <Grid item xs={12} md={6}>
                           <FormControl fullWidth>
@@ -643,4 +670,4 @@ const EditStudentPage = () => {
   )
 }
 
-export default EditStudentPage
+export default EditUserPage

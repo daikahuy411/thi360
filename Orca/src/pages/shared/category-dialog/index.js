@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, {
+  useEffect,
+  useState
+} from 'react'
+
+import CatalogApi from 'api/catalog-api'
+import OrganizationApi from 'api/organization-api'
+import { CategoryType } from 'types/CategoryType'
+
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
+import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
+import Paper from '@mui/material/Paper'
+import TableContainer from '@mui/material/TableContainer'
+import TablePagination from '@mui/material/TablePagination'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import Grid from '@mui/material/Grid'
-import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TablePagination from '@mui/material/TablePagination'
-import TableRow from '@mui/material/TableRow'
-import OrganizationApi from 'api/organization-api'
-import CatalogApi from 'api/catalog-api'
-import { CategoryType } from 'types/CategoryType'
-import TreeRow from './TreeRow'
-import LoadingSpinner from '@core/components/loading-spinner'
+
+import CatalogTree from './tree-view'
 
 // catalogId: avaiable trong trường hợp là QuestionCategory
 function CategoryDialog({ categoryType, open, onClose, catalogId = 0, currentId = 0, onNodeSelected = null }) {
@@ -30,7 +31,7 @@ function CategoryDialog({ categoryType, open, onClose, catalogId = 0, currentId 
   const [totalItem, setTotalItem] = useState(0)
   const [totalParentItem, setTotalParentItem] = useState(0)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const [loading, setLoading] = useState(false)
 
   const handleChangePage = (event, newPage) => {
@@ -52,7 +53,6 @@ function CategoryDialog({ categoryType, open, onClose, catalogId = 0, currentId 
 
   const fetchData = () => {
     const param = {
-      keyword: '',
       catalogId: catalogId,
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
@@ -117,12 +117,17 @@ function CategoryDialog({ categoryType, open, onClose, catalogId = 0, currentId 
         </Box>
         <Grid container>
           <Grid item md={4}>
-            <IconButton aria-label='filter'>
+            <IconButton aria-label='filter' style={{ display: 'none' }}>
               <FilterAltOutlinedIcon />
             </IconButton>
           </Grid>
           <Grid item md={4}>
-            <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+            <TextField
+              fullWidth
+              placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+              onChange={e => setKeyword(e.target.value)}
+              size='small'
+            />
           </Grid>
           <Grid item md={4} alignContent={'right'} alignItems={'right'}>
             <Button
@@ -140,41 +145,19 @@ function CategoryDialog({ categoryType, open, onClose, catalogId = 0, currentId 
               Chọn
             </Button>
           </Grid>
-          <Grid item md={12} style={{ width: 360 }}>
+          <Grid item md={12} style={{ width: 260 }}>
             <Divider />
             <div style={{ overflowY: 'scroll', height: `calc(100vh - 130px)` }}>
-              <TableContainer component={Paper} style={{ marginTop: 5 }}>
+              <TableContainer component={Paper} style={{ marginTop: 5, padding: 20 }}>
                 <LoadingSpinner active={loading}>
-                  <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell style={{ width: 60 }}>Chọn</TableCell>
-                        <TableCell>Tên</TableCell>
-                        <TableCell align='right' style={{ width: 180 }}>
-                          Ngày tạo
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {data &&
-                        data.map((item, index) => (
-                          <TreeRow
-                            onSelected={handleNodeSelected}
-                            selectedValue={selectedNodeId}
-                            key={index}
-                            item={item}
-                            currentId={currentId}
-                            nodeId={item.Id}
-                            level={0}
-                          />
-                        ))}
-                    </TableBody>
-                  </Table>
+                  {data && (
+                    <CatalogTree data={data} />
+                  )}
                 </LoadingSpinner>
               </TableContainer>
               <TablePagination
                 labelRowsPerPage='Số dòng/trang'
-                rowsPerPageOptions={[10, 25, 100]}
+                rowsPerPageOptions={[20, 30, 50]}
                 component='div'
                 count={totalParentItem}
                 rowsPerPage={rowsPerPage}

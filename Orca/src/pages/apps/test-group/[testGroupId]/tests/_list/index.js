@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import TestApi from 'api/test-api'
 import Link from 'next/link'
@@ -25,12 +28,15 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
+import GenTestDialog from '../gen-test'
+
 const TestsTable = () => {
   const router = useRouter()
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const { testGroupId } = router.query
+  const [showGenTest, setShowGenTest] = useState(false)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -73,23 +79,34 @@ const TestsTable = () => {
           </IconButton>
         </Tooltip>
         &nbsp; &nbsp;
-        <Button variant='contained' style={{ width: 180 }} color='primary' startIcon={<Icon icon='mdi:send' />}>
+        <Button
+          variant='contained'
+          style={{ width: 180 }}
+          color='primary'
+          onClick={() => setShowGenTest(true)}
+          startIcon={<Icon icon='mdi:send' />}
+        >
           Sinh đề
         </Button>
       </Toolbar>
       <Divider />
       <Grid container>
         <Grid item md={3} lg={3}>
-          <IconButton aria-label='filter'>
+          <IconButton aria-label='filter' style={{ display: 'none' }}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={3} lg={3}>
-          <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+          <TextField
+            fullWidth
+            placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+            onChange={e => setKeyword(e.target.value)}
+            size='small'
+          />
         </Grid>
         <Grid item md={6} lg={6} alignContent={'right'}>
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[20, 30, 50]}
             labelRowsPerPage='Hiển thị'
             component='div'
             count={data.length}
@@ -109,7 +126,7 @@ const TestsTable = () => {
                   // onChange={onSelectAllClick}
                   // checked={rowCount > 0 && numSelected === rowCount}
                   inputProps={{ 'aria-label': 'select all desserts' }}
-                // indeterminate={numSelected > 0 && numSelected < rowCount}
+                  // indeterminate={numSelected > 0 && numSelected < rowCount}
                 />
               </TableCell>
               <TableCell style={{ width: 30 }}>Sửa</TableCell>
@@ -132,7 +149,7 @@ const TestsTable = () => {
                     <Checkbox />
                   </TableCell>
                   <TableCell component='th' scope='row'>
-                    <IconButton aria-label='filter' component={Link} href={`/apps/class/${row.id}`}>
+                    <IconButton aria-label='edit' component={Link} href={`/apps/class/${row.id}`}>
                       <EditIcon />
                     </IconButton>
                   </TableCell>
@@ -146,7 +163,7 @@ const TestsTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[20, 30, 50]}
         component='div'
         count={data.length}
         labelRowsPerPage='Hiển thị'
@@ -155,6 +172,7 @@ const TestsTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      {showGenTest && <GenTestDialog onClose={() => setShowGenTest(false)} />}
     </>
   )
 }

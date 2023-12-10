@@ -6,6 +6,8 @@ import {
 import ExamApi from 'api/exam-api'
 import moment from 'moment'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import EditFolderDialog from 'pages/shared/folder/edit-folder-dialog'
 import Draggable from 'react-draggable'
 import {
   Helmet,
@@ -18,6 +20,7 @@ import LoadingSpinner from '@core/components/loading-spinner'
 import CustomChip from '@core/components/mui/chip'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
+import FolderIcon from '@mui/icons-material/Folder'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import Dialog from '@mui/material/Dialog'
@@ -52,13 +55,18 @@ function PaperComponent(props) {
 const ExamTable = () => {
   const [data, setData] = useState([])
   const [page, setPage] = useState(1)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const [totalItem, setTotalItem] = useState(0)
   const [keyword, setKeyword] = useState('')
   const [treeData, setTreeData] = useState(null)
   const [status, setStatus] = useState(-1)
   const [categoryId, setCategoryId] = useState(0)
   const [loading, setLoading] = useState(false)
+  const [editFolder, setEditFolder] = useState(false)
+  const [currentFolder, setCurrentFolder] = useState(null)
+
+  const router = useRouter()
+  const { examId } = router.query ?? '0'
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -71,12 +79,13 @@ const ExamTable = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, examId, keyword])
 
   const fetchData = () => {
     setLoading(true)
     new ExamApi()
       .searches({
+        FolderId: examId,
         Page: page + 1,
         Limit: rowsPerPage,
         Keyword: keyword,
@@ -155,6 +164,13 @@ const ExamTable = () => {
    * handle remove exam
    */
 
+  const handleEditFolderClose = hasChanged => {
+    setEditFolder(false)
+    if (hasChanged) {
+      fetchData()
+    }
+  }
+
   return (
     <>
       <HelmetProvider>
@@ -201,21 +217,39 @@ const ExamTable = () => {
           >
             Kỳ thi
           </Button>
+          &nbsp;
+          <Button
+            variant='contained'
+            onClick={() => {
+              setCurrentFolder(null)
+              setEditFolder(true)
+            }}
+            style={{ width: 210 }}
+            color='primary'
+            startIcon={<Icon icon='mdi:plus' />}
+          >
+            Thư mục
+          </Button>
         </Toolbar>
         <Divider />
         <Grid container>
           <Grid item md={4}>
-            <IconButton aria-label='filter'>
+            <IconButton aria-label='filter' style={{ display: 'none' }}>
               <FilterAltOutlinedIcon />
             </IconButton>
           </Grid>
           <Grid item md={4}>
-            <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+            <TextField
+              fullWidth
+              placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+              onChange={e => setKeyword(e.target.value)}
+              size='small'
+            />
           </Grid>
           <Grid item md={4} alignContent={'right'}>
             <TablePagination
               labelRowsPerPage={'Hiển thị:'}
-              rowsPerPageOptions={[10, 25, 100]}
+              rowsPerPageOptions={[20, 30, 50]}
               component='div'
               count={totalItem}
               rowsPerPage={rowsPerPage}
@@ -275,14 +309,31 @@ const ExamTable = () => {
                           />
                         </TableCell>
                         <TableCell component='th' scope='row'>
-                          <IconButton aria-label='filter' component={Link} href={`/apps/exam/${row.id}`}>
-                            <EditIcon />
-                          </IconButton>
+                          {row.type === 1 && (
+                            <IconButton
+                              title='Sửa'
+                              aria-label='edit'
+                              onClick={() => {
+                                setCurrentFolder(row)
+                                setEditFolder(true)
+                              }}
+                            >
+                              <EditIcon />
+                            </IconButton>
+                          )}
+                          {row.type !== 1 && (
+                            <IconButton title='Sửa' aria-label='edit' component={Link} href={`/apps/exam/${row.id}`}>
+                              <EditIcon />
+                            </IconButton>
+                          )}
                         </TableCell>
                         <TableCell component='th' scope='row'>
-                          <Typography variant='body1'>
-                            [{row.id}]-{row.name}
-                          </Typography>
+                          {row.type == 1 && (
+                            <Typography variant='body1' component={Link} href={`/apps/exam/view/${row.id}`}>
+                              <FolderIcon /> &nbsp; [{row.id}]-{row.name}
+                            </Typography>
+                          )}
+                          {row.type != 1 && <Typography variant='body1'>{row.name}</Typography>}
                           {/* <br /> <i>{row.registrationTypeName}</i> */}
                         </TableCell>
                         <TableCell>{row.examTypeName}</TableCell>
@@ -295,7 +346,9 @@ const ExamTable = () => {
                             color={row.status === 3 ? 'default' : row.status === 1 ? 'secondary' : 'success'}
                           />
                         </TableCell>
-                        <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
+                        <TableCell>
+                          <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                        </TableCell>
                       </TableRow>
                     )
                   })}
@@ -305,7 +358,7 @@ const ExamTable = () => {
         </TableContainer>
         <TablePagination
           labelRowsPerPage={'Hiển thị:'}
-          rowsPerPageOptions={[10, 25, 100]}
+          rowsPerPageOptions={[20, 30, 50]}
           component='div'
           count={totalItem}
           rowsPerPage={rowsPerPage}
@@ -313,6 +366,16 @@ const ExamTable = () => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
+
+        {editFolder && (
+          <EditFolderDialog
+            onClose={hasChanged => handleEditFolderClose(hasChanged)}
+            entity={currentFolder}
+            parentId={examId}
+            api={new ExamApi()}
+          />
+        )}
+
         <Dialog
           open={openDelete}
           onClose={handleCloseDelete}

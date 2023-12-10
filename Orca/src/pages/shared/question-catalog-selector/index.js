@@ -7,17 +7,18 @@ import CatalogApi from 'api/catalog-api'
 import QuestionCatalogApi from 'api/question-catalog-api'
 import { CategoryType } from 'types/CategoryType'
 
-import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
+import CloseIcon from '@mui/icons-material/Close'
+import FolderIcon from '@mui/icons-material/Folder'
+import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
 import Divider from '@mui/material/Divider'
-import Drawer from '@mui/material/Drawer'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
+import Slide from '@mui/material/Slide'
 import Step from '@mui/material/Step'
 import StepButton from '@mui/material/StepButton'
 import Stepper from '@mui/material/Stepper'
@@ -29,12 +30,17 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import TextField from '@mui/material/TextField'
+import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 
-import Questions from './Questions'
-import TreeRow from './TreeRow'
+import QuestionCategoryTree from './question-category-tree'
+import Questions from './questions'
 
-export default function QuestionCatalogSelector({ onClose, onOk, type = 2 }) {
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
+
+export default function QuestionCatalogSelector({ open, onClose, onOk, type = 2 }) {
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -43,7 +49,7 @@ export default function QuestionCatalogSelector({ onClose, onOk, type = 2 }) {
   })
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const [selectedData, setSelectedData] = useState([])
   const [selectedUsers, setSelectedUsers] = useState([])
   const [selectedQuestionCatalog, setSelectedQuestionCatalog] = useState(null)
@@ -55,6 +61,8 @@ export default function QuestionCatalogSelector({ onClose, onOk, type = 2 }) {
   const [selectedNode, setSelectedNode] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState(null)
   const [step, setStep] = useState(1)
+  const [keyword, setKeyword] = useState('')
+  const [totalQuestionCatalog, setTotalQuestionCatalog] = useState(0)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -114,7 +122,7 @@ export default function QuestionCatalogSelector({ onClose, onOk, type = 2 }) {
 
   const loadQuestionCates = item => {
     const param = {
-      keyword: '',
+      keyword: keyword,
       catalogId: item.id,
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
@@ -145,8 +153,9 @@ export default function QuestionCatalogSelector({ onClose, onOk, type = 2 }) {
 
   useEffect(() => {
     setLoading(true)
-    new QuestionCatalogApi().searches({ page: page }).then(response => {
+    new QuestionCatalogApi().searches({ page: page, limit: rowsPerPage }).then(response => {
       setData(response.data.value)
+      setTotalQuestionCatalog(response.data.totalItems)
       setLoading(false)
     })
   }, [])
@@ -170,232 +179,209 @@ export default function QuestionCatalogSelector({ onClose, onOk, type = 2 }) {
   }
 
   return (
-    <Drawer onClose={onClose} anchor={'right'} open={true}>
-      <div
-        style={{
-          width: 980
-        }}
-      >
-        <Box
-          className='customizer-header'
-          sx={{
-            position: 'relative',
-            p: theme => theme.spacing(3.5, 5),
-            borderBottom: theme => `1px solid ${theme.palette.divider}`,
-            marginBottom: 2
-          }}
-        >
+    <Dialog
+      fullScreen
+      open={open}
+      onClose={onClose}
+      TransitionComponent={Transition}
+      style={{ backgroundColor: '#f5f5f5' }}
+    >
+      <AppBar sx={{ position: 'relative' }}>
+        <Toolbar>
           {step == 1 && (
-            <Typography variant='h6' sx={{ fontWeight: 400, textTransform: 'uppercase' }}>
+            <Typography sx={{ ml: 2, flex: 1, color: 'white', fontWeight: 400, textTransform: 'uppercase' }}>
               Chọn Bộ Câu hỏi
             </Typography>
           )}
-          {step == 2 && (
-            <Typography variant='h6' sx={{ fontWeight: 400, textTransform: 'uppercase' }}>
+          {step == 2 && type == 4 && (
+            <Typography sx={{ ml: 2, flex: 1, color: 'white', fontWeight: 400, textTransform: 'uppercase' }}>
               Chọn Danh mục Câu hỏi
             </Typography>
           )}
-          {step == 3 && (
-            <Typography variant='h6' sx={{ fontWeight: 400, textTransform: 'uppercase' }}>
+          {step == 2 && type == 2 && (
+            <Typography sx={{ ml: 2, flex: 1, color: 'white', fontWeight: 400, textTransform: 'uppercase' }}>
               Chọn Câu hỏi
             </Typography>
           )}
-          <IconButton
-            onClick={() => onClose()}
-            sx={{
-              right: 20,
-              top: '50%',
-              position: 'absolute',
-              color: 'text.secondary',
-              transform: 'translateY(-50%)'
-            }}
-          >
-            <Icon icon='mdi:close' fontSize={20} />
+          <IconButton edge='start' color='inherit' onClick={onClose} aria-label='close'>
+            <CloseIcon />
           </IconButton>
-        </Box>
-        <Box>
-          <Stepper nonLinear alternativeLabel>
-            <Step key={'choose-catalog'} active={true} size='small'>
-              <StepButton
+        </Toolbar>
+      </AppBar>
+      <LoadingSpinner active={loading}>
+        <div style={{ padding: 10 }}>
+          <Box>
+            <Stepper nonLinear alternativeLabel>
+              <Step key={'choose-catalog'} active={true} size='small'>
+                <StepButton
+                  onClick={() => {
+                    setStep(1)
+                    setSelectedQuestionCatalog(null)
+                  }}
+                  color='inherit'
+                >
+                  Chọn Bộ câu hỏi
+                </StepButton>
+              </Step>
+              <Step
+                key={'choose-category'}
+                active={selectedQuestionCatalog != null}
                 onClick={() => {
-                  setStep(1)
-                  setSelectedQuestionCatalog(null)
+                  setStep(2)
                 }}
-                color='inherit'
               >
-                Chọn Bộ câu hỏi
-              </StepButton>
-            </Step>
-            <Step
-              key={'choose-category'}
-              active={selectedQuestionCatalog != null}
-              onClick={() => {
-                setStep(2)
+                <StepButton color='inherit'>
+                  {type == 4 && <>Chọn Danh mục câu hỏi</>}
+                  {type == 2 && <>Chọn Câu hỏi</>}
+                </StepButton>
+              </Step>
+            </Stepper>
+          </Box>
+          <Divider />
+          {step == 1 && (
+            <Grid container>
+              <Grid item xs={12}>
+                <TableContainer component={Paper} style={{ marginTop: 5 }}>
+                  <LoadingSpinner active={loading}>
+                    <Grid container justifyContent='center' alignItems='center'>
+                      <Grid item xs={12} md={10} lg={8}>
+                        <Grid container>
+                          <Grid item md={6} alignItems={'center'}>
+                            <Typography
+                              sx={{ flex: '1 1 100%', verticalAlign: 'middle', paddingTop: 3 }}
+                              variant='p'
+                              component='div'
+                            >
+                              {totalQuestionCatalog} Bộ Câu hỏi
+                            </Typography>
+                          </Grid>
+                          <Grid item md={6}>
+                            <TextField
+                              fullWidth
+                              placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+                              onChange={e => setKeyword(e.target.value)}
+                              size='small'
+                            />
+                          </Grid>
+                        </Grid>
+                        <Divider />
+                      </Grid>
+                      <Grid item xs={12} md={10} lg={8}>
+                        <Table sx={{}} aria-label='simple table'>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell style={{ width: 30 }}>STT </TableCell>
+                              <TableCell>Tên</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {data &&
+                              data.map((item, index) => (
+                                <TableRow
+                                  hover
+                                  key={item.name}
+                                  sx={{
+                                    '&:last-of-type td, &:last-of-type th': {
+                                      border: 0
+                                    }
+                                  }}
+                                >
+                                  <TableCell align='center'>{index + 1}</TableCell>
+                                  <TableCell
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => {
+                                      browseTestGroup(item)
+                                    }}
+                                  >
+                                    {item.type == 1 && (
+                                      <Typography variant='body1'>
+                                        <FolderIcon /> &nbsp;
+                                        {item.name}
+                                      </Typography>
+                                    )}
+                                    {item.type != 1 && <Typography variant='body1'>{item.name}</Typography>}
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                          </TableBody>
+                        </Table>
+                      </Grid>
+                      <Grid item xs={12} md={10} lg={8}>
+                        <Divider />
+                        <TablePagination
+                          rowsPerPageOptions={[10, 20, 30, 50]}
+                          labelRowsPerPage='Hiển thị'
+                          component='div'
+                          count={data.length}
+                          rowsPerPage={rowsPerPage}
+                          page={page}
+                          onPageChange={handleChangePage}
+                          onRowsPerPageChange={handleChangeRowsPerPage}
+                        />
+                      </Grid>
+                    </Grid>
+                  </LoadingSpinner>
+                </TableContainer>
+              </Grid>
+            </Grid>
+          )}
+          {step == 2 && selectedQuestionCatalog != null && type == 4 && questionCates && (
+            <Grid
+              container
+              justifyContent='center'
+              alignItems='center'
+              style={{
+                padding: 10,
+                backgroundColor: '#f5f5f5'
               }}
             >
-              <StepButton color='inherit'>Chọn Danh mục câu hỏi</StepButton>
-            </Step>
-            {type == 2 && (
-              <Step key={'choose-question'} active={step === 3}>
-                <StepButton color='inherit'>Chọn Câu hỏi</StepButton>
-              </Step>
-            )}
-          </Stepper>
-        </Box>
-        <Divider />
-        {step == 1 && (
-          <Grid container>
-            <Grid item md={4}>
-              <IconButton aria-label='filter'>
-                <FilterAltOutlinedIcon />
-              </IconButton>
-            </Grid>
-            <Grid item md={4}>
-              <TextField fullWidth placeholder='Tìm kiếm' size='small' />
-            </Grid>
-            <Grid item md={4} alignContent={'right'} alignItems={'right'}></Grid>
-            <Grid item xs={12}>
-              <Divider />
-              <TableContainer component={Paper} style={{ marginTop: 5 }}>
-                <LoadingSpinner active={loading}>
-                  <Table sx={{}} aria-label='simple table'>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell style={{ width: 30 }}>STT </TableCell>
-                        <TableCell style={{ width: 60 }}>Chọn</TableCell>
-                        <TableCell>Tên</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {data &&
-                        data.map((item, index) => (
-                          <TableRow
-                            hover
-                            key={item.name}
-                            sx={{
-                              '&:last-of-type td, &:last-of-type th': {
-                                border: 0
-                              }
-                            }}
-                          >
-                            <TableCell>{index + 1}</TableCell>
-                            <TableCell>
-                              <IconButton
-                                onClick={() => {
-                                  browseTestGroup(item)
-                                }}
-                              >
-                                <ChevronRightIcon />
-                              </IconButton>
-                            </TableCell>
-                            <TableCell
-                              style={{ cursor: 'pointer' }}
-                              onClick={() => {
-                                browseTestGroup(item)
-                              }}
-                            >
-                              <Typography variant='body1'>{item.name}</Typography>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </LoadingSpinner>
-              </TableContainer>
-              <Divider />
-              <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                labelRowsPerPage='Hiển thị'
-                component='div'
-                count={data.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </Grid>
-          </Grid>
-        )}
-        {step == 2 && selectedQuestionCatalog != null && (
-          <>
-            <Grid container>
-              <Grid item md={4}>
-                <IconButton aria-label='filter'>
-                  <FilterAltOutlinedIcon />
-                </IconButton>
+              <Grid item xs={12} md={10} lg={8}>
+                <Grid container>
+                  <Grid item md={4} alignItems={'center'}>
+                    <Typography
+                      sx={{ flex: '1 1 100%', verticalAlign: 'middle', paddingTop: 3 }}
+                      variant='p'
+                      component='div'
+                    >
+                      {totalQuestionCatalog} Bộ Câu hỏi
+                    </Typography>
+                  </Grid>
+                  <Grid item md={4}>
+                    <TextField
+                      fullWidth
+                      placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+                      onChange={e => setKeyword(e.target.value)}
+                      size='small'
+                    />
+                  </Grid>
+                  <Grid item md={4}>
+                    <Button
+                      color='primary'
+                      style={{ float: 'right' }}
+                      type='submit'
+                      variant='contained'
+                      onClick={onSelected}
+                    >
+                      Chọn
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Divider />
               </Grid>
-              <Grid item md={4}>
-                <TextField fullWidth placeholder='Tìm kiếm' size='small' />
-              </Grid>
-              <Grid item md={4} alignContent={'right'} alignItems={'right'}>
-                <Button
-                  disabled={(type == 4 && selectedNodeId == 0) || (type == 2 && selectedNodeIds.length == 0)}
-                  color='primary'
-                  style={{ float: 'right' }}
-                  type='submit'
-                  variant='contained'
-                  onClick={onSelected}
-                >
-                  Chọn
-                </Button>
+              <Grid item xs={12} md={10} lg={8}>
+                <QuestionCategoryTree data={questionCates} />
               </Grid>
             </Grid>
-            <Divider />
-            <TableContainer component={Paper} style={{ marginTop: 5 }}>
-              <LoadingSpinner active={loading}>
-                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell style={{ width: 60 }}>Chọn</TableCell>
-                      <TableCell>Tên</TableCell>
-                      <TableCell align='right' style={{ width: 180 }}>
-                        Ngày tạo
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {type == 2 && questionCates && (
-                      <TreeRow
-                        mode={'multi'}
-                        onSelected={handleNodeSelected}
-                        selectedValue={selectedNodeId}
-                        key={'all-category-1'}
-                        item={{ key: 0, title: 'Tất cả', children: [...questionCates] }}
-                        currentId={-1}
-                        level={0}
-                      />
-                    )}
-                    {type == 4 &&
-                      questionCates &&
-                      questionCates.map((item, index) => (
-                        <TreeRow
-                          mode={type == 4 ? 'single' : 'multi'}
-                          onSelected={handleNodeSelected}
-                          selectedValue={selectedNodeId}
-                          key={index}
-                          item={item}
-                          currentId={-1}
-                          level={0}
-                        />
-                      ))}
-                  </TableBody>
-                </Table>
-              </LoadingSpinner>
-            </TableContainer>
-            <TablePagination
-              labelRowsPerPage='Hiển thị'
-              rowsPerPageOptions={[10, 25, 100]}
-              component='div'
-              count={totalQuestionCates}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
+          )}
+          {step == 2 && selectedQuestionCatalog != null && type == 2 && questionCates && (
+            <Questions
+              onOk={onQuestionsSelected}
+              questionCates={questionCates}
+              catalogId={selectedQuestionCatalog.id}
             />
-          </>
-        )}
-        {step === 3 && <Questions onOk={onQuestionsSelected} catalogId={selectedQuestionCatalog.id} />}
-      </div>
-    </Drawer>
+          )}
+        </div>
+      </LoadingSpinner>
+    </Dialog>
   )
 }

@@ -1,6 +1,7 @@
-import ApiBase from './api-base'
 import axios from 'axios'
+
 import { CategoryType } from '../types/CategoryType'
+import ApiBase from './api-base'
 
 class CatalogApi extends ApiBase {
   type: CategoryType

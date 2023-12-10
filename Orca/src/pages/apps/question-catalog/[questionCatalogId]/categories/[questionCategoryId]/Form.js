@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import { QuestionCategoryApi } from 'api/catalog-api'
+import { useRouter } from 'next/router'
 import CategoryDialog from 'pages/shared/category-dialog'
 import { Controller } from 'react-hook-form'
 import { CategoryType } from 'types/CategoryType'

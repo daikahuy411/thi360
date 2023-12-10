@@ -64,27 +64,6 @@ export const studentLinks = [
   // }
 ]
 
-export const hostLinks = [
-  {
-    sectionTitle: 'Hệ thống'
-  },
-  {
-    title: 'Quản trị hệ thống',
-    icon: 'fluent-mdl2:system',
-    children: [
-      {
-        title: 'Tổ chức, Đơn vị',
-        path: '/apps/organization'
-      }
-    ]
-  },
-  {
-    title: 'Tenants',
-    icon: 'eos-icons:file-system',
-    path: '/apps/tenant'
-  }
-]
-
 export const teacherLinks = [
   {
     sectionTitle: 'LMS'
@@ -218,7 +197,12 @@ export const systemLinks = [
     path: '/apps/organization'
   },
   {
-    title: 'Khách hàng',
+    title: 'Người dùng',
+    icon: 'eos-icons:file-system',
+    path: '/apps/account'
+  },
+  {
+    title: 'Tenant',
     icon: 'eos-icons:file-system',
     path: '/apps/tenant'
   },

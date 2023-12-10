@@ -47,8 +47,9 @@ const SectionsTable = ({ testGroup }) => {
   const [data, setData] = useState([])
   const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const { testGroupId } = router.query
+  const [keyword, setKeyword] = useState('')
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -67,7 +68,7 @@ const SectionsTable = ({ testGroup }) => {
 
   const fetchData = () => {
     const param = {
-      keyword: '',
+      keyword: keyword,
       testGroupId: Number(testGroupId),
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
@@ -157,7 +158,7 @@ const SectionsTable = ({ testGroup }) => {
               <Typography sx={{ flex: '1 1 50%' }} variant='h5' id='tableTitle' component='div'>
                 {totalItem} Phần Thi
               </Typography>
-              &nbsp; &nbsp;
+              {/* &nbsp; &nbsp;
               <Tooltip title='Import'>
                 <IconButton sx={{ color: 'text.secondary' }}>
                   <Icon icon='mdi:upload' />
@@ -168,7 +169,7 @@ const SectionsTable = ({ testGroup }) => {
                 <IconButton sx={{ color: 'text.secondary' }}>
                   <Icon icon='mdi:download' />
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
               &nbsp; &nbsp;
               <Tooltip title='Xóa phần thi'>
                 <span>
@@ -196,16 +197,21 @@ const SectionsTable = ({ testGroup }) => {
             <Divider />
             <Grid container>
               <Grid item md={3} lg={3}>
-                <IconButton aria-label='filter'>
+                <IconButton aria-label='filter' style={{ display: 'none' }}>
                   <FilterAltOutlinedIcon />
                 </IconButton>
               </Grid>
               <Grid item md={3} lg={3}>
-                <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+                <TextField
+                  fullWidth
+                  placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+                  onChange={e => setKeyword(e.target.value)}
+                  size='small'
+                />
               </Grid>
               <Grid item md={6} lg={6} alignContent={'right'}>
                 <TablePagination
-                  rowsPerPageOptions={[10, 25, 100]}
+                  rowsPerPageOptions={[20, 30, 50]}
                   labelRowsPerPage='Hiển thị'
                   component='div'
                   count={totalItem}
@@ -230,6 +236,7 @@ const SectionsTable = ({ testGroup }) => {
                     </TableCell>
                     <TableCell style={{ width: 30 }}>Sửa</TableCell>
                     <TableCell>Tên</TableCell>
+                    <TableCell style={{ width: 180 }}>Thứ tự</TableCell>
                     <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
                   </TableRow>
                 </TableHead>
@@ -272,7 +279,14 @@ const SectionsTable = ({ testGroup }) => {
                           <TableCell component='th' scope='row'>
                             <Typography variant='body1'>{row.name}</Typography>
                           </TableCell>
-                          <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
+                          <TableCell component='th' scope='row'>
+                            <Typography variant='body1'>{row.order}</Typography>
+                          </TableCell>
+                          <TableCell>
+                            <Typography variant='body1'>
+                              {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
+                            </Typography>
+                          </TableCell>
                         </TableRow>
                       )
                     })}
@@ -280,7 +294,7 @@ const SectionsTable = ({ testGroup }) => {
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[10, 25, 100]}
+              rowsPerPageOptions={[20, 30, 50]}
               component='div'
               count={totalItem}
               labelRowsPerPage='Hiển thị'

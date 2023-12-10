@@ -2,24 +2,41 @@ import 'dayjs/locale/vi'
 import 'moment/locale/vi'
 
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import { ExamCategoryApi } from 'api/catalog-api'
 import ExamApi from 'api/exam-api'
-// import moment from 'moment'
+import { FolderType } from 'enum/FolderType'
 import moment from 'moment-timezone'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import CategoryDialog from 'pages/shared/category-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
+import ParentFolderField from 'pages/shared/folder/parent-folder-field'
 import Draggable from 'react-draggable'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedExam, selectExam } from 'store/slices/examSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedExam,
+  selectExam
+} from 'store/slices/examSlice'
 import { CategoryType } from 'types/CategoryType'
 import * as yup from 'yup'
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -95,7 +112,8 @@ function PaperComponent(props) {
 const EditExamPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { examId } = router.query
+  const { examId, folderId } = router.query
+  const [parentId, setParentId] = useState(0)
   const currentExam = useSelector(selectedExam)
 
   const {
@@ -176,12 +194,15 @@ const EditExamPage = () => {
       param = { ...item, startDate: undefined, endDate: undefined, CategoryId: organizationSelected.organizationId }
     }
 
+    param.parentId = parentId
+
     new ExamApi()
       .save(param)
       .then(response => {
         toast.success('Cập nhật thành công')
-        if (code == 1) {
-          router.push('/apps/exam/')
+        if (code === 1) {
+          router.query.examId = response.data.id
+          router.push(router)
         } else {
           reset()
         }
@@ -256,6 +277,10 @@ const EditExamPage = () => {
    * handle remove exam
    */
 
+  const handleParentChanged = parentId => {
+    setParentId(parentId)
+  }
+
   return (
     <>
       <HelmetProvider>
@@ -285,7 +310,11 @@ const EditExamPage = () => {
                           &nbsp;
                         </>
                       )}
-                      <Button variant='outlined' component={Link} href='/apps/exam/'>
+                      <Button
+                        variant='outlined'
+                        component={Link}
+                        href={folderId > 0 ? `/apps/exam/view/${folderId}` : `/apps/exam/`}
+                      >
                         <ArrowBackIcon />
                         &nbsp;Quay lại
                       </Button>
@@ -337,6 +366,18 @@ const EditExamPage = () => {
                                     </FormHelperText>
                                   )}
                                 </FormControl>
+                              </Grid>
+                              <Grid item xs={12}>
+                                <ParentFolderField
+                                  api={new ExamApi()}
+                                  type={FolderType.EXAM}
+                                  onSave={handleParentChanged}
+                                  parentId={
+                                    !currentExam || currentExam.id == 0
+                                      ? parseInt(isNaN(folderId) ? '0' : folderId)
+                                      : currentExam.parentId
+                                  }
+                                />
                               </Grid>
                               <Grid item xs={12}>
                                 <FormControl fullWidth>

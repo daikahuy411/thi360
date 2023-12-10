@@ -1,18 +1,23 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import QuestionCatalogApi from 'api/question-catalog-api'
-import Link from 'next/link'
-import Draggable from 'react-draggable'
 import moment from 'moment'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import EditFolderDialog from 'pages/shared/folder/edit-folder-dialog'
+import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
+import FolderIcon from '@mui/icons-material/Folder'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
-import Chip from '@mui/material/Chip'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
@@ -33,7 +38,6 @@ import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import LoadingSpinner from '@core/components/loading-spinner'
 
 function PaperComponent(props) {
   return (
@@ -48,8 +52,13 @@ const QuestionCatalogTable = () => {
   const [data, setData] = useState([])
   const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const [loading, setLoading] = useState(false)
+  const [editFolder, setEditFolder] = useState(false)
+  const [currentFolder, setCurrentFolder] = useState(null)
+
+  const router = useRouter()
+  const { questionCatalogId } = router.query ?? '0'
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -62,7 +71,7 @@ const QuestionCatalogTable = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, questionCatalogId, keyword])
 
   const fetchData = () => {
     setLoading(true)
@@ -70,7 +79,8 @@ const QuestionCatalogTable = () => {
       .searches({
         Page: page + 1,
         Limit: rowsPerPage,
-        Keyword: keyword
+        Keyword: keyword,
+        FolderId: questionCatalogId
       })
       .then(response => {
         setLoading(false)
@@ -144,6 +154,13 @@ const QuestionCatalogTable = () => {
    * handle remove question-catalog
    */
 
+  const handleEditFolderClose = hasChanged => {
+    setEditFolder(false)
+    if (hasChanged) {
+      fetchData()
+    }
+  }
+
   return (
     <>
       <Divider />
@@ -180,27 +197,45 @@ const QuestionCatalogTable = () => {
           component={Link}
           href={`/apps/question-catalog/0`}
           variant='contained'
-          style={{ width: 190 }}
+          style={{ width: 210 }}
           color='primary'
           startIcon={<Icon icon='mdi:plus' />}
         >
           Bộ Câu hỏi
         </Button>
+        &nbsp;
+        <Button
+          variant='contained'
+          onClick={() => {
+            setCurrentFolder(null)
+            setEditFolder(true)
+          }}
+          style={{ width: 210 }}
+          color='primary'
+          startIcon={<Icon icon='mdi:plus' />}
+        >
+          Thư mục
+        </Button>
       </Toolbar>
       <Divider />
       <Grid container>
         <Grid item md={4}>
-          <IconButton aria-label='filter'>
+          <IconButton aria-label='filter' style={{ display: 'none' }}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={4}>
-          <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+          <TextField
+            fullWidth
+            placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+            onChange={e => setKeyword(e.target.value)}
+            size='small'
+          />
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
             labelRowsPerPage={'Hiển thị:'}
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[20, 30, 50]}
             component='div'
             count={totalItem}
             rowsPerPage={rowsPerPage}
@@ -258,12 +293,37 @@ const QuestionCatalogTable = () => {
                         />
                       </TableCell>
                       <TableCell component='th' scope='row'>
-                        <IconButton aria-label='filter' component={Link} href={`/apps/question-catalog/${item.id}`}>
-                          <EditIcon />
-                        </IconButton>
+                        {item.type === 1 && (
+                          <IconButton
+                            aria-label='edit'
+                            onClick={() => {
+                              setCurrentFolder(item)
+                              setEditFolder(true)
+                            }}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                        )}
+                        {item.type !== 1 && (
+                          <IconButton aria-label='edit' component={Link} href={`/apps/question-catalog/${item.id}`}>
+                            <EditIcon />
+                          </IconButton>
+                        )}
                       </TableCell>
                       <TableCell component='th' scope='row'>
-                        <Typography variant='body1'>{item.name}</Typography>
+                        <Typography variant='body1'>
+                          {item.type == 1 && (
+                            <Typography
+                              variant='body1'
+                              component={Link}
+                              href={`/apps/question-catalog/view/${item.id}`}
+                            >
+                              <FolderIcon /> &nbsp;
+                              {item.name}
+                            </Typography>
+                          )}
+                          {item.type != 1 && <Typography variant='body1'>{item.name}</Typography>}
+                        </Typography>
                       </TableCell>
                       <TableCell component='th' scope='row' style={{ textAlign: 'right' }}>
                         {item.totalCategory}
@@ -281,7 +341,7 @@ const QuestionCatalogTable = () => {
       </TableContainer>
       <TablePagination
         labelRowsPerPage={'Hiển thị:'}
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[20, 30, 50]}
         component='div'
         count={totalItem}
         rowsPerPage={rowsPerPage}
@@ -289,6 +349,15 @@ const QuestionCatalogTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+
+      {editFolder && (
+        <EditFolderDialog
+          onClose={hasChanged => handleEditFolderClose(hasChanged)}
+          entity={currentFolder}
+          parentId={questionCatalogId}
+          api={new QuestionCatalogApi()}
+        />
+      )}
 
       <Dialog
         open={openDelete}

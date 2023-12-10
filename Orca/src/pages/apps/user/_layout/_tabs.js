@@ -6,18 +6,18 @@ import { selectedUser } from 'store/slices/userSlice'
 const Nav = () => {
   const router = useRouter()
   const currentUser = useSelector(selectedUser)
-  const { userId } = router.query
+  const { userId, classId } = router.query
 
   return (
     <>
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
         <Link
           className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/user/${userId}/` ? 'is-active' : 'disabled'
+            router.asPath.indexOf(`/users/${userId}/`) >= 0 ? 'is-active' : 'disabled'
           }`}
           title='Chi tiết'
           component={Link}
-          href={`/apps/user/${userId}`}
+          href={classId && classId > 0 ? `/apps/class/${classId}/users/${userId}` : `/apps/user/${userId}`}
         >
           Chi tiết
         </Link>

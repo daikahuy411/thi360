@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import { ExamCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
@@ -31,7 +34,7 @@ const ExamCategoryTable = () => {
   const [totalItem, setTotalItem] = useState(0)
   const [totalParentItem, setTotalParentItem] = useState(0)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -52,7 +55,6 @@ const ExamCategoryTable = () => {
 
   const fetchData = () => {
     const param = {
-      keyword: '',
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
     }
@@ -99,17 +101,22 @@ const ExamCategoryTable = () => {
       <Divider />
       <Grid container>
         <Grid item md={4}>
-          <IconButton aria-label='filter'>
+          <IconButton aria-label='filter' style={{ display: 'none' }}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={4}>
-          <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+          <TextField
+            fullWidth
+            placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+            onChange={e => setKeyword(e.target.value)}
+            size='small'
+          />
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
             labelRowsPerPage='Số dòng/trang'
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[20, 30, 50]}
             component='div'
             count={totalParentItem}
             rowsPerPage={rowsPerPage}
@@ -138,7 +145,7 @@ const ExamCategoryTable = () => {
       </TableContainer>
       <TablePagination
         labelRowsPerPage='Số dòng/trang'
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[20, 30, 50]}
         component='div'
         count={totalParentItem}
         rowsPerPage={rowsPerPage}

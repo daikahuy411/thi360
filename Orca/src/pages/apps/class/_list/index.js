@@ -1,14 +1,20 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import OrganizationApi from 'api/organization-api'
+import moment from 'moment'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import EditFolderDialog from 'pages/shared/folder/edit-folder-dialog'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
-import moment from 'moment'
 
 import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
+import FolderIcon from '@mui/icons-material/Folder'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import Dialog from '@mui/material/Dialog'
@@ -44,7 +50,13 @@ const ClassTable = () => {
   const [data, setData] = useState([])
   const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
+  const [keyword, setKeyword] = useState('')
+  const [editFolder, setEditFolder] = useState(false)
+  const [currentFolder, setCurrentFolder] = useState(null)
+
+  const router = useRouter()
+  const classId = parseInt(router.query.classId ?? '0')
 
   const [selected, setSelected] = useState([])
 
@@ -59,11 +71,12 @@ const ClassTable = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, classId, keyword])
 
   const fetchData = () => {
     const param = {
-      keyword: '',
+      folderId: classId,
+      keyword: keyword,
       page: page == 0 ? 1 : page + 1,
       limit: rowsPerPage
     }
@@ -138,6 +151,14 @@ const ClassTable = () => {
   /*
    * handle remove class
    */
+
+  const handleEditFolderClose = hasChanged => {
+    setEditFolder(false)
+    if (hasChanged) {
+      fetchData()
+    }
+  }
+
   return (
     <>
       <Divider />
@@ -172,28 +193,44 @@ const ClassTable = () => {
         &nbsp; &nbsp;
         <Button
           component={Link}
-          href={`/apps/class/0`}
+          href={`/apps/class/0/${classId}`}
           variant='contained'
-          style={{ width: 180 }}
-          color='primary'
+          style={{ width: 210 }}
           startIcon={<Icon icon='mdi:plus' />}
         >
           Lớp học
+        </Button>
+        &nbsp;
+        <Button
+          variant='contained'
+          onClick={() => {
+            setCurrentFolder(null)
+            setEditFolder(true)
+          }}
+          style={{ width: 210 }}
+          startIcon={<Icon icon='mdi:plus' />}
+        >
+          Thư mục
         </Button>
       </Toolbar>
       <Divider />
       <Grid container>
         <Grid item md={4}>
-          <IconButton aria-label='filter'>
+          <IconButton aria-label='filter' style={{ display: 'none' }}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={4}>
-          <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+          <TextField
+            fullWidth
+            placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+            onChange={e => setKeyword(e.target.value)}
+            size='small'
+          />
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[20, 30, 50]}
             component='div'
             count={totalItem}
             rowsPerPage={rowsPerPage}
@@ -255,20 +292,43 @@ const ClassTable = () => {
                       />
                     </TableCell>
                     <TableCell component='th' scope='row'>
-                      <IconButton aria-label='filter' component={Link} href={`/apps/class/${row.id}`}>
-                        <Tooltip title='Sửa lớp học'>
+                      {row.type === 1 && (
+                        <IconButton
+                          title='Sửa lớp học'
+                          aria-label='edit'
+                          onClick={() => {
+                            setCurrentFolder(row)
+                            setEditFolder(true)
+                          }}
+                        >
                           <EditIcon />
-                        </Tooltip>
-                      </IconButton>
+                        </IconButton>
+                      )}
+                      {row.type !== 1 && (
+                        <IconButton
+                          title='Sửa lớp học'
+                          aria-label='edit'
+                          component={Link}
+                          href={`/apps/class/${row.id}`}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      )}
                     </TableCell>
                     <TableCell component='th' scope='row'>
-                      <Typography variant='body1'>
-                        {row.name}
-                      </Typography>
+                      {row.type == 1 && (
+                        <Typography variant='body1' component={Link} href={`/apps/class/view/${row.id}`}>
+                          <FolderIcon /> &nbsp;
+                          {row.name}
+                        </Typography>
+                      )}
+                      {row.type != 1 && <Typography variant='body1'>{row.name}</Typography>}
                     </TableCell>
                     <TableCell align='right'>{row.group}</TableCell>
                     <TableCell align='right'>{row.totalUser}</TableCell>
-                    <TableCell>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
+                    <TableCell>
+                      <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                    </TableCell>
                   </TableRow>
                 )
               })}
@@ -276,7 +336,7 @@ const ClassTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[20, 30, 50]}
         component='div'
         count={totalItem}
         rowsPerPage={rowsPerPage}
@@ -284,6 +344,15 @@ const ClassTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+
+      {editFolder && (
+        <EditFolderDialog
+          id={currentFolder ? currentFolder.id : 0}
+          onClose={hasChanged => handleEditFolderClose(hasChanged)}
+          parentId={classId}
+          api={new OrganizationApi()}
+        />
+      )}
 
       <Dialog
         open={openDelete}

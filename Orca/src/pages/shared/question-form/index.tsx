@@ -1,6 +1,6 @@
 import {
-    useEffect,
-    useState
+  useEffect,
+  useState
 } from 'react'
 
 import { QuestionCategoryApi } from 'api/catalog-api'
@@ -8,8 +8,8 @@ import QuestionApi from 'api/question-api'
 import { useRouter } from 'next/router'
 import CategoryDialog from 'pages/shared/category-dialog'
 import {
-    Controller,
-    useForm
+  Controller,
+  useForm
 } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { CategoryType } from 'types/CategoryType'

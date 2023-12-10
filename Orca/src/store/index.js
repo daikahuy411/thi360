@@ -1,19 +1,21 @@
 import { configureStore } from '@reduxjs/toolkit'
 
+import { accountSlice } from './slices/accountSlice'
+import { blockSlice } from './slices/blockSlice'
 import { classSlice } from './slices/classSlice'
 import { examCategorySlice } from './slices/examCategorySlice'
 import { examItemSlice } from './slices/examItemSlice'
 import { examSlice } from './slices/examSlice'
+import { postCategorySlice } from './slices/postCategorySlice'
+import { postSlice } from './slices/postSlice'
 import { profileSlice } from './slices/profileSlice'
 import { questionCatalogSlice } from './slices/questionCatalogSlice'
 import { questionSlice } from './slices/questionSlice'
+import { tenantSlice } from './slices/tenantSlice'
 import { testGroupSectionItemSlice } from './slices/testGroupSectionItemSlice'
 import { testGroupSectionSlice } from './slices/testGroupSectionSlice'
 import { testGroupSlice } from './slices/testGroupSlice'
 import { userSlice } from './slices/userSlice'
-import { postSlice } from './slices/postSlice'
-import { blockSlice } from './slices/blockSlice'
-import { postCategorySlice } from './slices/postCategorySlice'
 
 export const store = configureStore({
   reducer: {
@@ -31,6 +33,8 @@ export const store = configureStore({
     [postSlice.name]: postSlice.reducer,
     [postCategorySlice.name]: postCategorySlice.reducer,
     [blockSlice.name]: blockSlice.reducer,
+    [tenantSlice.name]: tenantSlice.reducer,
+    [accountSlice.name]: accountSlice.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

@@ -1,15 +1,28 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import OrganizationApi from 'api/organization-api'
 import UserApi from 'api/user-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import CategoryDialog from 'pages/shared/category-dialog'
+import TenantSelector from 'pages/shared/tenant-selector'
 import Draggable from 'react-draggable'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedUser, selectUser } from 'store/slices/userSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectAccount,
+  selectedAccount
+} from 'store/slices/accountSlice'
 import { CategoryType } from 'types/CategoryType'
 import * as yup from 'yup'
 
@@ -32,7 +45,9 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import FormControl from '@mui/material/FormControl'
 import FormControlLabel from '@mui/material/FormControlLabel'
+import FormGroup from '@mui/material/FormGroup'
 import FormHelperText from '@mui/material/FormHelperText'
+import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -79,13 +94,16 @@ function PaperComponent(props) {
   )
 }
 
-const EditStudentPage = () => {
+const EditAccountPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
   const { userId } = router.query
-  const currentUser = useSelector(selectedUser)
+  const currentUser = useSelector(selectedAccount)
   const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
+  const [openTenantDialog, setOpenTenantDialog] = useState(false)
   const [cbChangePassword, setCbChangePassword] = useState(false)
+  const [roles, setRoles] = useState([])
+  const [selectedRoles, setSelectedRoles] = useState([])
 
   const {
     control,
@@ -100,9 +118,18 @@ const EditStudentPage = () => {
   })
 
   useEffect(() => {
+    new UserApi()
+      .getAllRoles(userId)
+      .then(response => {
+        setRoles(response.data)
+      })
+      .catch(e => console.log(e))
+  }, [])
+
+  useEffect(() => {
     if (!userId || userId == 0) {
       dispatch(
-        selectUser({ id: '0', firstName: '', lastName: '', userName: '', passwordHash: '', changePassword: false })
+        selectAccount({ id: '0', firstName: '', lastName: '', userName: '', passwordHash: '', changePassword: false })
       )
       return
     }
@@ -117,14 +144,33 @@ const EditStudentPage = () => {
     new UserApi()
       .getUserProfile(userId)
       .then(response => {
-        dispatch(selectUser(response.data))
+        dispatch(selectAccount(response.data))
 
         setOrganizationSelected({
           organizationId: response.data.organizationId,
           organizationName: response.data.organizationName
         })
+
+        setTenantSelected({
+          id: response.data.tenantId,
+          name: response.data.tenantName
+        })
+
+        setSelectedRoles(response.data.roles)
       })
       .catch(e => console.log(e))
+  }
+
+  const handleRoleChange = event => {
+    if (event.target.checked) {
+      var newRoles = [...selectedRoles]
+      newRoles.push(event.target.name)
+      setSelectedRoles([...newRoles])
+    } else {
+      var newRoles = [...selectedRoles]
+      newRoles = newRoles.filter(e => e !== event.target.name)
+      setSelectedRoles([...newRoles])
+    }
   }
 
   /*
@@ -148,12 +194,15 @@ const EditStudentPage = () => {
       }
     }
 
+    param.roles = selectedRoles
+    param.tenantId = tenantSelected.id
+
     new UserApi()
       .save(param)
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code === 1) {
-          router.push('/apps/user/')
+          router.push('/apps/account/')
         } else {
           reset()
         }
@@ -207,9 +256,19 @@ const EditStudentPage = () => {
   const cleanOrganization = () => {
     setOrganizationSelected({ organizationId: 0, organizationName: '' })
   }
+
   /*
    * end handle organization
    */
+
+  const [tenantSelected, setTenantSelected] = useState({ id: 0, name: '' })
+  const handleSelectedTenant = tenant => {
+    setTenantSelected(tenant)
+  }
+
+  const cleanTenant = () => {
+    setTenantSelected({ id: 0, name: '' })
+  }
 
   /*
    * remove user
@@ -223,7 +282,7 @@ const EditStudentPage = () => {
         .delete({ id: userId })
         .then(response => {
           toast.success('Xóa dữ liệu thành công.')
-          router.push('/apps/user/')
+          router.push('/apps/account/')
         })
         .catch(e => {
           setOpenDelete(false)
@@ -268,7 +327,7 @@ const EditStudentPage = () => {
                         &nbsp;
                       </>
                     )}
-                    <Button variant='outlined' component={Link} href='/apps/user/'>
+                    <Button variant='outlined' component={Link} href='/apps/account/'>
                       <ArrowBackIcon />
                       &nbsp;Quay lại
                     </Button>
@@ -289,7 +348,7 @@ const EditStudentPage = () => {
                 <div className='grid-block'>
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
-                    <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', height: '100vh', paddingTop: 10 }}>
+                    <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', paddingTop: 10 }}>
                       <Grid container spacing={5} maxWidth={'sm'}>
                         <Grid item xs={12} md={6}>
                           <FormControl fullWidth>
@@ -513,7 +572,7 @@ const EditStudentPage = () => {
                             )}
                           </FormControl>
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        {/* <Grid item xs={12} md={6}>
                           <FormControlLabel
                             name='isDayBoarding'
                             control={
@@ -528,7 +587,7 @@ const EditStudentPage = () => {
                             }
                             label='Bán trú'
                           />
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={12}>
                           <FormControl fullWidth>
                             <Controller
@@ -544,6 +603,49 @@ const EditStudentPage = () => {
                                   label='Địa chỉ'
                                   onChange={onChange}
                                 />
+                              )}
+                            />
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <FormControl fullWidth variant='outlined'>
+                            <Controller
+                              name='tenantId'
+                              control={control}
+                              rules={{ required: true }}
+                              render={({ field: { value, onChange } }) => (
+                                <>
+                                  <InputLabel htmlFor='outlined-adornment-parent-category'>Tenant</InputLabel>
+                                  <OutlinedInput
+                                    id='outlined-adornment-parent-category'
+                                    inputprops={{
+                                      readOnly: true,
+                                      className: 'Mui-disabled'
+                                    }}
+                                    value={tenantSelected.name ?? ''}
+                                    endAdornment={
+                                      <InputAdornment position='end'>
+                                        <IconButton
+                                          aria-label='toggle password visibility'
+                                          edge='end'
+                                          onClick={cleanTenant}
+                                        >
+                                          <DeleteOutline />
+                                        </IconButton>
+                                        &nbsp;
+                                        <IconButton
+                                          edge='end'
+                                          onClick={() => {
+                                            setOpenTenantDialog(true)
+                                          }}
+                                        >
+                                          <FolderIcon />
+                                        </IconButton>
+                                      </InputAdornment>
+                                    }
+                                    label='Tenant'
+                                  />
+                                </>
                               )}
                             />
                           </FormControl>
@@ -591,6 +693,22 @@ const EditStudentPage = () => {
                             />
                           </FormControl>
                         </Grid>
+                        <Grid item xs={12}>
+                          <FormControl>
+                            <FormLabel>Phân quyền</FormLabel>
+                            <FormGroup>
+                              {roles &&
+                                roles.map(item => (
+                                  <FormControlLabel
+                                    label={`${item.name}`}
+                                    key={`${item.id}`}
+                                    checked={selectedRoles && selectedRoles.indexOf(item.name) > -1}
+                                    control={<Checkbox onChange={handleRoleChange} name={`${item.name}`} />}
+                                  />
+                                ))}
+                            </FormGroup>
+                          </FormControl>
+                        </Grid>
                       </Grid>
                     </form>
 
@@ -605,6 +723,18 @@ const EditStudentPage = () => {
                           setOpenCatalogDialog(false)
                         }}
                         open={openCatalogDialog}
+                      />
+                    )}
+
+                    {openTenantDialog && (
+                      <TenantSelector
+                        onNodeSelected={x => {
+                          handleSelectedTenant(x)
+                        }}
+                        onClose={() => {
+                          setOpenTenantDialog(false)
+                        }}
+                        open={openTenantDialog}
                       />
                     )}
 
@@ -643,4 +773,4 @@ const EditStudentPage = () => {
   )
 }
 
-export default EditStudentPage
+export default EditAccountPage

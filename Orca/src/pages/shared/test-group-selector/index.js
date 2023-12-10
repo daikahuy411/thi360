@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+  useEffect,
+  useState
+} from 'react'
 
 import TestGroupApi from 'api/test-group-api'
 import { makeStyles } from 'tss-react/mui'
 
 import Icon from '@core/components/icon'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
+import FolderIcon from '@mui/icons-material/Folder'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -45,9 +49,10 @@ export default function TestGroupSelector({ onClose, onNodeSelected = null }) {
   const [data, setData] = useState([])
   const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
-  // const [selectedData, setSelectedData] = useState()
+  const [rowsPerPage, setRowsPerPage] = useState(20)
+  const [keyword, setKeyword] = useState(null)
   const [selectedValue, setSelectedValue] = React.useState(null)
+  const [folderId, setFolderId] = useState(0)
 
   const handleChange = event => {
     setSelectedValue(parseInt(event.target.value))
@@ -62,64 +67,21 @@ export default function TestGroupSelector({ onClose, onNodeSelected = null }) {
     setPage(0)
   }
 
-  // const toggleDrawer = (anchor, open) => event => {
-  //   if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-  //     return
-  //   }
-
-  //   setState({ ...state, [anchor]: open })
-  // }
-
-  // const handleSelectAll = event => {
-  //   const selected = event.target.checked ? data.map(t => t.id) : []
-  //   setSelectedData(selected)
-  //   if (event.target.checked) {
-  //     var newSelected = selectedUsers
-  //     newSelected.push(...data)
-  //     setSelectedUsers(newSelected)
-  //   } else {
-  //     setSelectedUsers([])
-  //   }
-  // }
-
-  // const handleSelectOne = (event, user) => {
-  //   const id = user.id
-  //   const selectedIndex = selectedData.indexOf(id)
-  //   let newSelectedData = []
-  //   if (selectedIndex === -1) {
-  //     newSelectedData = newSelectedData.concat(selectedData, id)
-  //   } else if (selectedIndex === 0) {
-  //     newSelectedData = newSelectedData.concat(selectedData.slice(1))
-  //   } else if (selectedIndex === selectedData.length - 1) {
-  //     newSelectedData = newSelectedData.concat(selectedData.slice(0, -1))
-  //   } else if (selectedIndex > 0) {
-  //     newSelectedData = newSelectedData.concat(
-  //       selectedData.slice(0, selectedIndex),
-  //       selectedData.slice(selectedIndex + 1)
-  //     )
-  //   }
-  //   setSelectedData(newSelectedData)
-
-  //   var newSelectedUsers = selectedUsers
-  //   if (selectedIndex === -1) {
-  //     newSelectedUsers.push(user)
-  //   } else {
-  //     newSelectedUsers = newSelectedUsers.filter(x => x.id != id)
-  //   }
-  //   setSelectedUsers(newSelectedUsers)
-  // }
-
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, folderId, keyword])
 
   const fetchData = () => {
-    new TestGroupApi().searches({ page: page + 1, limit: rowsPerPage }).then(response => {
-      if (response.data.isSuccess) {
+    new TestGroupApi()
+      .searches({
+        folderId: folderId,
+        page: page + 1,
+        limit: rowsPerPage
+      })
+      .then(response => {
         setData(response.data.value)
         setTotalItem(response.data.totalItems)
-      }
-    })
+      })
   }
 
   const onOk = () => {
@@ -164,12 +126,17 @@ export default function TestGroupSelector({ onClose, onNodeSelected = null }) {
 
         <Grid container>
           <Grid item md={4}>
-            <IconButton aria-label='filter'>
+            <IconButton aria-label='filter' style={{ display: 'none' }}>
               <FilterAltOutlinedIcon />
             </IconButton>
           </Grid>
           <Grid item md={4}>
-            <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+            <TextField
+              fullWidth
+              placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+              onChange={e => setKeyword(e.target.value)}
+              size='small'
+            />
           </Grid>
           <Grid item md={4} alignContent={'right'} alignItems={'right'}>
             <Button
@@ -212,16 +179,24 @@ export default function TestGroupSelector({ onClose, onNodeSelected = null }) {
                       >
                         <TableCell>{index + 1}</TableCell>
                         <TableCell>
-                          <Radio
-                            checked={selectedValue === item.id}
-                            onChange={handleChange}
-                            value={item.id}
-                            name='radio-buttons'
-                            inputProps={{ 'aria-label': 'A' }}
-                          />
+                          {item.type != 1 && (
+                            <Radio
+                              checked={selectedValue === item.id}
+                              onChange={handleChange}
+                              value={item.id}
+                              name='radio-buttons'
+                              inputProps={{ 'aria-label': 'A' }}
+                            />
+                          )}
                         </TableCell>
                         <TableCell>
-                          {item.name} - {item.id}
+                          {item.type == 1 && (
+                            <Typography variant='body1' onClick={() => setFolderId(item.id)}>
+                              <FolderIcon /> &nbsp;
+                              {item.name}
+                            </Typography>
+                          )}
+                          {item.type != 1 && <Typography variant='body1'>{item.name}</Typography>}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -230,7 +205,7 @@ export default function TestGroupSelector({ onClose, onNodeSelected = null }) {
             </TableContainer>
             <TablePagination
               labelRowsPerPage={'Hiển thị:'}
-              rowsPerPageOptions={[10, 25, 100]}
+              rowsPerPageOptions={[20, 30, 50]}
               component='div'
               count={totalItem}
               rowsPerPage={rowsPerPage}

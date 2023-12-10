@@ -44,7 +44,7 @@ function UserModal({ onClose, onOk }) {
   const [data, setData] = useState([])
   const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
   const [selectedData, setSelectedData] = useState([])
   const [selectedUsers, setSelectedUsers] = useState([])
   const [keyword, setKeyword] = useState('')
@@ -77,7 +77,7 @@ function UserModal({ onClose, onOk }) {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage])
+  }, [page, rowsPerPage, keyword])
 
   const handleSelectAll = event => {
     const selected = event.target.checked ? data.map(t => t.id) : []
@@ -149,12 +149,12 @@ function UserModal({ onClose, onOk }) {
         <PerfectScrollbar options={{ wheelPropagation: false }}>
           <Grid container>
             <Grid item md={4}>
-              <IconButton aria-label='filter'>
+              <IconButton aria-label='filter' style={{display: 'none'}}>
                 <FilterAltOutlinedIcon />
               </IconButton>
             </Grid>
             <Grid item md={4}>
-              <TextField fullWidth placeholder='Tìm kiếm' size='small' />
+              <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
             </Grid>
             <Grid item md={4} alignContent={'right'} alignItems={'right'}>
               <Button
@@ -226,7 +226,7 @@ function UserModal({ onClose, onOk }) {
               </TableContainer>
               <TablePagination
                 labelRowsPerPage={'Hiển thị:'}
-                rowsPerPageOptions={[10, 25, 100]}
+                rowsPerPageOptions={[20, 30, 50]}
                 component='div'
                 count={totalItem}
                 rowsPerPage={rowsPerPage}

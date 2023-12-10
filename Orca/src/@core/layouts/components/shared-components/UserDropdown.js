@@ -1,22 +1,32 @@
 // ** React Imports
-import { Fragment, useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import UserApi from 'api/user-api'
 import authConfig from 'configs/auth'
 // ** Context
 import { useAuth } from 'hooks/useAuth'
+import Link from 'next/link'
 // ** Next Import
 import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedProfile, selectProfile } from 'store/slices/profileSlice'
-import Button from '@mui/material/Button'
-import Link from 'next/link'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedProfile,
+  selectProfile
+} from 'store/slices/profileSlice'
+
 // ** Icon Imports
 import Icon from '@core/components/icon'
 import Avatar from '@mui/material/Avatar'
 import Badge from '@mui/material/Badge'
 // ** MUI Imports
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -69,7 +79,6 @@ const UserDropdown = props => {
       })
       .catch(e => {
         logout()
-        console.log(e)
       })
   }
 
@@ -126,7 +135,7 @@ const UserDropdown = props => {
             />
           </Badge>
           <Box display='inline-block' width='134px'>
-            <Typography>{currentUser?.fullName}</Typography>
+            <Typography sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{currentUser?.fullName}</Typography>
             <Typography
               sx={{
                 textAlign: 'start'

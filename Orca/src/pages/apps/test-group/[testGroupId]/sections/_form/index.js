@@ -30,7 +30,6 @@ import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 
-
 import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
 
@@ -89,7 +88,8 @@ const SectionEditForm = () => {
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code == 1) {
-          router.push(`/apps/test-group/${testGroupId}/sections`)
+          router.query.sectionId = response.data.id
+          router.push(router)
         } else {
           reset()
         }
@@ -214,6 +214,31 @@ const SectionEditForm = () => {
                               {errors.name && (
                                 <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
                                   {errors.name.message}
+                                </FormHelperText>
+                              )}
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='order'
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field: { value, onChange } }) => (
+                                  <TextField
+                                    value={value ?? ''}
+                                    type='number'
+                                    label='Thứ tự'
+                                    InputLabelProps={{ shrink: true }}
+                                    onChange={onChange}
+                                    error={Boolean(errors.order)}
+                                    aria-describedby='validation-schema-order'
+                                  />
+                                )}
+                              />
+                              {errors.order && (
+                                <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-order'>
+                                  {errors.order.message}
                                 </FormHelperText>
                               )}
                             </FormControl>

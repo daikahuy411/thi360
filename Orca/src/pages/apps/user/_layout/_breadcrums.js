@@ -1,51 +1,43 @@
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
+import { selectedClass } from 'store/slices/classSlice'
+
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
-import MuiCard from '@mui/material/Card'
-import Link from '@mui/material/Link'
-// ** MUI Imports
-import { styled } from '@mui/material/styles'
-import MuiTextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-
-// Styled Card component
-const Card = styled(MuiCard)(({ theme }) => ({
-  border: 0,
-  boxShadow: 'none',
-  backgroundSize: 'cover',
-  backgroundImage:
-    theme.palette.mode === 'light'
-      ? 'url(/images/pages/tree-cone-cube-bg-light.png)'
-      : 'url(/images/pages/tree-cone-cube-bg-dark.png)'
-}))
-
-// Styled TextField component
-const TextField = styled(MuiTextField)(({ theme }) => ({
-  width: '100%',
-  '& .MuiOutlinedInput-root': {
-    backgroundColor: theme.palette.background.paper
-  },
-  [theme.breakpoints.up('sm')]: {
-    width: '55%'
-  }
-}))
 
 const TopNav = props => {
-  // ** Props
-  const { searchTerm, setSearchTerm } = props
-
-  const handleFaqFilter = e => {
-    setSearchTerm(e.target.value)
-  }
+  const router = useRouter()
+  const currentClass = useSelector(selectedClass)
+  const { classId } = router.query
 
   return (
     <Breadcrumbs aria-label='breadcrumb' style={{ borderTop: '0px solid rgba(58, 53, 65, 0.12)', paddingTop: 0 }}>
       <Link underline='hover' color='inherit' href='/'>
         <HomeOutlinedIcon />
       </Link>
-      {/* <Link underline='hover' color='inherit' href='/material-ui/getting-started/installation/'>
-        Core
-      </Link> */}
-      <Typography color='text.primary'>Học viên</Typography>
+      {!classId && (
+        <Link underline='hover' color='inherit' href='/apps/user/'>
+          Học viên
+        </Link>
+      )}
+      {classId && classId > 0 && (
+        <Link underline='hover' color='inherit' href='/apps/class/'>
+          Lớp học
+        </Link>
+      )}
+      {currentClass &&
+        currentClass.ancestors &&
+        currentClass.ancestors.map(item => (
+          <Link underline='hover' color='inherit' href={`/apps/class/view/${item.id}`}>
+            {item.name}
+          </Link>
+        ))}
+      {currentClass && (
+        <Link underline='hover' color='inherit' href={`/apps/class/${classId}/users`}>
+          {currentClass.name}
+        </Link>
+      )}
     </Breadcrumbs>
   )
 }
