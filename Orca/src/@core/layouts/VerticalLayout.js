@@ -61,7 +61,8 @@ const VerticalLayout = props => {
 
   return (
     <>
-      <VerticalLayoutWrapper className='layout-wrapper layout-content-navbar'>
+    {/* layout-content-navbar */}
+      <VerticalLayoutWrapper className='layout-wrapper '>
         {navHidden && !(navHidden && settings.lastLayout === 'horizontal') ? null : (
           <Navigation
             navWidth={navWidth}
@@ -81,8 +82,9 @@ const VerticalLayout = props => {
             {...props}
           />
         )}
+        {/* layout-page */}
         <MainContentWrapper
-          className='layout-content-wrapper layout-page'
+          className='layout-content-wrapper '
           sx={{ ...(contentHeightFixed && { maxHeight: '100vh' }) }}
         >
           <VerticalAppBarContent />
@@ -124,8 +126,8 @@ const VerticalLayout = props => {
         </MainContentWrapper>
       </VerticalLayoutWrapper>
 
-      {/* {disableCustomizer || hidden ? null : <Customizer />} */}
-      {themeConfig.disableCustomizer || hidden ? null : <Customizer />}
+      {disableCustomizer || hidden ? null : <Customizer />}
+      {/* {themeConfig.disableCustomizer || hidden ? null : <Customizer />} */}
 
       {scrollToTop ? (
         scrollToTop(props)

@@ -1,5 +1,8 @@
 // ** MUI Imports
-import { styled, useTheme } from '@mui/material/styles'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
 import MuiSwipeableDrawer from '@mui/material/SwipeableDrawer'
 
 const SwipeableDrawer = styled(MuiSwipeableDrawer)({
@@ -43,7 +46,7 @@ const Drawer = props => {
   const { mode, navCollapsed } = settings
 
   const drawerColors = () => {
-    if (mode === 'semi-dark') {
+    if (mode === 'semi-dark' || mode === 'dark') {
       return {
         backgroundColor: 'customColors.darkBg',
         '& .MuiTypography-root, & svg': {
@@ -52,7 +55,9 @@ const Drawer = props => {
       }
     } else
       return {
-        backgroundColor: 'background.default'
+        // backgroundColor: 'background.default'
+        backgroundColor: '#fff',
+        boxShadow: '0 0 10px rgba(0,0,0,.1)' 
       }
   }
 

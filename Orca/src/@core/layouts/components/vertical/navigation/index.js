@@ -50,7 +50,6 @@ const StyledBoxForShadow = styled(Box)(({ theme }) => ({
 }))
 
 const Navigation = props => {
-  console.log(props)
   // ** Props
   const { hidden, settings, afterNavMenuContent, beforeNavMenuContent, navMenuContent: userNavMenuContent } = props
 
@@ -102,7 +101,6 @@ const Navigation = props => {
     if (beforeVerticalNavMenuContentPosition === 'static' || !beforeNavMenuContent) {
       container = hidden ? container.target : container
       if (shadowRef && container.scrollTop > 0) {
-        console.log('shadowRef', shadowRef)
         // @ts-ignore
         if (!shadowRef.current.classList.contains('scrolled')) {
           // @ts-ignore
@@ -115,10 +113,10 @@ const Navigation = props => {
     }
   }
   const ScrollWrapper = hidden ? Box : PerfectScrollbar
-  console.log('hidden:', hidden)
+  
   return (
-    <ThemeProvider theme={darkTheme}>
-      <Drawer {...props} navHover={navHover} setNavHover={setNavHover}>
+    <ThemeProvider theme={darkTheme} >
+      <Drawer {...props} navHover={navHover} setNavHover={setNavHover}> 
         <VerticalNavHeader {...props} navHover={navHover} />
         {beforeNavMenuContent && beforeVerticalNavMenuContentPosition === 'fixed'
           ? beforeNavMenuContent(navMenuContentProps)
@@ -138,7 +136,9 @@ const Navigation = props => {
                   options: { wheelPropagation: false },
                   onScrollY: container => scrollMenu(container),
                   containerRef: ref => handleInfiniteScroll(ref)
-                })}
+                })
+                
+            }
           >
             {beforeNavMenuContent && beforeVerticalNavMenuContentPosition === 'static'
               ? beforeNavMenuContent(navMenuContentProps)
