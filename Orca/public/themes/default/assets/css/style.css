@@ -100,7 +100,8 @@ aside {
 
 * {
   margin: 0;
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
+  scroll-behavior: inherit;
 }
 
 ::-webkit-scrollbar {

@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import UserDropdown from '@core/layouts/components/shared-components/UserDropdown'
+import { Typography } from '@mui/material'
 
 const AppBarContent = props => {
   const [path, setPath] = useState('')
@@ -79,8 +80,9 @@ const AppBarContent = props => {
         </a>
       </div> */}
       <div className='navbar-nav-right d-flex align-items-center' id='navbar-collapse'>
-        <div className='navbar-nav align-items-center' style={{ paddingLeft: 10 }}>
-          <h3 className='mb-0' style={{fontSize: '1.2rem'}}>{page}</h3>
+        <div className='navbar-nav align-items-center' style={{ paddingLeft: 24 }}>
+          {/* <h3 className='mb-0' style={{fontSize: '1.2rem'}}>{page}</h3> */}
+          <Typography variant='h5' style={{fontSize: '1.2rem'}}>{page}</Typography>
           {path}
         </div>
         <ul className='navbar-nav flex-row align-items-center ms-auto'>

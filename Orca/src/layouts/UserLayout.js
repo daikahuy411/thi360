@@ -6,7 +6,6 @@ import {
   teacherLinks
 } from 'navigation'
 import HorizontalNavItems from 'navigation/horizontal'
-import Head from 'next/head'
 
 // ** Hook Import
 import { useSettings } from '@core/hooks/useSettings'
@@ -87,7 +86,7 @@ const UserLayout = ({ children, contentHeightFixed }) => {
         }
       })}
     >
-      <Head>
+      {/* <Head> */}
         {/* Theme default v1 */}
         {/* <link rel="stylesheet" href="/themes/default/assets/vendor/fonts/materialdesignicons.css" />
         <link rel="stylesheet" href="/themes/default/assets/vendor/fonts/flag-icons.css" />
@@ -100,7 +99,7 @@ const UserLayout = ({ children, contentHeightFixed }) => {
 
         <link rel="stylesheet" href="/themes/default/assets/vendor/libs/swiper/swiper.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" /> */}
-      </Head>
+      {/* </Head> */}
       {children}
     </Layout>
   )
