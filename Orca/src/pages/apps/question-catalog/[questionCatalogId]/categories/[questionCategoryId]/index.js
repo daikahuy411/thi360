@@ -15,7 +15,7 @@ import {
   useForm
 } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { CategoryType } from 'types/CategoryType'
+import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -287,7 +287,7 @@ const QuestionCategoryEditPage = () => {
 
                     {openCatalogDialog && (
                       <CategoryDialog
-                        categoryType={CategoryType.QUESTION_CATEGORY}
+                        categoryType={CatalogType.QUESTION_CATEGORY}
                         currentId={questionCategoryId}
                         catalogId={parseInt(questionCatalogId)}
                         onNodeSelected={nodeId => {

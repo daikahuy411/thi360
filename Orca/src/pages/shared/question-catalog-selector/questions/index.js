@@ -6,7 +6,6 @@ import React, {
 import QuestionApi from 'api/question-api'
 import moment from 'moment'
 import Link from 'next/link'
-import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
@@ -72,8 +71,8 @@ const Questions = props => {
   const onSelected = () => {
     if (onOk) {
       onOk(selectedRecords)
+      setSelected([])
       setSelectedRecords([])
-      toast.success("Đã thêm câu hỏi.")
     }
   }
 
@@ -151,7 +150,7 @@ const Questions = props => {
         <Grid item md={12}>
           <Divider />
         </Grid>
-        <Grid item md={3} lg={3}>
+        <Grid item md={3} lg={3} style={{ height: '80%', borderRight: 'solid 1px rgba(58, 53, 65, 0.12)' }}>
           <QuestionCategoryTree
             onNodeSelected={nodeId => onCategoryChanged(nodeId)}
             data={[{ id: 0, key: 0, title: 'Tất cả' }, ...questionCates]}

@@ -46,23 +46,24 @@ export const studentLinks = [
         path: '/program/35'
       }
     ]
-  },
+  }
   // {
   //   icon: 'mdi:cash',
   //   title: 'Bảng giá',
   //   path: '/pricing'
   // },
-  {
-    icon: 'mdi:help-circle-outline',
-    title: 'Hướng dẫn',
-    path: '/help'
-  },
   // {
   //   title: 'Thời khóa biểu',
   //   icon: 'mdi:calendar-blank-outline',
   //   path: '/apps/calendar'
   // }
 ]
+
+export const helpLink = {
+  icon: 'mdi:help-circle-outline',
+  title: 'Hướng dẫn',
+  path: 'http://help.thi360.com'
+}
 
 export const teacherLinks = [
   {
@@ -181,34 +182,37 @@ export const programLinks = [
 
 export const systemLinks = [
   {
-    title: 'Tin bài',
-    path: '/apps/post'
-  },
-  {
-    title: 'Danh mục Tin bài',
-    path: '/apps/post-category'
-  },
-  {
-    title: 'Block',
-    path: '/apps/block'
-  },
-  {
-    title: 'Tổ chức, Đơn vị',
-    path: '/apps/organization'
-  },
-  {
-    title: 'Người dùng',
-    icon: 'eos-icons:file-system',
-    path: '/apps/account'
-  },
-  {
-    title: 'Tenant',
-    icon: 'eos-icons:file-system',
-    path: '/apps/tenant'
-  },
-  {
-    title: 'Cấu hình',
-    icon: 'eos-icons:file-system',
-    path: '/apps/tenant'
+    title: 'Hệ thống',
+    icon: 'mdi:cog-outline',
+    children: [
+      {
+        title: 'Tin bài',
+        path: '/apps/post'
+      },
+      {
+        title: 'Danh mục Tin bài',
+        path: '/apps/post-category'
+      },
+      {
+        title: 'Block',
+        path: '/apps/block'
+      },
+      {
+        title: 'Tổ chức, Đơn vị',
+        path: '/apps/organization'
+      },
+      {
+        title: 'Người dùng',
+        path: '/apps/account'
+      },
+      {
+        title: 'Tenant',
+        path: '/apps/tenant'
+      },
+      {
+        title: 'Cấu hình',
+        path: '/apps/tenant'
+      }
+    ]
   }
 ]

@@ -1,4 +1,4 @@
-export enum CategoryType {
+export enum CatalogType {
     /// myStudies
     QUESTION_CATEGORY=1,
     TESTGROUP_CATEGORY = 4,

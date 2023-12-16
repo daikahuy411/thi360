@@ -1,13 +1,17 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import QuestionApi from 'api/question-api'
+import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
-import moment from 'moment'
 
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
@@ -35,7 +39,6 @@ import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import LoadingSpinner from '@core/components/loading-spinner'
 
 function PaperComponent(props) {
   return (
@@ -56,6 +59,7 @@ const QuestionTable = () => {
   const [catalog, setCatalog] = useState(null)
   const [totalItems, setTotalItems] = useState(0)
   const [loading, setLoading] = useState(false)
+  const [keyword, setKeyword] = useState(null)
 
   const { questionCatalogId } = router.query
 
@@ -232,12 +236,17 @@ const QuestionTable = () => {
       <Divider />
       <Grid container>
         <Grid item md={3} lg={3}>
-          <IconButton aria-label='filter' style={{display: 'none'}}>
+          <IconButton aria-label='filter' style={{ display: 'none' }}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={3} lg={3}>
-          <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
+          <TextField
+            fullWidth
+            placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+            onChange={e => setKeyword(e.target.value)}
+            size='small'
+          />
         </Grid>
         <Grid item md={6} lg={6} alignContent={'right'}>
           <TablePagination
@@ -329,10 +338,8 @@ const QuestionTable = () => {
                       </TableCell>
                       <TableCell>{row.questionTypeName}</TableCell>
                       <TableCell>
-                            <Typography variant='body1'>
-                              {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
-                            </Typography>
-                          </TableCell>
+                        <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                      </TableCell>
                     </TableRow>
                   )
                 })}

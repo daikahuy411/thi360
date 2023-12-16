@@ -22,7 +22,7 @@ import {
   selectedPostCategory,
   selectPostCategory
 } from 'store/slices/postCategorySlice'
-import { CategoryType } from 'types/CategoryType'
+import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -358,7 +358,7 @@ const PostCategoryEditPage = () => {
                       </form>
                       {openCatalogDialog && (
                         <CategoryDialog
-                          categoryType={CategoryType.POST_CATEGORY}
+                          categoryType={CatalogType.POST_CATEGORY}
                           currentId={postCategoryId}
                           onNodeSelected={nodeId => {
                             handleSelectedParent(nodeId)

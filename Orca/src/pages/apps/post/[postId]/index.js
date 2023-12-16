@@ -28,7 +28,7 @@ import {
   selectedPost,
   selectPost
 } from 'store/slices/postSlice'
-import { CategoryType } from 'types/CategoryType'
+import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
 import ContentEditor from '@core/components/editor'
@@ -416,7 +416,7 @@ const EditPostPage = () => {
                       </Dialog>
                       {openCatalogDialog && (
                         <CategoryDialog
-                          categoryType={CategoryType.POST_CATEGORY}
+                          categoryType={CatalogType.POST_CATEGORY}
                           excludedId={0}
                           onNodeSelected={nodeId => {
                             handleSelectedOrganization(nodeId)

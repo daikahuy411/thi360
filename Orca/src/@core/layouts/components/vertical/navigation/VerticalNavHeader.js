@@ -82,7 +82,7 @@ const VerticalNavHeader = props => {
   }, [])
 
   return (
-    <MenuHeaderWrapper className='nav-header' sx={{ pl: menuHeaderPaddingLeft() }}>
+    <MenuHeaderWrapper className='nav-header' sx={{ pl: menuHeaderPaddingLeft() }} style={{ marginBottom: 20 }}>
       {userNavMenuBranding ? (
         userNavMenuBranding(props)
       ) : (
@@ -93,7 +93,10 @@ const VerticalNavHeader = props => {
             </Box>
           ) : (
             <Box style={{ padding: '20px' }}>
-              <HeaderTitle variant='h6' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 3 }) }}>
+              <HeaderTitle
+                variant='h6'
+                sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 3 }) }}
+              >
                 <span className='app-brand-logo demo me-1 logo'>
                   <img src='/themes/default/assets/img/edu-icon.svg' />
                 </span>

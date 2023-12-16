@@ -7,7 +7,7 @@ import { QuestionCategoryApi } from 'api/catalog-api'
 import { useRouter } from 'next/router'
 import CategoryDialog from 'pages/shared/category-dialog'
 import { Controller } from 'react-hook-form'
-import { CategoryType } from 'types/CategoryType'
+import { CatalogType } from 'types/CatalogType'
 
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import FolderIcon from '@mui/icons-material/FolderOpen'
@@ -121,7 +121,7 @@ const EditForm = props => {
 
       {openCatalogDialog && (
         <CategoryDialog
-          categoryType={CategoryType.QUESTION_CATEGORY}
+          categoryType={CatalogType.QUESTION_CATEGORY}
           excludedId={0}
           catalogId={questionCatalogId}
           onNodeSelected={nodeId => {

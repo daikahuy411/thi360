@@ -6,6 +6,7 @@ import {
 import TestApi from 'api/test-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
 import EditIcon from '@mui/icons-material/Edit'
@@ -45,6 +46,11 @@ const TestsTable = () => {
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(+event.target.value)
     setPage(0)
+  }
+
+  const onGenerated = response => {
+    setShowGenTest(false)
+    toast.success(response.data.message)
   }
 
   useEffect(() => {
@@ -172,7 +178,13 @@ const TestsTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      {showGenTest && <GenTestDialog onClose={() => setShowGenTest(false)} />}
+      {showGenTest && (
+        <GenTestDialog
+          onGenerated={response => onGenerated(response)}
+          testGroupId={testGroupId}
+          onClose={() => setShowGenTest(false)}
+        />
+      )}
     </>
   )
 }

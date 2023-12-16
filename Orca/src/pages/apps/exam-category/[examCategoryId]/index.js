@@ -22,7 +22,7 @@ import {
   selectedExamCategory,
   selectExamCategory
 } from 'store/slices/examCategorySlice'
-import { CategoryType } from 'types/CategoryType'
+import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -299,7 +299,7 @@ const ExamCategoryEditPage = () => {
                       </form>
                       {openCatalogDialog && (
                         <CategoryDialog
-                          categoryType={CategoryType.EXAM_CATEGORY}
+                          categoryType={CatalogType.EXAM_CATEGORY}
                           currentId={examCategoryId}
                           onNodeSelected={nodeId => {
                             handleSelectedParent(nodeId)

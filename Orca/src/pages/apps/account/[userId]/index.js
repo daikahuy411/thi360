@@ -23,7 +23,7 @@ import {
   selectAccount,
   selectedAccount
 } from 'store/slices/accountSlice'
-import { CategoryType } from 'types/CategoryType'
+import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -714,7 +714,7 @@ const EditAccountPage = () => {
 
                     {openCatalogDialog && (
                       <CategoryDialog
-                        categoryType={CategoryType.DOCUMENT_ORGANIZATION}
+                        categoryType={CatalogType.DOCUMENT_ORGANIZATION}
                         excludedId={0}
                         onNodeSelected={nodeId => {
                           handleSelectedOrganization(nodeId)

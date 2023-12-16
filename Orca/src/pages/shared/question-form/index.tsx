@@ -12,7 +12,7 @@ import {
   useForm
 } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { CategoryType } from 'types/CategoryType'
+import { CatalogType } from 'types/CatalogType'
 import { QuestionType } from 'types/QuestionType'
 import * as yup from 'yup'
 
@@ -594,7 +594,7 @@ const AddQuestionAnswer: React.FC<Props> = ({ isOpen, onClose, parentQuestionId,
 
                 {openCatalogDialog && (
                     <CategoryDialog
-                        categoryType={CategoryType.QUESTION_CATEGORY}
+                        categoryType={CatalogType.QUESTION_CATEGORY}
                         open={openCatalogDialog}
                         onClose={() => {
                             setOpenCatalogDialog(false)

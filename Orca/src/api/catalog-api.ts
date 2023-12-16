@@ -1,75 +1,75 @@
 import axios from 'axios'
 
-import { CategoryType } from '../types/CategoryType'
+import { CatalogType } from '../types/CatalogType'
 import ApiBase from './api-base'
 
 class CatalogApi extends ApiBase {
-  type: CategoryType
+  type: CatalogType
   url: string
 
-  constructor(catalogType: CategoryType) {
+  constructor(catalogType: CatalogType) {
     super('')
 
     this.url = ''
     this.type = catalogType
 
-    if (catalogType === CategoryType.QUESTION_CATEGORY) {
+    if (catalogType === CatalogType.QUESTION_CATEGORY) {
       this.baseApiUrl += 'questioncategories'
     }
 
-    if (catalogType === CategoryType.EXAM_CATEGORY) {
+    if (catalogType === CatalogType.EXAM_CATEGORY) {
       this.baseApiUrl += 'examcategories'
     }
 
-    if (catalogType === CategoryType.COURSE_CATEGORY) {
+    if (catalogType === CatalogType.COURSE_CATEGORY) {
       this.baseApiUrl += 'coursecategories'
     }
 
-    if (catalogType === CategoryType.POST_CATEGORY) {
+    if (catalogType === CatalogType.POST_CATEGORY) {
       this.baseApiUrl += 'postcategories'
     }
 
-    if (catalogType === CategoryType.PROGRAM_CATALOG) {
+    if (catalogType === CatalogType.PROGRAM_CATALOG) {
       this.baseApiUrl += 'programcatalog'
     }
 
-    if (catalogType === CategoryType.BOOK_CATALOG) {
+    if (catalogType === CatalogType.BOOK_CATALOG) {
       this.baseApiUrl += 'bookcatalog'
     }
 
-    if (catalogType === CategoryType.SUBJECT_CATALOG) {
+    if (catalogType === CatalogType.SUBJECT_CATALOG) {
       this.baseApiUrl += 'subjectcatalog'
     }
 
-    if (catalogType === CategoryType.SCHOOL_BLOCK_CATALOG) {
+    if (catalogType === CatalogType.SCHOOL_BLOCK_CATALOG) {
       this.baseApiUrl += 'schoolblockcatalog'
     }
 
-    if (catalogType === CategoryType.DOCUMENT_ORGANIZATION) {
+    if (catalogType === CatalogType.DEPARTMENT) {
       this.baseApiUrl += 'organizationCatalog'
     }
 
-    if (catalogType === CategoryType.DOCUMENT_TOPIC) {
+    if (catalogType === CatalogType.DOCUMENT_TOPIC) {
       this.baseApiUrl += 'topicCatalog'
     }
 
-    if (catalogType === CategoryType.DOCUMENT_AREA) {
+    if (catalogType === CatalogType.DOCUMENT_AREA) {
       this.baseApiUrl += 'areaCatalog'
     }
 
-    if (catalogType === CategoryType.DOCUMENT_SIGNER) {
+    if (catalogType === CatalogType.DOCUMENT_SIGNER) {
       this.baseApiUrl += 'signerCatalog'
     }
 
-    if (catalogType === CategoryType.DOCUMENT_POSITION) {
+    if (catalogType === CatalogType.DOCUMENT_POSITION) {
       this.baseApiUrl += 'positionCatalog'
     }
 
-    if (catalogType === CategoryType.MATERIAL_CATEGORY) {
+    if (catalogType === CatalogType.MATERIAL_CATEGORY) {
       this.baseApiUrl += 'materialcategories'
     }
 
-    if (catalogType === CategoryType.LIBRARY_CATEGORY) {
+    if (catalogType === CatalogType.LIBRARY_CATEGORY) {
       this.baseApiUrl += 'librarycategories'
     } 
   }
@@ -87,18 +87,18 @@ class CatalogApi extends ApiBase {
   }
 }
 
-export const QuestionCategoryApi = new CatalogApi(CategoryType.QUESTION_CATEGORY)
+export const QuestionCategoryApi = new CatalogApi(CatalogType.QUESTION_CATEGORY)
 
-export const ExamCategoryApi = new CatalogApi(CategoryType.EXAM_CATEGORY)
+export const ExamCategoryApi = new CatalogApi(CatalogType.EXAM_CATEGORY)
 
-export const TestGroupCategoryApi = new CatalogApi(CategoryType.TESTGROUP_CATEGORY)
+export const TestGroupCategoryApi = new CatalogApi(CatalogType.TESTGROUP_CATEGORY)
 
-export const CourseCategoryApi = new CatalogApi(CategoryType.COURSE_CATEGORY)
+export const CourseCategoryApi = new CatalogApi(CatalogType.COURSE_CATEGORY)
 
-export const PostCategoryApi = new CatalogApi(CategoryType.POST_CATEGORY)
+export const PostCategoryApi = new CatalogApi(CatalogType.POST_CATEGORY)
 
-export const MaterialCategoryApi = new CatalogApi(CategoryType.MATERIAL_CATEGORY)
+export const MaterialCategoryApi = new CatalogApi(CatalogType.MATERIAL_CATEGORY)
 
-export const LibraryCategoryApi = new CatalogApi(CategoryType.LIBRARY_CATEGORY)
+export const LibraryCategoryApi = new CatalogApi(CatalogType.LIBRARY_CATEGORY)
 
 export default CatalogApi

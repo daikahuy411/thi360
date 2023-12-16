@@ -34,7 +34,7 @@ import {
   selectedExam,
   selectExam
 } from 'store/slices/examSlice'
-import { CategoryType } from 'types/CategoryType'
+import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -654,7 +654,7 @@ const EditExamPage = () => {
 
                       {openCatalogDialog && (
                         <CategoryDialog
-                          categoryType={CategoryType.EXAM_CATEGORY}
+                          categoryType={CatalogType.EXAM_CATEGORY}
                           excludedId={0}
                           onNodeSelected={nodeId => {
                             handleSelectedOrganization(nodeId)

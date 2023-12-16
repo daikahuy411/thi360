@@ -26,7 +26,7 @@ import {
   selectedQuestion,
   selectQuestion
 } from 'store/slices/questionSlice'
-import { CategoryType } from 'types/CategoryType'
+import { CatalogType } from 'types/CatalogType'
 import { QuestionType } from 'types/QuestionType'
 import * as yup from 'yup'
 
@@ -78,6 +78,7 @@ import Typography from '@mui/material/Typography'
 
 import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
+import FillTheBlankEditor from './editor/fb'
 
 function PaperComponent(props) {
   return (
@@ -95,12 +96,13 @@ const QuestionEditForm = () => {
   const [item, setItem] = useState(null)
   const [answers, setAnswers] = useState([])
   const [anchorEl, setAnchorEl] = useState(null)
-  const [lsQuestionTypes, setLsQuestionTypes] = useState(null)
+  const [questionTypes, setQuestionTypes] = useState(null)
   const [questionTypeName, setQuestionTypeName] = useState('')
   const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
   const [openAddQuestionAnswer, setOpenAddQuestionAnswer] = useState(false)
   const [isValidAnswer, setIsValidAnswer] = useState(false)
   const [isloadingQuestion, setIsLoadingQuestion] = useState(false)
+  const [openFBEditor, setOpenFBEditor] = useState(false)
 
   let schema = yup.object().shape({
     content: yup.string().required('* bắt buộc')
@@ -151,7 +153,7 @@ const QuestionEditForm = () => {
 
   const getAllQuestionTypes = () => {
     new QuestionApi().getQuestionTypes().then(response => {
-      setLsQuestionTypes(response.data)
+      setQuestionTypes(response.data)
     })
   }
 
@@ -568,7 +570,8 @@ const QuestionEditForm = () => {
                           </Grid>
                           <br />
                           {currentQuestion.questionTypeId !== QuestionType.SA &&
-                            currentQuestion.questionTypeId !== QuestionType.GQ && (
+                            currentQuestion.questionTypeId !== QuestionType.GQ &&
+                            currentQuestion.questionTypeId !== QuestionType.FB && (
                               <>
                                 <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
                                   <Grid item xs={12}>
@@ -639,15 +642,15 @@ const QuestionEditForm = () => {
                                                       )}
                                                       {(currentQuestion.questionTypeId === QuestionType.SC ||
                                                         currentQuestion.questionTypeId === QuestionType.TF) && (
-                                                          <Radio
-                                                            checked={anwser.isCorrect}
-                                                            value={anwser.isCorrect}
-                                                            name={`rdb-ans-content-${anwser.id}`}
-                                                            onChange={event => {
-                                                              handleChangeAnwser(anwser.id, '')
-                                                            }}
-                                                          />
-                                                        )}
+                                                        <Radio
+                                                          checked={anwser.isCorrect}
+                                                          value={anwser.isCorrect}
+                                                          name={`rdb-ans-content-${anwser.id}`}
+                                                          onChange={event => {
+                                                            handleChangeAnwser(anwser.id, '')
+                                                          }}
+                                                        />
+                                                      )}
                                                       {currentQuestion.questionTypeId === QuestionType.FB && (
                                                         <Input
                                                           type='number'
@@ -712,7 +715,7 @@ const QuestionEditForm = () => {
                                                             <Icon icon='mdi:arrow-up' fontSize={20} />
                                                           </IconButton>
                                                         )}
-                                                        {index !== (answers.length - 1) && (
+                                                        {index !== answers.length - 1 && (
                                                           <IconButton onClick={() => moveItem(index, index + 1)}>
                                                             <Icon icon='mdi:arrow-down' fontSize={20} />
                                                           </IconButton>
@@ -804,7 +807,7 @@ const QuestionEditForm = () => {
                                           </Button>
                                         </Tooltip>
                                       </Box>
-                                      {lsQuestionTypes && (
+                                      {questionTypes && (
                                         <Menu
                                           anchorEl={anchorEl}
                                           id='account-menu'
@@ -840,7 +843,7 @@ const QuestionEditForm = () => {
                                           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                                           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                         >
-                                          {lsQuestionTypes.map(item => (
+                                          {questionTypes.map(item => (
                                             <MenuItem
                                               key={item.id}
                                               onClick={() => handleShowFormChildQuestion(item, null, true)}
@@ -1063,6 +1066,7 @@ const QuestionEditForm = () => {
                               )}
                             </>
                           )}
+                          {currentQuestion.questionTypeId === QuestionType.FB && <Button>Cấu hình câu hỏi FB</Button>}
                         </form>
                       )}
                     </div>
@@ -1073,7 +1077,7 @@ const QuestionEditForm = () => {
 
             {openCatalogDialog && (
               <CategoryDialog
-                categoryType={CategoryType.QUESTION_CATEGORY}
+                categoryType={CatalogType.QUESTION_CATEGORY}
                 open={openCatalogDialog}
                 onClose={() => {
                   setOpenCatalogDialog(false)
@@ -1097,6 +1101,15 @@ const QuestionEditForm = () => {
                 questionId={childQuestionSelected.questionId}
                 typeId={childQuestionSelected.typeId}
                 typeName={childQuestionSelected.name}
+              />
+            )}
+
+            {openFBEditor && (
+              <FillTheBlankEditor
+                question={currentQuestion}
+                onClose={() => {
+                  setOpenFBEditor(false)
+                }}
               />
             )}
 

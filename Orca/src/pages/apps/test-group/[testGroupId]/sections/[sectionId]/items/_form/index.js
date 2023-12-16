@@ -34,7 +34,6 @@ import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import FolderIcon from '@mui/icons-material/FolderOpen'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
-import Checkbox from '@mui/material/Checkbox'
 import Chip from '@mui/material/Chip'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
@@ -118,10 +117,10 @@ const ItemEditForm = () => {
   }
 
   const moveItem = (from, to) => {
-    var reOrderItems = [...currentTestGroupSectionItem.questions]
+    var reOrderItems = [...selectedQuestions]
     var f = reOrderItems.splice(from, 1)[0]
     reOrderItems.splice(to, 0, f)
-    currentTestGroupSectionItem.questions = reOrderItems
+    setSelectedQuestions(reOrderItems)
   }
 
   const {
@@ -141,10 +140,12 @@ const ItemEditForm = () => {
     item.testGroupId = parseInt(testGroupId)
     item.testGroupSectionId = parseInt(sectionId)
     item.type = itemType
+    item.questionCategory = {}
+    item.questions = []
     if (itemType == 2) {
       item.value = selectedQuestions.map(n => n.id).join(',')
     } else if (itemType == 4) {
-      item.value = selectedQuestionCategory.key
+      item.value = selectedQuestionCategory.key.toString()
     }
     new TestGroupSectionItemApi().save(item).then(response => {
       toast.success('Cập nhật thành công')
@@ -156,10 +157,15 @@ const ItemEditForm = () => {
       setSelectedQuestionCategory(items)
       setOpenQuestionCatalogSelector(false)
     } else {
-      var newSelectedQuestions = selectedQuestions || []
-      setSelectedQuestions(newSelectedQuestions.concat(items))
-      toast.success('Cập nhật thành công')
-      setOpenQuestionCatalogSelector(false)
+      var newSelectedQuestions = [...selectedQuestions]
+      items.map(item => {
+        if (!newSelectedQuestions.find(x => x.id == item.id)) {
+          newSelectedQuestions.push(item)
+        }
+      })
+      setSelectedQuestions(newSelectedQuestions)
+      // toast.success('Cập nhật thành công')
+      // setOpenQuestionCatalogSelector(false)
     }
   }
 
@@ -370,26 +376,15 @@ const ItemEditForm = () => {
                                     <Table aria-label='simple table'>
                                       <TableHead>
                                         <TableRow>
-                                          <TableCell padding='checkbox'>
-                                            <Checkbox
-                                              onChange={handleSelectAllClick}
-                                              checked={
-                                                selectedQuestions.length > 0 &&
-                                                selected.length === selectedQuestions.length
-                                              }
-                                              indeterminate={
-                                                selected.length > 0 && selected.length < selectedQuestions.length
-                                              }
-                                              inputProps={{ 'aria-label': 'select all desserts' }}
-                                            />
+                                          <TableCell align='center' style={{ width: 60 }}>
+                                            #
                                           </TableCell>
                                           <TableCell align='center' style={{ width: 180 }}>
-                                            Sửa
+                                            Thao tác
                                           </TableCell>
                                           <TableCell style={{ width: 160 }}>Mã</TableCell>
                                           <TableCell>Nội dung</TableCell>
-                                          <TableCell style={{ width: 180 }}>Bộ câu hỏi</TableCell>
-                                          <TableCell style={{ width: 180 }}>Danh mục</TableCell>
+                                          <TableCell style={{ width: 380 }}>Bộ câu hỏi- Danh mục</TableCell>
                                           <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
                                           <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
                                         </TableRow>
@@ -413,13 +408,7 @@ const ItemEditForm = () => {
                                                 }
                                               }}
                                             >
-                                              <TableCell padding='checkbox'>
-                                                <Checkbox
-                                                  checked={isItemSelected}
-                                                  inputProps={{ 'aria-labelledby': labelId }}
-                                                  onClick={event => handleSelectClick(event, row.id)}
-                                                />
-                                              </TableCell>
+                                              <TableCell align='center'>{index + 1}</TableCell>
                                               <TableCell component='th' scope='row' align='right'>
                                                 {index > 0 && (
                                                   <IconButton onClick={() => moveItem(index, index - 1)}>
@@ -448,17 +437,17 @@ const ItemEditForm = () => {
                                                 {row.shortContent}
                                               </TableCell>
                                               <TableCell component='th' scope='row'>
-                                                {row.catalogName}
-                                              </TableCell>
-                                              <TableCell>
-                                                {row.categoryName ? (
-                                                  <Chip
-                                                    icon={<Icon icon='mdi:tag' />}
-                                                    label={row.categoryName}
-                                                    color='secondary'
-                                                    variant='outlined'
-                                                  />
-                                                ) : null}
+                                                <p style={{ paddingBottom: 5 }}>{row.catalogName}</p>
+                                                <div>
+                                                  {row.categoryName ? (
+                                                    <Chip
+                                                      icon={<Icon icon='mdi:tag' />}
+                                                      label={row.categoryName}
+                                                      color='secondary'
+                                                      variant='outlined'
+                                                    />
+                                                  ) : null}
+                                                </div>
                                               </TableCell>
                                               <TableCell>{row.questionTypeName}</TableCell>
                                               <TableCell>

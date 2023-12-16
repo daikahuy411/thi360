@@ -3,8 +3,7 @@ import React, {
   useState
 } from 'react'
 
-import TestApi from 'api/test-api'
-import toast from 'react-hot-toast'
+import TestGroupApi from 'api/test-group-api'
 
 import CustomRadioBasic from '@core/components/custom-radio/basic'
 import Icon from '@core/components/icon'
@@ -31,7 +30,7 @@ const itemTypes = [
   }
 ]
 
-function GenTestDialog({ onClose }) {
+function GenTestDialog({ testGroupId, onClose, onGenerated }) {
   const [loading, setLoading] = useState(false)
   const [itemType, setItemType] = useState(itemTypes[0].value)
   const [isValid, setIsValid] = useState(false)
@@ -53,13 +52,15 @@ function GenTestDialog({ onClose }) {
   const onOk = () => {
     const request = {
       name: startIndex.toString(),
-      quantity: numberOfTest,
-      testGroupId: 1,
-      startIndex: startIndex,
-      allowDuplicateQuestionInTests: itemType == 0
+      numberOfTest: numberOfTest,
+      testGroupId: testGroupId,
+      startNumber: startIndex,
+      tollerant: itemType
     }
-    new TestApi().generateTest(request).then(respone => {
-      toast.success(respone.data.message)
+    new TestGroupApi().generateTest(request).then(respone => {
+      if(onGenerated){
+        onGenerated(respone.data)
+      }
     })
   }
 

@@ -5,7 +5,7 @@ import React, {
 
 import CatalogApi from 'api/catalog-api'
 import OrganizationApi from 'api/organization-api'
-import { CategoryType } from 'types/CategoryType'
+import { CategoryType } from 'types/CatalogType'
 
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
@@ -25,14 +25,21 @@ import Typography from '@mui/material/Typography'
 import CatalogTree from './tree-view'
 
 // catalogId: avaiable trong trường hợp là QuestionCategory
-function CategoryDialog({ categoryType, open, onClose, catalogId = 0, currentId = 0, onNodeSelected = null }) {
-  const [selectedNodeId, setSelectedNodeId] = useState(0)
+export default function CatalogDialog({
+  categoryType,
+  open,
+  onClose,
+  catalogId = 0,
+  currentId = 0,
+  onNodeSelected = null
+}) {
   const [data, setData] = useState([])
   const [totalItem, setTotalItem] = useState(0)
   const [totalParentItem, setTotalParentItem] = useState(0)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [loading, setLoading] = useState(false)
+  cosnt[(selectedNodeId, setSelectedNodeId)] = useState(0)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -67,7 +74,7 @@ function CategoryDialog({ categoryType, open, onClose, catalogId = 0, currentId 
         setLoading(false)
       })
     } else {
-      new CatalogApi(categoryType).searches(param).then(response => {
+      new CatalogApi(categoryType).getAll().then(response => {
         setData(response.data.value)
         setTotalItem(response.data.totalItems)
         setTotalParentItem(response.data.totalParentItems)
@@ -150,9 +157,7 @@ function CategoryDialog({ categoryType, open, onClose, catalogId = 0, currentId 
             <div style={{ overflowY: 'scroll', height: `calc(100vh - 130px)` }}>
               <TableContainer component={Paper} style={{ marginTop: 5, padding: 20 }}>
                 <LoadingSpinner active={loading}>
-                  {data && (
-                    <CatalogTree data={data} />
-                  )}
+                  {data && <CatalogTree onNodeSelected={nodeId => handleNodeSelected(nodeId)} data={data} />}
                 </LoadingSpinner>
               </TableContainer>
               <TablePagination
@@ -172,5 +177,3 @@ function CategoryDialog({ categoryType, open, onClose, catalogId = 0, currentId 
     </Drawer>
   )
 }
-
-export default CategoryDialog

@@ -1,8 +1,9 @@
 // ** Navigation Imports
 import { useAuth } from 'hooks/useAuth'
 import {
-  hostLinks,
+  helpLink,
   studentLinks,
+  systemLinks,
   teacherLinks
 } from 'navigation'
 import HorizontalNavItems from 'navigation/horizontal'
@@ -29,10 +30,12 @@ const UserLayout = ({ children, contentHeightFixed }) => {
 
   if (auth.user && auth.user.roles.includes('Host')) {
     links = links.concat(teacherLinks)
-    links = links.concat(hostLinks)
+    // systemLinks.push(helpLink)
+    links = links.concat([...systemLinks, helpLink])
   } else {
     if (auth.user && auth.user.roles.includes('Teacher')) {
-      links = links.concat(teacherLinks)
+      // teacherLinks.push(helpLink)
+      links = links.concat([...teacherLinks, helpLink])
     }
   }
 
@@ -86,20 +89,6 @@ const UserLayout = ({ children, contentHeightFixed }) => {
         }
       })}
     >
-      {/* <Head> */}
-        {/* Theme default v1 */}
-        {/* <link rel="stylesheet" href="/themes/default/assets/vendor/fonts/materialdesignicons.css" />
-        <link rel="stylesheet" href="/themes/default/assets/vendor/fonts/flag-icons.css" />
-        <link rel="stylesheet" href="/themes/default/assets/vendor/libs/node-waves/node-waves.css" />
-
-        <link href='/themes/default/assets/vendor/css/rtl/core.css' rel='stylesheet' />
-        <link href='/themes/default/assets/vendor/css/rtl/theme-default.css' rel='stylesheet' />
-        <link href='/themes/default/assets/css/demo.css' rel='stylesheet' />
-        <link href='/themes/default/assets/css/style.css' rel='stylesheet' />
-
-        <link rel="stylesheet" href="/themes/default/assets/vendor/libs/swiper/swiper.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" /> */}
-      {/* </Head> */}
       {children}
     </Layout>
   )
