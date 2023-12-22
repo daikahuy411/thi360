@@ -10,7 +10,7 @@ const Nav = ({ children }) => {
 
   return (
     <>
-      <div className='grid-block vertical flex-none finger-tabs__tabs'>
+      <div className='grid-block vertical  finger-tabs__tabs' style={{ height: '100vh' }}>
         <Link
           className={`finger-tabs__tab flex-none ${
             router.asPath === `/apps/question-catalog/${questionCatalogId}/` ? 'is-active' : 'disabled'

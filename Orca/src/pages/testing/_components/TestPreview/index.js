@@ -1,6 +1,6 @@
 import React from 'react'
 
-import TestingApi from 'api/testing-api'
+import TestApi from 'api/test-api'
 import _ from 'lodash'
 import Head from 'next/head'
 import { withRouter } from 'next/router'
@@ -27,15 +27,15 @@ class TestReview extends React.Component {
   }
 
   loadTestById(testId) {
-    const testingApi = new TestingApi()
-    testingApi.GetTestPreview(testId).then(response => {
+    const testingApi = new TestApi()
+    testingApi.getTestPreview(testId).then(response => {
       let test = response.data
       this.initialize(test)
     })
   }
 
   loadQuestionById(questionId) {
-    const testingApi = new TestingApi()
+    const testingApi = new TestApi()
     testingApi.GetQuestionPreview(questionId).then(response => {
       let test = response.data
       this.initialize(test)
@@ -87,7 +87,7 @@ class TestReview extends React.Component {
   saveAndNext() {
     let currentQuestionIndex = 0
     currentQuestionIndex = _.findIndex(this.state.test.testGroup.questionMaps, {
-      Id: this.state.currentQuestionId
+      id: this.state.currentQuestionId
     })
 
     currentQuestionIndex++
@@ -99,12 +99,7 @@ class TestReview extends React.Component {
 
     const nextQuestion = this.state.test.testGroup.questionMaps[currentQuestionIndex]
 
-    this.viewQuestion(
-      nextQuestion.id,
-      nextQuestion.parentId,
-      nextQuestion.testGroupSectionItemId,
-      nextQuestion.testGroupSectionId
-    )
+    this.viewQuestion(nextQuestion.id, nextQuestion.parentId, nextQuestion.itemId, nextQuestion.sectionId)
   }
 
   sectionClassName(sectionId) {
@@ -144,7 +139,6 @@ class TestReview extends React.Component {
   }
 
   componentDidMount() {
-
     // this.props.token
 
     if (this.props.testId) {
@@ -159,9 +153,9 @@ class TestReview extends React.Component {
     const userProfile = {} // LocalStorageService.getUserProfile();
     return (
       <>
-      <Head>
-        <title>{`Xem lại bài làm: `}</title>
-      </Head>
+        <Head>
+          <title>{`Xem lại bài làm: `}</title>
+        </Head>
         {this.state.test && (
           <div id='__next'>
             <div className='flex flex-column flex-grow-1 bg-white'>
@@ -405,12 +399,7 @@ class TestReview extends React.Component {
                                       <div
                                         key={`question-panel-${question.id}`}
                                         onClick={() => {
-                                          this.viewQuestion(
-                                            question.id,
-                                            question.parentId,
-                                            question.testGroupSectionItemId,
-                                            section.id
-                                          )
+                                          this.viewQuestion(question.id, question.parentId, question.itemId, section.id)
                                         }}
                                         className='flex items-center justify-center mb3 relative'
                                         style={{ flexBasis: '20%' }}
@@ -440,12 +429,12 @@ class TestReview extends React.Component {
                       </div>
                     ))}
                     <div className='flex flex-column mv2'>
-                      <a
+                      {/* <a
                         href={`/exam/detail/${this.props.examId}`}
                         className='flex pointer br2 ba mt2 sky-blue mh2 ttu f6 b--sky-blue fw6 justify-center pa2'
                       >
                         Quay lại
-                      </a>
+                      </a> */}
                     </div>
                   </div>
                 </div>

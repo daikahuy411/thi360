@@ -13,7 +13,7 @@ import { FolderType } from 'enum/FolderType'
 import moment from 'moment-timezone'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CategoryDialog from 'pages/shared/category-dialog'
+import CatalogDialog from 'pages/shared/catalog-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import ParentFolderField from 'pages/shared/folder/parent-folder-field'
 import Draggable from 'react-draggable'
@@ -653,7 +653,7 @@ const EditExamPage = () => {
                       </form>
 
                       {openCatalogDialog && (
-                        <CategoryDialog
+                        <CatalogDialog
                           categoryType={CatalogType.EXAM_CATEGORY}
                           excludedId={0}
                           onNodeSelected={nodeId => {

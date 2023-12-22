@@ -7,7 +7,7 @@ import OrganizationApi from 'api/organization-api'
 import UserApi from 'api/user-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CategoryDialog from 'pages/shared/category-dialog'
+import CatalogDialog from 'pages/shared/catalog-dialog'
 import TenantSelector from 'pages/shared/tenant-selector'
 import Draggable from 'react-draggable'
 import {
@@ -713,7 +713,7 @@ const EditAccountPage = () => {
                     </form>
 
                     {openCatalogDialog && (
-                      <CategoryDialog
+                      <CatalogDialog
                         categoryType={CatalogType.DOCUMENT_ORGANIZATION}
                         excludedId={0}
                         onNodeSelected={nodeId => {

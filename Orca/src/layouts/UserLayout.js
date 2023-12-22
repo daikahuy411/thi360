@@ -36,6 +36,8 @@ const UserLayout = ({ children, contentHeightFixed }) => {
     if (auth.user && auth.user.roles.includes('Teacher')) {
       // teacherLinks.push(helpLink)
       links = links.concat([...teacherLinks, helpLink])
+    }else{
+      links =  [...links, helpLink]
     }
   }
 

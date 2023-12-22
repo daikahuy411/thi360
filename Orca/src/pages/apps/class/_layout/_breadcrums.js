@@ -43,7 +43,7 @@ const TopNav = props => {
       {currentClass &&
         currentClass.ancestors &&
         currentClass.ancestors.map(item => (
-          <Link underline='hover' color='inherit' href={`/apps/class/view/${item.id}`}>
+          <Link underline='hover' color='inherit' key={`br-${item.id}`} href={`/apps/class/view/${item.id}`}>
             {item.name}
           </Link>
         ))}

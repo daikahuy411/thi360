@@ -306,6 +306,7 @@ export default function QuestionCatalogSelector({ open, onClose, onOk, type = 2 
                               <Link
                                 underline='hover'
                                 href='#'
+                                key={`l-${item.id}`}
                                 color='primary'
                                 onClick={() => {
                                   setFolderId(item.id)

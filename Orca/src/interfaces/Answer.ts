@@ -5,6 +5,7 @@ export default interface Answer extends EntityBase {
   content: string;
   order: number;
   questionId: number;
+  group: number;
   parentQuestionId: number;
   explain: string;
   errors?: any;

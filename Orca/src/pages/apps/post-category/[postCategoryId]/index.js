@@ -7,7 +7,7 @@ import {
 import { PostCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CategoryDialog from 'pages/shared/category-dialog'
+import CatalogDialog from 'pages/shared/catalog-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import {
   Controller,
@@ -357,7 +357,7 @@ const PostCategoryEditPage = () => {
                         </Grid>
                       </form>
                       {openCatalogDialog && (
-                        <CategoryDialog
+                        <CatalogDialog
                           categoryType={CatalogType.POST_CATEGORY}
                           currentId={postCategoryId}
                           onNodeSelected={nodeId => {

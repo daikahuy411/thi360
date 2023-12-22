@@ -1,9 +1,9 @@
-import { useTheme } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import LoadingOverlay from 'react-loading-overlay'
 import ClipLoader from 'react-spinners/ClipLoader'
 
-const LoadingSpinner = ({ sx, children, active, minHeight = 300 }) => {
+import { useTheme } from '@mui/material/styles'
+
+const LoadingSpinner = ({ children, active, minHeight = 300 }) => {
   const theme = useTheme()
 
   return (

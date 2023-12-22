@@ -1,14 +1,20 @@
 import { useEffect } from 'react'
 
 import TestGroupApi from 'api/test-group-api'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedTestGroup, selectTestGroup } from 'store/slices/testGroupSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedTestGroup,
+  selectTestGroup
+} from 'store/slices/testGroupSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Typography from '@mui/material/Typography'
-import Link from 'next/link'
 
 const TopNav = props => {
   const router = useRouter()
@@ -47,7 +53,7 @@ const TopNav = props => {
       {currentTestGroup &&
         currentTestGroup.ancestors &&
         currentTestGroup.ancestors.map(item => (
-          <Link underline='hover' color='inherit' href={`/apps/test-group/view/${item.id}`}>
+          <Link underline='hover' key={`br-${item.id}`} color='inherit' href={`/apps/test-group/view/${item.id}`}>
             {item.name}
           </Link>
         ))}

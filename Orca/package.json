@@ -41,8 +41,7 @@
     "axios-mock-adapter": "1.21.2",
     "babel-eslint": "10.1.0",
     "chart.js": "3.9.1",
-    "ckeditor4-react": "^4.3.0",
-    "ckeditor5-custom-build": "file:./ckeditor5",
+    "ckeditor5-custom-build": "file:ckeditor5",
     "cleave.js": "1.6.0",
     "clipboard-copy": "4.0.1",
     "clsx": "1.2.1",
@@ -96,7 +95,7 @@
     "yup": "0.32.11"
   },
   "devDependencies": {
-    "@ckeditor/ckeditor5-react": "^3.0.0",
+    "@ckeditor/ckeditor5-react": "^3.0.3",
     "@iconify/iconify": "3.0.0",
     "@iconify/json": "2.1.131",
     "@iconify/tools": "2.1.1",

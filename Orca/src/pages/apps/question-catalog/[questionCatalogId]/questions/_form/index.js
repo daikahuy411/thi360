@@ -1,5 +1,5 @@
+'use client' // only in App Router
 import {
-  Fragment,
   useEffect,
   useState
 } from 'react'
@@ -8,9 +8,9 @@ import { QuestionCategoryApi } from 'api/catalog-api'
 import QuestionApi from 'api/question-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CategoryDialog from 'pages/shared/category-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import CircularLoading from 'pages/shared/loading/CircularLoading'
+import QuestionCategoryDialog from 'pages/shared/question-category-selector'
 import AddQuestionAnswer from 'pages/shared/question-form'
 import Draggable from 'react-draggable'
 import {
@@ -23,33 +23,30 @@ import {
   useSelector
 } from 'react-redux'
 import {
+  sortableContainer,
+  sortableElement
+} from 'react-sortable-hoc'
+import {
   selectedQuestion,
   selectQuestion
 } from 'store/slices/questionSlice'
-import { CatalogType } from 'types/CatalogType'
 import { QuestionType } from 'types/QuestionType'
 import * as yup from 'yup'
 
+import ContentEditor from '@core/components/editor'
 import Icon from '@core/components/icon'
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
-import EditIcon from '@mui/icons-material/Edit'
 import FolderIcon from '@mui/icons-material/FolderOpen'
 import {
   Button,
-  Divider,
-  Input
+  Select
 } from '@mui/material'
 import Alert from '@mui/material/Alert'
-import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardHeader from '@mui/material/CardHeader'
 import Checkbox from '@mui/material/Checkbox'
-import Chip from '@mui/material/Chip'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
@@ -61,7 +58,6 @@ import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
-import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import Paper from '@mui/material/Paper'
@@ -78,7 +74,13 @@ import Typography from '@mui/material/Typography'
 
 import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
-import FillTheBlankEditor from './editor/fb'
+
+// const ContentEditor = dynamic(
+//   () => {
+//     return import('@core/components/editor/index-bak')
+//   },
+//   { ssr: false }
+// )
 
 function PaperComponent(props) {
   return (
@@ -88,10 +90,16 @@ function PaperComponent(props) {
   )
 }
 
+const SortableItem = sortableElement(({ value }) => <>{value}</>)
+
+const SortableContainer = sortableContainer(({ children }) => {
+  return <>{children}</>
+})
+
 const QuestionEditForm = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { questionCatalogId, questionId, type } = router.query
+  const { questionCatalogId, questionId, type, parentId, questionCategoryId } = router.query
   const currentQuestion = useSelector(selectedQuestion)
   const [item, setItem] = useState(null)
   const [answers, setAnswers] = useState([])
@@ -102,11 +110,25 @@ const QuestionEditForm = () => {
   const [openAddQuestionAnswer, setOpenAddQuestionAnswer] = useState(false)
   const [isValidAnswer, setIsValidAnswer] = useState(false)
   const [isloadingQuestion, setIsLoadingQuestion] = useState(false)
-  const [openFBEditor, setOpenFBEditor] = useState(false)
+  const [category, setCategory] = useState(null)
+  const [answerGroups, setAnswerGroups] = useState([])
 
   let schema = yup.object().shape({
     content: yup.string().required('* bắt buộc')
   })
+
+  const handleSortEnd = ({ oldIndex, newIndex }) => {
+    // const tmp = [...list];
+    // tmp.splice(newIndex, 0, tmp.splice(oldIndex, 1)[0]);
+    // setList(tmp);
+  }
+
+  const handleSortStart = ({ node }) => {
+    // const tds = document.getElementsByClassName("SortableHelper")[0].childNodes;
+    // node.childNodes.forEach(
+    //   (node, idx) => (tds[idx].style.width = `${node.offsetWidth}px`)
+    // );
+  }
 
   const {
     control,
@@ -135,6 +157,19 @@ const QuestionEditForm = () => {
     }
   }, [questionId])
 
+  useEffect(() => {
+    if (!questionCategoryId || questionCategoryId == '0') {
+      return
+    }
+
+    QuestionCategoryApi.get(questionCategoryId).then(response => {
+      if (response.data) {
+        setCategorySelected({ categoryId: questionCategoryId, categoryName: response.data.name })
+        setItem({ ...item, categoryId: Number(questionCategoryId) })
+      }
+    })
+  }, [questionCategoryId])
+
   const fetchData = questionId => {
     if (type === QuestionType.GQ) {
       setIsLoadingQuestion(true)
@@ -148,6 +183,19 @@ const QuestionEditForm = () => {
 
       setAnswers(Object.values(data.answers))
       setIsLoadingQuestion(false)
+
+      if (data.questionTypeId === QuestionType.MATCHING) {
+        var ags = []
+        data.answers.forEach(a => {
+          const g = ags.find(x => x.index == a.group)
+          if (!g) {
+            ags.push({ index: a.group, answers: [...a] })
+          } else {
+            g.answers.push(...a)
+          }
+        })
+        setAnswerGroups([...ags])
+      }
     })
   }
 
@@ -177,6 +225,10 @@ const QuestionEditForm = () => {
     setQuestionTypeName(item.questionTypeName)
     dispatch(selectQuestion(item))
     setAnswers(Object.values(item.answers))
+
+    if (type == QuestionType.MATCHING) {
+      initAnswerGroup()
+    }
   }
 
   useEffect(() => {
@@ -232,7 +284,12 @@ const QuestionEditForm = () => {
     param.name = itemValue.name
     param.content = itemValue.content
     param.explain = itemValue.explain
-    param.categoryId = categorySelected.categoryId
+    param.categoryId = parseInt(categorySelected.categoryId)
+    param.catalogName = ''
+
+    if (parentId && parentId != '0' && !isNaN(parentId)) {
+      param.parentId = parseInt(parentId)
+    }
 
     let answerArr = []
     answers.forEach(elm => {
@@ -243,6 +300,13 @@ const QuestionEditForm = () => {
       const content = getValues(`anws-content-${elm.id}`)
       if (content) elm.content = content
     })
+
+    answerGroups.forEach(e => {
+      e.answers.forEach(a => {
+        answerArr.push(Object.assign({}, a))
+      })
+    })
+
     param.answers = answerArr
 
     new QuestionApi()
@@ -250,7 +314,8 @@ const QuestionEditForm = () => {
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code == 1) {
-          router.push(`/apps/question-catalog/${questionCatalogId}/questions`)
+          router.query.questionId = response.data.id
+          router.push(router)
         } else {
           reset()
           cleanCategory()
@@ -300,6 +365,51 @@ const QuestionEditForm = () => {
 
     answers.push(newAnswer)
     setAnswers([...answers])
+  }
+
+  const addMatchingAnswerGroup = () => {
+    const groupIndex = answerGroups.length
+    let leftAnswer = new QuestionApi().createAnswer(-(answers.length + 1), 1, '', false, {
+      isError: false,
+      message: ''
+    })
+    leftAnswer.group = groupIndex
+
+    let rightAnswer = new QuestionApi().createAnswer(-(answers.length + 1), 2, '', false, {
+      isError: false,
+      message: ''
+    })
+    rightAnswer.group = groupIndex
+
+    answerGroups.push({ id: groupIndex, order: groupIndex + 1, answers: [leftAnswer, rightAnswer] })
+    setAnswerGroups([...answerGroups])
+  }
+
+  const initAnswerGroup = () => {
+    for (var i = 1; i <= 4; i++) {
+      const groupIndex = answerGroups.length
+      let leftAnswer = new QuestionApi().createAnswer(-(answers.length + 1), 1, '', false, {
+        isError: false,
+        message: ''
+      })
+      leftAnswer.group = groupIndex
+
+      let rightAnswer = new QuestionApi().createAnswer(-(answers.length + 1), 2, '', false, {
+        isError: false,
+        message: ''
+      })
+      rightAnswer.group = groupIndex
+
+      answerGroups.push({ id: groupIndex, order: groupIndex + 1, answers: [leftAnswer, rightAnswer] })
+    }
+
+    setAnswerGroups([...answerGroups])
+  }
+
+  const removeMatchingAnswerGroup = id => {
+    let ags = [...answerGroups]
+    ags = ags.filter(x => x.id != id)
+    setAnswerGroups(ags)
   }
 
   const removeAnswer = id => {
@@ -411,6 +521,14 @@ const QuestionEditForm = () => {
     setAnchorElChildQuestion(null)
   }
 
+  const getBackUrl = () => {
+    if (questionCategoryId && questionCategoryId != '0') {
+      return `/apps/question-catalog/${questionCatalogId}/categories/${questionCategoryId}/questions/`
+    }
+
+    return `/apps/question-catalog/${questionCatalogId}/questions/`
+  }
+
   return (
     <>
       <div style={{ padding: 0 }}>
@@ -446,11 +564,7 @@ const QuestionEditForm = () => {
                           &nbsp;
                         </>
                       )}
-                      <Button
-                        variant='outlined'
-                        component={Link}
-                        href={`/apps/question-catalog/${questionCatalogId}/questions`}
-                      >
+                      <Button variant='outlined' component={Link} href={getBackUrl()}>
                         <ArrowBackIcon />
                         &nbsp;Quay lại
                       </Button>
@@ -458,7 +572,7 @@ const QuestionEditForm = () => {
                       <Button disabled={!isValid || !isValidAnswer} onClick={() => save(1)} variant='contained'>
                         Cập nhật
                       </Button>
-                      {(!currentQuestion || currentQuestion.id == 0) && (
+                      {questionId == '0' && (
                         <>
                           &nbsp;
                           <Button disabled={!isValid || !isValidAnswer} onClick={() => save(2)} variant='contained'>
@@ -518,6 +632,9 @@ const QuestionEditForm = () => {
                                 />
                               </FormControl>
                             </Grid>
+                            <Grid item xs={12}>
+                              <Typography>Nội dung</Typography>
+                            </Grid>
                             <Grid item xs={12} md={12}>
                               <FormControl fullWidth>
                                 <Controller
@@ -525,17 +642,11 @@ const QuestionEditForm = () => {
                                   control={control}
                                   rules={{ required: true }}
                                   render={({ field: { value, onChange } }) => (
-                                    <TextField
-                                      multiline
-                                      rows={3}
-                                      fullWidth
-                                      value={value ?? ''}
-                                      label='Nội dung'
-                                      InputLabelProps={{ shrink: true }}
-                                      required
-                                      onChange={onChange}
-                                      error={Boolean(errors.content)}
-                                      aria-describedby='validation-schema-name'
+                                    <ContentEditor
+                                      content={value ?? ''}
+                                      onChange={data => {
+                                        onChange(data)
+                                      }}
                                     />
                                   )}
                                 />
@@ -546,6 +657,9 @@ const QuestionEditForm = () => {
                                 )}
                               </FormControl>
                             </Grid>
+                            <Grid item xs={12}>
+                              <Typography>Giải thích</Typography>
+                            </Grid>
                             <Grid item xs={12} md={12}>
                               <FormControl fullWidth>
                                 <Controller
@@ -553,15 +667,11 @@ const QuestionEditForm = () => {
                                   control={control}
                                   rules={{ required: false }}
                                   render={({ field: { value, onChange } }) => (
-                                    <TextField
-                                      multiline
-                                      rows={2}
-                                      fullWidth
-                                      value={value ?? ''}
-                                      label='Giải thích'
-                                      InputLabelProps={{ shrink: true }}
-                                      onChange={onChange}
-                                      aria-describedby='validation-schema-name'
+                                    <ContentEditor
+                                      content={value ?? ''}
+                                      onChange={data => {
+                                        onChange(data)
+                                      }}
                                     />
                                   )}
                                 />
@@ -571,13 +681,14 @@ const QuestionEditForm = () => {
                           <br />
                           {currentQuestion.questionTypeId !== QuestionType.SA &&
                             currentQuestion.questionTypeId !== QuestionType.GQ &&
+                            currentQuestion.questionTypeId !== QuestionType.MATCHING &&
                             currentQuestion.questionTypeId !== QuestionType.FB && (
                               <>
                                 <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
                                   <Grid item xs={12}>
                                     {currentQuestion.questionTypeId === QuestionType.ORDER && (
                                       <>
-                                        <Alert severity='info'>
+                                        <Alert>
                                           <strong>Hướng dẫn</strong>
                                           <br />
                                           Thứ tự đáp án đúng phải được sắp xếp theo thứ tự từ trên xuống dưới.
@@ -592,11 +703,12 @@ const QuestionEditForm = () => {
                                             <TableCell padding='checkbox' align='center'>
                                               #
                                             </TableCell>
+                                            <TableCell style={{ width: 50 }}></TableCell>
+                                            <TableCell style={{ width: 110 }}>Thứ tự</TableCell>
                                             {currentQuestion.questionTypeId !== QuestionType.ORDER && (
                                               <TableCell style={{ width: 120 }}>Đáp án đúng</TableCell>
                                             )}
                                             <TableCell>Nội dung</TableCell>
-                                            <TableCell style={{ width: 150 }}></TableCell>
                                           </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -619,6 +731,29 @@ const QuestionEditForm = () => {
                                                     style={{ textAlign: 'center' }}
                                                   >
                                                     {index + 1}
+                                                  </TableCell>
+                                                  <TableCell scope='row' component='th' align='right'>
+                                                    <Tooltip title='Xóa đáp án'>
+                                                      <span>
+                                                        <IconButton
+                                                          aria-label='Xóa đáp án'
+                                                          onClick={() => removeAnswer(anwser.id)}
+                                                        >
+                                                          <Icon icon='mdi:trash' fontSize={20} />
+                                                        </IconButton>
+                                                      </span>
+                                                    </Tooltip>
+                                                  </TableCell>
+                                                  <TableCell scope='row' component='th' style={{ textAlign: 'center' }}>
+                                                    <TextField
+                                                      type='number'
+                                                      name={`ans-order-${anwser.id}`}
+                                                      value={anwser.order}
+                                                      size={'small'}
+                                                      onChange={event => {
+                                                        handleChangeAnwser(anwser.id, 'position', event.target.value)
+                                                      }}
+                                                    />
                                                   </TableCell>
                                                   {currentQuestion.questionTypeId !== QuestionType.ORDER && (
                                                     <TableCell
@@ -652,7 +787,7 @@ const QuestionEditForm = () => {
                                                         />
                                                       )}
                                                       {currentQuestion.questionTypeId === QuestionType.FB && (
-                                                        <Input
+                                                        <TextField
                                                           type='number'
                                                           name={`ans-order-${anwser.id}`}
                                                           value={anwser.order}
@@ -674,31 +809,15 @@ const QuestionEditForm = () => {
                                                         control={control}
                                                         rules={{ required: true }}
                                                         render={({ field: { value, onChange } }) => (
-                                                          <TextField
-                                                            multiline
-                                                            rows={
-                                                              currentQuestion.questionTypeId == QuestionType.TF ? 1 : 3
-                                                            }
-                                                            fullWidth
-                                                            disabled={
-                                                              currentQuestion.questionTypeId == QuestionType.TF
-                                                                ? true
-                                                                : false
-                                                            }
-                                                            value={value ?? anwser.content ?? ''}
-                                                            label='Nội dung'
-                                                            InputLabelProps={{ shrink: true }}
-                                                            required
+                                                          <ContentEditor
+                                                            content={value ?? anwser.content ?? ''}
                                                             onChange={value => {
                                                               onChange(value)
                                                               checkValidate(anwser.id)
                                                             }}
-                                                            error={Boolean(anwser.errors?.isError)}
-                                                            aria-describedby='validation-schema-name'
                                                           />
                                                         )}
                                                       />
-
                                                       <FormHelperText
                                                         sx={{ color: 'error.main' }}
                                                         id='validation-schema-name'
@@ -707,40 +826,12 @@ const QuestionEditForm = () => {
                                                       </FormHelperText>
                                                     </FormControl>
                                                   </TableCell>
-                                                  <TableCell scope='row' component='th' align='right'>
-                                                    {currentQuestion.questionTypeId === QuestionType.ORDER && (
-                                                      <>
-                                                        {index > 0 && (
-                                                          <IconButton onClick={() => moveItem(index, index - 1)}>
-                                                            <Icon icon='mdi:arrow-up' fontSize={20} />
-                                                          </IconButton>
-                                                        )}
-                                                        {index !== answers.length - 1 && (
-                                                          <IconButton onClick={() => moveItem(index, index + 1)}>
-                                                            <Icon icon='mdi:arrow-down' fontSize={20} />
-                                                          </IconButton>
-                                                        )}
-                                                      </>
-                                                    )}
-                                                    {currentQuestion.questionTypeId !== QuestionType.TF && (
-                                                      <Tooltip title='Xóa đáp án'>
-                                                        <span>
-                                                          <IconButton
-                                                            aria-label='Xóa đáp án'
-                                                            onClick={() => removeAnswer(anwser.id)}
-                                                          >
-                                                            <Icon icon='mdi:trash' fontSize={20} />
-                                                          </IconButton>
-                                                        </span>
-                                                      </Tooltip>
-                                                    )}
-                                                  </TableCell>
                                                 </TableRow>
                                               )
                                             })}
                                           {currentQuestion && currentQuestion.questionTypeId !== QuestionType.TF && (
                                             <TableRow key={`add-anwser`}>
-                                              <TableCell padding='checkbox' colSpan={4} style={{ textAlign: 'center' }}>
+                                              <TableCell padding='checkbox' colSpan={5} style={{ textAlign: 'center' }}>
                                                 <Button
                                                   size='small'
                                                   variant='contained'
@@ -761,312 +852,194 @@ const QuestionEditForm = () => {
                                 </Grid>
                               </>
                             )}
-                          {currentQuestion.questionTypeId === QuestionType.GQ && (
+                          {currentQuestion.questionTypeId === QuestionType.FB && (
+                            <Grid container spacing={6}>
+                              <Grid item md={12}>
+                                <Alert>
+                                  <strong>Hướng dẫn</strong>
+                                  <br />
+                                  Trả lời dạng [Đáp án đúng 1;Đáp án đúng 2;~Đáp án sai 1;~Đáp án sai 2]
+                                </Alert>
+                              </Grid>
+                              <Grid item md={6}>
+                                <FormControl fullWidth>
+                                  <InputLabel htmlFor='payment-method'>Cấu hình hiển thị câu hỏi</InputLabel>
+                                  <Select
+                                    // onChange={e => onChangeRadioControl(e, 'renderAs')}
+                                    label='Cấu hình hiển thị câu hỏi'
+                                    labelId='demo-simple-select-label'
+                                    aria-describedby='validation-schema-group'
+                                  >
+                                    <MenuItem value={-1}>Chọn</MenuItem>
+                                    <MenuItem value={1}>Textbox</MenuItem>
+                                    <MenuItem value={2}>Dropdonwlist</MenuItem>
+                                  </Select>
+                                </FormControl>
+                              </Grid>
+                              <Grid item md={6}>
+                                <FormControl fullWidth>
+                                  <InputLabel htmlFor='payment-method'>Cấu hình cách chấm điểm câu hỏi</InputLabel>
+                                  <Select
+                                    label='Cấu hình cách chấm điểm câu hỏi'
+                                    labelId='demo-simple-select-label'
+                                    aria-describedby='validation-schema-group'
+                                  >
+                                    <MenuItem value={-1}>Chọn</MenuItem>
+                                    <MenuItem value={1}>Đúng chính xác</MenuItem>
+                                    <MenuItem value={2}>Không phân biệt chữ in, thường</MenuItem>
+                                  </Select>
+                                </FormControl>
+                              </Grid>
+                            </Grid>
+                          )}
+
+                          {currentQuestion.questionTypeId === QuestionType.MATCHING && (
                             <>
-                              <Grid container spacing={5} style={{ paddingBottom: '20px', paddingTop: '10px' }}>
+                              <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
                                 <Grid item xs={12}>
-                                  <Divider variant='left' textAlign='left'>
-                                    {' '}
-                                    <b>
-                                      Câu hỏi con{' '}
-                                      {currentQuestion.children.length > 0
-                                        ? `(${currentQuestion.children.length})`
-                                        : ''}
-                                    </b>
-                                  </Divider>
+                                  <TableContainer component={Paper} style={{ marginTop: 5 }} className=''>
+                                    <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                                      <TableHead>
+                                        <TableRow>
+                                          <TableCell padding='checkbox' align='center'>
+                                            #
+                                          </TableCell>
+                                          <TableCell style={{ width: 60 }}></TableCell>
+                                          <TableCell style={{ width: 110 }}>Thứ tự</TableCell>
+                                          <TableCell>Nội dung</TableCell>
+                                        </TableRow>
+                                      </TableHead>
+                                      <TableBody>
+                                        {answerGroups &&
+                                          answerGroups.map((group, index) => {
+                                            return (
+                                              <>
+                                                <TableRow
+                                                  key={`group-${group.id}`}
+                                                  sx={{
+                                                    '&:last-of-type td, &:last-of-type th': {
+                                                      border: 0
+                                                    }
+                                                  }}
+                                                >
+                                                  <TableCell
+                                                    rowSpan={2}
+                                                    padding='checkbox'
+                                                    scope='row'
+                                                    component='th'
+                                                    style={{ textAlign: 'center' }}
+                                                  >
+                                                    {index + 1}
+                                                  </TableCell>
+                                                  <TableCell scope='row' component='th' rowSpan={2} align='right'>
+                                                    <Tooltip title='Xóa Cặp Đáp án'>
+                                                      <span>
+                                                        <IconButton
+                                                          aria-label='Xóa Cặp Đáp án'
+                                                          onClick={() => removeMatchingAnswerGroup(group.id)}
+                                                        >
+                                                          <Icon icon='mdi:trash' fontSize={20} />
+                                                        </IconButton>
+                                                      </span>
+                                                    </Tooltip>
+                                                  </TableCell>
+                                                  <TableCell
+                                                    scope='row'
+                                                    component='th'
+                                                    rowSpan={2}
+                                                    style={{ textAlign: 'center' }}
+                                                  >
+                                                    <TextField
+                                                      type='number'
+                                                      name={`group-order-${group.id}`}
+                                                      value={group.order}
+                                                      size={'small'}
+                                                      onChange={event => {
+                                                        // handleChangeAnwser(group.id, 'position', event.target.value)
+                                                      }}
+                                                    />
+                                                  </TableCell>
+                                                  <TableCell scope='row' component='th'>
+                                                    <FormControl fullWidth>
+                                                      <Controller
+                                                        name={`anws-content-${group.answers[0].id}`}
+                                                        control={control}
+                                                        rules={{ required: true }}
+                                                        render={({ field: { value, onChange } }) => (
+                                                          <ContentEditor
+                                                            value={value ?? group.answers[0].content ?? ''}
+                                                            onChange={data => {
+                                                              group.answers[0].content = data
+                                                            }}
+                                                          />
+                                                        )}
+                                                      />
+                                                      <FormHelperText
+                                                        sx={{ color: 'error.main' }}
+                                                        id='validation-schema-name'
+                                                      >
+                                                        {group.answers[0].errors?.message}
+                                                      </FormHelperText>
+                                                    </FormControl>
+                                                  </TableCell>
+                                                </TableRow>
+                                                <TableRow
+                                                  key={`group-${group.id}`}
+                                                  sx={{
+                                                    '&:last-of-type td, &:last-of-type th': {
+                                                      border: 0
+                                                    }
+                                                  }}
+                                                >
+                                                  <TableCell scope='row' component='th'>
+                                                    <FormControl fullWidth>
+                                                      <Controller
+                                                        name={`anws-content-${group.answers[1].id}`}
+                                                        control={control}
+                                                        rules={{ required: true }}
+                                                        render={({ field: { value, onChange } }) => (
+                                                          <ContentEditor
+                                                            value={value ?? group.answers[1].content ?? ''}
+                                                            onChange={data => {
+                                                              group.answers[1].content = data
+                                                              onChange(data)
+                                                            }}
+                                                          />
+                                                        )}
+                                                      />
+                                                      <FormHelperText
+                                                        sx={{ color: 'error.main' }}
+                                                        id='validation-schema-name'
+                                                      >
+                                                        {group.answers[1].errors?.message}
+                                                      </FormHelperText>
+                                                    </FormControl>
+                                                  </TableCell>
+                                                </TableRow>
+                                              </>
+                                            )
+                                          })}
+                                        <TableRow key={`add-anwser`}>
+                                          <TableCell padding='checkbox' colSpan={4} style={{ textAlign: 'center' }}>
+                                            <Button
+                                              size='small'
+                                              variant='contained'
+                                              style={{ width: 250, margin: '20px' }}
+                                              color='primary'
+                                              startIcon={<Icon icon='mdi:plus' />}
+                                              onClick={() => addMatchingAnswerGroup()}
+                                            >
+                                              Thêm cặp Đáp án
+                                            </Button>
+                                          </TableCell>
+                                        </TableRow>
+                                      </TableBody>
+                                    </Table>
+                                  </TableContainer>
                                 </Grid>
                               </Grid>
-                              {(!questionId || questionId == 0) && (
-                                <Grid container spacing={5} style={{ paddingBottom: '20px', paddingTop: '10px' }}>
-                                  <Grid item xs={12}>
-                                    <div className='box-noted'>
-                                      <span className='text-muted'>
-                                        Cập nhật câu hỏi chính trước khi thêm/ sửa câu hỏi phụ.
-                                      </span>
-                                    </div>
-                                  </Grid>
-                                </Grid>
-                              )}
-                              {questionId > 0 && (
-                                <Grid container spacing={5} style={{ paddingBottom: '20px', paddingTop: '10px' }}>
-                                  <Grid item xs={12}>
-                                    <Fragment>
-                                      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-                                        <Tooltip title='Thêm câu hỏi con vào câu hỏi chính phụ'>
-                                          <Button
-                                            variant='outlined'
-                                            style={{ width: 250, margin: '20px' }}
-                                            color='success'
-                                            startIcon={<Icon icon='mdi:plus' />}
-                                            aria-controls={open ? 'account-menu' : undefined}
-                                            aria-haspopup='true'
-                                            aria-expanded={open ? 'true' : undefined}
-                                            onClick={handleChildQuestionClick}
-                                          >
-                                            Thêm câu hỏi con
-                                          </Button>
-                                        </Tooltip>
-                                      </Box>
-                                      {questionTypes && (
-                                        <Menu
-                                          anchorEl={anchorEl}
-                                          id='account-menu'
-                                          open={open}
-                                          onClose={() => handleShowFormChildQuestion(null)}
-                                          // onClick={handleClose}
-                                          PaperProps={{
-                                            elevation: 0,
-                                            sx: {
-                                              overflow: 'visible',
-                                              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                                              mt: 1.5,
-                                              '& .MuiAvatar-root': {
-                                                width: 32,
-                                                height: 32,
-                                                ml: -0.5,
-                                                mr: 1
-                                              },
-                                              '&:before': {
-                                                content: '""',
-                                                display: 'block',
-                                                position: 'absolute',
-                                                top: 0,
-                                                right: 14,
-                                                width: 10,
-                                                height: 10,
-                                                bgcolor: 'background.paper',
-                                                transform: 'translateY(-50%) rotate(45deg)',
-                                                zIndex: 0
-                                              }
-                                            }
-                                          }}
-                                          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                                          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                                        >
-                                          {questionTypes.map(item => (
-                                            <MenuItem
-                                              key={item.id}
-                                              onClick={() => handleShowFormChildQuestion(item, null, true)}
-                                            >
-                                              {item.name}
-                                            </MenuItem>
-                                          ))}
-                                        </Menu>
-                                      )}
-                                    </Fragment>
-                                  </Grid>
-
-                                  {(currentQuestion.children || []) &&
-                                    currentQuestion.children.map(item => {
-                                      return (
-                                        <Grid item xs={12} md={6} lg={4} key={item.id}>
-                                          <Card>
-                                            <CardHeader
-                                              title={
-                                                <>
-                                                  <Chip
-                                                    icon={<Icon icon='mdi:category' />}
-                                                    label={item.questionTypeName}
-                                                    color='info'
-                                                    variant='outlined'
-                                                    className='chip-square'
-                                                  />
-                                                </>
-                                              }
-                                              action={
-                                                <>
-                                                  <IconButton
-                                                    aria-label='filter'
-                                                    onClick={() => {
-                                                      handleCloseChildQuestion()
-                                                      setChildQuestionSelected(item)
-                                                      handleClickOpenDelete(2)
-                                                    }}
-                                                  >
-                                                    <Icon icon='mdi:delete-outline' />
-                                                  </IconButton>
-                                                  <IconButton
-                                                    aria-label='filter'
-                                                    onClick={e => {
-                                                      handleCloseChildQuestion()
-                                                      setChildQuestionSelected(item)
-                                                      handleShowFormChildQuestion(null, item, false)
-                                                    }}
-                                                  >
-                                                    <EditIcon />
-                                                  </IconButton>
-
-                                                  {/* <IconButton aria-haspopup='true' onClick={handleClickChildQuestion}>
-                                                <Icon icon='mdi:dots-vertical' />
-                                              </IconButton> */}
-                                                  {/* <Menu
-                                                keepMounted
-                                                anchorEl={anchorElChildQuestion}
-                                                onClose={handleCloseChildQuestion}
-                                                open={Boolean(anchorElChildQuestion)}
-                                              >
-                                                <MenuItem
-                                                  key={1}
-                                                  onClick={e => {
-                                                    handleCloseChildQuestion()
-                                                    setChildQuestionSelected(item)
-                                                    handleShowFormChildQuestion(null, item, false)
-                                                  }}
-                                                >
-                                                  <IconButton
-                                                    aria-label='filter'
-                                                  >
-                                                    <EditIcon />
-                                                  </IconButton>
-                                                  Sửa câu hỏi
-                                                </MenuItem>
-                                                <MenuItem
-                                                  key={2}
-                                                  onClick={(e, item) => {
-                                                    handleCloseChildQuestion()
-                                                    setChildQuestionSelected(item)
-                                                    handleClickOpenDelete(2)
-                                                  }}
-                                                >
-                                                  <IconButton
-                                                    aria-label='filter'
-                                                  >
-                                                    <Icon icon='mdi:delete-outline' />
-                                                  </IconButton>
-                                                  Xóa câu hỏi <br /> {item.name}
-                                                </MenuItem>
-                                              </Menu> */}
-                                                </>
-                                              }
-                                            />
-                                            <CardContent>
-                                              <Typography sx={{ fontWeight: 500, fontSize: '0.875rem' }}>
-                                                {item.name}
-                                              </Typography>
-                                              <Typography
-                                                variant='body2'
-                                                sx={{ fontSize: '0.75rem', letterSpacing: '0.4px', minHeight: '40px' }}
-                                              >
-                                                {item.shortContent}
-                                              </Typography>
-                                              <Typography
-                                                sx={{ mt: 4.5, mb: 2, fontWeight: 600, fontSize: '0.875rem' }}
-                                              >
-                                                Phân loại
-                                              </Typography>
-                                              <Box
-                                                sx={{
-                                                  mt: 4,
-                                                  borderRadius: '4px',
-                                                  color: 'text.primary',
-                                                  p: theme => theme.spacing(2.25, 2.75),
-                                                  backgroundColor: 'aliceblue'
-                                                }}
-                                              >
-                                                <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-                                                  <Avatar
-                                                    variant='rounded'
-                                                    sx={{
-                                                      mr: 3,
-                                                      width: '2.625rem',
-                                                      height: '2.625rem',
-                                                      backgroundColor: 'transparent',
-                                                      border: theme => `1px solid ${theme.palette.primary.main}`
-                                                    }}
-                                                  >
-                                                    <img
-                                                      width={23}
-                                                      height={20}
-                                                      alt='briefcase'
-                                                      src='/images/cards/briefcase.png'
-                                                    />
-                                                  </Avatar>
-
-                                                  <Box
-                                                    sx={{
-                                                      width: '100%',
-                                                      display: 'flex',
-                                                      flexWrap: 'wrap',
-                                                      alignItems: 'center',
-                                                      justifyContent: 'space-between'
-                                                    }}
-                                                  >
-                                                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                                      <Typography sx={{ fontWeight: 500, fontSize: '0.875rem' }}>
-                                                        Danh mục
-                                                      </Typography>
-                                                      <Typography variant='caption'>{item.categoryName}</Typography>
-                                                    </Box>
-                                                    {/* <Box sx={{ display: 'flex' }}>
-                                                  <Typography
-                                                    component='sup'
-                                                    variant='caption'
-                                                    sx={{ mt: 0.75, fontWeight: 500, color: 'text.primary', alignSelf: 'flex-start' }}
-                                                  >
-                                                    $
-                                                  </Typography>
-                                                  <Typography variant='h5' sx={{ fontWeight: 600 }}>
-                                                    5,250
-                                                  </Typography>
-                                                  <Typography component='sub' variant='caption' sx={{ lineHeight: 1.5, alignSelf: 'flex-end' }}>
-                                                    /Year
-                                                  </Typography>
-                                                </Box> */}
-                                                  </Box>
-                                                </Box>
-                                              </Box>
-
-                                              {/* <Typography sx={{ mt: 4.5, mb: 2, fontWeight: 600, fontSize: '0.875rem' }}>Phân loại</Typography>
-
-                                          <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
-                                              <img width={42} height={30} alt='master-card' src='/images/cards/logo-mastercard-small.png' />
-                                              <Box
-                                                sx={{
-                                                  ml: 3,
-                                                  flexGrow: 1,
-                                                  display: 'flex',
-                                                  flexWrap: 'wrap',
-                                                  alignItems: 'center',
-                                                  justifyContent: 'space-between'
-                                                }}
-                                              >
-                                                <Box sx={{ mr: 2, display: 'flex', mb: 0.4, flexDirection: 'column' }}>
-                                                  <Typography sx={{ fontWeight: 500, fontSize: '0.875rem' }}>Danh mục</Typography>
-                                                  <Typography variant='caption'>{item.categoryName}</Typography>
-                                                </Box>
-                                              </Box>
-                                            </Box>
-
-                                            <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
-                                              <img width={42} height={30} alt='credit-card' src='/images/cards/logo-credit-card-2.png' />
-                                              <Box
-                                                sx={{
-                                                  ml: 3,
-                                                  flexGrow: 1,
-                                                  display: 'flex',
-                                                  flexWrap: 'wrap',
-                                                  alignItems: 'center',
-                                                  justifyContent: 'space-between'
-                                                }}
-                                              >
-                                                <Box sx={{ mr: 2, display: 'flex', mb: 0.4, flexDirection: 'column' }}>
-                                                  <Typography sx={{ fontWeight: 500, fontSize: '0.875rem' }}>Credit card</Typography>
-                                                  <Typography variant='caption'>8990 xxxx xxxx 6852</Typography>
-                                                </Box>
-                                              </Box>
-                                            </Box>
-                                          </Box> */}
-                                            </CardContent>
-                                          </Card>
-                                        </Grid>
-                                      )
-                                    })}
-                                </Grid>
-                              )}
                             </>
                           )}
-                          {currentQuestion.questionTypeId === QuestionType.FB && <Button>Cấu hình câu hỏi FB</Button>}
                         </form>
                       )}
                     </div>
@@ -1076,8 +1049,7 @@ const QuestionEditForm = () => {
             )}
 
             {openCatalogDialog && (
-              <CategoryDialog
-                categoryType={CatalogType.QUESTION_CATEGORY}
+              <QuestionCategoryDialog
                 open={openCatalogDialog}
                 onClose={() => {
                   setOpenCatalogDialog(false)
@@ -1101,15 +1073,6 @@ const QuestionEditForm = () => {
                 questionId={childQuestionSelected.questionId}
                 typeId={childQuestionSelected.typeId}
                 typeName={childQuestionSelected.name}
-              />
-            )}
-
-            {openFBEditor && (
-              <FillTheBlankEditor
-                question={currentQuestion}
-                onClose={() => {
-                  setOpenFBEditor(false)
-                }}
               />
             )}
 
