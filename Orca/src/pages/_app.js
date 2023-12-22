@@ -12,7 +12,6 @@ import 'iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'
 import '../../styles/main.scss'
-
 import '../../styles/themes/default/assets/vendor/fonts/materialdesignicons.css'
 import '../../styles/themes/default/assets/vendor/fonts/flag-icons.css'
 import '../../styles/themes/default/assets/vendor/css/rtl/core.css'
@@ -115,7 +114,7 @@ const App = props => {
               <meta name='description' content={`Trang tài liệu, đề thi, luyện đề online, website giáo dục tại Việt Nam`} />
               <meta name='keywords' content='Thi360.com, luyện đề online, thi trắc nghiệm online, luyện đề toeic online' />
               <meta name='viewport' content='initial-scale=1, width=device-width' />
-              <meta charset="utf-8" />
+              <meta charSet="utf-8" />
               <meta property="og:image" content="/images/meta-page.jpg"></meta>
               <meta name="author" content={`${themeConfig.templateName}`} />
             </Head>

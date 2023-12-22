@@ -1,0 +1,30 @@
+
+/* bootstrapdemo is a custom classname to increases the specificity of our styles. It can be anything. 
+ * The idea is that it is easy to extend/override builtin styles with very little effort.
+ */
+ .bootstrap_demo .dropdown-trigger {
+  border-radius: 0.25rem;
+}
+
+.bootstrapdemo .dropdown-trigger > span:after {
+  font-size: 12px;
+  color: #555;
+}
+
+.bootstrapdemo .toggle {
+  font: normal normal normal 12px/1 FontAwesome;
+  color: #555;
+}
+
+.bootstrapdemo .toggle.collapsed::after {
+  content: "\f067";
+}
+
+.bootstrapdemo .toggle.expanded::after {
+  content: "\f068";
+}
+
+.bootstrapdemo .root {
+  padding: 0px;
+  margin: 0px;
+}

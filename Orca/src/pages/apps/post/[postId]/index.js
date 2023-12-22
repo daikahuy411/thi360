@@ -8,7 +8,7 @@ import { PostCategoryApi } from 'api/catalog-api'
 import PostApi from 'api/post-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CategoryDialog from 'pages/shared/category-dialog'
+import CatalogDialog from 'pages/shared/catalog-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
 import {
@@ -344,7 +344,7 @@ const EditPostPage = () => {
                                     rules={{ required: false }}
                                     render={({ field: { value, onChange } }) => (
                                       <ContentEditor
-                                        content={value ?? ''}
+                                        data={value ?? ''}
                                         onChange={data => {
                                           onChange(data)
                                         }}
@@ -415,7 +415,7 @@ const EditPostPage = () => {
                         </DialogActions>
                       </Dialog>
                       {openCatalogDialog && (
-                        <CategoryDialog
+                        <CatalogDialog
                           categoryType={CatalogType.POST_CATEGORY}
                           excludedId={0}
                           onNodeSelected={nodeId => {

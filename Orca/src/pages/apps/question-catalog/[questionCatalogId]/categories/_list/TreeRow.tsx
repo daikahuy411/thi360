@@ -29,17 +29,15 @@ type TreeRowProps = {
   item: any
   excludedId: number
   level: number
+  onDeleted: () => void
 }
 
 function PaperComponent(props) {
   return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
 export default function TreeRow(props: TreeRowProps) {
@@ -56,6 +54,7 @@ export default function TreeRow(props: TreeRowProps) {
     .map((child: any) => {
       return (
         <TreeRow
+          onDeleted={props.onDeleted}
           level={props.level + 1}
           excludedId={props.excludedId}
           key={child.id}
@@ -65,29 +64,31 @@ export default function TreeRow(props: TreeRowProps) {
       )
     })
 
-/*
-  * handle remove question-catalog
-  */
-const [openDelete, setOpenDelete] = useState(false);
-const handleClickOpenDelete = () => setOpenDelete(true);
-const handleCloseDelete = () => setOpenDelete(false);
-const handleDelete = (item) => {
-  if (item) {
-    QuestionCategoryApi.delete({ id: Number(item.key) })
-      .then((response) => {
-        setOpenDelete(false)
-        toast.success('Xóa dữ liệu thành công.')
-        setTimeout(() => router.reload(), 1000)
-      })
-      .catch((e) => {
-        setOpenDelete(false)
-        toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
-      })
+  /*
+   * handle remove question-catalog
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
+  const handleDelete = item => {
+    if (item) {
+      QuestionCategoryApi.delete({ id: Number(item.key) })
+        .then(response => {
+          setOpenDelete(false)
+          toast.success('Xóa dữ liệu thành công.')
+          if (props.onDeleted) {
+            props.onDeleted()
+          }
+        })
+        .catch(e => {
+          setOpenDelete(false)
+          toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
+        })
+    }
   }
-}
-/*
-* handle remove question-catalog
-*/
+  /*
+   * handle remove question-catalog
+   */
 
   return (
     <>
@@ -120,24 +121,29 @@ const handleDelete = (item) => {
       {!isCollapsed && <>{children}</>}
 
       <Dialog
-              open={openDelete}
-              onClose={handleCloseDelete}
-              PaperComponent={PaperComponent}
-              aria-labelledby="draggable-dialog-title"
-            >
-              <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-                Xác nhận
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Dữ liệu xóa sẽ không thể khôi phục lại. Bạn có muốn xóa Danh mục câu hỏi này không?
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button autoFocus onClick={handleCloseDelete}> Hủy bỏ </Button>
-                <Button onClick={() => handleDelete(item)} color='error'>Đồng ý</Button>
-              </DialogActions>
-            </Dialog>
+        open={openDelete}
+        onClose={handleCloseDelete}
+        PaperComponent={PaperComponent}
+        aria-labelledby='draggable-dialog-title'
+      >
+        <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
+          Xác nhận
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Dữ liệu xóa sẽ không thể khôi phục lại. Bạn có muốn xóa Danh mục câu hỏi này không?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleCloseDelete}>
+            {' '}
+            Hủy bỏ{' '}
+          </Button>
+          <Button onClick={() => handleDelete(item)} color='error'>
+            Đồng ý
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }

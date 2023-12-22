@@ -30,12 +30,13 @@ const itemTypes = [
   }
 ]
 
-function GenTestDialog({ testGroupId, onClose, onGenerated }) {
+function GenTestDialog({ testgroup, testGroupId, onClose, onGenerated }) {
   const [loading, setLoading] = useState(false)
   const [itemType, setItemType] = useState(itemTypes[0].value)
   const [isValid, setIsValid] = useState(false)
   const [startIndex, setStartIndex] = useState(0)
   const [numberOfTest, setNumberOfTest] = useState(1)
+  const [testName, setTestName] = useState(testgroup.name)
 
   const handleChangeItemType = prop => {
     setItemType(prop)
@@ -51,14 +52,16 @@ function GenTestDialog({ testGroupId, onClose, onGenerated }) {
 
   const onOk = () => {
     const request = {
-      name: startIndex.toString(),
+      testName: testName,
       numberOfTest: numberOfTest,
       testGroupId: testGroupId,
       startNumber: startIndex,
       tollerant: itemType
     }
+    setLoading(true)
     new TestGroupApi().generateTest(request).then(respone => {
-      if(onGenerated){
+      setLoading(false)
+      if (onGenerated) {
         onGenerated(respone.data)
       }
     })
@@ -103,7 +106,7 @@ function GenTestDialog({ testGroupId, onClose, onGenerated }) {
           <LoadingSpinner active={loading}>
             <Grid container spacing={5}>
               {itemTypes.map((item, index) => (
-                <Grid item md={12}>
+                <Grid item md={12} key={`griditem-${item.id}`}>
                   <Grid container>
                     <CustomRadioBasic
                       key={index}
@@ -116,6 +119,15 @@ function GenTestDialog({ testGroupId, onClose, onGenerated }) {
                   </Grid>
                 </Grid>
               ))}
+              <Grid item md={12}>
+                <TextField
+                  fullWidth
+                  value={testName}
+                  onChange={e => setTestName(e.target.value)}
+                  label='Tên đề thi'
+                  InputLabelProps={{ shrink: true }}
+                />
+              </Grid>
               <Grid item md={12}>
                 <TextField
                   fullWidth

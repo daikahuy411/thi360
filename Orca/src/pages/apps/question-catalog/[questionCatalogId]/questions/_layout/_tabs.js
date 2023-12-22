@@ -1,46 +1,46 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import { selectedClass } from 'store/slices/classSlice'
+import { selectedQuestion } from 'store/slices/questionSlice'
 
 const Nav = ({ children }) => {
   const router = useRouter()
-  const currentClass = useSelector(selectedClass)
-  const { classId } = router.query
+  const currentQuestion = useSelector(selectedQuestion)
+  const { questionId, questionCatalogId, type } = router.query
 
   return (
     <>
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
         <Link
           className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/class/${classId}/` ? 'is-active' : 'disabled'
+            router.asPath === `/apps/question-catalog/${questionCatalogId}/questions/${questionId}/`
+              ? 'is-active'
+              : 'disabled'
           }`}
           title='Chi tiết'
           component={Link}
-          href={`/apps/question-catalog/${classId}/questions/`}
+          href={`/apps/question-catalog/${questionCatalogId}/questions/${questionId}/`}
         >
           Chi tiết
         </Link>
-        {currentClass && currentClass.id > 0 ? (
+        {type === '9' && (!currentQuestion || currentQuestion.id == 0) && (
+          <Link className={`finger-tabs__tab flex-none disabled`} title='Câu hỏi con' href={'#'}>
+            Câu hỏi con
+          </Link>
+        )}
+        {currentQuestion && currentQuestion.id > 0 && currentQuestion.questionTypeId == 9 && (
           <Link
             className={`finger-tabs__tab flex-none ${
-              router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
+              router.asPath === `/apps/question-catalog/${questionCatalogId}/questions/${questionId}/children/`
+                ? 'is-active'
+                : 'disabled'
             }`}
-            title='Cấu hình'
+            title='Câu hỏi con'
             component={Link}
-            href={currentClass && currentClass.id > 0 ? `/apps/class/${classId}/users` : 'javascript:void(0)'}
+            href={`/apps/question-catalog/${questionCatalogId}/questions/${questionId}/children/`}
           >
-            Cấu hình
+            Câu hỏi con
           </Link>
-        ) : (
-          <p
-            className={`finger-tabs__tab flex-none ${
-              router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
-            }`}
-            title='Cấu hình'
-          >
-            Cấu hình
-          </p>
         )}
       </div>
     </>

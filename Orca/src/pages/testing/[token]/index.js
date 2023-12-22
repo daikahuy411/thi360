@@ -1,8 +1,8 @@
 import React from 'react'
+
 import TestingLayout from 'layouts/testing'
-import TestDetail from 'pages/testing/_components/TestDetails'
 import { useRouter } from 'next/router'
-import Head from 'next/head'
+import TestDetail from 'pages/testing/_components/TestDetails'
 
 const TestingPage = () => {
   const router = useRouter()
@@ -14,9 +14,9 @@ const TestingPage = () => {
 TestingPage.getLayout = function getLayout(page) {
   return (
     <>
-      <Head>
+      {/* <Head>
         <link href='/css/test.css' rel='stylesheet' />
-      </Head>
+      </Head> */}
       <TestingLayout>{page}</TestingLayout>
     </>
   )

@@ -40,6 +40,8 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
+import QuestionCategoryTree from '../category-tree'
+
 function PaperComponent(props) {
   return (
     <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
@@ -56,12 +58,12 @@ const QuestionTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [anchorEl, setAnchorEl] = useState(null)
   const [questionTypes, setQuestionTypes] = useState(null)
-  const [catalog, setCatalog] = useState(null)
+  const [categoryId, setCategoryId] = useState(0)
   const [totalItems, setTotalItems] = useState(0)
   const [loading, setLoading] = useState(false)
   const [keyword, setKeyword] = useState(null)
 
-  const { questionCatalogId } = router.query
+  const { questionCatalogId, questionCategoryId } = router.query
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -85,9 +87,9 @@ const QuestionTable = () => {
     setLoading(true)
     new QuestionApi()
       .searches({
-        catalogId: questionCatalogId,
+        catalogId: parseInt(questionCatalogId),
         questionType: 0,
-        categoryId: 0,
+        categoryId: categoryId,
         keyword: keyword,
         page: page + 1,
         limit: rowsPerPage
@@ -107,7 +109,7 @@ const QuestionTable = () => {
 
   useEffect(() => {
     searchQuestion()
-  }, [questionCatalogId, page, rowsPerPage])
+  }, [questionCatalogId, categoryId, keyword, page, rowsPerPage])
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
@@ -152,7 +154,7 @@ const QuestionTable = () => {
    */
 
   /*
-   * handle remove exam
+   * handle remove
    */
   const [openDelete, setOpenDelete] = useState(false)
   const handleClickOpenDelete = () => setOpenDelete(true)
@@ -176,8 +178,19 @@ const QuestionTable = () => {
     }
   }
   /*
-   * handle remove exam
+   * handle remove
    */
+
+  const handleNodeSelected = nodeId => {
+    setCategoryId(parseInt(nodeId))
+  }
+
+  const editUrl = id => {
+    if (questionCategoryId && questionCategoryId != '0') {
+      return `/apps/question-catalog/${questionCatalogId}/categories/${questionCategoryId}/questions/${id}`
+    }
+    return `/apps/question-catalog/${questionCatalogId}/questions/${id}`
+  }
 
   return (
     <>
@@ -234,119 +247,146 @@ const QuestionTable = () => {
         )}
       </Toolbar>
       <Divider />
-      <Grid container>
-        <Grid item md={3} lg={3}>
-          <IconButton aria-label='filter' style={{ display: 'none' }}>
-            <FilterAltOutlinedIcon />
-          </IconButton>
+      <Grid container spacing={0}>
+        <Grid item md={12} style={{ padding: 5 }}>
+          <Grid container>
+            <Grid item md={3} lg={3}>
+              <IconButton aria-label='filter'>
+                <FilterAltOutlinedIcon />
+              </IconButton>
+            </Grid>
+            <Grid item md={3} lg={3}>
+              <TextField
+                fullWidth
+                placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+                onChange={e => setKeyword(e.target.value)}
+                size='small'
+              />
+            </Grid>
+            <Grid item md={6} lg={6} alignContent={'right'}>
+              <TablePagination
+                rowsPerPageOptions={[20, 30, 50]}
+                labelRowsPerPage='Hiển thị'
+                component='div'
+                count={totalItems}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </Grid>
+          </Grid>
+          <Divider />
         </Grid>
-        <Grid item md={3} lg={3}>
-          <TextField
-            fullWidth
-            placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
-            onChange={e => setKeyword(e.target.value)}
-            size='small'
-          />
-        </Grid>
-        <Grid item md={6} lg={6} alignContent={'right'}>
-          <TablePagination
-            rowsPerPageOptions={[20, 30, 50]}
-            labelRowsPerPage='Hiển thị'
-            component='div'
-            count={totalItems}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+        <Grid item md={12} style={{ padding: 0 }}>
+          <table style={{ width: '100%' }}>
+            <tr>
+              <td
+                style={{
+                  width: '20%',
+                  padding: 5,
+                  verticalAlign: 'top',
+                  borderRight: '1px solid rgba(58, 53, 65, 0.12)'
+                }}
+              >
+                <QuestionCategoryTree
+                  onNodeSelected={handleNodeSelected}
+                  excludedId={-1}
+                  catalogId={questionCatalogId}
+                />
+              </td>
+              <td style={{ verticalAlign: 'top', padding: 5 }}>
+                <TableContainer component={Paper} style={{ marginTop: 5 }}>
+                  <LoadingSpinner active={loading}>
+                    <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell padding='checkbox'>
+                            <Checkbox
+                              onChange={handleSelectAllClick}
+                              checked={data.length > 0 && selected.length === data.length}
+                              indeterminate={selected.length > 0 && selected.length < data.length}
+                              inputProps={{ 'aria-label': 'select all desserts' }}
+                            />
+                          </TableCell>
+                          <TableCell align='center' style={{ width: 30 }}>
+                            Sửa
+                          </TableCell>
+                          <TableCell style={{ width: 160 }}>Mã</TableCell>
+                          <TableCell>Nội dung</TableCell>
+                          <TableCell style={{ width: 280 }}>Danh mục</TableCell>
+                          <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
+                          <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {data &&
+                          data.map((row, index) => {
+                            const isItemSelected = isSelected(row.id)
+                            const labelId = `enhanced-table-checkbox-${index}`
+
+                            return (
+                              <TableRow
+                                hover
+                                tabIndex={-1}
+                                role='checkbox'
+                                key={row.id}
+                                selected={isItemSelected}
+                                aria-checked={isItemSelected}
+                                sx={{
+                                  '&:last-of-type td, &:last-of-type th': {
+                                    border: 0
+                                  }
+                                }}
+                              >
+                                <TableCell padding='checkbox'>
+                                  <Checkbox
+                                    checked={isItemSelected}
+                                    inputProps={{ 'aria-labelledby': labelId }}
+                                    onClick={event => handleSelectClick(event, row.id)}
+                                  />
+                                </TableCell>
+                                <TableCell component='th' scope='row'>
+                                  <IconButton aria-label='filter' component={Link} href={editUrl(row.id)}>
+                                    <EditIcon />
+                                  </IconButton>
+                                </TableCell>
+                                <TableCell component='th' scope='row'>
+                                  <Typography variant='body1'>{row.id}</Typography>
+                                </TableCell>
+                                <TableCell component='th' scope='row'>
+                                  {row.shortContent}
+                                </TableCell>
+                                <TableCell>
+                                  {row.category ? (
+                                    <Chip
+                                      icon={<Icon icon='mdi:tag' />}
+                                      label={row.category.name}
+                                      color='secondary'
+                                      variant='outlined'
+                                    />
+                                  ) : null}
+                                </TableCell>
+                                <TableCell>
+                                  <Typography variant='body1'>{row.questionTypeName}</Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <Typography variant='body1'>
+                                    {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
+                                  </Typography>
+                                </TableCell>
+                              </TableRow>
+                            )
+                          })}
+                      </TableBody>
+                    </Table>
+                  </LoadingSpinner>
+                </TableContainer>
+              </td>
+            </tr>
+          </table>
         </Grid>
       </Grid>
-      <TableContainer component={Paper} style={{ marginTop: 5 }}>
-        <LoadingSpinner active={loading}>
-          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-            <TableHead>
-              <TableRow>
-                <TableCell padding='checkbox'>
-                  <Checkbox
-                    onChange={handleSelectAllClick}
-                    checked={data.length > 0 && selected.length === data.length}
-                    indeterminate={selected.length > 0 && selected.length < data.length}
-                    inputProps={{ 'aria-label': 'select all desserts' }}
-                  />
-                </TableCell>
-                <TableCell align='center' style={{ width: 30 }}>
-                  Sửa
-                </TableCell>
-                <TableCell style={{ width: 160 }}>Mã</TableCell>
-                <TableCell>Nội dung</TableCell>
-                <TableCell style={{ width: 280 }}>Danh mục</TableCell>
-                <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
-                <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data &&
-                data.map((row, index) => {
-                  const isItemSelected = isSelected(row.id)
-                  const labelId = `enhanced-table-checkbox-${index}`
-
-                  return (
-                    <TableRow
-                      hover
-                      tabIndex={-1}
-                      role='checkbox'
-                      key={row.id}
-                      selected={isItemSelected}
-                      aria-checked={isItemSelected}
-                      sx={{
-                        '&:last-of-type td, &:last-of-type th': {
-                          border: 0
-                        }
-                      }}
-                    >
-                      <TableCell padding='checkbox'>
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                          onClick={event => handleSelectClick(event, row.id)}
-                        />
-                      </TableCell>
-                      <TableCell component='th' scope='row'>
-                        <IconButton
-                          aria-label='filter'
-                          component={Link}
-                          href={`/apps/question-catalog/${questionCatalogId}/questions/${row.id}`}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                      </TableCell>
-                      <TableCell component='th' scope='row'>
-                        <Typography variant='body1'>{row.id}</Typography>
-                      </TableCell>
-                      <TableCell component='th' scope='row'>
-                        {row.shortContent}
-                      </TableCell>
-                      <TableCell>
-                        {row.categoryName ? (
-                          <Chip
-                            icon={<Icon icon='mdi:tag' />}
-                            label={row.categoryName}
-                            color='secondary'
-                            variant='outlined'
-                          />
-                        ) : null}
-                      </TableCell>
-                      <TableCell>{row.questionTypeName}</TableCell>
-                      <TableCell>
-                        <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-            </TableBody>
-          </Table>
-        </LoadingSpinner>
-      </TableContainer>
       <TablePagination
         rowsPerPageOptions={[20, 30, 50]}
         component='div'

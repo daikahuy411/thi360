@@ -7,15 +7,14 @@ import {
 import { QuestionCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CategoryDialog from 'pages/shared/category-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
+import QuestionCategoryDialog from 'pages/shared/question-category-selector'
 import Draggable from 'react-draggable'
 import {
   Controller,
   useForm
 } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -41,6 +40,7 @@ import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 
 import TopNav from '../_layout/_breadcrums'
+import Nav from './_layout/_tabs'
 
 const schema = yup.object().shape({
   name: yup.string().required('* bắt buộc'),
@@ -93,8 +93,6 @@ const QuestionCategoryEditPage = () => {
 
   const save = code => {
     const item = getValues()
-    console.log('item-save:', item)
-    console.log('parentId:', parentId)
 
     QuestionCategoryApi.save({
       ...item,
@@ -106,7 +104,8 @@ const QuestionCategoryEditPage = () => {
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code == 1) {
-          router.push(`/apps/question-catalog/${questionCatalogId}/categories`)
+          router.query.questionCategoryId = response.data.id
+          router.push(router)
         } else {
           reset()
         }
@@ -208,25 +207,11 @@ const QuestionCategoryEditPage = () => {
                 </div>
                 <div className='grid-block' style={{ height: '100vh' }}>
                   <div className='grid-block vertical flex-none finger-tabs__tabs'>
-                    <div
-                      id='fingerTabs_1'
-                      className='finger-tabs__tab flex-none tst_changeTabDetails is-active'
-                      title='Details'
-                    >
-                      Chi tiết
-                    </div>
-                    <div
-                      id='fingerTabs_2'
-                      className='finger-tabs__tab flex-none tst_changeTabUsers disabled'
-                      title='Users'
-                    >
-                      Câu hỏi
-                    </div>
+                    <Nav />
                   </div>
                   <div className='grid-block' style={{ padding: 10 }}>
-                    {/* <EditForm item={item} control={control} errors={errors} parentCallback={callbackFunction} /> */}
                     <form onSubmit={e => e.preventDefault()} style={{ height: 'auto', width: '100%', paddingTop: 10 }}>
-                      <Grid container spacing={5}>
+                      <Grid container maxWidth={'md'} spacing={5}>
                         <Grid item xs={12}>
                           <FormControl fullWidth variant='outlined'>
                             <InputLabel htmlFor='outlined-adornment-parent-category'>Danh mục cha</InputLabel>
@@ -286,8 +271,7 @@ const QuestionCategoryEditPage = () => {
                     </form>
 
                     {openCatalogDialog && (
-                      <CategoryDialog
-                        categoryType={CatalogType.QUESTION_CATEGORY}
+                      <QuestionCategoryDialog
                         currentId={questionCategoryId}
                         catalogId={parseInt(questionCatalogId)}
                         onNodeSelected={nodeId => {

@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import { QuestionCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
@@ -22,7 +26,6 @@ import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import LoadingSpinner from '@core/components/loading-spinner'
 
 import TreeRow from './TreeRow'
 
@@ -72,6 +75,10 @@ const CategoryTable = () => {
     fetchData()
   }, [questionCatalogId, page, rowsPerPage])
 
+  const onDeleted = () => {
+    fetchData()
+  }
+
   return (
     <>
       <Toolbar style={{ padding: 0 }}>
@@ -111,12 +118,17 @@ const CategoryTable = () => {
       <Divider />
       <Grid container>
         <Grid item md={2}>
-          <IconButton aria-label='filter' style={{display: 'none'}}>
+          <IconButton aria-label='filter' style={{ display: 'none' }}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={4}>
-          <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
+          <TextField
+            fullWidth
+            placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+            onChange={e => setKeyword(e.target.value)}
+            size='small'
+          />
         </Grid>
         <Grid item md={6} alignContent={'right'}>
           <TablePagination
@@ -146,7 +158,14 @@ const CategoryTable = () => {
             <TableBody>
               {data &&
                 data.map((item, index) => (
-                  <TreeRow key={index} item={item} excludedId={0} nodeId={item.Id} level={0} />
+                  <TreeRow
+                    onDeleted={onDeleted}
+                    key={index}
+                    item={item}
+                    excludedId={0}
+                    nodeId={item.Id}
+                    level={0}
+                  />
                 ))}
             </TableBody>
           </Table>

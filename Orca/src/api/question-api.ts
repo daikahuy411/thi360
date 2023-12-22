@@ -8,261 +8,247 @@ import ApiBase from './api-base'
 
 export default class QuestionApi extends ApiBase {
   constructor() {
-    super("questions");
+    super('questions')
   }
 
   getQuestionTypes = () => {
-    const response = axios.get(this.baseApiUrl + "/QuestionTypes");
-    return response;
-  };
+    const response = axios.get(this.baseApiUrl + '/QuestionTypes')
+    return response
+  }
 
   parseFillTheBlankQuestion = (question: Question) => {
-    const response = axios.post(this.baseApiUrl + "/ParseFillTheBlank", question);
-    return response;
+    const response = axios.post(this.baseApiUrl + '/ParseFillTheBlank', question)
+    return response
   }
 
   saveSetting = (question: Question) => {
-    const response = axios.put(this.baseApiUrl + "/Setting", question);
-    return response;
+    const response = axios.put(this.baseApiUrl + '/Setting', question)
+    return response
   }
 
   createQuestion = (type: QuestionType): Question => {
-    let typeName = "";
+    let typeName = ''
     var allTypes = [
       {
-        code: "SA",
+        code: 'SA',
         order: 0,
         id: 1,
         typeId: 4,
-        name: "Câu hỏi Trả lời ngắn",
+        name: 'Câu hỏi Trả lời ngắn',
         files: null,
         createdBy: 1,
         lastModifiedBy: 1,
-        createdTime: "2022-05-06T08:52:43.2899338",
-        lastModifiedTime: "2022-05-06T08:52:43.3007385",
+        createdTime: '2022-05-06T08:52:43.2899338',
+        lastModifiedTime: '2022-05-06T08:52:43.3007385'
       },
       {
-        code: "MC",
+        code: 'MC',
         order: 1,
         id: 2,
         typeId: 8,
-        name: "Câu hỏi Nhiều lựa chọn",
+        name: 'Câu hỏi Nhiều lựa chọn',
         files: null,
         createdBy: 1,
         lastModifiedBy: 1,
-        createdTime: "2022-05-06T08:52:43.3007894",
-        lastModifiedTime: "2022-05-06T08:52:43.3007897",
+        createdTime: '2022-05-06T08:52:43.3007894',
+        lastModifiedTime: '2022-05-06T08:52:43.3007897'
       },
       {
-        code: "GQ",
+        code: 'GQ',
         order: 2,
         id: 3,
         typeId: 9,
-        name: "Câu hỏi Chính phụ",
+        name: 'Câu hỏi Chính phụ',
         files: null,
         createdBy: 1,
         lastModifiedBy: 1,
-        createdTime: "2022-05-06T08:52:43.3007898",
-        lastModifiedTime: "2022-05-06T08:52:43.3007899",
+        createdTime: '2022-05-06T08:52:43.3007898',
+        lastModifiedTime: '2022-05-06T08:52:43.3007899'
       },
       {
-        code: "TF",
+        code: 'TF',
         order: 3,
         id: 4,
         typeId: 13,
-        name: "Câu hỏi Đúng/Sai",
+        name: 'Câu hỏi Đúng/Sai',
         files: null,
         createdBy: 1,
         lastModifiedBy: 1,
-        createdTime: "2022-05-06T08:52:43.30079",
-        lastModifiedTime: "2022-05-06T08:52:43.30079",
+        createdTime: '2022-05-06T08:52:43.30079',
+        lastModifiedTime: '2022-05-06T08:52:43.30079'
       },
       {
-        code: "SC",
+        code: 'SC',
         order: 4,
         id: 5,
         typeId: 12,
-        name: "Câu hỏi Một lựa chọn",
+        name: 'Câu hỏi Một lựa chọn',
         files: null,
         createdBy: 1,
         lastModifiedBy: 1,
-        createdTime: "2022-05-06T08:52:43.3007901",
-        lastModifiedTime: "2022-05-06T08:52:43.3007902",
+        createdTime: '2022-05-06T08:52:43.3007901',
+        lastModifiedTime: '2022-05-06T08:52:43.3007902'
       },
       {
-        code: "FB",
+        code: 'FB',
         order: 5,
         id: 6,
         typeId: 19,
-        name: "Câu hỏi Điền từ vào chỗ trống",
+        name: 'Câu hỏi Điền từ vào chỗ trống',
         files: null,
         createdBy: 1,
         lastModifiedBy: 1,
-        createdTime: "2022-05-06T08:52:43.3007901",
-        lastModifiedTime: "2022-05-06T08:52:43.3007902",
+        createdTime: '2022-05-06T08:52:43.3007901',
+        lastModifiedTime: '2022-05-06T08:52:43.3007902'
       },
       {
-        code: "ORDER",
+        code: 'ORDER',
         order: 8,
         id: 8,
         typeId: 21,
-        name: "Câu hỏi Sắp xếp",
+        name: 'Câu hỏi Sắp xếp',
         files: null,
         createdBy: 1,
         lastModifiedBy: 1,
-        createdTime: "2022-05-06T08:52:43.3007901",
-        lastModifiedTime: "2022-05-06T08:52:43.3007902",
-      },
-    ];
-    typeName = allTypes.find((x) => x.typeId === type.id)?.name ?? "";
+        createdTime: '2022-05-06T08:52:43.3007901',
+        lastModifiedTime: '2022-05-06T08:52:43.3007902'
+      }
+    ]
+    typeName = allTypes.find(x => x.typeId === type.id)?.name ?? ''
 
     const errors = {
       isError: false,
-      message: ""
+      message: ''
     }
 
     if (type.id == QuestionTypeEnum.SC || type.id == QuestionTypeEnum.MC) {
       return {
         id: 0,
-        content: "",
-        name: "",
+        content: '',
+        name: '',
         parentId: 0,
         order: 0,
-        explain: "",
-        contentFormat: "html",
+        explain: '',
+        contentFormat: 'html',
         totalQuestion: 0,
         questionTypeId: type.id,
         questionTypeName: typeName,
         categoryId: 0,
         answers: [
-          this.createAnswer(-1, 1, "", true, errors),
-          this.createAnswer(-2, 2, "", false, errors),
-          this.createAnswer(-3, 3, "", false, errors),
-          this.createAnswer(-4, 4, "", false, errors),
-        ],
-      };
+          this.createAnswer(-1, 1, '', true, errors),
+          this.createAnswer(-2, 2, '', false, errors),
+          this.createAnswer(-3, 3, '', false, errors),
+          this.createAnswer(-4, 4, '', false, errors)
+        ]
+      }
     }
 
     if (type.id == QuestionTypeEnum.TF) {
       return {
         id: 0,
-        content: "",
-        name: "",
+        content: '',
+        name: '',
         parentId: 0,
         order: 0,
-        explain: "",
-        contentFormat: "html",
+        explain: '',
+        contentFormat: 'html',
         totalQuestion: 0,
         questionTypeId: type.id,
         questionTypeName: typeName,
         categoryId: 0,
-        answers: [
-          this.createAnswer(-1, 1, "Đúng", true, errors),
-          this.createAnswer(-2, 2, "Sai", false, errors),
-        ],
-      };
+        answers: [this.createAnswer(-1, 1, 'Đúng', true, errors), this.createAnswer(-2, 2, 'Sai', false, errors)]
+      }
     }
 
     if (type.id == QuestionTypeEnum.FB) {
       return {
         id: 0,
-        content: "",
-        name: "",
+        content: '',
+        name: '',
         parentId: 0,
         order: 0,
-        explain: "",
-        contentFormat: "html",
+        explain: '',
+        contentFormat: 'html',
         totalQuestion: 0,
         questionTypeId: type.id,
         questionTypeName: typeName,
         categoryId: 0,
-        answers: [
-          this.createAnswer(-1, 1, "", true, errors),
-        ],
-      };
+        answers: [this.createAnswer(-1, 1, '', true, errors)]
+      }
     }
 
     if (type.id == QuestionTypeEnum.GQ) {
       return {
         id: 0,
-        content: "",
-        name: "",
+        content: '',
+        name: '',
         parentId: 0,
         order: 0,
-        explain: "",
-        contentFormat: "html",
+        explain: '',
+        contentFormat: 'html',
         totalQuestion: 0,
         questionTypeId: type.id,
         questionTypeName: typeName,
         categoryId: 0,
         answers: [],
-        children: [],
-      };
+        children: []
+      }
     }
 
     if (type.id == QuestionTypeEnum.SA) {
       return {
         id: 0,
-        content: "",
-        name: "",
+        content: '',
+        name: '',
         parentId: 0,
         order: 0,
-        explain: "",
-        contentFormat: "html",
+        explain: '',
+        contentFormat: 'html',
         totalQuestion: 0,
         questionTypeId: type.id,
         questionTypeName: typeName,
         categoryId: 0,
         answers: [],
-        children: [],
-      };
+        children: []
+      }
     }
 
     if (type.id == QuestionTypeEnum.ORDER) {
       return {
         id: 0,
-        content: "",
-        name: "",
+        content: '',
+        name: '',
         parentId: 0,
         order: 0,
-        explain: "",
-        contentFormat: "html",
+        explain: '',
+        contentFormat: 'html',
         totalQuestion: 0,
         questionTypeId: type.id,
         questionTypeName: typeName,
         categoryId: 0,
-        answers: [
-          this.createAnswer(-1, 1, "", true, errors),
-          this.createAnswer(-2, 2, "", true, errors),
-        ],
-        children: [],
-      };
+        answers: [this.createAnswer(-1, 1, '', true, errors), this.createAnswer(-2, 2, '', true, errors)],
+        children: []
+      }
     }
 
     return {
       id: 0,
-      content: "",
-      name: "",
+      content: '',
+      name: '',
       parentId: 0,
       order: 0,
-      explain: "",
-      contentFormat: "html",
+      explain: '',
+      contentFormat: 'html',
       totalQuestion: 0,
       questionTypeId: type.id,
       questionTypeName: typeName,
       categoryId: 0,
       answers: [],
-      children: [],
-    };
-  };
+      children: []
+    }
+  }
 
-  createAnswer = (
-    id: number,
-    order: number,
-    content: string,
-    isCorrect: boolean,
-    errors: any
-  ): Answer => {
+  createAnswer = (id: number, order: number, content: string, isCorrect: boolean, errors: any): Answer => {
     return {
       id: id,
       content: content,
@@ -270,9 +256,10 @@ export default class QuestionApi extends ApiBase {
       order: order,
       questionId: 0,
       parentQuestionId: 0,
-      name: "",
-      explain: "",
-      errors: errors
-    };
-  };
+      name: '',
+      explain: '',
+      errors: errors,
+      group: 0
+    }
+  }
 }

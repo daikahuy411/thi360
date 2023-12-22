@@ -46,7 +46,7 @@ export default class FolderTree extends React.Component<Props, States> {
     }
   }
 
-  componentWillReceiveProps = (nextProps: any) => {
+  UNSAFE_componentWillReceiveProps = (nextProps: any) => {
     if (nextProps.data) {
       this.setState({
         data: nextProps.data

@@ -3,6 +3,7 @@ import {
   useState
 } from 'react'
 
+import TestGroupSectionApi from 'api/test-group-section-api'
 import TestGroupSectionItemApi from 'api/test-group-section-item-api'
 import moment from 'moment'
 import Link from 'next/link'
@@ -22,6 +23,7 @@ import {
   selectedTestGroupSectionItem,
   selectTestGroupSectionItem
 } from 'store/slices/testGroupSectionItemSlice'
+import { selectTestGroupSection } from 'store/slices/testGroupSectionSlice'
 import * as yup from 'yup'
 
 import CustomRadioBasic from '@core/components/custom-radio/basic'
@@ -87,31 +89,6 @@ const ItemEditForm = () => {
   const [selected, setSelected] = useState([])
   const isSelected = name => selected.indexOf(name) !== -1
 
-  const handleSelectAllClick = event => {
-    if (event.target.checked) {
-      const newSelecteds = data.map(n => n.id)
-      setSelected(newSelecteds)
-
-      return
-    }
-    setSelected([])
-  }
-
-  const handleSelectClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name)
-    let newSelected = []
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name)
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1))
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1))
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1))
-    }
-    setSelected(newSelected)
-  }
-
   const handleChangeItemType = prop => {
     setItemType(prop)
   }
@@ -149,6 +126,9 @@ const ItemEditForm = () => {
     }
     new TestGroupSectionItemApi().save(item).then(response => {
       toast.success('Cập nhật thành công')
+      new TestGroupSectionApi().get(sectionId).then(response => {
+        dispatch(selectTestGroupSection(response.data))
+      })
     })
   }
 

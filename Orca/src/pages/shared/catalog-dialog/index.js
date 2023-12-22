@@ -5,7 +5,7 @@ import React, {
 
 import CatalogApi from 'api/catalog-api'
 import OrganizationApi from 'api/organization-api'
-import { CategoryType } from 'types/CatalogType'
+import { CatalogType } from 'types/CatalogType'
 
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
@@ -39,7 +39,7 @@ export default function CatalogDialog({
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [loading, setLoading] = useState(false)
-  cosnt[(selectedNodeId, setSelectedNodeId)] = useState(0)
+  const [selectedNodeId, setSelectedNodeId] = useState(0)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -66,7 +66,7 @@ export default function CatalogDialog({
     }
     setLoading(true)
 
-    if (categoryType === CategoryType.DEPARTMENT) {
+    if (categoryType === CatalogType.DEPARTMENT) {
       new OrganizationApi().getOrganizationTree().then(response => {
         setData(response.data.value)
         setTotalItem(response.data.totalItems)
