@@ -360,7 +360,7 @@ const ItemEditForm = () => {
                                           <TableCell align='center' style={{ width: 60 }}>
                                             #
                                           </TableCell>
-                                          <TableCell align='center' style={{ width: 150 }}>
+                                          <TableCell align='center' style={{ width: 180 }}>
                                             Thao tác
                                           </TableCell>
                                           <TableCell style={{ width: 160 }}>Mã</TableCell>

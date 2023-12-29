@@ -15,11 +15,13 @@ export default function ContentEditor({ content, isReadOnly, onChange }) {
   const { CKEditor, Editor } = editorRef.current || {}
 
   useEffect(() => {
-    editorRef.current = {
-      CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, // v3+
-      Editor: require('ckeditor5-custom-build/build/ckeditor')
-    }
-    setEditorLoaded(true)
+    setTimeout(() => {
+      editorRef.current = {
+        CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, // v3+
+        Editor: require('ckeditor5-custom-build/build/ckeditor')
+      }
+      setEditorLoaded(true)
+    }, 250)
   }, [])
 
   return editorLoaded ? (
@@ -106,6 +108,6 @@ export default function ContentEditor({ content, isReadOnly, onChange }) {
       }}
     />
   ) : (
-    <div>Editor loading</div>
+    <div>Đang tải Trình soạn thảo...</div>
   )
 }

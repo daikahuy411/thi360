@@ -232,6 +232,11 @@ const QuestionEditForm = () => {
   }
 
   const checkIsvalidAnswer = (isFormField = false) => {
+    if (currentQuestion.questionTypeId === QuestionType.SA || currentQuestion.questionTypeId === QuestionType.FB) {
+      setIsValidAnswer(true)
+      return
+    }
+
     let answersCloned = [...answers]
     let check = true
     answersCloned.forEach(elm => {
@@ -624,12 +629,10 @@ const QuestionEditForm = () => {
                                   </FormControl>
                                 </Grid>
                                 {currentQuestion.questionTypeId === QuestionType.FB && (
-                                  <Grid container spacing={6}>
-                                    <Grid item md={12}>
-                                      <Alert>
-                                        Trả lời dạng [Đáp án đúng 1;Đáp án đúng 2;~Đáp án sai 1;~Đáp án sai 2]
-                                      </Alert>
-                                    </Grid>
+                                  <Grid item md={12}>
+                                    <Alert>
+                                      Trả lời dạng [Đáp án đúng 1;Đáp án đúng 2;~Đáp án sai 1;~Đáp án sai 2]
+                                    </Alert>
                                   </Grid>
                                 )}
                                 <Grid item xs={12}>
