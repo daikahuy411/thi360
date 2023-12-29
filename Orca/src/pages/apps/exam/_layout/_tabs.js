@@ -5,7 +5,7 @@ import { selectedExam } from 'store/slices/examSlice'
 
 const Nav = () => {
   const router = useRouter()
-  const currentClass = useSelector(selectedExam)
+  const currentExam = useSelector(selectedExam)
   const { examId } = router.query
 
   return (
@@ -21,14 +21,14 @@ const Nav = () => {
         >
           Chi tiết
         </Link>
-        {currentClass && currentClass.id > 0 ? (
+        {currentExam && currentExam.id > 0 ? (
           <Link
             className={`finger-tabs__tab flex-none ${
               router.asPath === `/apps/exam/${examId}/items/` ? 'is-active' : 'disabled'
             }`}
             title='Môn thi'
             component={Link}
-            href={currentClass && currentClass.id > 0 ? `/apps/exam/${examId}/items` : 'javascript:void(0)'}
+            href={currentExam && currentExam.id > 0 ? `/apps/exam/${examId}/items` : 'javascript:void(0)'}
           >
             Môn thi
           </Link>
@@ -43,14 +43,14 @@ const Nav = () => {
           </p>
         )}
 
-        {currentClass && currentClass.id > 0 ? (
+        {currentExam && currentExam.id > 0 ? (
           <Link
             className={`finger-tabs__tab flex-none ${
               router.asPath === `/apps/exam/${examId}/users/` ? 'is-active' : 'disabled'
             }`}
             title='Học viên'
             component={Link}
-            href={currentClass && currentClass.id > 0 ? `/apps/exam/${examId}/users` : 'javascript:void(0)'}
+            href={currentExam && currentExam.id > 0 ? `/apps/exam/${examId}/users` : 'javascript:void(0)'}
           >
             Học viên
           </Link>
@@ -64,26 +64,36 @@ const Nav = () => {
             Học viên
           </p>
         )}
+        <Link
+          className={`finger-tabs__tab flex-none ${
+            router.asPath === `/apps/exam/${examId}/marks/` ? 'is-active' : 'disabled'
+          }`}
+          title='Chấm điểm'
+          component={Link}
+          href={currentExam && currentExam.id > 0 ? `/apps/exam/${examId}/marks` : 'javascript:void(0)'}
+        >
+          Chấm điểm
+        </Link>
 
-        {currentClass && currentClass.id > 0 ? (
+        {currentExam && currentExam.id > 0 ? (
           <Link
             className={`finger-tabs__tab flex-none ${
               router.asPath === `/apps/exam/${examId}/report/` ? 'is-active' : 'disabled'
             }`}
-            title='Học viên'
+            title='Báo cáo'
             component={Link}
-            href={currentClass && currentClass.id > 0 ? `/apps/exam/${examId}/report` : 'javascript:void(0)'}
+            href={currentExam && currentExam.id > 0 ? `/apps/exam/${examId}/report` : 'javascript:void(0)'}
           >
-            Thống kê
+            Báo cáo
           </Link>
         ) : (
           <p
             className={`finger-tabs__tab flex-none ${
               router.asPath === `/apps/exam/${examId}/report/` ? 'is-active' : 'disabled'
             }`}
-            title='Học viên'
+            title='Báo cáo'
           >
-            Thống kê
+            Báo cáo
           </p>
         )}
       </div>

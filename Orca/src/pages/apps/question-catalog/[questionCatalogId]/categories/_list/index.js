@@ -55,7 +55,7 @@ const CategoryTable = () => {
     const param = {
       keyword: keyword,
       catalogId: Number(questionCatalogId),
-      page: page == 0 ? 1 : page + 1,
+      page: page,
       limit: rowsPerPage
     }
 

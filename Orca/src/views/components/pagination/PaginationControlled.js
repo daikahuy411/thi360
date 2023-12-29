@@ -1,13 +1,13 @@
 // ** React Imports
 import { useState } from 'react'
 
+import Pagination from '@mui/material/Pagination'
 // ** MUI Imports
 import Typography from '@mui/material/Typography'
-import Pagination from '@mui/material/Pagination'
 
 const PaginationControlled = () => {
   // ** State
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(0)
 
   const handleChange = (event, value) => {
     setPage(value)

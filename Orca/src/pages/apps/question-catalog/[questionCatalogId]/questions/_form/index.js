@@ -1,4 +1,3 @@
-'use client' // only in App Router
 import {
   useEffect,
   useState
@@ -9,7 +8,6 @@ import QuestionApi from 'api/question-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
-import CircularLoading from 'pages/shared/loading/CircularLoading'
 import QuestionCategoryDialog from 'pages/shared/question-category-selector'
 import AddQuestionAnswer from 'pages/shared/question-form'
 import Draggable from 'react-draggable'
@@ -23,10 +21,6 @@ import {
   useSelector
 } from 'react-redux'
 import {
-  sortableContainer,
-  sortableElement
-} from 'react-sortable-hoc'
-import {
   selectedQuestion,
   selectQuestion
 } from 'store/slices/questionSlice'
@@ -35,6 +29,7 @@ import * as yup from 'yup'
 
 import ContentEditor from '@core/components/editor'
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -75,13 +70,6 @@ import Typography from '@mui/material/Typography'
 import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
 
-// const ContentEditor = dynamic(
-//   () => {
-//     return import('@core/components/editor/index-bak')
-//   },
-//   { ssr: false }
-// )
-
 function PaperComponent(props) {
   return (
     <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
@@ -89,12 +77,6 @@ function PaperComponent(props) {
     </Draggable>
   )
 }
-
-const SortableItem = sortableElement(({ value }) => <>{value}</>)
-
-const SortableContainer = sortableContainer(({ children }) => {
-  return <>{children}</>
-})
 
 const QuestionEditForm = () => {
   const router = useRouter()
@@ -116,19 +98,6 @@ const QuestionEditForm = () => {
   let schema = yup.object().shape({
     content: yup.string().required('* bắt buộc')
   })
-
-  const handleSortEnd = ({ oldIndex, newIndex }) => {
-    // const tmp = [...list];
-    // tmp.splice(newIndex, 0, tmp.splice(oldIndex, 1)[0]);
-    // setList(tmp);
-  }
-
-  const handleSortStart = ({ node }) => {
-    // const tds = document.getElementsByClassName("SortableHelper")[0].childNodes;
-    // node.childNodes.forEach(
-    //   (node, idx) => (tds[idx].style.width = `${node.offsetWidth}px`)
-    // );
-  }
 
   const {
     control,
@@ -227,7 +196,7 @@ const QuestionEditForm = () => {
     setAnswers(Object.values(item.answers))
 
     if (type == QuestionType.MATCHING) {
-      initAnswerGroup()
+      // initAnswerGroup()
     }
   }
 
@@ -367,15 +336,16 @@ const QuestionEditForm = () => {
     setAnswers([...answers])
   }
 
+  // Matching Question
   const addMatchingAnswerGroup = () => {
     const groupIndex = answerGroups.length
-    let leftAnswer = new QuestionApi().createAnswer(-(answers.length + 1), 1, '', false, {
+    let leftAnswer = new QuestionApi().createAnswer(-(groupIndex * 2 + 1), 1, '', false, {
       isError: false,
       message: ''
     })
     leftAnswer.group = groupIndex
 
-    let rightAnswer = new QuestionApi().createAnswer(-(answers.length + 1), 2, '', false, {
+    let rightAnswer = new QuestionApi().createAnswer(-(groupIndex * 2 + 2), 2, '', false, {
       isError: false,
       message: ''
     })
@@ -383,6 +353,12 @@ const QuestionEditForm = () => {
 
     answerGroups.push({ id: groupIndex, order: groupIndex + 1, answers: [leftAnswer, rightAnswer] })
     setAnswerGroups([...answerGroups])
+  }
+
+  const removeMatchingAnswerGroup = id => {
+    let ags = [...answerGroups]
+    ags = ags.filter(x => x.id != id)
+    setAnswerGroups([...ags])
   }
 
   const initAnswerGroup = () => {
@@ -406,11 +382,7 @@ const QuestionEditForm = () => {
     setAnswerGroups([...answerGroups])
   }
 
-  const removeMatchingAnswerGroup = id => {
-    let ags = [...answerGroups]
-    ags = ags.filter(x => x.id != id)
-    setAnswerGroups(ags)
-  }
+  // Matching Question
 
   const removeAnswer = id => {
     let answers = [...answers]
@@ -585,212 +557,178 @@ const QuestionEditForm = () => {
                   <div className='grid-block'>
                     <Nav />
                     <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
-                      {isloadingQuestion && (
-                        <Box sx={{ width: '100%', paddingTop: '50px' }}>
-                          <div className=''>
-                            <CircularLoading />
-                          </div>
-                        </Box>
-                      )}
-                      {!isloadingQuestion && (
-                        <form
-                          onSubmit={handleSubmit(onSubmit)}
-                          style={{ height: 'auto', width: '100%', paddingTop: 10 }}
-                        >
-                          <Grid container spacing={5}>
-                            <Grid item xs={12}>
-                              <FormControl fullWidth variant='outlined'>
-                                <InputLabel htmlFor='outlined-adornment-parent-category'>Danh mục câu hỏi</InputLabel>
-                                <OutlinedInput
-                                  id='outlined-adornment-parent-category'
-                                  inputprops={{
-                                    readOnly: true,
-                                    className: 'Mui-disabled'
-                                  }}
-                                  value={categorySelected.categoryName ?? ''}
-                                  endAdornment={
-                                    <InputAdornment position='end'>
-                                      <IconButton
-                                        aria-label='toggle password visibility'
-                                        edge='end'
-                                        onClick={cleanCategory}
-                                      >
-                                        <DeleteOutline />
-                                      </IconButton>
-                                      &nbsp;
-                                      <IconButton
-                                        edge='end'
-                                        onClick={() => {
-                                          setOpenCatalogDialog(true)
-                                        }}
-                                      >
-                                        <FolderIcon />
-                                      </IconButton>
-                                    </InputAdornment>
-                                  }
-                                  label='Danh mục câu hỏi'
-                                />
-                              </FormControl>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Typography>Nội dung</Typography>
-                            </Grid>
-                            <Grid item xs={12} md={12}>
-                              <FormControl fullWidth>
-                                <Controller
-                                  name='content'
-                                  control={control}
-                                  rules={{ required: true }}
-                                  render={({ field: { value, onChange } }) => (
-                                    <ContentEditor
-                                      content={value ?? ''}
-                                      onChange={data => {
-                                        onChange(data)
+                      <LoadingSpinner active={isloadingQuestion}>
+                        <Grid container>
+                          <Grid item xs={12}>
+                            <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', paddingTop: 10 }}>
+                              <Grid container spacing={5}>
+                                <Grid item xs={12} md={6}>
+                                  <FormControl fullWidth variant='outlined'>
+                                    <InputLabel htmlFor='outlined-adornment-parent-category'>
+                                      Danh mục câu hỏi
+                                    </InputLabel>
+                                    <OutlinedInput
+                                      id='outlined-adornment-parent-category'
+                                      inputprops={{
+                                        readOnly: true,
+                                        className: 'Mui-disabled'
                                       }}
+                                      value={categorySelected.categoryName ?? ''}
+                                      endAdornment={
+                                        <InputAdornment position='end'>
+                                          <IconButton
+                                            aria-label='toggle password visibility'
+                                            edge='end'
+                                            onClick={cleanCategory}
+                                          >
+                                            <DeleteOutline />
+                                          </IconButton>
+                                          &nbsp;
+                                          <IconButton
+                                            edge='end'
+                                            onClick={() => {
+                                              setOpenCatalogDialog(true)
+                                            }}
+                                          >
+                                            <FolderIcon />
+                                          </IconButton>
+                                        </InputAdornment>
+                                      }
+                                      label='Danh mục câu hỏi'
                                     />
-                                  )}
-                                />
-                                {errors.content && (
-                                  <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
-                                    {errors.content.message}
-                                  </FormHelperText>
-                                )}
-                              </FormControl>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Typography>Giải thích</Typography>
-                            </Grid>
-                            <Grid item xs={12} md={12}>
-                              <FormControl fullWidth>
-                                <Controller
-                                  name='explain'
-                                  control={control}
-                                  rules={{ required: false }}
-                                  render={({ field: { value, onChange } }) => (
-                                    <ContentEditor
-                                      content={value ?? ''}
-                                      onChange={data => {
-                                        onChange(data)
-                                      }}
+                                  </FormControl>
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <Typography>Nội dung</Typography>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                  <FormControl fullWidth>
+                                    <Controller
+                                      name='content'
+                                      control={control}
+                                      rules={{ required: true }}
+                                      render={({ field: { value, onChange } }) => (
+                                        <ContentEditor
+                                          content={value ?? ''}
+                                          onChange={data => {
+                                            onChange(data)
+                                          }}
+                                        />
+                                      )}
                                     />
-                                  )}
-                                />
-                              </FormControl>
-                            </Grid>
-                          </Grid>
-                          <br />
-                          {currentQuestion.questionTypeId !== QuestionType.SA &&
-                            currentQuestion.questionTypeId !== QuestionType.GQ &&
-                            currentQuestion.questionTypeId !== QuestionType.MATCHING &&
-                            currentQuestion.questionTypeId !== QuestionType.FB && (
-                              <>
-                                <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
-                                  <Grid item xs={12}>
-                                    {currentQuestion.questionTypeId === QuestionType.ORDER && (
-                                      <>
-                                        <Alert>
-                                          <strong>Hướng dẫn</strong>
-                                          <br />
-                                          Thứ tự đáp án đúng phải được sắp xếp theo thứ tự từ trên xuống dưới.
-                                        </Alert>
-                                        <br />
-                                      </>
+                                    {errors.content && (
+                                      <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
+                                        {errors.content.message}
+                                      </FormHelperText>
                                     )}
-                                    <TableContainer component={Paper} style={{ marginTop: 5 }} className=''>
-                                      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                                        <TableHead>
-                                          <TableRow>
-                                            <TableCell padding='checkbox' align='center'>
-                                              #
-                                            </TableCell>
-                                            <TableCell style={{ width: 50 }}></TableCell>
-                                            <TableCell style={{ width: 110 }}>Thứ tự</TableCell>
-                                            {currentQuestion.questionTypeId !== QuestionType.ORDER && (
-                                              <TableCell style={{ width: 120 }}>Đáp án đúng</TableCell>
-                                            )}
-                                            <TableCell>Nội dung</TableCell>
-                                          </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                          {answers &&
-                                            answers.map((anwser, index) => {
-                                              return (
-                                                <TableRow
-                                                  hover
-                                                  key={`anwser-${anwser.id}`}
-                                                  sx={{
-                                                    '&:last-of-type td, &:last-of-type th': {
-                                                      border: 0
-                                                    }
-                                                  }}
-                                                >
-                                                  <TableCell
-                                                    padding='checkbox'
-                                                    scope='row'
-                                                    component='th'
-                                                    style={{ textAlign: 'center' }}
-                                                  >
-                                                    {index + 1}
-                                                  </TableCell>
-                                                  <TableCell scope='row' component='th' align='right'>
-                                                    <Tooltip title='Xóa đáp án'>
-                                                      <span>
-                                                        <IconButton
-                                                          aria-label='Xóa đáp án'
-                                                          onClick={() => removeAnswer(anwser.id)}
-                                                        >
-                                                          <Icon icon='mdi:trash' fontSize={20} />
-                                                        </IconButton>
-                                                      </span>
-                                                    </Tooltip>
-                                                  </TableCell>
-                                                  <TableCell scope='row' component='th' style={{ textAlign: 'center' }}>
-                                                    <TextField
-                                                      type='number'
-                                                      name={`ans-order-${anwser.id}`}
-                                                      value={anwser.order}
-                                                      size={'small'}
-                                                      onChange={event => {
-                                                        handleChangeAnwser(anwser.id, 'position', event.target.value)
+                                  </FormControl>
+                                </Grid>
+                                {currentQuestion.questionTypeId === QuestionType.FB && (
+                                  <Grid container spacing={6}>
+                                    <Grid item md={12}>
+                                      <Alert>
+                                        Trả lời dạng [Đáp án đúng 1;Đáp án đúng 2;~Đáp án sai 1;~Đáp án sai 2]
+                                      </Alert>
+                                    </Grid>
+                                  </Grid>
+                                )}
+                                <Grid item xs={12}>
+                                  <Typography>Giải thích</Typography>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                  <FormControl fullWidth>
+                                    <Controller
+                                      name='explain'
+                                      control={control}
+                                      rules={{ required: false }}
+                                      render={({ field: { value, onChange } }) => (
+                                        <ContentEditor
+                                          content={value ?? ''}
+                                          onChange={data => {
+                                            onChange(data)
+                                          }}
+                                        />
+                                      )}
+                                    />
+                                  </FormControl>
+                                </Grid>
+                              </Grid>
+
+                              <br />
+                              {currentQuestion.questionTypeId !== QuestionType.SA &&
+                                currentQuestion.questionTypeId !== QuestionType.GQ &&
+                                currentQuestion.questionTypeId !== QuestionType.MATCHING &&
+                                currentQuestion.questionTypeId !== QuestionType.FB && (
+                                  <>
+                                    <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
+                                      <Grid item xs={12}>
+                                        {currentQuestion.questionTypeId === QuestionType.ORDER && (
+                                          <>
+                                            <Alert>
+                                              <br />
+                                              Thứ tự đáp án đúng phải được sắp xếp theo thứ tự từ trên xuống dưới.
+                                            </Alert>
+                                            <br />
+                                          </>
+                                        )}
+                                        <TableContainer component={Paper} style={{ marginTop: 5 }} className=''>
+                                          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                                            <TableHead>
+                                              <TableRow>
+                                                <TableCell padding='checkbox' align='center'>
+                                                  #
+                                                </TableCell>
+                                                <TableCell style={{ width: 50 }}></TableCell>
+                                                <TableCell style={{ width: 110 }}>Thứ tự</TableCell>
+                                                {currentQuestion.questionTypeId !== QuestionType.ORDER && (
+                                                  <TableCell style={{ width: 120 }}>Đáp án đúng</TableCell>
+                                                )}
+                                                <TableCell>Nội dung</TableCell>
+                                              </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                              {answers &&
+                                                answers.map((anwser, index) => {
+                                                  return (
+                                                    <TableRow
+                                                      hover
+                                                      key={`normal-anwser-${anwser.id}`}
+                                                      sx={{
+                                                        '&:last-of-type td, &:last-of-type th': {
+                                                          border: 0
+                                                        }
                                                       }}
-                                                    />
-                                                  </TableCell>
-                                                  {currentQuestion.questionTypeId !== QuestionType.ORDER && (
-                                                    <TableCell
-                                                      scope='row'
-                                                      component='th'
-                                                      style={{ textAlign: 'center' }}
                                                     >
-                                                      {currentQuestion.questionTypeId === QuestionType.MC && (
-                                                        <Checkbox
-                                                          checked={anwser.isCorrect}
-                                                          value={anwser.isCorrect}
-                                                          name={`chk-ans-content-${anwser.id}`}
-                                                          onChange={event => {
-                                                            handleChangeAnwser(
-                                                              anwser.id,
-                                                              'checkbox',
-                                                              event.target.checked
-                                                            )
-                                                          }}
-                                                        />
-                                                      )}
-                                                      {(currentQuestion.questionTypeId === QuestionType.SC ||
-                                                        currentQuestion.questionTypeId === QuestionType.TF) && (
-                                                        <Radio
-                                                          checked={anwser.isCorrect}
-                                                          value={anwser.isCorrect}
-                                                          name={`rdb-ans-content-${anwser.id}`}
-                                                          onChange={event => {
-                                                            handleChangeAnwser(anwser.id, '')
-                                                          }}
-                                                        />
-                                                      )}
-                                                      {currentQuestion.questionTypeId === QuestionType.FB && (
+                                                      <TableCell
+                                                        padding='checkbox'
+                                                        scope='row'
+                                                        component='th'
+                                                        style={{ textAlign: 'center' }}
+                                                      >
+                                                        {index + 1}
+                                                      </TableCell>
+                                                      <TableCell scope='row' component='th' align='right'>
+                                                        <Tooltip title='Xóa đáp án'>
+                                                          <span>
+                                                            <IconButton
+                                                              aria-label='Xóa đáp án'
+                                                              onClick={() => removeAnswer(anwser.id)}
+                                                            >
+                                                              <Icon icon='mdi:trash' fontSize={20} />
+                                                            </IconButton>
+                                                          </span>
+                                                        </Tooltip>
+                                                      </TableCell>
+                                                      <TableCell
+                                                        scope='row'
+                                                        component='th'
+                                                        style={{ textAlign: 'center' }}
+                                                      >
                                                         <TextField
                                                           type='number'
                                                           name={`ans-order-${anwser.id}`}
                                                           value={anwser.order}
+                                                          size={'small'}
                                                           onChange={event => {
                                                             handleChangeAnwser(
                                                               anwser.id,
@@ -799,249 +737,280 @@ const QuestionEditForm = () => {
                                                             )
                                                           }}
                                                         />
+                                                      </TableCell>
+                                                      {currentQuestion.questionTypeId !== QuestionType.ORDER && (
+                                                        <TableCell
+                                                          scope='row'
+                                                          component='th'
+                                                          style={{ textAlign: 'center' }}
+                                                        >
+                                                          {currentQuestion.questionTypeId === QuestionType.MC && (
+                                                            <Checkbox
+                                                              checked={anwser.isCorrect}
+                                                              value={anwser.isCorrect}
+                                                              name={`chk-ans-content-${anwser.id}`}
+                                                              onChange={event => {
+                                                                handleChangeAnwser(
+                                                                  anwser.id,
+                                                                  'checkbox',
+                                                                  event.target.checked
+                                                                )
+                                                              }}
+                                                            />
+                                                          )}
+                                                          {(currentQuestion.questionTypeId === QuestionType.SC ||
+                                                            currentQuestion.questionTypeId === QuestionType.TF) && (
+                                                            <Radio
+                                                              checked={anwser.isCorrect}
+                                                              value={anwser.isCorrect}
+                                                              name={`rdb-ans-content-${anwser.id}`}
+                                                              onChange={event => {
+                                                                handleChangeAnwser(anwser.id, '')
+                                                              }}
+                                                            />
+                                                          )}
+                                                          {currentQuestion.questionTypeId === QuestionType.FB && (
+                                                            <TextField
+                                                              type='number'
+                                                              name={`ans-order-${anwser.id}`}
+                                                              value={anwser.order}
+                                                              onChange={event => {
+                                                                handleChangeAnwser(
+                                                                  anwser.id,
+                                                                  'position',
+                                                                  event.target.value
+                                                                )
+                                                              }}
+                                                            />
+                                                          )}
+                                                        </TableCell>
                                                       )}
-                                                    </TableCell>
-                                                  )}
-                                                  <TableCell scope='row' component='th'>
-                                                    <FormControl fullWidth>
-                                                      <Controller
-                                                        name={`anws-content-${anwser.id}`}
-                                                        control={control}
-                                                        rules={{ required: true }}
-                                                        render={({ field: { value, onChange } }) => (
-                                                          <ContentEditor
-                                                            content={value ?? anwser.content ?? ''}
-                                                            onChange={value => {
-                                                              onChange(value)
-                                                              checkValidate(anwser.id)
-                                                            }}
+                                                      <TableCell scope='row' component='th'>
+                                                        <FormControl fullWidth>
+                                                          <Controller
+                                                            name={`anws-content-${anwser.id}`}
+                                                            control={control}
+                                                            rules={{ required: true }}
+                                                            render={({ field: { value, onChange } }) => (
+                                                              <ContentEditor
+                                                                content={value ?? anwser.content ?? ''}
+                                                                onChange={value => {
+                                                                  onChange(value)
+                                                                  checkValidate(anwser.id)
+                                                                }}
+                                                              />
+                                                            )}
                                                           />
-                                                        )}
-                                                      />
-                                                      <FormHelperText
-                                                        sx={{ color: 'error.main' }}
-                                                        id='validation-schema-name'
-                                                      >
-                                                        {anwser.errors?.message}
-                                                      </FormHelperText>
-                                                    </FormControl>
+                                                          <FormHelperText
+                                                            sx={{ color: 'error.main' }}
+                                                            id='validation-schema-name'
+                                                          >
+                                                            {anwser.errors?.message}
+                                                          </FormHelperText>
+                                                        </FormControl>
+                                                      </TableCell>
+                                                    </TableRow>
+                                                  )
+                                                })}
+                                              {currentQuestion && currentQuestion.questionTypeId !== QuestionType.TF && (
+                                                <TableRow key={`add-anwser`}>
+                                                  <TableCell
+                                                    padding='checkbox'
+                                                    colSpan={5}
+                                                    style={{ textAlign: 'center' }}
+                                                  >
+                                                    <Button
+                                                      size='small'
+                                                      variant='contained'
+                                                      style={{ width: 250, margin: '20px' }}
+                                                      color='primary'
+                                                      startIcon={<Icon icon='mdi:plus' />}
+                                                      onClick={() => addAnswer()}
+                                                    >
+                                                      Thêm đáp án
+                                                    </Button>
                                                   </TableCell>
                                                 </TableRow>
+                                              )}
+                                            </TableBody>
+                                          </Table>
+                                        </TableContainer>
+                                      </Grid>
+                                    </Grid>
+                                  </>
+                                )}
+                              {currentQuestion.questionTypeId === QuestionType.FB && (
+                                <Grid container spacing={6}>
+                                  <Grid item md={6}>
+                                    <FormControl fullWidth>
+                                      <InputLabel htmlFor='payment-method'>Cấu hình hiển thị câu hỏi</InputLabel>
+                                      <Select
+                                        // onChange={e => onChangeRadioControl(e, 'renderAs')}
+                                        label='Cấu hình hiển thị câu hỏi'
+                                        labelId='demo-simple-select-label'
+                                        aria-describedby='validation-schema-group'
+                                      >
+                                        <MenuItem value={-1}>Chọn</MenuItem>
+                                        <MenuItem value={1}>Textbox</MenuItem>
+                                        <MenuItem value={2}>Dropdonwlist</MenuItem>
+                                      </Select>
+                                    </FormControl>
+                                  </Grid>
+                                  <Grid item md={6}>
+                                    <FormControl fullWidth>
+                                      <InputLabel htmlFor='payment-method'>Cấu hình cách chấm điểm câu hỏi</InputLabel>
+                                      <Select
+                                        label='Cấu hình cách chấm điểm câu hỏi'
+                                        labelId='demo-simple-select-label'
+                                        aria-describedby='validation-schema-group'
+                                      >
+                                        <MenuItem value={-1}>Chọn</MenuItem>
+                                        <MenuItem value={1}>Đúng chính xác</MenuItem>
+                                        <MenuItem value={2}>Không phân biệt chữ in, thường</MenuItem>
+                                      </Select>
+                                    </FormControl>
+                                  </Grid>
+                                </Grid>
+                              )}
+                            </form>
+                          </Grid>
+                          <Grid item xs={12}>
+                            {currentQuestion.questionTypeId === QuestionType.MATCHING && (
+                              <div style={{ height: 'auto', width: '100%', paddingTop: 10 }}>
+                                <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
+                                  <Grid item md={12} xs={12}>
+                                    <TableContainer component={Paper} style={{ marginTop: 5 }} className=''>
+                                      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                                        <TableHead>
+                                          <TableRow>
+                                            <TableCell padding='checkbox' align='center'>
+                                              #
+                                            </TableCell>
+                                            <TableCell style={{ width: 60 }}></TableCell>
+                                            <TableCell style={{ width: 110 }}>Thứ tự</TableCell>
+                                            <TableCell>Nội dung</TableCell>
+                                          </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                          {answerGroups &&
+                                            answerGroups.map((group, index) => {
+                                              return (
+                                                <>
+                                                  <TableRow
+                                                    key={`group-first-${group.id}`}
+                                                    sx={{
+                                                      '&:last-of-type td, &:last-of-type th': {
+                                                        border: 0
+                                                      }
+                                                    }}
+                                                  >
+                                                    <TableCell
+                                                      rowSpan={2}
+                                                      padding='checkbox'
+                                                      scope='row'
+                                                      component='th'
+                                                      style={{ textAlign: 'center' }}
+                                                    >
+                                                      {index + 1}
+                                                    </TableCell>
+                                                    <TableCell scope='row' component='th' rowSpan={2} align='right'>
+                                                      <Tooltip title='Xóa Cặp Đáp án'>
+                                                        <span>
+                                                          <IconButton
+                                                            aria-label='Xóa Cặp Đáp án'
+                                                            onClick={() => removeMatchingAnswerGroup(group.id)}
+                                                          >
+                                                            <Icon icon='mdi:trash' fontSize={20} />
+                                                          </IconButton>
+                                                        </span>
+                                                      </Tooltip>
+                                                    </TableCell>
+                                                    <TableCell
+                                                      scope='row'
+                                                      component='th'
+                                                      rowSpan={2}
+                                                      style={{ textAlign: 'center' }}
+                                                    >
+                                                      <TextField
+                                                        type='number'
+                                                        name={`group-order-${group.id}`}
+                                                        value={group.order}
+                                                        size={'small'}
+                                                        onChange={event => {
+                                                          // handleChangeAnwser(group.id, 'position', event.target.value)
+                                                        }}
+                                                      />
+                                                    </TableCell>
+                                                    <TableCell scope='row' component='th'>
+                                                      <FormControl fullWidth>
+                                                        <ContentEditor
+                                                          value={group.answers[0].content ?? ''}
+                                                          onChange={data => {
+                                                            group.answers[0].content = data
+                                                          }}
+                                                        />
+                                                        <FormHelperText
+                                                          sx={{ color: 'error.main' }}
+                                                          id='validation-schema-name'
+                                                        >
+                                                          {group.answers[0].errors?.message}
+                                                        </FormHelperText>
+                                                      </FormControl>
+                                                    </TableCell>
+                                                  </TableRow>
+                                                  <TableRow
+                                                    key={`group-second-${group.id}`}
+                                                    sx={{
+                                                      '&:last-of-type td, &:last-of-type th': {
+                                                        border: 0
+                                                      }
+                                                    }}
+                                                  >
+                                                    <TableCell scope='row' component='th'>
+                                                      <FormControl fullWidth>
+                                                        <ContentEditor
+                                                          value={group.answers[1].content ?? ''}
+                                                          onChange={data => {
+                                                            group.answers[1].content = data
+                                                            onChange(data)
+                                                          }}
+                                                        />
+                                                        <FormHelperText
+                                                          sx={{ color: 'error.main' }}
+                                                          id='validation-schema-name'
+                                                        >
+                                                          {group.answers[1].errors?.message}
+                                                        </FormHelperText>
+                                                      </FormControl>
+                                                    </TableCell>
+                                                  </TableRow>
+                                                </>
                                               )
                                             })}
-                                          {currentQuestion && currentQuestion.questionTypeId !== QuestionType.TF && (
-                                            <TableRow key={`add-anwser`}>
-                                              <TableCell padding='checkbox' colSpan={5} style={{ textAlign: 'center' }}>
-                                                <Button
-                                                  size='small'
-                                                  variant='contained'
-                                                  style={{ width: 250, margin: '20px' }}
-                                                  color='primary'
-                                                  startIcon={<Icon icon='mdi:plus' />}
-                                                  onClick={() => addAnswer()}
-                                                >
-                                                  Thêm đáp án
-                                                </Button>
-                                              </TableCell>
-                                            </TableRow>
-                                          )}
+                                          <TableRow key={`add-anwser-for-grouping`}>
+                                            <TableCell padding='checkbox' colSpan={4} style={{ textAlign: 'center' }}>
+                                              <Button
+                                                size='small'
+                                                variant='contained'
+                                                style={{ width: 250, margin: '20px' }}
+                                                color='primary'
+                                                startIcon={<Icon icon='mdi:plus' />}
+                                                onClick={() => addMatchingAnswerGroup()}
+                                              >
+                                                Thêm cặp Đáp án
+                                              </Button>
+                                            </TableCell>
+                                          </TableRow>
                                         </TableBody>
                                       </Table>
                                     </TableContainer>
                                   </Grid>
                                 </Grid>
-                              </>
+                              </div>
                             )}
-                          {currentQuestion.questionTypeId === QuestionType.FB && (
-                            <Grid container spacing={6}>
-                              <Grid item md={12}>
-                                <Alert>
-                                  <strong>Hướng dẫn</strong>
-                                  <br />
-                                  Trả lời dạng [Đáp án đúng 1;Đáp án đúng 2;~Đáp án sai 1;~Đáp án sai 2]
-                                </Alert>
-                              </Grid>
-                              <Grid item md={6}>
-                                <FormControl fullWidth>
-                                  <InputLabel htmlFor='payment-method'>Cấu hình hiển thị câu hỏi</InputLabel>
-                                  <Select
-                                    // onChange={e => onChangeRadioControl(e, 'renderAs')}
-                                    label='Cấu hình hiển thị câu hỏi'
-                                    labelId='demo-simple-select-label'
-                                    aria-describedby='validation-schema-group'
-                                  >
-                                    <MenuItem value={-1}>Chọn</MenuItem>
-                                    <MenuItem value={1}>Textbox</MenuItem>
-                                    <MenuItem value={2}>Dropdonwlist</MenuItem>
-                                  </Select>
-                                </FormControl>
-                              </Grid>
-                              <Grid item md={6}>
-                                <FormControl fullWidth>
-                                  <InputLabel htmlFor='payment-method'>Cấu hình cách chấm điểm câu hỏi</InputLabel>
-                                  <Select
-                                    label='Cấu hình cách chấm điểm câu hỏi'
-                                    labelId='demo-simple-select-label'
-                                    aria-describedby='validation-schema-group'
-                                  >
-                                    <MenuItem value={-1}>Chọn</MenuItem>
-                                    <MenuItem value={1}>Đúng chính xác</MenuItem>
-                                    <MenuItem value={2}>Không phân biệt chữ in, thường</MenuItem>
-                                  </Select>
-                                </FormControl>
-                              </Grid>
-                            </Grid>
-                          )}
-
-                          {currentQuestion.questionTypeId === QuestionType.MATCHING && (
-                            <>
-                              <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
-                                <Grid item xs={12}>
-                                  <TableContainer component={Paper} style={{ marginTop: 5 }} className=''>
-                                    <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                                      <TableHead>
-                                        <TableRow>
-                                          <TableCell padding='checkbox' align='center'>
-                                            #
-                                          </TableCell>
-                                          <TableCell style={{ width: 60 }}></TableCell>
-                                          <TableCell style={{ width: 110 }}>Thứ tự</TableCell>
-                                          <TableCell>Nội dung</TableCell>
-                                        </TableRow>
-                                      </TableHead>
-                                      <TableBody>
-                                        {answerGroups &&
-                                          answerGroups.map((group, index) => {
-                                            return (
-                                              <>
-                                                <TableRow
-                                                  key={`group-${group.id}`}
-                                                  sx={{
-                                                    '&:last-of-type td, &:last-of-type th': {
-                                                      border: 0
-                                                    }
-                                                  }}
-                                                >
-                                                  <TableCell
-                                                    rowSpan={2}
-                                                    padding='checkbox'
-                                                    scope='row'
-                                                    component='th'
-                                                    style={{ textAlign: 'center' }}
-                                                  >
-                                                    {index + 1}
-                                                  </TableCell>
-                                                  <TableCell scope='row' component='th' rowSpan={2} align='right'>
-                                                    <Tooltip title='Xóa Cặp Đáp án'>
-                                                      <span>
-                                                        <IconButton
-                                                          aria-label='Xóa Cặp Đáp án'
-                                                          onClick={() => removeMatchingAnswerGroup(group.id)}
-                                                        >
-                                                          <Icon icon='mdi:trash' fontSize={20} />
-                                                        </IconButton>
-                                                      </span>
-                                                    </Tooltip>
-                                                  </TableCell>
-                                                  <TableCell
-                                                    scope='row'
-                                                    component='th'
-                                                    rowSpan={2}
-                                                    style={{ textAlign: 'center' }}
-                                                  >
-                                                    <TextField
-                                                      type='number'
-                                                      name={`group-order-${group.id}`}
-                                                      value={group.order}
-                                                      size={'small'}
-                                                      onChange={event => {
-                                                        // handleChangeAnwser(group.id, 'position', event.target.value)
-                                                      }}
-                                                    />
-                                                  </TableCell>
-                                                  <TableCell scope='row' component='th'>
-                                                    <FormControl fullWidth>
-                                                      <Controller
-                                                        name={`anws-content-${group.answers[0].id}`}
-                                                        control={control}
-                                                        rules={{ required: true }}
-                                                        render={({ field: { value, onChange } }) => (
-                                                          <ContentEditor
-                                                            value={value ?? group.answers[0].content ?? ''}
-                                                            onChange={data => {
-                                                              group.answers[0].content = data
-                                                            }}
-                                                          />
-                                                        )}
-                                                      />
-                                                      <FormHelperText
-                                                        sx={{ color: 'error.main' }}
-                                                        id='validation-schema-name'
-                                                      >
-                                                        {group.answers[0].errors?.message}
-                                                      </FormHelperText>
-                                                    </FormControl>
-                                                  </TableCell>
-                                                </TableRow>
-                                                <TableRow
-                                                  key={`group-${group.id}`}
-                                                  sx={{
-                                                    '&:last-of-type td, &:last-of-type th': {
-                                                      border: 0
-                                                    }
-                                                  }}
-                                                >
-                                                  <TableCell scope='row' component='th'>
-                                                    <FormControl fullWidth>
-                                                      <Controller
-                                                        name={`anws-content-${group.answers[1].id}`}
-                                                        control={control}
-                                                        rules={{ required: true }}
-                                                        render={({ field: { value, onChange } }) => (
-                                                          <ContentEditor
-                                                            value={value ?? group.answers[1].content ?? ''}
-                                                            onChange={data => {
-                                                              group.answers[1].content = data
-                                                              onChange(data)
-                                                            }}
-                                                          />
-                                                        )}
-                                                      />
-                                                      <FormHelperText
-                                                        sx={{ color: 'error.main' }}
-                                                        id='validation-schema-name'
-                                                      >
-                                                        {group.answers[1].errors?.message}
-                                                      </FormHelperText>
-                                                    </FormControl>
-                                                  </TableCell>
-                                                </TableRow>
-                                              </>
-                                            )
-                                          })}
-                                        <TableRow key={`add-anwser`}>
-                                          <TableCell padding='checkbox' colSpan={4} style={{ textAlign: 'center' }}>
-                                            <Button
-                                              size='small'
-                                              variant='contained'
-                                              style={{ width: 250, margin: '20px' }}
-                                              color='primary'
-                                              startIcon={<Icon icon='mdi:plus' />}
-                                              onClick={() => addMatchingAnswerGroup()}
-                                            >
-                                              Thêm cặp Đáp án
-                                            </Button>
-                                          </TableCell>
-                                        </TableRow>
-                                      </TableBody>
-                                    </Table>
-                                  </TableContainer>
-                                </Grid>
-                              </Grid>
-                            </>
-                          )}
-                        </form>
-                      )}
+                          </Grid>
+                        </Grid>
+                      </LoadingSpinner>
                     </div>
                   </div>
                 </div>

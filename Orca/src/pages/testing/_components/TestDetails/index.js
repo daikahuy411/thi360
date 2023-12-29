@@ -17,6 +17,7 @@ import Help from '../Help'
 import QuestionContent from '../Question/QuestionContent'
 import Clock from './Clock'
 import QuestionExplain from './QuestionExplain'
+import SortableComponent from './Sortable'
 
 // MODE
 // 0: Practice: hiển thị đáp án sau khi trả lời.
@@ -635,11 +636,15 @@ class TestDetails extends React.Component {
   render() {
     return (
       <>
-      <Head>
-      {this.state.examAttempt && (
-        <title>{this.state.mode == 1 ? `Làm bài thi: ${this.state.examAttempt.name}` : `Xem lại kết quả: ${this.state.examAttempt.name}`}</title>
-      )}
-      </Head>
+        <Head>
+          {this.state.examAttempt && (
+            <title>
+              {this.state.mode == 1
+                ? `Làm bài thi: ${this.state.examAttempt.name}`
+                : `Xem lại kết quả: ${this.state.examAttempt.name}`}
+            </title>
+          )}
+        </Head>
         <LoadingSpinner active={this.state.loading}>
           {this.state.examAttempt && (
             <Fullscreen enabled={this.state.fullScreen} onChange={fullScreen => this.setState({ fullScreen })}>
@@ -843,8 +848,6 @@ class TestDetails extends React.Component {
                                   {this.state.currentQuestion && <>{this.state.currentQuestion.order}</>}
                                 </span>
                               </span>
-                              {/* <span className="gray mr3-l mr2">Single Correct</span>
-                        <span className="gray">Marks : +4, -1.33</span> */}
                             </span>
                           </div>
                           {/* Queston detail */}
@@ -1075,8 +1078,11 @@ class TestDetails extends React.Component {
                                     </div>
                                   </>
                                 )}
+
                                 {/* Câu hỏi thông thường */}
-                                {this.state.currentQuestion.questionTypeId !== QuestionType.GQ && (
+                                {(this.state.currentQuestion.questionTypeId === QuestionType.TF ||
+                                  this.state.currentQuestion.questionTypeId === QuestionType.SC ||
+                                  this.state.currentQuestion.questionTypeId === QuestionType.MC) && (
                                   <>
                                     <div className='flex flex-column flex-auto  overflow-y-auto-l overflow-unset'>
                                       <span className='mb4 w-100 gray dn du-l'>
@@ -1249,6 +1255,79 @@ class TestDetails extends React.Component {
                                       </div>
                                     </div>
                                   </>
+                                )}
+
+                                {/* Câu hỏi kéo thả */}
+                                {this.state.currentQuestion.questionTypeId === QuestionType.ORDER && (
+                                  <div className='flex flex-column flex-auto  overflow-y-auto-l overflow-unset'>
+                                    <span className='mb4 w-100 gray dn du-l'>
+                                      <QuestionContent question={this.state.currentQuestion} />
+                                    </span>
+                                    <div className='relative dn-l mb4'>
+                                      <div
+                                        className='overflow-hidden '
+                                        style={{
+                                          maxHeight: '6.4rem',
+                                          lineHeight: '1.6rem'
+                                        }}
+                                      >
+                                        <QuestionContent question={this.state.currentQuestion} />
+                                      </div>
+                                    </div>
+                                    <div className='flex flex-column w-100'>
+                                      <b>Sắp xếp câu hỏi</b>
+                                      <SortableComponent />
+                                    </div>
+                                  </div>
+                                )}
+
+                                {/* Câu hỏi ghép đôi */}
+                                {this.state.currentQuestion.questionTypeId === QuestionType.MATCHING && (
+                                  <div className='flex flex-column flex-auto  overflow-y-auto-l overflow-unset'>
+                                    <span className='mb4 w-100 gray dn du-l'>
+                                      <QuestionContent question={this.state.currentQuestion} />
+                                    </span>
+                                    <div className='relative dn-l mb4'>
+                                      <div
+                                        className='overflow-hidden '
+                                        style={{
+                                          maxHeight: '6.4rem',
+                                          lineHeight: '1.6rem'
+                                        }}
+                                      >
+                                        <QuestionContent question={this.state.currentQuestion} />
+                                      </div>
+                                    </div>
+                                    <div className='flex flex-column w-100'>
+                                      <b>Ghép đôi</b>
+                                    </div>
+                                  </div>
+                                )}
+                                {/* Câu hỏi trả lời ngắn */}
+                                {this.state.currentQuestion.questionTypeId === QuestionType.SA && (
+                                  <div className='flex flex-column flex-auto  overflow-y-auto-l overflow-unset'>
+                                    <span className='mb4 w-100 gray dn du-l'>
+                                      <QuestionContent question={this.state.currentQuestion} />
+                                    </span>
+                                    <div className='relative dn-l mb4'>
+                                      <div
+                                        className='overflow-hidden '
+                                        style={{
+                                          maxHeight: '6.4rem',
+                                          lineHeight: '1.6rem'
+                                        }}
+                                      >
+                                        <QuestionContent question={this.state.currentQuestion} />
+                                      </div>
+                                    </div>
+                                    <div className='flex flex-column w-100'>
+                                      <textarea
+                                        rows={6}
+                                        className='form-control'
+                                        placeholder='Phần trả lời của thí sinh'
+                                      />
+                                    </div>
+                                  </div>
                                 )}
                               </>
                             )}

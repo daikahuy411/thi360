@@ -1,12 +1,17 @@
 import { useState } from 'react'
 
+import TestGroupSectionApi from 'api/test-group-section-api'
 import TestGroupSectionItemApi from 'api/test-group-section-item-api'
 import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
-import { useSelector } from 'react-redux'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import { selectTestGroupSection } from 'store/slices/testGroupSectionSlice'
 import { selectedTestGroup } from 'store/slices/testGroupSlice'
 
 import Icon from '@core/components/icon'
@@ -41,6 +46,8 @@ function PaperComponent(props) {
 
 const ItemsTable = ({ data }) => {
   const router = useRouter()
+  const dispatch = useDispatch()
+
   const { testGroupId, sectionId } = router.query
   const currentTestGroup = useSelector(selectedTestGroup)
 
@@ -55,8 +62,10 @@ const ItemsTable = ({ data }) => {
           setOpenDelete(false)
           if (response.data.isSuccess) {
             toast.success('Xóa dữ liệu thành công.')
-            fetchData()
             setSelected([])
+            new TestGroupSectionApi().get(sectionId).then(response => {
+              dispatch(selectTestGroupSection(response.data))
+            })
           }
         })
         .catch(e => {

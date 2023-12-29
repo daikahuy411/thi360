@@ -13,6 +13,7 @@ import Head from 'next/head'
 import NavLink from 'next/link'
 import { useRouter } from 'next/router'
 import TestAttemptHistoryDialog from 'pages/shared/test-attempt-history-dialog'
+import toast from 'react-hot-toast'
 
 import LoadingSpinner from '@core/components/loading-spinner'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -44,6 +45,7 @@ const ExamPage = () => {
   const [anchorEls, setAnchorEls] = useState([])
   const [openTestAttemptHistory, setOpenTestAttemptHistory] = useState(false)
   const auth = useAuth()
+  let order = 1
 
   const createExamAttempt = (examItemId, testId, mode = 1) => {
     if (!auth.user) {
@@ -53,7 +55,12 @@ const ExamPage = () => {
 
     setLoading(true)
     new TestingApi().CreateExamAttempt(parseInt(examId), examItemId, testId, mode).then(response => {
-      router.push(`/testing/${response.data.value.token}`)
+      if (response.data.isSuccess) {
+        router.push(`/testing/${response.data.value.token}`)
+      } else {
+        toast.error(response.data.message)
+        setLoading(false)
+      }
     })
   }
 
@@ -92,7 +99,7 @@ const ExamPage = () => {
     <>
       <Head>
         {exam && (
-          <title>{`${exam.subject.name} ${exam.program?.name}: ${exam.name} - ${themeConfig.templateName}`}</title>
+          <title>{`${exam.subject?.name} ${exam.program?.name}: ${exam.name} - ${themeConfig.templateName}`}</title>
         )}
       </Head>
       <Grid container>
@@ -105,17 +112,21 @@ const ExamPage = () => {
                   src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQVJREFUSEvtldERgyAMhpNN7CY6ApmgnaTXSZxAGKFuUjehh2c4jCDhwbs+lEcM//cnJoBw8cKL9UENcM513vsxGELEhzFm0ZhTARLxfhNdEHHQQKoAIc6uOwBQQU4BUpyIbtveGwBUkCIgJ841b4FkAWfirZADQCPeAtkBWsS1kAiQrUhE1Q4TkE+uhaPINE0jIt75UAsgnLHW+mTwZiIa1qHkzcsBDGInnIFzrvfePwGAp5hDZ0R8GWPmNAOZ+aHOEmCtDbUNQ5VbsRTyHAdrAGttpbOMkWzcHxBL91P/4Kxrao/YEq70NCh32YW+D09jqTVLkN1cFNu0ZrH1u/pCaxXm+C/ebQ4oUTUexgAAAABJRU5ErkJggg=='
                 />
               </Link>
-              <Link underline='hover' color='inherit' href={`/program/${exam.program.id}`} component={NavLink}>
-                {exam.program.name}
-              </Link>
-              <Link
-                underline='hover'
-                color='inherit'
-                href={`/program/${exam.program.id}/subject/${exam.subject.id}`}
-                component={NavLink}
-              >
-                {exam.subject.name}
-              </Link>
+              {exam.program && (
+                <Link underline='hover' color='inherit' href={`/program/${exam.program.id}`} component={NavLink}>
+                  {exam.program.name}
+                </Link>
+              )}
+              {exam.program && exam.subject && (
+                <Link
+                  underline='hover'
+                  color='inherit'
+                  href={`/program/${exam.program.id}/subject/${exam.subject.id}`}
+                  component={NavLink}
+                >
+                  {exam.subject.name}
+                </Link>
+              )}
               {exam.curriculum && (
                 <Link
                   underline='hover'
@@ -127,6 +138,7 @@ const ExamPage = () => {
                 </Link>
               )}
               {exam.curriculum &&
+                exam.program &&
                 exam.curriculum.children &&
                 exam.curriculum.children.map(item => (
                   <Link
@@ -238,100 +250,108 @@ const ExamPage = () => {
                                 </thead>
                                 <tbody className='table-border-bottom-0'>
                                   {exam &&
-                                    exam.examItems[0].tests.map((row, index) => (
-                                      <tr key={row.id}>
-                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                        <td>
-                                          {row.userTestAttemptTracking && (
-                                            <>
-                                              <CircularProgress
-                                                size={32}
-                                                value={100}
-                                                thickness={5}
-                                                variant='determinate'
-                                                sx={{ position: 'absolute', color: 'customColors.trackBg' }}
-                                              />
-                                              <CircularProgress
-                                                size={32}
-                                                thickness={5}
-                                                value={50}
-                                                sx={{ color: '#4caf50' }}
-                                                variant='determinate'
-                                              />
-                                            </>
-                                          )}
-                                        </td>
-                                        <td>
-                                          <div>{row.name}</div>
-                                          {row.link && (
-                                            <div>
-                                              <a href={row.link} rel='noreferrer' target={'_blank'}>
-                                                {row.link}
-                                              </a>
-                                            </div>
-                                          )}
-                                        </td>
-                                        <td>{row.totalQuestion}</td>
-                                        <td>{row.testTypeName}</td>
-                                        <td>
-                                          {row.userTestAttemptTracking && (
-                                            <p>
-                                              {row.userTestAttemptTracking.totalPassed +
-                                                row.userTestAttemptTracking.totalFailed}
-                                            </p>
-                                          )}
-                                          {!row.userTestAttemptTracking && <p>0</p>}
-                                        </td>
-                                        <td className=''>
-                                          <div className='d-flex align-items-center justify-content-end'>
-                                            <Button
-                                              variant='contained'
-                                              size='small'
-                                              onClick={() => {
-                                                createExamAttempt(exam.examItems[0].id, row.id)
-                                              }}
-                                            >
-                                              Vào thi
-                                            </Button>
-                                            &nbsp;
-                                            <Button
-                                              variant='outlined'
-                                              onClick={() => {
-                                                createExamAttempt(exam.examItems[0].id, row.id, 0)
-                                              }}
-                                              size='small'
-                                            >
-                                              Luyện tập
-                                            </Button>
-                                            &nbsp;
-                                            <IconButton
-                                              aria-label='more'
-                                              aria-controls='long-menu'
-                                              aria-haspopup='true'
-                                              onClick={e => handleActionClick(row.id, e)}
-                                            >
-                                              <MoreVertIcon />
-                                            </IconButton>
-                                            <Menu
-                                              id={row.id}
-                                              anchorEl={anchorEls[row.id]}
-                                              keepMounted
-                                              open={Boolean(anchorEls[row.id])}
-                                              onClose={e => handleActionClose(row.id, e)}
-                                            >
-                                              <MenuItem
-                                                onClick={e => {
-                                                  setSelectedTest(row)
-                                                  showTestAttemptHistory(row.id)
-                                                }}
-                                              >
-                                                Xem lịch sử thi
-                                              </MenuItem>
-                                            </Menu>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                    ))}
+                                    exam.examItems.map(item => {
+                                      return (
+                                        <>
+                                          {item.tests.map(row => {
+                                            return (
+                                              <tr key={row.id}>
+                                                <td style={{ textAlign: 'center' }}>{order++}</td>
+                                                <td>
+                                                  {row.userTestAttemptTracking && (
+                                                    <>
+                                                      <CircularProgress
+                                                        size={32}
+                                                        value={100}
+                                                        thickness={5}
+                                                        variant='determinate'
+                                                        sx={{ position: 'absolute', color: 'customColors.trackBg' }}
+                                                      />
+                                                      <CircularProgress
+                                                        size={32}
+                                                        thickness={5}
+                                                        value={50}
+                                                        sx={{ color: '#4caf50' }}
+                                                        variant='determinate'
+                                                      />
+                                                    </>
+                                                  )}
+                                                </td>
+                                                <td>
+                                                  <div>{row.name}</div>
+                                                  {row.link && (
+                                                    <div>
+                                                      <a href={row.link} rel='noreferrer' target={'_blank'}>
+                                                        {row.link}
+                                                      </a>
+                                                    </div>
+                                                  )}
+                                                </td>
+                                                <td>{row.totalQuestion}</td>
+                                                <td>{row.testTypeName}</td>
+                                                <td>
+                                                  {row.userTestAttemptTracking && (
+                                                    <p>
+                                                      {row.userTestAttemptTracking.totalPassed +
+                                                        row.userTestAttemptTracking.totalFailed}
+                                                    </p>
+                                                  )}
+                                                  {!row.userTestAttemptTracking && <p>0</p>}
+                                                </td>
+                                                <td className=''>
+                                                  <div className='d-flex align-items-center justify-content-end'>
+                                                    <Button
+                                                      variant='contained'
+                                                      size='small'
+                                                      onClick={() => {
+                                                        createExamAttempt(exam.examItems[0].id, row.id)
+                                                      }}
+                                                    >
+                                                      Vào thi
+                                                    </Button>
+                                                    &nbsp;
+                                                    <Button
+                                                      variant='outlined'
+                                                      onClick={() => {
+                                                        createExamAttempt(exam.examItems[0].id, row.id, 0)
+                                                      }}
+                                                      size='small'
+                                                    >
+                                                      Luyện tập
+                                                    </Button>
+                                                    &nbsp;
+                                                    <IconButton
+                                                      aria-label='more'
+                                                      aria-controls='long-menu'
+                                                      aria-haspopup='true'
+                                                      onClick={e => handleActionClick(row.id, e)}
+                                                    >
+                                                      <MoreVertIcon />
+                                                    </IconButton>
+                                                    <Menu
+                                                      id={row.id}
+                                                      anchorEl={anchorEls[row.id]}
+                                                      keepMounted
+                                                      open={Boolean(anchorEls[row.id])}
+                                                      onClose={e => handleActionClose(row.id, e)}
+                                                    >
+                                                      <MenuItem
+                                                        onClick={e => {
+                                                          setSelectedTest(row)
+                                                          showTestAttemptHistory(row.id)
+                                                        }}
+                                                      >
+                                                        Xem lịch sử thi
+                                                      </MenuItem>
+                                                    </Menu>
+                                                  </div>
+                                                </td>
+                                              </tr>
+                                            )
+                                          })}
+                                        </>
+                                      )
+                                    })}
                                 </tbody>
                               </table>
                             </div>

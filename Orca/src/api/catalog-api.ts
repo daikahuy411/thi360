@@ -87,6 +87,8 @@ class CatalogApi extends ApiBase {
   }
 }
 
+export const ProgramCatalogApi = new CatalogApi(CatalogType.PROGRAM_CATALOG)
+
 export const QuestionCategoryApi = new CatalogApi(CatalogType.QUESTION_CATEGORY)
 
 export const ExamCategoryApi = new CatalogApi(CatalogType.EXAM_CATEGORY)

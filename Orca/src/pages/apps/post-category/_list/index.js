@@ -1,7 +1,12 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
 import { PostCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+
 import Icon from '@core/components/icon'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
@@ -48,7 +53,7 @@ const ExamCategoryTable = () => {
   const fetchData = () => {
     const param = {
       keyword: keyword,
-      page: page == 0 ? 1 : page + 1,
+      page: page,
       limit: rowsPerPage
     }
     PostCategoryApi.searches(param)

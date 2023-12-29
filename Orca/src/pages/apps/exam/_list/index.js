@@ -54,7 +54,7 @@ function PaperComponent(props) {
 
 const ExamTable = () => {
   const [data, setData] = useState([])
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [totalItem, setTotalItem] = useState(0)
   const [keyword, setKeyword] = useState('')
@@ -86,7 +86,7 @@ const ExamTable = () => {
     new ExamApi()
       .searches({
         FolderId: examId,
-        Page: page + 1,
+        Page: page,
         Limit: rowsPerPage,
         Keyword: keyword,
         Status: status,

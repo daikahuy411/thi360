@@ -56,9 +56,7 @@ const TopNav = props => {
           Câu hỏi
         </Link>
       )}
-      {parentId && parentId!='0' && (
-        <p>Cau hoi cha</p>
-      )}
+      {parentId && parentId != '0' && <p>Cau hoi cha</p>}
     </Breadcrumbs>
   )
 }

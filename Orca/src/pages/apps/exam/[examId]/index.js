@@ -7,7 +7,10 @@ import {
   useState
 } from 'react'
 
-import { ExamCategoryApi } from 'api/catalog-api'
+import {
+  ExamCategoryApi,
+  ProgramCatalogApi
+} from 'api/catalog-api'
 import ExamApi from 'api/exam-api'
 import { FolderType } from 'enum/FolderType'
 import moment from 'moment-timezone'
@@ -114,6 +117,11 @@ const EditExamPage = () => {
   const dispatch = useDispatch()
   const { examId, folderId } = router.query
   const [parentId, setParentId] = useState(0)
+  const [programs, setPrograms] = useState([])
+  const [subjects, setSubjects] = useState([])
+  const [programCatalogId, setProgramCatalogId] = useState(0)
+  const [subjectCatalogId, setSubjectCatalogId] = useState(0)
+
   const currentExam = useSelector(selectedExam)
 
   const {
@@ -132,6 +140,22 @@ const EditExamPage = () => {
   const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
 
   useEffect(() => {
+    ProgramCatalogApi.getAll().then(response => {
+      setPrograms(response.data)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (!programCatalogId || programCatalogId == 0) {
+      setSubjects([])
+      return
+    }
+    ProgramCatalogApi.get(programCatalogId).then(response => {
+      setSubjects(response.data.subjectCatalogs)
+    })
+  }, [programCatalogId])
+
+  useEffect(() => {
     if (!examId || examId == 0) {
       dispatch(selectExam({ id: 0, name: '' }))
       return
@@ -140,7 +164,8 @@ const EditExamPage = () => {
       dispatch(selectExam(response.data))
       if (response.data) {
         setCheckedIsSpecificDuration(response.data.isSpecificDuration)
-
+        setProgramCatalogId(response.data.programId)
+        setSubjectCatalogId(response.data.subjectId)
         setOrganizationSelected({
           organizationId: response.data.categoryId,
           organizationName: response.data.categoryName
@@ -150,7 +175,11 @@ const EditExamPage = () => {
   }, [examId])
 
   useEffect(() => {
-    if (currentExam) reset(currentExam)
+    if (currentExam) {
+      reset(currentExam)
+      setProgramCatalogId(currentExam.programId)
+      setSubjectCatalogId(currentExam.subjectId)
+    }
   }, [currentExam])
 
   /*
@@ -430,6 +459,60 @@ const EditExamPage = () => {
                                       </InputAdornment>
                                     }
                                     label='Danh mục Kỳ thi'
+                                  />
+                                </FormControl>
+                              </Grid>
+                              <Grid item xs={6}>
+                                <FormControl fullWidth>
+                                  <Controller
+                                    name='programId'
+                                    control={control}
+                                    render={({ field: { value, onChange } }) => (
+                                      <>
+                                        <InputLabel id='select-program-label'>Chương trình</InputLabel>
+                                        <Select
+                                          label='Chương trình'
+                                          labelId='select-program-label'
+                                          aria-describedby='validation-schema-exam-type'
+                                          value={value ?? 0}
+                                          onChange={e => {
+                                            onChange(parseInt(e.target.value))
+                                            setProgramCatalogId(parseInt(e.target.value))
+                                          }}
+                                        >
+                                          <MenuItem value={0}>Chọn Chương trình</MenuItem>
+                                          {programs &&
+                                            programs.map(item => <MenuItem value={item.id}>{item.name}</MenuItem>)}
+                                        </Select>
+                                      </>
+                                    )}
+                                  />
+                                </FormControl>
+                              </Grid>
+                              <Grid item xs={6}>
+                                <FormControl fullWidth>
+                                  <Controller
+                                    name='subjectId'
+                                    control={control}
+                                    render={({ field: { value, onChange } }) => (
+                                      <>
+                                        <InputLabel id='select-subject-catalog'>Môn học/ Chủ đề</InputLabel>
+                                        <Select
+                                          label='Môn học/ Chủ đề'
+                                          labelId='select-subject-catalog'
+                                          aria-describedby='validation-schema-group'
+                                          value={value ?? 0}
+                                          onChange={e => {
+                                            onChange(parseInt(e.target.value))
+                                            setSubjectCatalogId(parseInt(e.target.value))
+                                          }}
+                                        >
+                                          <MenuItem value={0}>Chọn Môn học/ Chủ đề</MenuItem>
+                                          {subjects &&
+                                            subjects.map(item => <MenuItem value={item.id}>{item.name}</MenuItem>)}
+                                        </Select>
+                                      </>
+                                    )}
                                   />
                                 </FormControl>
                               </Grid>

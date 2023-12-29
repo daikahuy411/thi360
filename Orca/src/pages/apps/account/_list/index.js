@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import UserApi from 'api/user-api'
 import moment from 'moment'
@@ -66,7 +69,7 @@ const UserTable = () => {
     const param = {
       keyword: keyword,
       organizationId: 0,
-      page: page == 0 ? 1 : page + 1,
+      page: page,
       limit: rowsPerPage
     }
     new UserApi().searches(param).then(response => {

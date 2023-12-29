@@ -75,7 +75,7 @@ const SectionsTable = ({ testGroup }) => {
     const param = {
       keyword: keyword,
       testGroupId: Number(testGroupId),
-      page: page == 0 ? 1 : page + 1,
+      page: page,
       limit: rowsPerPage
     }
     new TestGroupSectionApi()

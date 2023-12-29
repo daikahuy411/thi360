@@ -1,22 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+
+import LoadingSpinner from '@core/components/loading-spinner'
 import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-import LoadingSpinner from '@core/components/loading-spinner'
-import * as yup from 'yup'
-import toast from 'react-hot-toast'
+
 import Uploader from '../uploader'
 
 export default function ImportDialog({ onClose }) {
   const [loading, setLoading] = useState(false)
+  const [uploadedFile, setUploadedFile] = useState(null)
 
   const handleClose = () => {
     if (onClose) {
       onClose()
     }
+  }
+
+  const onUploaded = response => {
+    setUploadedFile(response)
   }
 
   return (
@@ -25,13 +29,13 @@ export default function ImportDialog({ onClose }) {
       <DialogContent>
         <LoadingSpinner active={loading} minHeight={0}>
           <div style={{ padding: 5 }}>
-            <Uploader />
+            <Uploader onUploaded={onUploaded} />
           </div>
         </LoadingSpinner>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Hủy bỏ</Button>
-        <Button variant='contained' color='primary'>
+        <Button disabled={!uploadedFile} variant='contained' color='primary'>
           Tiến hành Import
         </Button>
       </DialogActions>

@@ -14,9 +14,6 @@ const TestingPage = () => {
 TestingPage.getLayout = function getLayout(page) {
   return (
     <>
-      {/* <Head>
-        <link href='/css/test.css' rel='stylesheet' />
-      </Head> */}
       <TestingLayout>{page}</TestingLayout>
     </>
   )

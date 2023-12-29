@@ -18,7 +18,6 @@ import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
 import TableContainer from '@mui/material/TableContainer'
-import TablePagination from '@mui/material/TablePagination'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
@@ -34,21 +33,10 @@ export default function CatalogDialog({
   onNodeSelected = null
 }) {
   const [data, setData] = useState([])
-  const [totalItem, setTotalItem] = useState(0)
-  const [totalParentItem, setTotalParentItem] = useState(0)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [loading, setLoading] = useState(false)
   const [selectedNodeId, setSelectedNodeId] = useState(0)
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage)
-  }
-
-  const handleChangeRowsPerPage = event => {
-    setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(0)
-  }
 
   useEffect(() => {
     fetchData()
@@ -61,7 +49,7 @@ export default function CatalogDialog({
   const fetchData = () => {
     const param = {
       catalogId: catalogId,
-      page: page == 0 ? 1 : page + 1,
+      page: page,
       limit: rowsPerPage
     }
     setLoading(true)
@@ -69,15 +57,11 @@ export default function CatalogDialog({
     if (categoryType === CatalogType.DEPARTMENT) {
       new OrganizationApi().getOrganizationTree().then(response => {
         setData(response.data.value)
-        setTotalItem(response.data.totalItems)
-        setTotalParentItem(response.data.totalParentItems)
         setLoading(false)
       })
     } else {
-      new CatalogApi(categoryType).getAll().then(response => {
+      new CatalogApi(categoryType).searches().then(response => {
         setData(response.data.value)
-        setTotalItem(response.data.totalItems)
-        setTotalParentItem(response.data.totalParentItems)
         setLoading(false)
       })
     }
@@ -160,16 +144,6 @@ export default function CatalogDialog({
                   {data && <CatalogTree onNodeSelected={nodeId => handleNodeSelected(nodeId)} data={data} />}
                 </LoadingSpinner>
               </TableContainer>
-              <TablePagination
-                labelRowsPerPage='Số dòng/trang'
-                rowsPerPageOptions={[20, 30, 50]}
-                component='div'
-                count={totalParentItem}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
             </div>
           </Grid>
         </Grid>

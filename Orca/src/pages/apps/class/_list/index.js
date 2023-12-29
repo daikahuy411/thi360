@@ -77,7 +77,7 @@ const ClassTable = () => {
     const param = {
       folderId: classId,
       keyword: keyword,
-      page: page == 0 ? 1 : page + 1,
+      page: page,
       limit: rowsPerPage
     }
     new OrganizationApi()

@@ -63,7 +63,8 @@ const StyledTreeItem = (props: StyledTreeItemProps) => {
       {...other}
       label={
         <Box sx={{ py: 1, display: 'flex', alignItems: 'center', '& svg': { mr: 1 } }}>
-          {hasChildren === true && <Icon icon={'mdi:folder-outline'} color='inherit' />}
+          {hasChildren === true && <Icon icon={'mdi:folder'} color='inherit' />}
+          {hasChildren === false && <Icon icon={'mdi:file-outline'} color='inherit' />}
           <Typography variant='body1' sx={{ flexGrow: 1, fontWeight: 'inherit' }}>
             {label}
           </Typography>

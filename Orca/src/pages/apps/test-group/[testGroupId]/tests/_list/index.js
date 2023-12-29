@@ -260,7 +260,7 @@ const TestsDataTable = () => {
                         <IconButton
                           aria-label='edit'
                           component={Link}
-                          href={`/testing/preview/${row.id}`}
+                          href={`/testing/preview/testgroup/${testGroupId}/${row.id}`}
                         >
                           <VisibilityIcon />
                         </IconButton>

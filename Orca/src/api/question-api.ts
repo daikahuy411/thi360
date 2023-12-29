@@ -262,4 +262,10 @@ export default class QuestionApi extends ApiBase {
       group: 0
     }
   }
+
+  getQuestionPreview = (id: number) => {
+    const url = `${this.baseApiUrl}/GetQuestionPreview/${id}`
+    const response = axios.post(url)
+    return response
+  }
 }

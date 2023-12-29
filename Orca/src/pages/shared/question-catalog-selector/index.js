@@ -132,7 +132,7 @@ export default function QuestionCatalogSelector({ open, onClose, onOk, type = 2 
     const param = {
       keyword: '',
       catalogId: item.id,
-      page: page == 0 ? 1 : page + 1,
+      page: page,
       limit: rowsPerPage
     }
     setLoading(true)

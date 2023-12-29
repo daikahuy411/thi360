@@ -30,7 +30,7 @@ const SubjectPage = () => {
   const [exams, setExams] = useState([])
   const [totalItems, setTotalItems] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [loading, setLoading] = useState(false)
   const [curriculum, setCurriculum] = useState(null)
@@ -96,9 +96,7 @@ const SubjectPage = () => {
   return (
     <>
       <Head>
-        {(program && subject && curriculum) && (
-          <title>{`${subject.name} ${program.name} - ${curriculum.name}`}</title>
-        )}
+        {program && subject && curriculum && <title>{`${subject.name} ${program.name} - ${curriculum.name}`}</title>}
       </Head>
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -206,7 +204,7 @@ const SubjectPage = () => {
                                   <NavLink href={`/exam/${item.id}`} className='TC-detail'>
                                     <article style={{ width: '100%' }}>
                                       <label>
-                                        {(page-1)*rowsPerPage + index + 1}.&nbsp;{item.name}
+                                        {(page - 1) * rowsPerPage + index + 1}.&nbsp;{item.name}
                                       </label>
                                       {item.curriculum && (
                                         <div style={{ padding: 5, paddingLeft: 0 }} className='text-muted'>

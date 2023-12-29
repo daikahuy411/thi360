@@ -6,16 +6,13 @@ import TestDetail from 'pages/testing/_components/TestPreview'
 
 const TestingReviewPage = () => {
   const router = useRouter()
-  const { testId } = router.query
-  return <>{testId && <TestDetail testId={testId} mode={2} />}</>
+  const { catalogId, questionId, categoryId } = router.query
+  return <>{questionId && <TestDetail questionId={questionId} catalogId={catalogId} categoryId={categoryId} />}</>
 }
 
 TestingReviewPage.getLayout = function getLayout(page) {
   return (
     <>
-      {/* <Head>
-        <link href='/css/test.css' rel='stylesheet' />
-      </Head> */}
       <TestingLayout>{page}</TestingLayout>
     </>
   )

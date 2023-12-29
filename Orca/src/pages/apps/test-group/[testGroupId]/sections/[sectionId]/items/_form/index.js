@@ -121,11 +121,12 @@ const ItemEditForm = () => {
     item.questions = []
     if (itemType == 2) {
       item.value = selectedQuestions.map(n => n.id).join(',')
-    } else if (itemType == 4) {
+    } else if (itemType == 4 && selectedQuestionCategory && selectedQuestionCategory.key) {
       item.value = selectedQuestionCategory.key.toString()
     }
     new TestGroupSectionItemApi().save(item).then(response => {
       toast.success('Cập nhật thành công')
+      dispatch(selectTestGroupSectionItem(response.data))
       new TestGroupSectionApi().get(sectionId).then(response => {
         dispatch(selectTestGroupSection(response.data))
       })

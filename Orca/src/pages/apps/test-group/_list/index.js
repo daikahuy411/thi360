@@ -1,15 +1,21 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import TestGroupApi from 'api/test-group-api'
+import moment from 'moment'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import EditFolderDialog from 'pages/shared/folder/edit-folder-dialog'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
-import moment from 'moment'
-import { useRouter } from 'next/router'
 
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
+import FolderIcon from '@mui/icons-material/Folder'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import Dialog from '@mui/material/Dialog'
@@ -32,9 +38,6 @@ import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import LoadingSpinner from '@core/components/loading-spinner'
-import FolderIcon from '@mui/icons-material/Folder'
-import EditFolderDialog from 'pages/shared/folder/edit-folder-dialog'
 
 function PaperComponent(props) {
   return (
@@ -74,7 +77,7 @@ const TestGroupTable = () => {
     const param = {
       keyword: keyword,
       folderId: folderId,
-      page: page == 0 ? 1 : page + 1,
+      page: page,
       limit: rowsPerPage
     }
 

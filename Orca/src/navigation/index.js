@@ -5,6 +5,20 @@ export const studentLinks = [
     path: '/home'
   },
   {
+    title: 'Kỳ thi của tôi',
+    icon: 'mdi:calendar-blank-outline',
+    children: [
+      {
+        title: 'Luyện tập',
+        path: '/apps/my-practice'
+      },
+      {
+        title: 'Thi-Kiểm tra',
+        path: '/apps/my-assignment'
+      }
+    ]
+  },
+  {
     icon: 'bi:book',
     title: 'Chương trình',
     // path: '/program',

@@ -34,28 +34,22 @@ const EntityInfoModal = ({ entity }) => {
           <Table sx={{ minWidth: 500 }} aria-label='custom pagination table'>
             <TableBody>
               <TableRow>
-                <TableCell component='th' scope='row'>
+                <TableCell style={{ width: 180 }} component='th' scope='row'>
                   Ngày tạo
                 </TableCell>
-                <TableCell style={{ width: 180 }} align='right'>
-                  {moment(entity.createdTime).format('DD-MM-YYYY HH:mm hh:mm')}
-                </TableCell>
+                <TableCell align='right'>{moment(entity.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell component='th' scope='row'>
+                <TableCell style={{ width: 180 }} component='th' scope='row'>
                   Người tạo
                 </TableCell>
-                <TableCell style={{ width: 180 }} align='right'>
-                  {entity.createdByName}
-                </TableCell>
+                <TableCell align='right'>{entity.createdByName}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell component='th' scope='row'>
+                <TableCell style={{ width: 180 }} component='th' scope='row'>
                   Sửa gần nhất
                 </TableCell>
-                <TableCell style={{ width: 180 }} align='right'>
-                  {moment(entity.lastModifiedTime).format('DD-MM-YYYY HH:mm')}
-                </TableCell>
+                <TableCell align='right'>{moment(entity.lastModifiedTime).format('DD-MM-YYYY HH:mm')}</TableCell>
               </TableRow>
             </TableBody>
           </Table>

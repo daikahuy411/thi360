@@ -3,7 +3,6 @@ import * as React from 'react'
 import { useEffect } from 'react'
 
 import TestGroupSectionApi from 'api/test-group-section-api'
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
@@ -27,6 +26,7 @@ import {
 } from 'store/slices/testGroupSectionSlice'
 import * as yup from 'yup'
 
+import ContentEditor from '@core/components/editor'
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -49,13 +49,6 @@ import Typography from '@mui/material/Typography'
 
 import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
-
-const ContentEditor = dynamic(
-  () => {
-    return import('@core/components/editor/index-bak')
-  },
-  { ssr: false }
-)
 
 const schema = yup.object().shape({
   name: yup.string().required('* bắt buộc'),
@@ -216,7 +209,7 @@ const SectionEditForm = () => {
                     <Nav />
                     <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                       <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', paddingTop: 10 }}>
-                        <Grid container spacing={5}>
+                        <Grid container spacing={5} maxWidth={"md"}>
                           <Grid item xs={12}>
                             <FormControl fullWidth>
                               <Controller
