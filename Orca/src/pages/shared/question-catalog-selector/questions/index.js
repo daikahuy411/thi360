@@ -52,7 +52,7 @@ const Questions = props => {
         questionType: 0,
         categoryId: categoryId,
         keyword: keyword,
-        page: page + 1,
+        page: page ,
         limit: rowsPerPage
       })
       .then(response => {
@@ -150,100 +150,114 @@ const Questions = props => {
         <Grid item md={12}>
           <Divider />
         </Grid>
-        <Grid item md={3} lg={3} style={{ height: '80%', borderRight: 'solid 1px rgba(58, 53, 65, 0.12)' }}>
-          <QuestionCategoryTree
-            onNodeSelected={nodeId => onCategoryChanged(nodeId)}
-            data={[{ id: 0, key: 0, title: 'Tất cả' }, ...questionCates]}
-          />
-        </Grid>
-        <Grid item md={9} lg={9}>
-          <TableContainer component={Paper} style={{ marginTop: 5 }}>
-            <LoadingSpinner active={loading}>
-              <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-                <TableHead>
-                  <TableRow>
-                    <TableCell padding='checkbox'>
-                      <Checkbox
-                        onChange={handleSelectAllClick}
-                        checked={data.length > 0 && selected.length === data.length}
-                        indeterminate={selected.length > 0 && selected.length < data.length}
-                        inputProps={{ 'aria-label': 'select all desserts' }}
-                      />
-                    </TableCell>
-                    <TableCell align='center' style={{ width: 40 }}>
-                      Xem
-                    </TableCell>
-                    <TableCell style={{ width: 160 }}>Mã</TableCell>
-                    <TableCell>Nội dung</TableCell>
-                    <TableCell style={{ width: 180 }}>Danh mục</TableCell>
-                    <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
-                    <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {data &&
-                    data.map((row, index) => {
-                      const isItemSelected = isSelected(row.id)
-                      const labelId = `enhanced-table-checkbox-${index}`
 
-                      return (
-                        <TableRow
-                          hover
-                          tabIndex={-1}
-                          role='checkbox'
-                          key={row.id}
-                          selected={isItemSelected}
-                          aria-checked={isItemSelected}
-                          sx={{
-                            '&:last-of-type td, &:last-of-type th': {
-                              border: 0
-                            }
-                          }}
-                        >
+        <Grid item md={12} lg={12}>
+          <table style={{ width: '100%' }}>
+            <tr>
+              <td
+                style={{
+                  width: '20%',
+                  padding: 5,
+                  verticalAlign: 'top',
+                  borderRight: '1px solid rgba(58, 53, 65, 0.12)'
+                }}
+              >
+                <QuestionCategoryTree
+                  onNodeSelected={nodeId => onCategoryChanged(nodeId)}
+                  data={[{ id: 0, key: 0, title: 'Tất cả' }, ...questionCates]}
+                />
+              </td>
+              <td style={{ verticalAlign: 'top', padding: 5 }}>
+                <TableContainer component={Paper} style={{ marginTop: 5 }}>
+                  <LoadingSpinner active={loading}>
+                    <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                      <TableHead>
+                        <TableRow>
                           <TableCell padding='checkbox'>
                             <Checkbox
-                              checked={isItemSelected}
-                              inputProps={{ 'aria-labelledby': labelId }}
-                              onClick={event => handleSelectClick(event, row.id)}
+                              onChange={handleSelectAllClick}
+                              checked={data.length > 0 && selected.length === data.length}
+                              indeterminate={selected.length > 0 && selected.length < data.length}
+                              inputProps={{ 'aria-label': 'select all desserts' }}
                             />
                           </TableCell>
-                          <TableCell component='th' scope='row' align='right'>
-                            <IconButton
-                              component={Link}
-                              href={`/apps/question-catalog/${row.catalogId}/questions/${row.id}`}
-                            >
-                              <Icon icon='mdi:eye-outline' fontSize={20} />
-                            </IconButton>
+                          <TableCell align='center' style={{ width: 40 }}>
+                            Xem
                           </TableCell>
-                          <TableCell component='th' scope='row'>
-                            <Typography variant='body1'>{row.id}</Typography>
-                          </TableCell>
-                          <TableCell component='th' scope='row'>
-                            {row.shortContent}
-                          </TableCell>
-                          <TableCell>
-                            {row.categoryName ? (
-                              <Chip
-                                icon={<Icon icon='mdi:tag' />}
-                                label={row.categoryName}
-                                color='secondary'
-                                variant='outlined'
-                              />
-                            ) : null}
-                          </TableCell>
-                          <TableCell>{row.questionTypeName}</TableCell>
-                          <TableCell>
-                            <Typography variant='body1'>
-                              {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
-                            </Typography>
-                          </TableCell>
+                          <TableCell style={{ width: 160 }}>Mã</TableCell>
+                          <TableCell>Nội dung</TableCell>
+                          <TableCell style={{ width: 180 }}>Danh mục</TableCell>
+                          <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
+                          <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
                         </TableRow>
-                      )
-                    })}
-                </TableBody>
-              </Table>
-            </LoadingSpinner>
-          </TableContainer>
+                      </TableHead>
+                      <TableBody>
+                        {data &&
+                          data.map((row, index) => {
+                            const isItemSelected = isSelected(row.id)
+                            const labelId = `enhanced-table-checkbox-${index}`
+
+                            return (
+                              <TableRow
+                                hover
+                                tabIndex={-1}
+                                role='checkbox'
+                                key={row.id}
+                                selected={isItemSelected}
+                                aria-checked={isItemSelected}
+                                sx={{
+                                  '&:last-of-type td, &:last-of-type th': {
+                                    border: 0
+                                  }
+                                }}
+                              >
+                                <TableCell padding='checkbox'>
+                                  <Checkbox
+                                    checked={isItemSelected}
+                                    inputProps={{ 'aria-labelledby': labelId }}
+                                    onClick={event => handleSelectClick(event, row.id)}
+                                  />
+                                </TableCell>
+                                <TableCell component='th' scope='row' align='right'>
+                                  <IconButton
+                                    component={Link}
+                                    href={`/apps/question-catalog/${row.catalogId}/questions/${row.id}`}
+                                  >
+                                    <Icon icon='mdi:eye-outline' fontSize={20} />
+                                  </IconButton>
+                                </TableCell>
+                                <TableCell component='th' scope='row'>
+                                  <Typography variant='body1'>{row.id}</Typography>
+                                </TableCell>
+                                <TableCell component='th' scope='row'>
+                                  {row.shortContent}
+                                </TableCell>
+                                <TableCell>
+                                  {row.categoryName ? (
+                                    <Chip
+                                      icon={<Icon icon='mdi:tag' />}
+                                      label={row.categoryName}
+                                      color='secondary'
+                                      variant='outlined'
+                                    />
+                                  ) : null}
+                                </TableCell>
+                                <TableCell>{row.questionTypeName}</TableCell>
+                                <TableCell>
+                                  <Typography variant='body1'>
+                                    {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
+                                  </Typography>
+                                </TableCell>
+                              </TableRow>
+                            )
+                          })}
+                      </TableBody>
+                    </Table>
+                  </LoadingSpinner>
+                </TableContainer>
+              </td>
+            </tr>
+          </table>
           <Divider />
           <TablePagination
             labelRowsPerPage='Hiển thị'

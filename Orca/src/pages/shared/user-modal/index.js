@@ -65,7 +65,7 @@ function UserModal({ onClose, onOk }) {
   const fetchData = () => {
     new UserApi()
       .searchesUserNotInExam({
-        Page: page + 1,
+        Page: page ,
         Limit: rowsPerPage,
         Keyword: keyword,
         ExamId: Number(examId),

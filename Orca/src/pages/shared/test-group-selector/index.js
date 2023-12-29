@@ -72,7 +72,7 @@ export default function TestGroupSelector({ onClose, onNodeSelected = null }) {
     new TestGroupApi()
       .searches({
         folderId: folderId,
-        page: page + 1,
+        page: page ,
         limit: rowsPerPage
       })
       .then(response => {

@@ -80,7 +80,7 @@ const ReportList = () => {
   }
 
   const fetchData = () => {
-    new ExamUserApi().searchesExamUsersByExam(examId, page + 1, rowsPerPage).then(response => {
+    new ExamUserApi().searchesExamUsersByExam(examId, page , rowsPerPage).then(response => {
       if (response.data.isSuccess) {
         setData(response.data.value)
         setTotalItem(response.data.totalItems)

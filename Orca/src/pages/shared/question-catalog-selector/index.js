@@ -8,6 +8,7 @@ import QuestionCatalogApi from 'api/question-catalog-api'
 import { CatalogType } from 'types/CatalogType'
 
 import LoadingSpinner from '@core/components/loading-spinner'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import CloseIcon from '@mui/icons-material/Close'
 import FolderIcon from '@mui/icons-material/Folder'
 import AppBar from '@mui/material/AppBar'
@@ -321,7 +322,7 @@ export default function QuestionCatalogSelector({ open, onClose, onOk, type = 2 
                     </Grid>
                   </Grid>
                 </Grid>
-                {/* <Divider /> */}
+                <Divider />
               </>
             )}
             {/* BƯỚC I:  Chọn Bộ Câu hỏi */}
@@ -359,6 +360,7 @@ export default function QuestionCatalogSelector({ open, onClose, onOk, type = 2 
                               <TableRow>
                                 <TableCell style={{ width: 30 }}>STT </TableCell>
                                 <TableCell>Tên</TableCell>
+                                <TableCell style={{ width: 50 }}> </TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -397,6 +399,9 @@ export default function QuestionCatalogSelector({ open, onClose, onOk, type = 2 
                                         {item.type != 1 && <Typography variant='body1'>{item.name}</Typography>}
                                       </TableCell>
                                     )}
+                                    <TableCell>
+                                      <ChevronRightIcon />
+                                    </TableCell>
                                   </TableRow>
                                 ))}
                             </TableBody>

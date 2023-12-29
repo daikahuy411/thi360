@@ -360,12 +360,12 @@ const ItemEditForm = () => {
                                           <TableCell align='center' style={{ width: 60 }}>
                                             #
                                           </TableCell>
-                                          <TableCell align='center' style={{ width: 180 }}>
+                                          <TableCell align='center' style={{ width: 150 }}>
                                             Thao tác
                                           </TableCell>
                                           <TableCell style={{ width: 160 }}>Mã</TableCell>
                                           <TableCell>Nội dung</TableCell>
-                                          <TableCell style={{ width: 380 }}>Bộ câu hỏi- Danh mục</TableCell>
+                                          <TableCell style={{ width: 210 }}>Bộ câu hỏi- Danh mục</TableCell>
                                           <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
                                           <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
                                         </TableRow>
@@ -430,9 +430,14 @@ const ItemEditForm = () => {
                                                   ) : null}
                                                 </div>
                                               </TableCell>
-                                              <TableCell>{row.questionTypeName}</TableCell>
                                               <TableCell>
-                                                {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
+                                                <Typography variant='body1'>{row.questionTypeName}</Typography>
+                                              </TableCell>
+                                              <TableCell>
+                                                <Typography variant='body1'>
+                                                  {' '}
+                                                  {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
+                                                </Typography>
                                               </TableCell>
                                             </TableRow>
                                           )

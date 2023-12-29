@@ -88,7 +88,7 @@ const QuestionTable = () => {
         questionType: 0,
         categoryId: questionCategoryId,
         keyword: keyword,
-        page: page + 1,
+        page: page ,
         limit: rowsPerPage
       })
       .then(response => {

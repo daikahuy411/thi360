@@ -77,7 +77,7 @@ const QuestionCatalogTable = () => {
     setLoading(true)
     new QuestionCatalogApi()
       .searches({
-        Page: page + 1,
+        Page: page ,
         Limit: rowsPerPage,
         Keyword: keyword,
         FolderId: questionCatalogId
