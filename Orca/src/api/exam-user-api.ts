@@ -4,22 +4,26 @@ import ApiBase from './api-base'
 
 export default class ExamUserApi extends ApiBase {
   constructor() {
-    super("examusers");
+    super('examusers')
   }
 
   addUsersToExam = (examId: number, userIds: number[]) => {
     const response = axios.post(this.baseApiUrl, {
       examId: examId,
-      userIds: userIds,
-    });
-    return response;
-  };
+      userIds: userIds
+    })
+    return response
+  }
 
-  getExamUsersByExam = (examId: number, page: number, limit: number, orgId: number = 0) => {
-    return axios.get(this.baseApiUrl + "/GetExamUsersByExam/" + examId + "/" + orgId + "/" + page + "/" + limit);
-  };
+  searchesExamUsersByExam = (examId: number, page: number, limit: number) => {
+    return axios.post(this.baseApiUrl + '/SearchesExamUsers', {
+      examId: examId,
+      page: page,
+      limit: limit
+    })
+  }
 
   getExamAttemptsHistory = (examId: number, userId: string) => {
-    return axios.get(this.baseApiUrl + "/GetExamAttemptsHistory/" + examId + "/" + userId);
-  };
+    return axios.get(this.baseApiUrl + '/GetExamAttemptsHistory/' + examId + '/' + userId)
+  }
 }

@@ -68,11 +68,6 @@ const StyledTreeItem = (props: StyledTreeItemProps) => {
           <Typography variant='body1' sx={{ flexGrow: 1, fontWeight: 'inherit' }}>
             {label}
           </Typography>
-          {/* {labelInfo ? (
-            <Typography variant='caption' color='inherit'>
-              {labelInfo}
-            </Typography>
-          ) : null} */}
         </Box>
       }
     />
