@@ -10285,12 +10285,12 @@ aside.post-aside.post-aside--open .quiz-aside {
   }
 }
 
-* {
+/* * {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
+} */
 
 .mt-header {
   background-color: var(--white);

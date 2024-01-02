@@ -232,7 +232,10 @@ const QuestionEditForm = () => {
   }
 
   const checkIsvalidAnswer = (isFormField = false) => {
-    if (currentQuestion.questionTypeId === QuestionType.SA || currentQuestion.questionTypeId === QuestionType.FB) {
+    if (
+      currentQuestion &&
+      (currentQuestion.questionTypeId === QuestionType.SA || currentQuestion.questionTypeId === QuestionType.FB)
+    ) {
       setIsValidAnswer(true)
       return
     }

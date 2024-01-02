@@ -23,9 +23,10 @@ export default class ExamItemApi extends ApiBase {
     return response
   }
 
-  removeTestsFromExamItem = (itemId: number, testIds: number[]) => {
+  removeTestsFromExamItem = (examId: number, itemId: number, testIds: number[]) => {
     const url = `${this.baseApiUrl}/RemoveExamTests`
     const response = axios.post(url, {
+      examId: examId,
       itemId: itemId,
       testIds: testIds
     })

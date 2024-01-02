@@ -97,6 +97,10 @@ const TestsList = () => {
     new ExamItemApi().addTestsToExamItem(examId, itemId, testIds).then(response => {
       setShowTestDialog(false)
       toast.success('Cập nhật thành công')
+      new ExamItemApi().get(itemId).then(response => {
+        dispatch(selectExamItem(response.data))
+        setData(response.data.tests)
+      })
     })
   }
 
@@ -143,7 +147,7 @@ const TestsList = () => {
   const handleDelete = () => {
     if (selected.length > 0) {
       new ExamItemApi()
-        .removeTestsFromExamItem(parseInt(itemId), selected)
+        .removeTestsFromExamItem(examId, parseInt(itemId), selected)
         .then(response => {
           setOpenDelete(false)
           toast.success('Xóa dữ liệu thành công.')

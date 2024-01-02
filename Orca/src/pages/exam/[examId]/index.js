@@ -303,6 +303,7 @@ const ExamPage = () => {
                                                     <Button
                                                       variant='contained'
                                                       size='small'
+                                                      style={{ width: 90 }}
                                                       onClick={() => {
                                                         createExamAttempt(exam.examItems[0].id, row.id)
                                                       }}
@@ -316,6 +317,7 @@ const ExamPage = () => {
                                                         createExamAttempt(exam.examItems[0].id, row.id, 0)
                                                       }}
                                                       size='small'
+                                                      style={{ width: 120 }}
                                                     >
                                                       Luyện tập
                                                     </Button>

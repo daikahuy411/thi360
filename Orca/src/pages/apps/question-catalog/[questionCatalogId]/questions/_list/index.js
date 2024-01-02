@@ -91,7 +91,7 @@ const QuestionTable = () => {
         questionType: 0,
         categoryId: categoryId,
         keyword: keyword,
-        page: page ,
+        page: page,
         limit: rowsPerPage
       })
       .then(response => {
@@ -283,7 +283,7 @@ const QuestionTable = () => {
             <tr>
               <td
                 style={{
-                  width: '30%',
+                  width: '25%',
                   padding: 5,
                   verticalAlign: 'top',
                   borderRight: '1px solid rgba(58, 53, 65, 0.12)'

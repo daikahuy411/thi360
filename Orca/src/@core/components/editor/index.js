@@ -12,17 +12,33 @@ import Configuration from 'configs/auth'
 export default function ContentEditor({ content, isReadOnly, onChange }) {
   const editorRef = useRef()
   const [editorLoaded, setEditorLoaded] = useState(false)
+  const [error, setError] = useState(false)
   const { CKEditor, Editor } = editorRef.current || {}
 
   useEffect(() => {
     setTimeout(() => {
-      editorRef.current = {
-        CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, // v3+
-        Editor: require('ckeditor5-custom-build/build/ckeditor')
+      try {
+        loadRequire()
+      } catch (ex) {
+        setTimeout(() => {
+          try {
+            loadRequire()
+          } catch (ex) {
+            setError(true)
+            alert('Vui lòng tải lại trang do không thể tải được trình soạn thảo')
+          }
+        }, 250)
       }
-      setEditorLoaded(true)
     }, 250)
   }, [])
+
+  const loadRequire = () => {
+    editorRef.current = {
+      CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, // v3+
+      Editor: require('ckeditor5-custom-build/build/ckeditor')
+    }
+    setEditorLoaded(true)
+  }
 
   return editorLoaded ? (
     <CKEditor
