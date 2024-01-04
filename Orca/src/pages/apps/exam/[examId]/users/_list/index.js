@@ -5,6 +5,7 @@ import {
 
 import ExamUserApi from 'api/exam-user-api'
 import { useRouter } from 'next/router'
+import UserExamAttemptHistoryDialog from 'pages/shared/user-exam-attempt-history-dialog'
 import UserModal from 'pages/shared/user-modal'
 import Draggable from 'react-draggable'
 import {
@@ -58,7 +59,8 @@ const UserTable = () => {
   const [orgs, setOrgs] = useState([])
   const [orgId, setOrgId] = useState(0)
   const [userHistoryDialog, setUserHistoryDialog] = useState(false)
-  const [userId, setUserId] = useState('')
+  const [user, setUser] = useState('')
+  const [keyword, setKeyword] = useState('')
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -72,15 +74,15 @@ const UserTable = () => {
   useEffect(() => {
     if (!examId || examId == 0) return
     fetchData()
-  }, [examId, page, rowsPerPage])
+  }, [examId, page, keyword, rowsPerPage])
 
   const showUserHistory = row => {
     setUserHistoryDialog(true)
-    setUserId(row.userId)
+    setUser(row)
   }
 
   const fetchData = () => {
-    new ExamUserApi().searchesExamUsersByExam(examId, page , rowsPerPage).then(response => {
+    new ExamUserApi().searchesExamUsersByExam(examId, keyword, page, rowsPerPage).then(response => {
       if (response.data.isSuccess) {
         setData(response.data.value)
         setTotalItem(response.data.totalItems)
@@ -248,8 +250,9 @@ const UserTable = () => {
                     inputProps={{ 'aria-label': 'select all desserts' }}
                   />
                 </TableCell>
-                <TableCell style={{ width: 120 }}>Tên đăng nhập</TableCell>
-                <TableCell style={{ width: 120 }}>Tên đầy đủ </TableCell>
+                <TableCell style={{ width: 50 }}>Xem</TableCell>
+                <TableCell style={{}}>Tên đăng nhập</TableCell>
+                <TableCell style={{ width: 280 }}>Tên đầy đủ </TableCell>
                 <TableCell style={{ width: 120 }}>Giới tính</TableCell>
                 <TableCell style={{ width: 120 }}>Lớp</TableCell>
               </TableRow>
@@ -277,6 +280,17 @@ const UserTable = () => {
                     >
                       <TableCell padding='checkbox'>
                         <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
+                      </TableCell>
+                      <TableCell style={{ width: 30 }}>
+                        <IconButton
+                          aria-label='view testing history'
+                          onClick={e => {
+                            e.preventDefault()
+                            showUserHistory(row)
+                          }}
+                        >
+                          <Icon icon='bi:eye' fontSize={22} />
+                        </IconButton>
                       </TableCell>
                       <TableCell component='th' scope='row'>
                         <Typography noWrap variant='body1'>
@@ -343,6 +357,15 @@ const UserTable = () => {
         {openUserModal && (
           <UserModal open={openUserModal} onOk={onSelectedUsers} onClose={() => setOpenUserModal(false)} />
         )}
+
+        <UserExamAttemptHistoryDialog
+          open={userHistoryDialog}
+          user={user}
+          examId={examId}
+          onClose={() => {
+            setUserHistoryDialog(false)
+          }}
+        />
       </HelmetProvider>
     </>
   )

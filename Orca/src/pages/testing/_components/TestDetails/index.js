@@ -17,6 +17,7 @@ import Help from '../Help'
 import QuestionContent from '../Question/QuestionContent'
 import Clock from './Clock'
 import FbQuestion from './FbQuestion'
+import MatchingQuestion from './MatchingQuestion'
 import OrderQuestion from './OrderQuestion'
 import QuestionExplain from './QuestionExplain'
 
@@ -1331,8 +1332,9 @@ class TestDetails extends React.Component {
                                     <div className='flex flex-column w-100'>
                                       <b>Điền từ vào chỗ trống</b>
                                       <FbQuestion
-                                      onChanged={content => this.saveQuestionAttemptedState(content)}
-                                      question={this.state.currentQuestion}  />
+                                        onChanged={content => this.saveQuestionAttemptedState(content)}
+                                        question={this.state.currentQuestion}
+                                      />
                                     </div>
                                   </div>
                                 )}
@@ -1382,6 +1384,7 @@ class TestDetails extends React.Component {
                                     </div>
                                     <div className='flex flex-column w-100'>
                                       <b>Ghép đôi</b>
+                                      <MatchingQuestion />
                                     </div>
                                   </div>
                                 )}

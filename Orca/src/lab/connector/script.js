@@ -68,7 +68,7 @@ jQuery(document).ready(function () {
 
   var connectEndpoints = function () {
     sourceEndpoints.map((source, index) => {
-      if (targetEndpoints[index]) {
+      if (targetEndpoints[index] <= index) {
         jsPlumb.connect({
           source: source,
           target: targetEndpoints[index]

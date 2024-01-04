@@ -15,9 +15,10 @@ export default class ExamUserApi extends ApiBase {
     return response
   }
 
-  searchesExamUsersByExam = (examId: number, page: number, limit: number) => {
+  searchesExamUsersByExam = (examId: number, keyword: string, page: number, limit: number) => {
     return axios.post(this.baseApiUrl + '/SearchesExamUsers', {
       examId: examId,
+      keyword: keyword,
       page: page,
       limit: limit
     })
