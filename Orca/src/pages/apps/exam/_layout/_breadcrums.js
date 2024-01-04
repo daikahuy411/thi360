@@ -23,10 +23,12 @@ const TopNav = props => {
   const currentExam = useSelector(selectedExam)
 
   useEffect(() => {
-    if (examId && parseInt(examId) > 0 && !currentExam) {
+    if (examId && parseInt(examId) > 0) {      
       new ExamApi().get(examId).then(response => {
         dispatch(selectExam(response.data))
       })
+    } else {
+      dispatch(selectExam(null))
     }
   }, [examId])
 
@@ -34,6 +36,9 @@ const TopNav = props => {
     <Breadcrumbs aria-label='breadcrumb' style={{ borderTop: '0px solid rgba(58, 53, 65, 0.12)', paddingTop: 0 }}>
       <Link underline='hover' color='inherit' href='/'>
         <HomeOutlinedIcon />
+      </Link>
+      <Link underline='hover' color='inherit' href='/apps/exam/'>
+        Kỳ thi
       </Link>
       {currentExam &&
         currentExam.ancestors &&

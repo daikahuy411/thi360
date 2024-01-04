@@ -18,6 +18,7 @@ import toast from 'react-hot-toast'
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
 import CustomChip from '@core/components/mui/chip'
+import { formatCurrency } from '@core/utils/format'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import FolderIcon from '@mui/icons-material/Folder'
@@ -180,7 +181,7 @@ const ExamTable = () => {
         <Divider />
         <Toolbar style={{ padding: 0 }}>
           <Typography sx={{ flex: '1 1 100%' }} variant='h5' id='tableTitle' component='div'>
-            {totalItem} Kỳ thi
+            {formatCurrency(totalItem, 0)} Kỳ thi
           </Typography>
           &nbsp; &nbsp;
           <Tooltip title='Import'>
@@ -209,7 +210,7 @@ const ExamTable = () => {
           &nbsp; &nbsp;
           <Button
             component={Link}
-            href={`/apps/exam/0`}
+            href={`/apps/exam/0/${examId}`}
             variant='contained'
             style={{ width: 180 }}
             color='primary'
@@ -221,7 +222,7 @@ const ExamTable = () => {
           <Button
             variant='contained'
             onClick={() => {
-              setCurrentFolder(null)
+              setCurrentFolder({id: 0, type: 1})
               setEditFolder(true)
             }}
             style={{ width: 210 }}
