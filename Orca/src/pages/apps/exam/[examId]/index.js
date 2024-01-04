@@ -182,6 +182,10 @@ const EditExamPage = () => {
     }
   }, [currentExam])
 
+  useEffect(() => {
+    setParentId(parseInt(folderId))
+  }, [folderId])
+
   /*
    * handle save
    */

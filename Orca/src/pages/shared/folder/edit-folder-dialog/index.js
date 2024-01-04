@@ -3,7 +3,6 @@ import {
   useState
 } from 'react'
 
-import OrganizationApi from 'api/organization-api'
 import { FolderType } from 'enum/FolderType'
 import FolderSelectorDiaglog from 'pages/shared/folder/folder-selector'
 import {
@@ -31,12 +30,11 @@ const schema = yup.object().shape({
   name: yup.string().required('* bắt buộc')
 })
 
-export default function EditFolderDialog({ id = 0, api, onClose, parentId = 0 }) {
+export default function EditFolderDialog({ id = 0, api, onClose, parentId = 0, entity }) {
   const [loading, setLoading] = useState(false)
   const [openFolderSelectorDialog, setOpenFolderSelectorDialog] = useState(false)
   const [hasChanged, setHasChanged] = useState(false)
   const [item, setItem] = useState(null)
-
   const {
     control,
     handleSubmit,
@@ -50,9 +48,10 @@ export default function EditFolderDialog({ id = 0, api, onClose, parentId = 0 })
   })
 
   const load = () => {
-    if (id == 0) return
+    if (!entity) return
+    if (entity.id === 0) return
     setLoading(true)
-    api.get(id).then(response => {
+    api.get(entity.id).then(response => {
       setItem(response.data)
       setLoading(false)
     })
@@ -95,7 +94,7 @@ export default function EditFolderDialog({ id = 0, api, onClose, parentId = 0 })
     <>
       <Dialog open={true} onClose={handleClose}>
         <DialogTitle>
-          {item && <>{item.name}</>}
+          {item && <>Chỉnh sửa {item.name}</>}
           {!item && <>Tạo mới Thư mục</>}
         </DialogTitle>
         <DialogContent>
@@ -132,8 +131,8 @@ export default function EditFolderDialog({ id = 0, api, onClose, parentId = 0 })
                   </Grid>
                   <Grid item xs={12}>
                     <ParentFolderField
-                      api={new OrganizationApi()}
-                      type={FolderType.CLASS}
+                      api={api}
+                      type={entity.type}
                       parentId={item ? item.parentId : parentId}
                     />
                   </Grid>

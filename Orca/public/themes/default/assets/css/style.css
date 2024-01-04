@@ -101,7 +101,7 @@ aside {
 * {
   margin: 0;
   /* scroll-behavior: smooth; */
-  scroll-behavior: inherit;
+  scroll-behavior: auto !important;
 }
 
 ::-webkit-scrollbar {
