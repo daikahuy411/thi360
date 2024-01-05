@@ -21,14 +21,14 @@ const Nav = () => {
         >
           Chi tiết
         </Link>
-        {currentUser && currentUser.id > 0 ? (
+        {currentUser && currentUser.id ? (
           <Link
             className={`finger-tabs__tab flex-none ${
               router.asPath === `/apps/user/${userId}/testinghistory/` ? 'is-active' : 'disabled'
             }`}
             title='Lịch sử Thi'
             component={Link}
-            href={currentUser && currentUser.id > 0 ? `/apps/user/${userId}/testinghistory` : 'javascript:void(0)'}
+            href={currentUser && currentUser?.id ? `/apps/user/${userId}/testinghistory` : 'javascript:void(0)'}
           >
             Lịch sử Thi
           </Link>

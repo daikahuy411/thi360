@@ -35,6 +35,8 @@ import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import { useDispatch } from 'react-redux'
+import { selectAccount } from 'store/slices/accountSlice'
 
 function PaperComponent(props) {
   return (
@@ -45,6 +47,7 @@ function PaperComponent(props) {
 }
 
 const UserTable = () => {
+  const dispatch = useDispatch();
   const [data, setData] = useState([])
   const [totalItem, setTotalItem] = useState(0)
   const [page, setPage] = useState(0)
@@ -139,7 +142,6 @@ const UserTable = () => {
   /*
    * end handle remove user
    */
-
   return (
     <>
       <Divider />
@@ -252,7 +254,11 @@ const UserTable = () => {
                         <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                       </TableCell>
                       <TableCell component='th' scope='row'>
-                        <IconButton aria-label='edit' component={Link} href={`/apps/account/${row.id}`}>
+                        <IconButton aria-label='edit' component={Link}
+                        onClick={() => {
+                          dispatch(selectAccount(row))
+                        }}
+                        href={`/apps/account/${row.id}`}>
                           <EditIcon />
                         </IconButton>
                       </TableCell>

@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import { selectedUser } from 'store/slices/userSlice'
+import { selectedAccount } from 'store/slices/accountSlice'
 
 const Nav = () => {
   const router = useRouter()
-  const currentUser = useSelector(selectedUser)
+  const currentUser = useSelector(selectedAccount)
   const { userId } = router.query
 
   return (
@@ -21,14 +21,14 @@ const Nav = () => {
         >
           Chi tiết
         </Link>
-        {currentUser && currentUser.id > 0 ? (
+        {currentUser && currentUser?.id ? (
           <Link
             className={`finger-tabs__tab flex-none ${
               router.asPath === `/apps/user/${userId}/testinghistory/` ? 'is-active' : 'disabled'
             }`}
             title='Lịch sử Thi'
             component={Link}
-            href={currentUser && currentUser.id > 0 ? `/apps/user/${userId}/testinghistory` : 'javascript:void(0)'}
+            href={`/apps/user/${userId}/testinghistory`}
           >
             Lịch sử Thi
           </Link>
