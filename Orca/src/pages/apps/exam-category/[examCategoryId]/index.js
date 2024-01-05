@@ -7,7 +7,7 @@ import {
 import { ExamCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CategoryDialog from 'pages/shared/category-dialog'
+import CatalogDialog from 'pages/shared/catalog-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import {
   Controller,
@@ -22,7 +22,7 @@ import {
   selectedExamCategory,
   selectExamCategory
 } from 'store/slices/examCategorySlice'
-import { CategoryType } from 'types/CategoryType'
+import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -298,8 +298,8 @@ const ExamCategoryEditPage = () => {
                         </Grid>
                       </form>
                       {openCatalogDialog && (
-                        <CategoryDialog
-                          categoryType={CategoryType.EXAM_CATEGORY}
+                        <CatalogDialog
+                          categoryType={CatalogType.EXAM_CATEGORY}
                           currentId={examCategoryId}
                           onNodeSelected={nodeId => {
                             handleSelectedParent(nodeId)

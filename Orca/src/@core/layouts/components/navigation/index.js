@@ -1,10 +1,17 @@
-import Link from 'next/link'
 import { useState } from 'react'
-import { systemLinks, classLinks, examLinks, programLinks } from 'navigation'
+
 import clsx from 'clsx'
-import { useRouter } from 'next/router'
-import { handleURLQueries } from '@core/layouts/utils'
 import { useAuth } from 'hooks/useAuth'
+import {
+  classLinks,
+  examLinks,
+  programLinks,
+  systemLinks
+} from 'navigation'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+import { handleURLQueries } from '@core/layouts/utils'
 
 const Navigation = () => {
   const [activeMenuIndex, setActiveMenuIndex] = useState('home')

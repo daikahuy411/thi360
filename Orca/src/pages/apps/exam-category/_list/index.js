@@ -55,7 +55,7 @@ const ExamCategoryTable = () => {
 
   const fetchData = () => {
     const param = {
-      page: page == 0 ? 1 : page + 1,
+      page: page,
       limit: rowsPerPage
     }
     ExamCategoryApi.searches(param)

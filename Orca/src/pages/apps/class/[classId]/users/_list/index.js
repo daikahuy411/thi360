@@ -65,7 +65,7 @@ const UserTable = () => {
     if (!classId || classId == 0) return
     new UserApi()
       .searches({
-        Page: page + 1,
+        Page: page ,
         Limit: rowsPerPage,
         Keyword: keyword,
         organizationId: classId

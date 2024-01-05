@@ -1,14 +1,26 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import QuestionCatalogApi from 'api/question-catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedQuestionCatalog, selectQuestionCatalog } from 'store/slices/questionCatalogSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedQuestionCatalog,
+  selectQuestionCatalog
+} from 'store/slices/questionCatalogSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -175,7 +187,7 @@ const EditQuestionCatalogPage = () => {
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                     <form onSubmit={handleSubmit(onSubmit)} style={{ height: 'auto', width: '100%', paddingTop: 10 }}>
-                      <Grid container spacing={5}>
+                      <Grid container spacing={5} maxWidth={"md"}>
                         <Grid item xs={12}>
                           <FormControl fullWidth>
                             <Controller

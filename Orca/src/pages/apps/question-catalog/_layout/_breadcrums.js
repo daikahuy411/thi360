@@ -1,13 +1,19 @@
 import { useEffect } from 'react'
 
 import QuestionCatalogApi from 'api/question-catalog-api'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedQuestionCatalog, selectQuestionCatalog } from 'store/slices/questionCatalogSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedQuestionCatalog,
+  selectQuestionCatalog
+} from 'store/slices/questionCatalogSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
-import Link from 'next/link'
 import Typography from '@mui/material/Typography'
 
 const TopNav = props => {
@@ -37,7 +43,7 @@ const TopNav = props => {
       {currentQuestionCatalog &&
         currentQuestionCatalog.ancestors &&
         currentQuestionCatalog.ancestors.map(item => (
-          <Link underline='hover' color='inherit' href={`/apps/question-catalog/view/${item.id}`}>
+          <Link underline='hover' color='inherit' key={`br-${item.id}`} href={`/apps/question-catalog/view/${item.id}`}>
             {item.name}
           </Link>
         ))}

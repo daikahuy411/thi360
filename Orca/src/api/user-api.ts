@@ -89,4 +89,9 @@ export default class UserApi extends ApiBase {
     const response = axios.get(`${this.baseApiUrl}/allroles`)
     return response
   }
+
+  exportUsers = () => {
+    const response = axios.post(`${this.baseApiUrl}/exportusers`, { page: 1, limit: 1000 })
+    return response
+  }
 }

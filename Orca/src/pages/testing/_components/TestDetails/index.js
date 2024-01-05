@@ -16,6 +16,9 @@ import LoadingSpinner from '@core/components/loading-spinner'
 import Help from '../Help'
 import QuestionContent from '../Question/QuestionContent'
 import Clock from './Clock'
+import FbQuestion from './FbQuestion'
+import MatchingQuestion from './MatchingQuestion'
+import OrderQuestion from './OrderQuestion'
 import QuestionExplain from './QuestionExplain'
 
 // MODE
@@ -428,8 +431,27 @@ class TestDetails extends React.Component {
     }))
   }
 
-  ///Trả lời câu hỏi.
-  onQuestionAttempted = function (question, answerId) {
+  /// Trả lời câu hỏi, chia thành 2 nhóm:  (MC, SC, TF) , (MATCHING, ORDER, SA, FB)
+  /// answerIdOrContent: id hoặc của câu trả lời.
+  onQuestionAttempted = function (question, answerIdOrContent) {
+    let answerType = 'id' // 'content'
+    if (
+      question.questionTypeId === QuestionType.MC ||
+      question.questionTypeId === QuestionType.SC ||
+      question.questionTypeId === QuestionType.TF
+    ) {
+      answerType = 'id'
+    }
+
+    if (
+      question.questionTypeId === QuestionType.MATCHING ||
+      question.questionTypeId === QuestionType.ORDER ||
+      question.questionTypeId === QuestionType.SA ||
+      question.questionTypeId === QuestionType.FB
+    ) {
+      answerType = 'content'
+    }
+
     const questionId = question.id
 
     // //Nếu câu hỏi đã submit câu trả lời thì không cho phép thay đổi
@@ -444,39 +466,73 @@ class TestDetails extends React.Component {
       questionAttempteds.push(questionId)
     }
 
-    if (question.questionTypeId !== QuestionType.SA) {
-      let userAnswers = this.state.userAnswers
+    let userAnswers = this.state.userAnswers
+
+    if (answerType === 'id') {
       let questionUserAnswers = userAnswers[questionId] || []
 
-      if (questionUserAnswers.indexOf(answerId) < 0) {
+      if (questionUserAnswers.indexOf(answerIdOrContent) < 0) {
         if (question.questionTypeId === QuestionType.MC) {
-          questionUserAnswers.push(answerId)
+          questionUserAnswers.push(answerIdOrContent)
         } else {
-          questionUserAnswers = [answerId]
+          questionUserAnswers = [answerIdOrContent]
         }
       } else {
-        questionUserAnswers.splice(questionUserAnswers.indexOf(answerId, 0), 1)
+        questionUserAnswers.splice(questionUserAnswers.indexOf(answerIdOrContent, 0), 1)
       }
 
       userAnswers[question.id] = questionUserAnswers
-
-      this.setState(
-        prevState => ({
-          ...prevState,
-          userAnswers: userAnswers,
-          currentQuestionId: questionId,
-          userExamAttemptTracking: {
-            ...prevState.userExamAttemptTracking,
-            questionAttempteds: questionAttempteds,
-            questionVisiteds: questionVisiteds
-          }
-        }),
-        () => {
-          this.markQuestion(question, answerId)
-          this.updateExamAttempt()
-        }
-      )
+    } else {
+      userAnswers[question.id] = answerIdOrContent
     }
+
+    this.setState(
+      prevState => ({
+        ...prevState,
+        userAnswers: userAnswers,
+        currentQuestionId: questionId,
+        userExamAttemptTracking: {
+          ...prevState.userExamAttemptTracking,
+          questionAttempteds: questionAttempteds,
+          questionVisiteds: questionVisiteds
+        }
+      }),
+      () => {
+        this.markQuestion(question, answerIdOrContent)
+        this.updateExamAttempt()
+      }
+    )
+  }
+
+  /// Cập nhật câu trả lời vào State
+  saveQuestionAttemptedState = function (content) {
+    const questionId = this.state.currentQuestion.id
+
+    // //Nếu câu hỏi đã submit câu trả lời thì không cho phép thay đổi
+    const questionAttempteds = [...this.state.userExamAttemptTracking.questionAttempteds]
+    const questionVisiteds = [...this.state.userExamAttemptTracking.questionVisiteds]
+
+    if (this.state.mode !== 2 && questionVisiteds.indexOf(questionId) < 0) {
+      questionVisiteds.push(questionId)
+    }
+
+    if (questionAttempteds.indexOf(questionId) < 0) {
+      questionAttempteds.push(questionId)
+    }
+
+    let userAnswers = this.state.userAnswers
+    userAnswers[questionId] = content
+
+    this.setState(prevState => ({
+      ...prevState,
+      userAnswers: userAnswers,
+
+      userExamAttemptTracking: {
+        ...prevState.userExamAttemptTracking,
+        questionAttempteds: questionAttempteds,
+        questionVisiteds: questionVisiteds
+      }
+    }))
   }
 
   viewQuestion(questionId, parentQuestionId, sectionItemId, sectionId) {
@@ -635,11 +691,15 @@ class TestDetails extends React.Component {
   render() {
     return (
       <>
-      <Head>
-      {this.state.examAttempt && (
-        <title>{this.state.mode == 1 ? `Làm bài thi: ${this.state.examAttempt.name}` : `Xem lại kết quả: ${this.state.examAttempt.name}`}</title>
-      )}
-      </Head>
+        <Head>
+          {this.state.examAttempt && (
+            <title>
+              {this.state.mode == 1
+                ? `Làm bài thi: ${this.state.examAttempt.name}`
+                : `Xem lại kết quả: ${this.state.examAttempt.name}`}
+            </title>
+          )}
+        </Head>
         <LoadingSpinner active={this.state.loading}>
           {this.state.examAttempt && (
             <Fullscreen enabled={this.state.fullScreen} onChange={fullScreen => this.setState({ fullScreen })}>
@@ -685,7 +745,7 @@ class TestDetails extends React.Component {
                                   this.finishExamAttempt()
                                 }}
                                 onTick={() => {
-                                  this.onTick()
+                                  // this.onTick()
                                 }}
                                 date={Date.now() + this.state.timeLeftInSeconds * 1000}
                                 renderer={Clock}
@@ -843,8 +903,6 @@ class TestDetails extends React.Component {
                                   {this.state.currentQuestion && <>{this.state.currentQuestion.order}</>}
                                 </span>
                               </span>
-                              {/* <span className="gray mr3-l mr2">Single Correct</span>
-                        <span className="gray">Marks : +4, -1.33</span> */}
                             </span>
                           </div>
                           {/* Queston detail */}
@@ -1075,8 +1133,11 @@ class TestDetails extends React.Component {
                                     </div>
                                   </>
                                 )}
+
                                 {/* Câu hỏi thông thường */}
-                                {this.state.currentQuestion.questionTypeId !== QuestionType.GQ && (
+                                {(this.state.currentQuestion.questionTypeId === QuestionType.TF ||
+                                  this.state.currentQuestion.questionTypeId === QuestionType.SC ||
+                                  this.state.currentQuestion.questionTypeId === QuestionType.MC) && (
                                   <>
                                     <div className='flex flex-column flex-auto  overflow-y-auto-l overflow-unset'>
                                       <span className='mb4 w-100 gray dn du-l'>
@@ -1249,6 +1310,123 @@ class TestDetails extends React.Component {
                                       </div>
                                     </div>
                                   </>
+                                )}
+
+                                {/* Câu hỏi điền từ vào chỗ trống */}
+                                {this.state.currentQuestion.questionTypeId === QuestionType.FB && (
+                                  <div className='flex flex-column flex-auto  overflow-y-auto-l overflow-unset'>
+                                    <span className='mb4 w-100 gray dn du-l'>
+                                      <QuestionContent question={this.state.currentQuestion} />
+                                    </span>
+                                    <div className='relative dn-l mb4'>
+                                      <div
+                                        className='overflow-hidden '
+                                        style={{
+                                          maxHeight: '6.4rem',
+                                          lineHeight: '1.6rem'
+                                        }}
+                                      >
+                                        <QuestionContent question={this.state.currentQuestion} />
+                                      </div>
+                                    </div>
+                                    <div className='flex flex-column w-100'>
+                                      <b>Điền từ vào chỗ trống</b>
+                                      <FbQuestion
+                                        onChanged={content => this.saveQuestionAttemptedState(content)}
+                                        question={this.state.currentQuestion}
+                                      />
+                                    </div>
+                                  </div>
+                                )}
+
+                                {/* Câu hỏi sắp xếp */}
+                                {this.state.currentQuestion.questionTypeId === QuestionType.ORDER && (
+                                  <div className='flex flex-column flex-auto  overflow-y-auto-l overflow-unset'>
+                                    <span className='mb4 w-100 gray dn du-l'>
+                                      <QuestionContent question={this.state.currentQuestion} />
+                                    </span>
+                                    <div className='relative dn-l mb4'>
+                                      <div
+                                        className='overflow-hidden '
+                                        style={{
+                                          maxHeight: '6.4rem',
+                                          lineHeight: '1.6rem'
+                                        }}
+                                      >
+                                        <QuestionContent question={this.state.currentQuestion} />
+                                      </div>
+                                    </div>
+                                    <div className='flex flex-column w-100'>
+                                      <OrderQuestion
+                                        onChanged={ids => this.saveQuestionAttemptedState(ids)}
+                                        data={this.state.currentQuestion.answers}
+                                      />
+                                    </div>
+                                  </div>
+                                )}
+
+                                {/* Câu hỏi ghép đôi */}
+                                {this.state.currentQuestion.questionTypeId === QuestionType.MATCHING && (
+                                  <div className='flex flex-column flex-auto  overflow-y-auto-l overflow-unset'>
+                                    <span className='mb4 w-100 gray dn du-l'>
+                                      <QuestionContent question={this.state.currentQuestion} />
+                                    </span>
+                                    <div className='relative dn-l mb4'>
+                                      <div
+                                        className='overflow-hidden '
+                                        style={{
+                                          maxHeight: '6.4rem',
+                                          lineHeight: '1.6rem'
+                                        }}
+                                      >
+                                        <QuestionContent question={this.state.currentQuestion} />
+                                      </div>
+                                    </div>
+                                    <div className='flex flex-column w-100'>
+                                      <b>Ghép đôi</b>
+                                      <MatchingQuestion />
+                                    </div>
+                                  </div>
+                                )}
+
+                                {/* Câu hỏi trả lời ngắn */}
+                                {this.state.currentQuestion.questionTypeId === QuestionType.SA && (
+                                  <div className='flex flex-column flex-auto  overflow-y-auto-l overflow-unset'>
+                                    <span className='mb4 w-100 gray dn du-l'>
+                                      <QuestionContent question={this.state.currentQuestion} />
+                                    </span>
+                                    <div className='relative dn-l mb4'>
+                                      <div
+                                        className='overflow-hidden '
+                                        style={{
+                                          maxHeight: '6.4rem',
+                                          lineHeight: '1.6rem'
+                                        }}
+                                      >
+                                        <QuestionContent question={this.state.currentQuestion} />
+                                      </div>
+                                    </div>
+                                    <div className='flex flex-column w-100'>
+                                      <textarea
+                                        value={this.state.userAnswers[this.state.currentQuestion.id] ?? ''}
+                                        onChange={e => {
+                                          this.saveQuestionAttemptedState(e.target.value)
+                                        }}
+                                        rows={6}
+                                        className='form-control'
+                                        placeholder='Phần trả lời của thí sinh'
+                                      />
+                                      <br />
+                                      <button
+                                        onClick={() => {
+                                          this.updateExamAttempt()
+                                        }}
+                                        className='form-control white bg-sky-blue'
+                                      >
+                                        Cập nhật
+                                      </button>
+                                    </div>
+                                  </div>
                                 )}
                               </>
                             )}

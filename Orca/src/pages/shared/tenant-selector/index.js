@@ -72,7 +72,7 @@ export default function TenantSelector({ onClose, onNodeSelected = null }) {
   }, [page, rowsPerPage, keyword])
 
   const fetchData = () => {
-    new TenantApi().searches({ page: page + 1, limit: rowsPerPage }).then(response => {
+    new TenantApi().searches({ page: page , limit: rowsPerPage }).then(response => {
       if (response.data.isSuccess) {
         setData(response.data.value)
         setTotalItem(response.data.totalItems)

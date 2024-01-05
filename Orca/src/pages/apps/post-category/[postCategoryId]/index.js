@@ -7,7 +7,7 @@ import {
 import { PostCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CategoryDialog from 'pages/shared/category-dialog'
+import CatalogDialog from 'pages/shared/catalog-dialog'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import {
   Controller,
@@ -22,7 +22,7 @@ import {
   selectedPostCategory,
   selectPostCategory
 } from 'store/slices/postCategorySlice'
-import { CategoryType } from 'types/CategoryType'
+import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -357,8 +357,8 @@ const PostCategoryEditPage = () => {
                         </Grid>
                       </form>
                       {openCatalogDialog && (
-                        <CategoryDialog
-                          categoryType={CategoryType.POST_CATEGORY}
+                        <CatalogDialog
+                          categoryType={CatalogType.POST_CATEGORY}
                           currentId={postCategoryId}
                           onNodeSelected={nodeId => {
                             handleSelectedParent(nodeId)

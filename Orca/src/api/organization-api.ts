@@ -21,6 +21,11 @@ export default class OrganizationApi extends ApiBase {
     const response = axios.get(`${this.baseApiUrl}/GetOrganizationTree`);
     return response;
   };
+  
+  getClassTree = () => {
+    const response = axios.get(`${this.baseApiUrl}/GetClassTree`);
+    return response;
+  };
 
   deleteMultipleOrganization = (request: any) => {
     const response = axios.delete(`${this.baseApiUrl}/batch`, { data: request })

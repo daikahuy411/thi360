@@ -1,15 +1,28 @@
 import * as React from 'react'
 import { useEffect } from 'react'
+
 import TestGroupApi from 'api/test-group-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedTestGroup, selectTestGroup } from 'store/slices/testGroupSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedTestGroup,
+  selectTestGroup
+} from 'store/slices/testGroupSlice'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -185,8 +198,8 @@ const EditTestGroupPage = () => {
                         onSubmit={handleSubmit(onSubmit)}
                         style={{ height: '100vh', width: '100%', paddingTop: 10 }}
                       >
-                        <Grid container spacing={5}>
-                          <Grid item xs={12} md={6}>
+                        <Grid container maxWidth={'md'} spacing={5}>
+                          <Grid item xs={12} md={12}>
                             <FormControl fullWidth>
                               <Controller
                                 name='name'
@@ -210,6 +223,28 @@ const EditTestGroupPage = () => {
                                   {errors.name.message}
                                 </FormHelperText>
                               )}
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={12} md={12}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='content'
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field: { value, onChange } }) => (
+                                  <TextField
+                                    fullWidth
+                                    multiline
+                                    rows={3}
+                                    value={value ?? ''}
+                                    label='Mô tả'
+                                    InputLabelProps={{ shrink: true }}
+                                    required
+                                    onChange={onChange}
+                                    aria-describedby='validation-schema-content'
+                                  />
+                                )}
+                              />
                             </FormControl>
                           </Grid>
                         </Grid>

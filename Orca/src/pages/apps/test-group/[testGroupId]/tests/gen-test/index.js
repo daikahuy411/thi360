@@ -3,8 +3,7 @@ import React, {
   useState
 } from 'react'
 
-import TestApi from 'api/test-api'
-import toast from 'react-hot-toast'
+import TestGroupApi from 'api/test-group-api'
 
 import CustomRadioBasic from '@core/components/custom-radio/basic'
 import Icon from '@core/components/icon'
@@ -31,12 +30,13 @@ const itemTypes = [
   }
 ]
 
-function GenTestDialog({ onClose }) {
+function GenTestDialog({ testgroup, testGroupId, onClose, onGenerated }) {
   const [loading, setLoading] = useState(false)
   const [itemType, setItemType] = useState(itemTypes[0].value)
   const [isValid, setIsValid] = useState(false)
   const [startIndex, setStartIndex] = useState(0)
   const [numberOfTest, setNumberOfTest] = useState(1)
+  const [testName, setTestName] = useState(testgroup.name)
 
   const handleChangeItemType = prop => {
     setItemType(prop)
@@ -52,14 +52,18 @@ function GenTestDialog({ onClose }) {
 
   const onOk = () => {
     const request = {
-      name: startIndex.toString(),
-      quantity: numberOfTest,
-      testGroupId: 1,
-      startIndex: startIndex,
-      allowDuplicateQuestionInTests: itemType == 0
+      testName: testName,
+      numberOfTest: numberOfTest,
+      testGroupId: testGroupId,
+      startNumber: startIndex,
+      tollerant: itemType
     }
-    new TestApi().generateTest(request).then(respone => {
-      toast.success(respone.data.message)
+    setLoading(true)
+    new TestGroupApi().generateTest(request).then(respone => {
+      setLoading(false)
+      if (onGenerated) {
+        onGenerated(respone.data)
+      }
     })
   }
 
@@ -102,7 +106,7 @@ function GenTestDialog({ onClose }) {
           <LoadingSpinner active={loading}>
             <Grid container spacing={5}>
               {itemTypes.map((item, index) => (
-                <Grid item md={12}>
+                <Grid item md={12} key={`griditem-${item.id}`}>
                   <Grid container>
                     <CustomRadioBasic
                       key={index}
@@ -115,6 +119,15 @@ function GenTestDialog({ onClose }) {
                   </Grid>
                 </Grid>
               ))}
+              <Grid item md={12}>
+                <TextField
+                  fullWidth
+                  value={testName}
+                  onChange={e => setTestName(e.target.value)}
+                  label='Tên đề thi'
+                  InputLabelProps={{ shrink: true }}
+                />
+              </Grid>
               <Grid item md={12}>
                 <TextField
                   fullWidth

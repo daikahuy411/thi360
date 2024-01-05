@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 
+import TestGroupApi from 'api/test-group-api'
 import TestGroupSectionApi from 'api/test-group-section-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -11,7 +12,10 @@ import {
   selectedTestGroupSection,
   selectTestGroupSection
 } from 'store/slices/testGroupSectionSlice'
-import { selectedTestGroup } from 'store/slices/testGroupSlice'
+import {
+  selectedTestGroup,
+  selectTestGroup
+} from 'store/slices/testGroupSlice'
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
@@ -32,6 +36,16 @@ const TopNav = () => {
       })
     }
   }, [sectionId])
+
+  useEffect(() => {
+    if (testGroupId && parseInt(testGroupId) > 0) {
+      new TestGroupApi().get(testGroupId).then(response => {
+        dispatch(selectTestGroup(response.data))
+      })
+    } else {
+      dispatch(selectTestGroup(null))
+    }
+  }, [testGroupId])
 
   return (
     <Breadcrumbs aria-label='breadcrumb' style={{ borderTop: '0px solid rgba(58, 53, 65, 0.12)', paddingTop: 0 }}>

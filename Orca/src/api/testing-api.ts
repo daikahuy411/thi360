@@ -203,16 +203,6 @@ export default class TestingApi extends ApiBase {
     return axios.get(this.baseApiUrl + "/GetExamForAttempt/" + id);
   };
 
-  // Lấy bài thi ngẫu nhiên cho trang chủ
-  GetRandomMiniTest = () => {
-    return axios.post(this.baseApiUrl + "/GetRandomMiniTest/");
-  };
-
-  //  Lấy điều kiện thống kê xếp hạng
-  GetExamResultStatFilter = () => {
-    return axios.get(this.baseApiUrl + "/GetExamResultStatFilter/");
-  };
-
   // Lấy bảng xếp hạng
   GetExamResultStat = (
     classBlockId: any,

@@ -1,12 +1,20 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
 import TenantApi from 'api/tenant-api'
 import moment from 'moment'
 import Link from 'next/link'
 import Draggable from 'react-draggable'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
+import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
 import toast from 'react-hot-toast'
-import LoadingSpinner from '@core/components/loading-spinner'
+
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
@@ -67,7 +75,7 @@ const TenantTable = () => {
     setLoading(true)
     new TenantApi()
       .searches({
-        Page: page + 1,
+        Page: page ,
         Limit: rowsPerPage,
         Keyword: keyword,
         Status: status

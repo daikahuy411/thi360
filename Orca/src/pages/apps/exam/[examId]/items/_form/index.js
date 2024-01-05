@@ -30,6 +30,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import FolderIcon from '@mui/icons-material/FolderOpen'
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import Dialog from '@mui/material/Dialog'
@@ -45,10 +46,8 @@ import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import Paper from '@mui/material/Paper'
-import Select from '@mui/material/Select'
 import Skeleton from '@mui/material/Skeleton'
 import Switch from '@mui/material/Switch'
 import TextField from '@mui/material/TextField'
@@ -106,7 +105,7 @@ const ExamItemEditForm = () => {
   useEffect(() => {
     setLoading(true)
     if (!itemId || itemId == 0) {
-      dispatch(selectExamItem({ id: 0, name: '', setting: {} }))
+      dispatch(selectExamItem({ id: 0, name: '', setting: {}, finalizationMethod: 4 }))
       setLoading(false)
       return
     }
@@ -142,7 +141,6 @@ const ExamItemEditForm = () => {
         if (code === 1) {
           router.query.itemId = response.data.id
           router.push(router)
-          // router.push(`/apps/exam/${examId}/items`)
         } else {
           cleanTestGroup()
           reset()
@@ -172,6 +170,10 @@ const ExamItemEditForm = () => {
         setTestGroupSelected({ testGroupId: selectedId, testGroupName: response.data.name })
       }
     })
+  }
+
+  const viewTestGroup = () => {
+    router.push(`/apps/test-group/${testGroupSelected.testGroupId}`)
   }
 
   const cleanTestGroup = () => {
@@ -246,7 +248,7 @@ const ExamItemEditForm = () => {
                     <Button disabled={!isValid} onClick={() => save(1)} variant='contained'>
                       Cập nhật
                     </Button>
-                    {(!currentExamItem || currentExamItem.id == 0) && (
+                    {itemId == '0' && (
                       <>
                         &nbsp;
                         <Button disabled={!isValid} onClick={() => save(2)} variant='contained'>
@@ -283,7 +285,46 @@ const ExamItemEditForm = () => {
 
                         {!loading && (
                           <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', paddingTop: 10 }}>
-                            <Grid container spacing={5} maxWidth={"lg"}>
+                            <Grid container spacing={5} maxWidth={'md'}>
+                              <Grid item xs={12}>
+                                <FormControl fullWidth variant='outlined'>
+                                  <InputLabel htmlFor='outlined-adornment-parent-category'>Bộ đề thi</InputLabel>
+                                  <OutlinedInput
+                                    id='outlined-adornment-parent-category'
+                                    inputprops={{
+                                      readOnly: true,
+                                      className: 'Mui-disabled'
+                                    }}
+                                    readOnly={true}
+                                    value={testGroupSelected.testGroupName}
+                                    endAdornment={
+                                      <InputAdornment position='end'>
+                                        {testGroupSelected && testGroupSelected.testGroupId > 0 && (
+                                          <>
+                                            <IconButton edge='end' onClick={() => viewTestGroup()}>
+                                              <VisibilityOutlinedIcon />
+                                            </IconButton>
+                                            &nbsp;
+                                          </>
+                                        )}
+                                        <IconButton edge='end' onClick={() => cleanTestGroup(true)}>
+                                          <DeleteOutline />
+                                        </IconButton>
+                                        &nbsp;
+                                        <IconButton
+                                          edge='end'
+                                          onClick={() => {
+                                            setOpenQuestionCatalogSelector(true)
+                                          }}
+                                        >
+                                          <FolderIcon />
+                                        </IconButton>
+                                      </InputAdornment>
+                                    }
+                                    label='Bộ đề thi'
+                                  />
+                                </FormControl>
+                              </Grid>
                               <Grid item xs={12}>
                                 <FormControl fullWidth>
                                   <Controller
@@ -346,41 +387,7 @@ const ExamItemEditForm = () => {
                                   />
                                 </FormControl>
                               </Grid>
-                              <Grid item xs={12}>
-                                <FormControl fullWidth variant='outlined'>
-                                  <InputLabel htmlFor='outlined-adornment-parent-category'>Bộ đề thi</InputLabel>
-                                  <OutlinedInput
-                                    id='outlined-adornment-parent-category'
-                                    inputprops={{
-                                      readOnly: true,
-                                      className: 'Mui-disabled'
-                                    }}
-                                    disabled={true}
-                                    value={testGroupSelected.testGroupName}
-                                    endAdornment={
-                                      <InputAdornment position='end'>
-                                        <IconButton
-                                          aria-label='toggle password visibility'
-                                          edge='end'
-                                          onClick={() => cleanTestGroup(true)}
-                                        >
-                                          <DeleteOutline />
-                                        </IconButton>
-                                        &nbsp;
-                                        <IconButton
-                                          edge='end'
-                                          onClick={() => {
-                                            setOpenQuestionCatalogSelector(true)
-                                          }}
-                                        >
-                                          <FolderIcon />
-                                        </IconButton>
-                                      </InputAdornment>
-                                    }
-                                    label='Bộ đề thi'
-                                  />
-                                </FormControl>
-                              </Grid>
+
                               <Grid item md={4}>
                                 <FormControl fullWidth>
                                   <Controller
@@ -465,7 +472,7 @@ const ExamItemEditForm = () => {
                                   )}
                                 </FormControl>
                               </Grid>
-                              <Grid item xs={12}>
+                              {/* <Grid item xs={12}>
                                 <FormControl fullWidth>
                                   <Controller
                                     name='finalizationMethod'
@@ -500,7 +507,7 @@ const ExamItemEditForm = () => {
                                     </FormHelperText>
                                   )}
                                 </FormControl>
-                              </Grid>
+                              </Grid> */}
                               <Grid item xs={12}>
                                 <FormGroup row>
                                   <FormControlLabel

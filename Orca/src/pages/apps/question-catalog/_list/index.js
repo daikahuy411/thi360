@@ -77,7 +77,7 @@ const QuestionCatalogTable = () => {
     setLoading(true)
     new QuestionCatalogApi()
       .searches({
-        Page: page + 1,
+        Page: page,
         Limit: rowsPerPage,
         Keyword: keyword,
         FolderId: questionCatalogId
@@ -197,7 +197,7 @@ const QuestionCatalogTable = () => {
           component={Link}
           href={`/apps/question-catalog/0`}
           variant='contained'
-          style={{ width: 210 }}
+          style={{ width: 220 }}
           color='primary'
           startIcon={<Icon icon='mdi:plus' />}
         >

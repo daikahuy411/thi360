@@ -1,7 +1,7 @@
 export default interface GenerateTestRequest{
     name: string;
-    quantity: number;
+    numberOfTest: number;
     testGroupId:number;
-    startIndex:number;
-    allowDuplicateQuestionInTests: boolean;
+    startNumber:number;
+    tollerant: number;
 };

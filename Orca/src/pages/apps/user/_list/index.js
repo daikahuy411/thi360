@@ -1,12 +1,19 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import UserApi from 'api/user-api'
+import moment from 'moment'
 import Link from 'next/link'
+import ClassTree from 'pages/shared/class-tree'
+import ExportDialog from 'pages/shared/export-dialog'
+import ImportDialog from 'pages/shared/import-dialog'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
-import moment from 'moment'
 
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
@@ -31,7 +38,6 @@ import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import ImportDialog from 'pages/shared/import'
 
 function PaperComponent(props) {
   return (
@@ -48,6 +54,11 @@ const UserTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [openImportDialog, setOpenImportDialog] = useState(false)
   const [keyword, setKeyword] = useState('')
+  const [classId, setClassId] = useState(0)
+  const [loading, setLoading] = useState(false)
+  const [openExportDialog, setOpenExporttDialog] = useState(false)
+  const [exporting, setExporting] = useState(false)
+  const [exportResponse, setExportResponse] = useState(null)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -58,20 +69,26 @@ const UserTable = () => {
     setPage(0)
   }
 
+  const handleNodeSelected = nodeId => {
+    setClassId(parseInt(nodeId))
+  }
+
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage, keyword])
+  }, [page, rowsPerPage, classId, keyword])
 
   const fetchData = () => {
     const param = {
       keyword: keyword,
-      organizationId: 0,
-      page: page == 0 ? 1 : page + 1,
+      organizationId: classId,
+      page: page,
       limit: rowsPerPage
     }
+    setLoading(true)
     new UserApi().searches(param).then(response => {
       setData(response.data.value)
       setTotalItem(response.data.totalItems)
+      setLoading(false)
     })
   }
 
@@ -136,6 +153,14 @@ const UserTable = () => {
   /*
    * end handle remove user
    */
+  const exportUsers = () => {
+    setExporting(true)
+    setOpenExporttDialog(true)
+    new UserApi().exportUsers().then(response => {
+      setExportResponse(response)
+      setExporting(false)
+    })
+  }
 
   return (
     <>
@@ -151,8 +176,8 @@ const UserTable = () => {
           </IconButton>
         </Tooltip>
         &nbsp; &nbsp;
-        <Tooltip title='Import'>
-          <IconButton sx={{ color: 'text.secondary' }}>
+        <Tooltip title='Export'>
+          <IconButton sx={{ color: 'text.secondary' }} onClick={() => exportUsers()}>
             <Icon icon='mdi:download' />
           </IconButton>
         </Tooltip>
@@ -204,73 +229,87 @@ const UserTable = () => {
           />
         </Grid>
       </Grid>
-      <TableContainer component={Paper} style={{ marginTop: 5 }}>
-        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-          <TableHead>
-            <TableRow>
-              <TableCell padding='checkbox'>
-                <Checkbox
-                  onChange={handleSelectAllClick}
-                  checked={data.length > 0 && selected.length === data.length}
-                  indeterminate={selected.length > 0 && selected.length < data.length}
-                  inputProps={{ 'aria-label': 'select all desserts' }}
-                />
-              </TableCell>
-              <TableCell style={{ width: 30 }}>Sửa</TableCell>
-              <TableCell style={{ width: 240 }}>Tên đăng nhập</TableCell>
-              <TableCell>Tên đầy đủ </TableCell>
-              <TableCell style={{ width: 120 }}>Giới tính</TableCell>
-              <TableCell style={{ width: 180 }}>Lớp</TableCell>
-              <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data &&
-              data.map((row, index) => {
-                const isItemSelected = isSelected(row.id)
-                const labelId = `enhanced-table-checkbox-${index}`
-                return (
-                  <TableRow
-                    hover
-                    tabIndex={-1}
-                    role='checkbox'
-                    key={row.id}
-                    selected={isItemSelected}
-                    aria-checked={isItemSelected}
-                    onClick={event => handleClick(event, row.id)}
-                    sx={{
-                      '&:last-of-type td, &:last-of-type th': {
-                        border: 0
-                      }
-                    }}
-                  >
-                    <TableCell padding='checkbox'>
-                      <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
-                    </TableCell>
-                    <TableCell component='th' scope='row'>
-                      <IconButton aria-label='edit' component={Link} href={`/apps/user/${row.id}`}>
-                        <EditIcon />
-                      </IconButton>
-                    </TableCell>
-                    <TableCell component='th' scope='row'>
-                      <Typography noWrap variant='body1'>
-                        {row.userName}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant='body1'>{row.fullName}</Typography>{' '}
-                    </TableCell>
-                    <TableCell>{row.genderName}</TableCell>
-                    <TableCell>{row.organizationName}</TableCell>
-                    <TableCell>
-                      <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Divider />
+      <table style={{ width: '100%' }}>
+        <tr>
+          <td style={{ width: '25%', verticalAlign: 'top', borderRight: '1px solid rgba(58, 53, 65, 0.12)' }}>
+            <ClassTree onNodeSelected={handleNodeSelected} />
+          </td>
+          <td style={{ verticalAlign: 'top' }}>
+            <LoadingSpinner active={loading}>
+              <TableContainer component={Paper} style={{ marginTop: 5 }}>
+                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell padding='checkbox'>
+                        <Checkbox
+                          onChange={handleSelectAllClick}
+                          checked={data.length > 0 && selected.length === data.length}
+                          indeterminate={selected.length > 0 && selected.length < data.length}
+                          inputProps={{ 'aria-label': 'select all desserts' }}
+                        />
+                      </TableCell>
+                      <TableCell style={{ width: 30 }}>Sửa</TableCell>
+                      <TableCell style={{ width: 240 }}>Tên đăng nhập</TableCell>
+                      <TableCell>Tên đầy đủ </TableCell>
+                      <TableCell style={{ width: 120 }}>Giới tính</TableCell>
+                      <TableCell style={{ width: 180 }}>Lớp</TableCell>
+                      <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {data &&
+                      data.map((row, index) => {
+                        const isItemSelected = isSelected(row.id)
+                        const labelId = `enhanced-table-checkbox-${index}`
+                        return (
+                          <TableRow
+                            hover
+                            tabIndex={-1}
+                            role='checkbox'
+                            key={row.id}
+                            selected={isItemSelected}
+                            aria-checked={isItemSelected}
+                            onClick={event => handleClick(event, row.id)}
+                            sx={{
+                              '&:last-of-type td, &:last-of-type th': {
+                                border: 0
+                              }
+                            }}
+                          >
+                            <TableCell padding='checkbox'>
+                              <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
+                            </TableCell>
+                            <TableCell component='th' scope='row'>
+                              <IconButton aria-label='edit' component={Link} href={`/apps/user/${row.id}`}>
+                                <EditIcon />
+                              </IconButton>
+                            </TableCell>
+                            <TableCell component='th' scope='row'>
+                              <Typography noWrap variant='body1'>
+                                {row.userName}
+                              </Typography>
+                            </TableCell>
+                            <TableCell>
+                              <Typography variant='body1'>{row.fullName}</Typography>{' '}
+                            </TableCell>
+                            <TableCell>{row.genderName}</TableCell>
+                            <TableCell>{row.organizationName}</TableCell>
+                            <TableCell>
+                              <Typography variant='body1'>
+                                {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
+                              </Typography>
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </LoadingSpinner>
+          </td>
+        </tr>
+      </table>
       <TablePagination
         labelRowsPerPage='Số dòng/trang'
         rowsPerPageOptions={[20, 30, 50]}
@@ -308,6 +347,14 @@ const UserTable = () => {
       </Dialog>
 
       {openImportDialog && <ImportDialog onClose={() => setOpenImportDialog(false)} />}
+
+      <ExportDialog
+        open={openExportDialog}
+        response={exportResponse}
+        title={'Export Học viên'}
+        loading={exporting}
+        onClose={() => setOpenExporttDialog(false)}
+      />
     </>
   )
 }

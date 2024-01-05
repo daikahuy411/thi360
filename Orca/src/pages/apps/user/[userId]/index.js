@@ -7,7 +7,7 @@ import OrganizationApi from 'api/organization-api'
 import UserApi from 'api/user-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CategoryDialog from 'pages/shared/category-dialog'
+import CatalogDialog from 'pages/shared/catalog'
 import Draggable from 'react-draggable'
 import {
   Controller,
@@ -23,7 +23,7 @@ import {
   selectedUser,
   selectUser
 } from 'store/slices/userSlice'
-import { CategoryType } from 'types/CategoryType'
+import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -622,8 +622,8 @@ const EditUserPage = () => {
                     </form>
 
                     {openCatalogDialog && (
-                      <CategoryDialog
-                        categoryType={CategoryType.DOCUMENT_ORGANIZATION}
+                      <CatalogDialog
+                        catalogType={CatalogType.DEPARTMENT}
                         excludedId={0}
                         onNodeSelected={nodeId => {
                           handleSelectedOrganization(nodeId)

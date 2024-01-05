@@ -1,20 +1,44 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, {
+  useEffect,
+  useRef,
+  useState
+} from 'react'
+
 import Configuration from 'configs/auth'
+
 // import { CKEditor } from '@ckeditor/ckeditor5-react'
 // import Editor from 'ckeditor5-custom-build/build/ckeditor'
 
 export default function ContentEditor({ content, isReadOnly, onChange }) {
   const editorRef = useRef()
   const [editorLoaded, setEditorLoaded] = useState(false)
+  const [error, setError] = useState(false)
   const { CKEditor, Editor } = editorRef.current || {}
 
   useEffect(() => {
+    setTimeout(() => {
+      try {
+        loadRequire()
+      } catch (ex) {
+        setTimeout(() => {
+          try {
+            loadRequire()
+          } catch (ex) {
+            setError(true)
+            alert('Vui lòng tải lại trang do không thể tải được trình soạn thảo')
+          }
+        }, 250)
+      }
+    }, 250)
+  }, [])
+
+  const loadRequire = () => {
     editorRef.current = {
       CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, // v3+
       Editor: require('ckeditor5-custom-build/build/ckeditor')
     }
     setEditorLoaded(true)
-  }, [])
+  }
 
   return editorLoaded ? (
     <CKEditor
@@ -100,6 +124,6 @@ export default function ContentEditor({ content, isReadOnly, onChange }) {
       }}
     />
   ) : (
-    <div>Editor loading</div>
+    <div>Đang tải Trình soạn thảo...</div>
   )
 }

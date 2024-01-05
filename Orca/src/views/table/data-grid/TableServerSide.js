@@ -1,5 +1,9 @@
 // ** React Imports
-import { useCallback, useEffect, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 
 // ** ThirdParty Components
 import axios from 'axios'
@@ -130,7 +134,7 @@ const TableServerSide = () => {
   const [searchValue, setSearchValue] = useState('')
   const [sortColumn, setSortColumn] = useState('full_name')
   function loadServerRows(currentPage, data) {
-    return data.slice(currentPage * pageSize, (currentPage + 1) * pageSize)
+    return data.slice(currentPage * pageSize, (currentpage ) * pageSize)
   }
 
   const fetchTableData = useCallback(

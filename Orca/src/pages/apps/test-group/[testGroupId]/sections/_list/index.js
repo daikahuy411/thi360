@@ -1,11 +1,17 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import TestGroupSectionApi from 'api/test-group-section-api'
 import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Draggable from 'react-draggable'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
+import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
 import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
@@ -29,7 +35,6 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
-import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
@@ -70,7 +75,7 @@ const SectionsTable = ({ testGroup }) => {
     const param = {
       keyword: keyword,
       testGroupId: Number(testGroupId),
-      page: page == 0 ? 1 : page + 1,
+      page: page,
       limit: rowsPerPage
     }
     new TestGroupSectionApi()
@@ -202,12 +207,12 @@ const SectionsTable = ({ testGroup }) => {
                 </IconButton>
               </Grid>
               <Grid item md={3} lg={3}>
-                <TextField
+                {/* <TextField
                   fullWidth
                   placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
                   onChange={e => setKeyword(e.target.value)}
                   size='small'
-                />
+                /> */}
               </Grid>
               <Grid item md={6} lg={6} alignContent={'right'}>
                 <TablePagination

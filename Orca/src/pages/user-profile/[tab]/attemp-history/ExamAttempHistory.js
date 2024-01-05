@@ -49,7 +49,7 @@ const ExamAttempHistory = () => {
   const fetchData = () => {
     setLoading(true)
     const param = {
-      Page: page + 1,
+      Page: page ,
       Limit: rowsPerPage
     }
     new TestingApi()

@@ -73,7 +73,7 @@ const ExamItemTable = () => {
 
   const fetchData = () => {
     new ExamItemApi()
-      .getByExamId(examId, page + 1, rowsPerPage)
+      .getByExamId(examId, page , rowsPerPage)
       .then(response => {
         if (response.data.isSuccess) {
           setData(response.data.value)

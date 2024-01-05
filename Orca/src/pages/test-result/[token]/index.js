@@ -75,9 +75,9 @@ const TestResultPage = () => {
       <>
         {attempt && (
           <>
-          <Head>
-            <title>{`Kết quả thi: ${attempt.name} - ${themeConfig.templateName}`}</title>
-          </Head>
+            <Head>
+              <title>{`Kết quả thi: ${attempt.name} - ${themeConfig.templateName}`}</title>
+            </Head>
             <Grid container>
               <Grid item md={12}>
                 {exam && (
@@ -88,22 +88,26 @@ const TestResultPage = () => {
                         src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQVJREFUSEvtldERgyAMhpNN7CY6ApmgnaTXSZxAGKFuUjehh2c4jCDhwbs+lEcM//cnJoBw8cKL9UENcM513vsxGELEhzFm0ZhTARLxfhNdEHHQQKoAIc6uOwBQQU4BUpyIbtveGwBUkCIgJ841b4FkAWfirZADQCPeAtkBWsS1kAiQrUhE1Q4TkE+uhaPINE0jIt75UAsgnLHW+mTwZiIa1qHkzcsBDGInnIFzrvfePwGAp5hDZ0R8GWPmNAOZ+aHOEmCtDbUNQ5VbsRTyHAdrAGttpbOMkWzcHxBL91P/4Kxrao/YEq70NCh32YW+D09jqTVLkN1cFNu0ZrH1u/pCaxXm+C/ebQ4oUTUexgAAAABJRU5ErkJggg=='
                       />
                     </Link>
-                    <Link
-                      underline='hover'
-                      style={{ color: 'rgba(58, 53, 65, 0.6)' }}
-                      href={`/program/${exam.program.id}`}
-                      component={NavLink}
-                    >
-                      {exam.program.name}
-                    </Link>
-                    <Link
-                      underline='hover'
-                      style={{ color: 'rgba(58, 53, 65, 0.6)' }}
-                      href={`/program/${exam.program.id}/subject/${exam.subject.id}`}
-                      component={NavLink}
-                    >
-                      {exam.subject.name}
-                    </Link>
+                    {exam.program && (
+                      <Link
+                        underline='hover'
+                        style={{ color: 'rgba(58, 53, 65, 0.6)' }}
+                        href={`/program/${exam.program.id}`}
+                        component={NavLink}
+                      >
+                        {exam.program.name}
+                      </Link>
+                    )}
+                    {exam.program && exam.subject && (
+                      <Link
+                        underline='hover'
+                        style={{ color: 'rgba(58, 53, 65, 0.6)' }}
+                        href={`/program/${exam.program.id}/subject/${exam.subject.id}`}
+                        component={NavLink}
+                      >
+                        {exam.subject.name}
+                      </Link>
+                    )}
                     {exam.curriculum && (
                       <Link
                         underline='hover'
@@ -114,7 +118,9 @@ const TestResultPage = () => {
                         {exam.curriculum.name}
                       </Link>
                     )}
-                    {exam.curriculum &&
+                    {exam.program &&
+                      exam.subject &&
+                      exam.curriculum &&
                       exam.curriculum.children &&
                       exam.curriculum.children.map(item => (
                         <Link
@@ -142,15 +148,22 @@ const TestResultPage = () => {
                 <br />
               </Grid>
               <Grid item md={12}>
-
                 <div className='box-result'>
                   <div className=''>
                     <div className='br-left '>
                       <p className='br-caption'>
-                        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width="56" height="56" rx="28" fill="#E5FFF1"></rect>
-                          <path d="M35.293 22.2928L26.0001 31.5857L20.7072 26.2928L19.293 27.7071L26.0001 34.4142L36.7072 23.7071L35.293 22.2928Z" fill="#007F31"></path>
-                          <path fillRule="evenodd" clipRule="evenodd" d="M44 28C44 36.8366 36.8366 44 28 44C19.1634 44 12 36.8366 12 28C12 19.1634 19.1634 12 28 12C36.8366 12 44 19.1634 44 28ZM42 28C42 35.732 35.732 42 28 42C20.268 42 14 35.732 14 28C14 20.268 20.268 14 28 14C35.732 14 42 20.268 42 28Z" fill="#007F31"></path>
+                        <svg width='56' height='56' viewBox='0 0 56 56' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                          <rect width='56' height='56' rx='28' fill='#E5FFF1'></rect>
+                          <path
+                            d='M35.293 22.2928L26.0001 31.5857L20.7072 26.2928L19.293 27.7071L26.0001 34.4142L36.7072 23.7071L35.293 22.2928Z'
+                            fill='#007F31'
+                          ></path>
+                          <path
+                            fillRule='evenodd'
+                            clipRule='evenodd'
+                            d='M44 28C44 36.8366 36.8366 44 28 44C19.1634 44 12 36.8366 12 28C12 19.1634 19.1634 12 28 12C36.8366 12 44 19.1634 44 28ZM42 28C42 35.732 35.732 42 28 42C20.268 42 14 35.732 14 28C14 20.268 20.268 14 28 14C35.732 14 42 20.268 42 28Z'
+                            fill='#007F31'
+                          ></path>
                         </svg>
                         &nbsp;&nbsp;
                         <strong>{attempt.name}</strong>

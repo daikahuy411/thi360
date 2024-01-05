@@ -1,3 +1,4 @@
+'use client' // only in App Router
 import * as React from 'react'
 import { useEffect } from 'react'
 
@@ -6,29 +7,45 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedTestGroupSection, selectTestGroupSection } from 'store/slices/testGroupSectionSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedTestGroupSection,
+  selectTestGroupSection
+} from 'store/slices/testGroupSectionSlice'
 import * as yup from 'yup'
 
+import ContentEditor from '@core/components/editor'
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
+import Checkbox from '@mui/material/Checkbox'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import FormHelperText from '@mui/material/FormHelperText'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
 import TopNav from '../_layout/_breadcrums'
 import Nav from '../_layout/_tabs'
@@ -192,7 +209,7 @@ const SectionEditForm = () => {
                     <Nav />
                     <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                       <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', paddingTop: 10 }}>
-                        <Grid container spacing={5}>
+                        <Grid container spacing={5} maxWidth={"md"}>
                           <Grid item xs={12}>
                             <FormControl fullWidth>
                               <Controller
@@ -262,6 +279,37 @@ const SectionEditForm = () => {
                                 )}
                               />
                             </FormControl>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography>Nội dung Hướng dẫn</Typography>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='content'
+                                control={control}
+                                rules={{ required: false }}
+                                render={({ field: { value, onChange } }) => (
+                                  <ContentEditor data={value ?? ''} label='Nội dung hướng dẫn' onChange={onChange} />
+                                )}
+                              />
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <FormControlLabel
+                              name='showHelp'
+                              control={
+                                <Controller
+                                  name='showHelp'
+                                  control={control}
+                                  rules={{ required: false }}
+                                  render={({ field: { value, onChange } }) => (
+                                    <Checkbox checked={value ?? false} onChange={onChange} />
+                                  )}
+                                />
+                              }
+                              label='Hiển thị Hướng dẫn'
+                            />
                           </Grid>
                         </Grid>
                       </form>

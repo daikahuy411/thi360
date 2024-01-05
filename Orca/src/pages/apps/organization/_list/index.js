@@ -1,11 +1,17 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import ExamApi from 'api/exam-api'
 import OrganizationApi from 'api/organization-api'
 import moment from 'moment'
 import Link from 'next/link'
 import Draggable from 'react-draggable'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
+import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
 import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
@@ -70,7 +76,7 @@ const OrganizationTable = () => {
   const fetchData = () => {
     new OrganizationApi()
       .searchesOrganizations({
-        Page: page + 1,
+        Page: page ,
         Limit: rowsPerPage,
         Keyword: keyword,
         Status: status,

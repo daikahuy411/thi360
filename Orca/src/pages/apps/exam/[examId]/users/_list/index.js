@@ -1,10 +1,17 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import ExamUserApi from 'api/exam-user-api'
 import { useRouter } from 'next/router'
+import UserExamAttemptHistoryDialog from 'pages/shared/user-exam-attempt-history-dialog'
 import UserModal from 'pages/shared/user-modal'
 import Draggable from 'react-draggable'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
+import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
 import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
@@ -52,7 +59,8 @@ const UserTable = () => {
   const [orgs, setOrgs] = useState([])
   const [orgId, setOrgId] = useState(0)
   const [userHistoryDialog, setUserHistoryDialog] = useState(false)
-  const [userId, setUserId] = useState('')
+  const [user, setUser] = useState('')
+  const [keyword, setKeyword] = useState('')
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -66,15 +74,15 @@ const UserTable = () => {
   useEffect(() => {
     if (!examId || examId == 0) return
     fetchData()
-  }, [examId, page, rowsPerPage])
+  }, [examId, page, keyword, rowsPerPage])
 
   const showUserHistory = row => {
     setUserHistoryDialog(true)
-    setUserId(row.userId)
+    setUser(row)
   }
 
   const fetchData = () => {
-    new ExamUserApi().getExamUsersByExam(examId, page + 1, rowsPerPage).then(response => {
+    new ExamUserApi().searchesExamUsersByExam(examId, keyword, page, rowsPerPage).then(response => {
       if (response.data.isSuccess) {
         setData(response.data.value)
         setTotalItem(response.data.totalItems)
@@ -205,12 +213,17 @@ const UserTable = () => {
         <Divider />
         <Grid container>
           <Grid item md={3} lg={3}>
-            <IconButton aria-label='filter' style={{display: 'none'}}>
+            <IconButton aria-label='filter' style={{ display: 'none' }}>
               <FilterAltOutlinedIcon />
             </IconButton>
           </Grid>
           <Grid item md={3} lg={3}>
-            <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
+            <TextField
+              fullWidth
+              placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+              onChange={e => setKeyword(e.target.value)}
+              size='small'
+            />
           </Grid>
           <Grid item md={6} lg={6} alignContent={'right'}>
             <TablePagination
@@ -237,8 +250,9 @@ const UserTable = () => {
                     inputProps={{ 'aria-label': 'select all desserts' }}
                   />
                 </TableCell>
-                <TableCell style={{ width: 120 }}>Tên đăng nhập</TableCell>
-                <TableCell style={{ width: 120 }}>Tên đầy đủ </TableCell>
+                <TableCell style={{ width: 50 }}>Xem</TableCell>
+                <TableCell style={{}}>Tên đăng nhập</TableCell>
+                <TableCell style={{ width: 280 }}>Tên đầy đủ </TableCell>
                 <TableCell style={{ width: 120 }}>Giới tính</TableCell>
                 <TableCell style={{ width: 120 }}>Lớp</TableCell>
               </TableRow>
@@ -267,12 +281,37 @@ const UserTable = () => {
                       <TableCell padding='checkbox'>
                         <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                       </TableCell>
-                      <TableCell component='th' scope='row'>
-                        {row.userName}
+                      <TableCell style={{ width: 30 }}>
+                        <IconButton
+                          aria-label='view testing history'
+                          onClick={e => {
+                            e.preventDefault()
+                            showUserHistory(row)
+                          }}
+                        >
+                          <Icon icon='bi:eye' fontSize={22} />
+                        </IconButton>
                       </TableCell>
-                      <TableCell>{row.fullName}</TableCell>
-                      <TableCell>{row.genderName}</TableCell>
-                      <TableCell>{row.organizationName}</TableCell>
+                      <TableCell component='th' scope='row'>
+                        <Typography noWrap variant='body1'>
+                          {row.userName}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography noWrap variant='body1'>
+                          {row.fullName}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography noWrap variant='body1'>
+                          {row.genderName}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography noWrap variant='body1'>
+                          {row.organizationName}
+                        </Typography>
+                      </TableCell>
                     </TableRow>
                   )
                 })}
@@ -318,6 +357,15 @@ const UserTable = () => {
         {openUserModal && (
           <UserModal open={openUserModal} onOk={onSelectedUsers} onClose={() => setOpenUserModal(false)} />
         )}
+
+        <UserExamAttemptHistoryDialog
+          open={userHistoryDialog}
+          user={user}
+          examId={examId}
+          onClose={() => {
+            setUserHistoryDialog(false)
+          }}
+        />
       </HelmetProvider>
     </>
   )
