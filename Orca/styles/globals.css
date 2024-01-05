@@ -365,7 +365,6 @@ code[class*='language-'] {
 }
 
 .finger-tabs__tab {
-  background-color: white;
   color: rgba(0, 0, 0, 0.87);
   cursor: pointer;
   -ms-flex: 0 1 auto;

@@ -1,16 +1,22 @@
 import * as React from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
+import TestingApi from 'api/testing-api'
+import moment from 'moment'
+import Link from 'next/link'
+
+import LoadingSpinner from '@core/components/loading-spinner'
+import CloseIcon from '@mui/icons-material/Close'
+import AppBar from '@mui/material/AppBar'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
-import AppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import CloseIcon from '@mui/icons-material/Close'
 import Slide from '@mui/material/Slide'
-import TestingApi from 'api/testing-api'
-import LoadingSpinner from '@core/components/loading-spinner'
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
@@ -67,14 +73,15 @@ export default function TestAttemptHistoryDialog({ onClose, open, test }) {
               <thead>
                 <tr>
                   <th style={{ width: 30, textAlign: 'center' }}>STT</th>
-                  <th style={{ width: 80 }}>Câu đúng</th>
-                  <th style={{ width: 80 }}>Câu sai</th>
-                  <th style={{ width: 80 }}>Chưa trả lời</th>
+                  <th>Đề thi</th>
+                  <th style={{ width: 120 }}>Câu đúng</th>
+                  <th style={{ width: 120 }}>Câu sai</th>
+                  <th style={{ width: 140 }}>Chưa trả lời</th>
                   <th style={{ width: 160 }}>Điểm</th>
-                  <th style={{ width: 90 }}>Trạng thái</th>
-                  <th style={{ width: 120 }}>Bắt đầu</th>
-                  <th style={{ width: 120 }}>Kết thúc</th>
-                  <th style={{ textAlign: 'left', width: 80 }}>Thao tác</th>
+                  <th style={{ width: 160 }}>Trạng thái</th>
+                  <th style={{ width: 190 }}>Bắt đầu</th>
+                  <th style={{ width: 190 }}>Kết thúc</th>
+                  <th style={{ textAlign: 'left', width: 150 }}>Thao tác</th>
                 </tr>
               </thead>
               <tbody className='table-border-bottom-0'>
@@ -82,16 +89,29 @@ export default function TestAttemptHistoryDialog({ onClose, open, test }) {
                   data.map((row, index) => (
                     <tr key={row.id}>
                       <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                      <td>{row.totalCorrectQuestion}</td>
-                      <td>{row.totalIncorrectQuestion}</td>
+                      <td>{row.name}</td>
+                      <td>
+                        <Typography noWrap variant='body1'>
+                          {row.totalCorrectQuestion}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography noWrap variant='body1'>
+                          {row.totalIncorrectQuestion}
+                        </Typography>
+                      </td>
                       <td>{row.totalNoAnswerQuestion}</td>
                       <td>{row.score}</td>
                       <td>{row.status}</td>
-                      <td>{row.startDate}</td>
-                      <td>{row.endDate}</td>
-                      <td className='' style={{ textAlign: 'left', width: 80 }}>
-                        <Link href='/'>
-                          <Button variant='contained' size='small'>
+                      <td>
+                        <Typography variant='body1'>{moment(row.startDate).format('DD-MM-YYYY HH:mm')}</Typography>
+                      </td>
+                      <td>
+                        <Typography variant='body1'>{moment(row.endDate).format('DD-MM-YYYY HH:mm')}</Typography>
+                      </td>
+                      <td className='' style={{ textAlign: 'left' }}>
+                        <Link href={`/testing/review/${row.token}`} target='_blank'>
+                          <Button variant='contained' size='small' style={{ textAlign: 'left', width: 120 }}>
                             Xem lại
                           </Button>
                         </Link>

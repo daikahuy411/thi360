@@ -12,7 +12,7 @@ import TopNav from '../../_layout/_breadcrums'
 import Nav from '../../_layout/_tabs'
 import ReportList from './_list'
 
-const ClassUserList = () => {
+const ExamReportingPage = () => {
   const router = useRouter()
   const currentExam = useSelector(selectedExam)
   const { examId } = router.query
@@ -56,4 +56,4 @@ const ClassUserList = () => {
   )
 }
 
-export default ClassUserList
+export default ExamReportingPage

@@ -102,6 +102,10 @@ export const teacherLinks = [
       {
         title: 'Bộ Câu hỏi',
         path: '/apps/question-catalog'
+      },
+      {
+        title: 'Ngân hàng Câu hỏi',
+        path: '/apps/question-bank'
       }
     ]
   },
@@ -137,6 +141,10 @@ export const examLinks = [
   {
     title: 'Bộ Câu hỏi',
     path: '/apps/question-catalog'
+  },
+  {
+    title: 'Ngân hàng Câu hỏi',
+    path: '/apps/question-bank'
   }
 ]
 
@@ -225,7 +233,7 @@ export const systemLinks = [
       },
       {
         title: 'Cấu hình',
-        path: '/apps/tenant'
+        path: '/apps/setting'
       }
     ]
   }

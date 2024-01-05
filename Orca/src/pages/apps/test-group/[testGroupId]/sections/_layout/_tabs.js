@@ -23,7 +23,7 @@ const Nav = () => {
             className={`finger-tabs__tab flex-none ${
               router.asPath === `/apps/test-group/${testGroupId}/sections/${sectionId}/items/`
                 ? 'is-active'
-                : 'disabled'
+                : ''
             }`}
             title='Cấu hình'
             component={Link}

@@ -25,7 +25,7 @@ const Nav = () => {
         {currentTestGroup && currentTestGroup.id > 0 ? (
           <Link
             className={`finger-tabs__tab flex-none ${
-              router.asPath === `/apps/test-group/${testGroupId}/sections/` ? 'is-active' : 'disabled'
+              router.asPath === `/apps/test-group/${testGroupId}/sections/` ? 'is-active' : ''
             }`}
             title='Cấu trúc đề thi'
             component={Link}
@@ -51,7 +51,7 @@ const Nav = () => {
         {currentTestGroup && currentTestGroup.id > 0 ? (
           <Link
             className={`finger-tabs__tab flex-none ${
-              router.asPath === `/apps/test-group/${testGroupId}/tests/` ? 'is-active' : 'disabled'
+              router.asPath === `/apps/test-group/${testGroupId}/tests/` ? 'is-active' : ''
             }`}
             title='Đề thi'
             component={Link}

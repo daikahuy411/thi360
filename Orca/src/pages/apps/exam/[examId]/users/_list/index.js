@@ -255,6 +255,7 @@ const UserTable = () => {
                 <TableCell style={{ width: 280 }}>Tên đầy đủ </TableCell>
                 <TableCell style={{ width: 120 }}>Giới tính</TableCell>
                 <TableCell style={{ width: 120 }}>Lớp</TableCell>
+                <TableCell style={{ width: 120 }}>Số lượt thi</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -312,6 +313,11 @@ const UserTable = () => {
                           {row.organizationName}
                         </Typography>
                       </TableCell>
+                      <TableCell>
+                        <Typography noWrap variant='body1'>
+                          {row.totalAttempt}
+                        </Typography>
+                      </TableCell>
                     </TableRow>
                   )
                 })}
@@ -361,7 +367,7 @@ const UserTable = () => {
         <UserExamAttemptHistoryDialog
           open={userHistoryDialog}
           user={user}
-          examId={examId}
+          examId={parseInt(examId)}
           onClose={() => {
             setUserHistoryDialog(false)
           }}

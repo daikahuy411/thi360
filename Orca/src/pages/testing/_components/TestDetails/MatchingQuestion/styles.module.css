@@ -26,12 +26,16 @@
   padding: 0;
   margin-left: 100px;
   float: left;
+}
 
-  .li {
-    margin-bottom: 20px;
-    list-style: none;
-    background-color: #ededed;
-    height: 40px;
-    padding: 5px;
-  }
+.li {
+  margin-bottom: 20px;
+  list-style: none;
+  background-color: #ededed;
+  height: 40px;
+  padding: 5px;
+}
+
+.li.active {
+  border-color: blueviolet;
 }

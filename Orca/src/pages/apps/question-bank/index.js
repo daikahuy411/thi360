@@ -1,17 +1,17 @@
 import Grid from '@mui/material/Grid'
 
 import TopNav from './_layout/_breadcrums'
-import ExamTable from './_list'
+import QuestionTable from './_list'
 
-const ExamPage = () => {
+const ClassApp = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12} sx={{ mb: 4 }}>
         <TopNav />
-        <ExamTable />
+        <QuestionTable />
       </Grid>
     </Grid>
   )
 }
 
-export default ExamPage
+export default ClassApp

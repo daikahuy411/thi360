@@ -9,17 +9,16 @@ import {
 } from 'react-sortable-hoc'
 
 import Button from '@mui/material/Button'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
-import ListItemText from '@mui/material/ListItemText'
 import { styled } from '@mui/material/styles'
 
-const StyledList = styled(List)(({ theme }) => ({
+const StyledList = styled('div')(({ theme }) => ({
   display: 'block',
   listStyle: 'none',
   '& .MuiListItem-root': {
     listStyle: 'none',
+    padding: 10,
+    marginTop: 5,
     cursor: 'move',
     border: `1px solid ${theme.palette.divider}`,
     paddingRight: theme.spacing(24),
@@ -30,9 +29,6 @@ const StyledList = styled(List)(({ theme }) => ({
     '&:last-child': {
       borderBottomLeftRadius: theme.shape.borderRadius,
       borderBottomRightRadius: theme.shape.borderRadius
-    },
-    '&:not(:last-child)': {
-      borderBottom: 0
     },
     '& .MuiListItemText-root': {
       marginTop: 0,
@@ -55,19 +51,17 @@ const SortableList = SortableContainer(({ items }) => {
   return (
     <StyledList disablePadding>
       {items.map((value, index) => (
-        <SortableItem key={`item-${value}`} index={index} value={value} />
+        <SortableItem key={`item-${value.id}`} index={index} value={value} />
       ))}
     </StyledList>
   )
 })
 
 const SortableItem = SortableElement(({ value }) => (
-  <ListItem>
-    <div>
-      <ListItemText primary={ReactHtmlParser(value.content)} />
-    </div>
+  <div className='MuiListItem-root'>
+    <div>{ReactHtmlParser(value.content)}</div>
     {/* <DragHandle /> */}
-  </ListItem>
+  </div>
 ))
 
 class OrderQuestion extends Component {

@@ -21,7 +21,7 @@ const Nav = () => {
         {itemId > 0 ? (
           <Link
             className={`finger-tabs__tab flex-none ${
-              router.asPath === `/apps/exam/${examId}/items/${itemId}/tests/` ? 'is-active' : 'disabled'
+              router.asPath === `/apps/exam/${examId}/items/${itemId}/tests/` ? 'is-active' : ''
             }`}
             title='Cấu hình'
             component={Link}

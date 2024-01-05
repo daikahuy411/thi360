@@ -24,7 +24,7 @@ const Nav = () => {
         {currentExamCategory && currentExamCategory.id > 0 ? (
           <Link
             className={`finger-tabs__tab flex-none ${
-              router.asPath === `/apps/exam-category/${examCategoryId}/exams/` ? 'is-active' : 'disabled'
+              router.asPath === `/apps/exam-category/${examCategoryId}/exams/` ? 'is-active' : ''
             }`}
             title='Kỳ thi'
             component={Link}

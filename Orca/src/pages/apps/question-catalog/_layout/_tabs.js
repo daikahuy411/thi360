@@ -24,7 +24,7 @@ const Nav = ({ children }) => {
         {currentQuestionCatalog && currentQuestionCatalog.id > 0 ? (
           <Link
             className={`finger-tabs__tab flex-none ${
-              router.asPath === `/apps/question-catalog/${questionCatalogId}/categories/` ? 'is-active' : 'disabled'
+              router.asPath === `/apps/question-catalog/${questionCatalogId}/categories/` ? 'is-active' : ''
             }`}
             title='Danh mục'
             component={Link}
@@ -50,7 +50,7 @@ const Nav = ({ children }) => {
         {currentQuestionCatalog && currentQuestionCatalog.id > 0 ? (
           <Link
             className={`finger-tabs__tab flex-none ${
-              router.asPath === `/apps/question-catalog/${questionCatalogId}/questions/` ? 'is-active' : 'disabled'
+              router.asPath === `/apps/question-catalog/${questionCatalogId}/questions/` ? 'is-active' : ''
             }`}
             title='Câu hỏi'
             component={Link}

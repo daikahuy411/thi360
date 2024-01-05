@@ -12,9 +12,10 @@ import {
   HelmetProvider
 } from 'react-helmet-async'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import { selectedExam } from 'store/slices/examSlice'
 
 import Icon from '@core/components/icon'
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import Dialog from '@mui/material/Dialog'
@@ -23,9 +24,13 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import Divider from '@mui/material/Divider'
+import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
 import Paper from '@mui/material/Paper'
+import Select from '@mui/material/Select'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -46,9 +51,10 @@ function PaperComponent(props) {
   )
 }
 
-const ReportList = () => {
+const UserTable = () => {
   const router = useRouter()
   const { examId } = router.query
+  const currentExam = useSelector(selectedExam)
 
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
@@ -59,6 +65,7 @@ const ReportList = () => {
   const [orgId, setOrgId] = useState(0)
   const [userHistoryDialog, setUserHistoryDialog] = useState(false)
   const [userId, setUserId] = useState('')
+  const [itemId, setItemId] = useState(0)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -80,7 +87,7 @@ const ReportList = () => {
   }
 
   const fetchData = () => {
-    new ExamUserApi().searchesExamUsersByExam(examId, page , rowsPerPage).then(response => {
+    new ExamUserApi().searchesExamUsersByExam(examId, '', page, rowsPerPage).then(response => {
       if (response.data.isSuccess) {
         setData(response.data.value)
         setTotalItem(response.data.totalItems)
@@ -167,7 +174,8 @@ const ReportList = () => {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Quản lý học viên trong kỳ thi</title>
+          {currentExam && (
+            <title>Báo cáo Kỳ thi {currentExam.name}</title>)}
         </Helmet>
         <Toolbar style={{ padding: 0 }}>
           <Typography sx={{ flex: '1 1 50%' }} variant='h5' id='tableTitle' component='div'>
@@ -185,35 +193,28 @@ const ReportList = () => {
               <Icon icon='mdi:download' />
             </IconButton>
           </Tooltip>
-          &nbsp; &nbsp;
-          <Tooltip title='Xóa học viên khỏi kỳ thi'>
-            <span>
-              <IconButton
-                sx={{ color: 'text.secondary' }}
-                onClick={handleClickOpenDelete}
-                disabled={selected.length > 0 ? false : true}
-              >
-                <Icon icon='mdi:delete-outline' />
-              </IconButton>
-            </span>
-          </Tooltip>
-          &nbsp; &nbsp;
-          <Button
-            variant='contained'
-            style={{ width: 180 }}
-            onClick={() => setOpenUserModal(true)}
-            color='primary'
-            startIcon={<Icon icon='mdi:plus' />}
-          >
-            Gán Học viên
-          </Button>
         </Toolbar>
         <Divider />
-        <Grid container>
+        <Grid container spacing={6}>
           <Grid item md={3} lg={3}>
-            <IconButton aria-label='filter' style={{ display: 'none' }}>
-              <FilterAltOutlinedIcon />
-            </IconButton>
+            {currentExam && currentExam.examItems && (
+              <FormControl fullWidth>
+                <InputLabel htmlFor='payment-method'>Môn thi</InputLabel>
+                <Select
+                  size='small'
+                  value={itemId}
+                  onChange={e => setItemId(parseInt(e.target.value))}
+                  label='Môn thi'
+                  labelId='demo-simple-select-label'
+                  aria-describedby='validation-schema-group'
+                >
+                  <MenuItem value={0}>Chọn Môn thi</MenuItem>
+                  {currentExam.examItems.map(item => (
+                    <MenuItem value={item.id}>{item.name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            )}
           </Grid>
           <Grid item md={3} lg={3}>
             <TextField
@@ -252,6 +253,7 @@ const ReportList = () => {
                 <TableCell style={{ width: 120 }}>Tên đầy đủ </TableCell>
                 <TableCell style={{ width: 120 }}>Giới tính</TableCell>
                 <TableCell style={{ width: 120 }}>Lớp</TableCell>
+                <TableCell style={{ width: 120 }}>Số lượt thi</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -296,6 +298,11 @@ const ReportList = () => {
                       <TableCell>
                         <Typography noWrap variant='body1'>
                           {row.organizationName}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography noWrap variant='body1'>
+                          {row.totalAttempt}
                         </Typography>
                       </TableCell>
                     </TableRow>
@@ -348,4 +355,4 @@ const ReportList = () => {
   )
 }
 
-export default ReportList
+export default UserTable
