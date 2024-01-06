@@ -236,7 +236,7 @@ const QuestionTable = () => {
               <MenuItem
                 component={Link}
                 key={item.id}
-                href={`/apps/question-catalog/${questionCatalogId}/questions/add/${item.typeId}`}
+                href={`/apps/question-catalog/${questionCatalogId ?? 0}/questions/add/${item.typeId}`}
               >
                 {item.name}
               </MenuItem>
@@ -281,7 +281,7 @@ const QuestionTable = () => {
             <tr>
               <td
                 style={{
-                  width: '28%',
+                  width: '25%',
                   padding: 5,
                   verticalAlign: 'top',
                   borderRight: '1px solid rgba(58, 53, 65, 0.12)'

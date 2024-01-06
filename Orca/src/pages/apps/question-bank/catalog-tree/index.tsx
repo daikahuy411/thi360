@@ -28,7 +28,6 @@ export default function QuestionCatalogTree(props: Props) {
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
-  const [categoryId, setCategoryId] = useState(0)
   const [totalItems, setTotalItems] = useState(0)
   const [keyword, setKeyword] = useState('')
 
@@ -55,14 +54,15 @@ export default function QuestionCatalogTree(props: Props) {
   }
 
   const fetchData = () => {
-    new QuestionCatalogApi().getCatalogTree({ page: 0, keyword: keyword }).then((response: any) => {
+    new QuestionCatalogApi().getCatalogTree({ page: page, keyword: keyword }).then((response: any) => {
       setData([{ id: 0, name: 'Tất cả Bộ Câu hỏi' }, ...response.data.value])
+      setTotalItems(response.data.totalItems)
     })
   }
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [keyword, page, rowsPerPage])
 
   return (
     <LoadingSpinner active={loading}>

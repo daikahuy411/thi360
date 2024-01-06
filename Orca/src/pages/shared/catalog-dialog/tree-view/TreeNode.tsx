@@ -1,6 +1,10 @@
 import React from 'react'
 
-import Icon from '@core/components/icon'
+import {
+  mdilFile,
+  mdilFolder
+} from '@mdi/light-js'
+import IconReact from '@mdi/react'
 import TreeItem, { TreeItemProps } from '@mui/lab/TreeItem'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
@@ -63,8 +67,8 @@ const StyledTreeItem = (props: StyledTreeItemProps) => {
       {...other}
       label={
         <Box sx={{ py: 1, display: 'flex', alignItems: 'center', '& svg': { mr: 1 } }}>
-          {hasChildren === true && <Icon icon={'mdi:folder'} color='inherit' />}
-          {hasChildren === false && <Icon icon={'mdi:file-outline'} color='inherit' />}
+          {hasChildren === true && <IconReact path={mdilFolder} title='Folder' color='black' size={1} />}
+          {hasChildren === false && <IconReact path={mdilFile} title='Folder' color='black' size={1} />}
           <Typography variant='body1' sx={{ flexGrow: 1, fontWeight: 'inherit' }}>
             {label}
           </Typography>

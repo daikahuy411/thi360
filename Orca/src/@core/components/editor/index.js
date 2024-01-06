@@ -45,7 +45,7 @@ export default function ContentEditor({ content, isReadOnly, onChange }) {
     <CKEditor
       editor={Editor}
       data={content}
-      onInit={editor => {
+      onReady={editor => {
         console.log('Editor is ready to use!', editor)
       }}
       onChange={(event, editor) => {

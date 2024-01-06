@@ -1,6 +1,10 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import ExamApi from 'api/exam-api'
+import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -79,9 +83,9 @@ const ExamTable = () => {
         &nbsp; &nbsp;
         <Button
           component={Link}
-          href={`/apps/user/0`}
+          href={`/apps/exam/0/category/${examCategoryId}`}
           variant='contained'
-          style={{ width: 180 }}
+          style={{ width: 130 }}
           color='primary'
           startIcon={<Icon icon='mdi:plus' />}
         >
@@ -91,12 +95,17 @@ const ExamTable = () => {
       <Divider />
       <Grid container>
         <Grid item md={3} lg={3}>
-          <IconButton aria-label='filter' style={{display: 'none'}}>
+          <IconButton aria-label='filter' style={{ display: 'none' }}>
             <FilterAltOutlinedIcon />
           </IconButton>
         </Grid>
         <Grid item md={3} lg={3}>
-          <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
+          <TextField
+            fullWidth
+            placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+            onChange={e => setKeyword(e.target.value)}
+            size='small'
+          />
         </Grid>
         <Grid item md={6} lg={6} alignContent={'right'}>
           <TablePagination
@@ -152,13 +161,25 @@ const ExamTable = () => {
                     </IconButton>
                   </TableCell>
                   <TableCell component='th' scope='row'>
-                    [{row.id}]-{row.name}
+                    <Typography variant='body1'>
+                      [{row.id}]-{row.name}
+                    </Typography>
                   </TableCell>
-                  <TableCell>{row.registrationTypeName}</TableCell>
-                  <TableCell>{row.examTypeName}</TableCell>
-                  <TableCell>{row.totalAttempt}</TableCell>
-                  <TableCell>{row.totalUser}</TableCell>
-                  <TableCell>{row.statusName}</TableCell>
+                  <TableCell>
+                    <Typography variant='body1'>{row.registrationTypeName}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant='body1'>{row.examTypeName}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant='body1'>{row.totalAttempt}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant='body1'>{row.totalUser}</Typography>{' '}
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>

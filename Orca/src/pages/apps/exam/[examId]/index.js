@@ -115,7 +115,7 @@ function PaperComponent(props) {
 const EditExamPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { examId, folderId } = router.query
+  const { examId, folderId, categoryId } = router.query
   const [parentId, setParentId] = useState(0)
   const [programs, setPrograms] = useState([])
   const [subjects, setSubjects] = useState([])
@@ -166,9 +166,9 @@ const EditExamPage = () => {
         setCheckedIsSpecificDuration(response.data.isSpecificDuration)
         setProgramCatalogId(response.data.programId)
         setSubjectCatalogId(response.data.subjectId)
-        setOrganizationSelected({
-          organizationId: response.data.categoryId,
-          organizationName: response.data.categoryName
+        setExamCategorySelected({
+          id: response.data.categoryId,
+          name: response.data.categoryName
         })
       }
     })
@@ -221,10 +221,10 @@ const EditExamPage = () => {
         ...item,
         startDate: new Date(startStr),
         endDate: new Date(endStr),
-        CategoryId: organizationSelected.organizationId
+        CategoryId: examCategorySelected.id
       }
     } else {
-      param = { ...item, startDate: undefined, endDate: undefined, CategoryId: organizationSelected.organizationId }
+      param = { ...item, startDate: undefined, endDate: undefined, CategoryId: examCategorySelected.id }
     }
 
     param.parentId = parentId
@@ -267,22 +267,33 @@ const EditExamPage = () => {
   }
 
   /*
-   * handle organization
+   * handle exam category
    */
-  const [organizationSelected, setOrganizationSelected] = useState({ organizationId: 0, organizationName: '' })
+  const [examCategorySelected, setExamCategorySelected] = useState({ id: 0, name: '' })
   const handleSelectedOrganization = selectedId => {
     ExamCategoryApi.get(selectedId).then(response => {
       if (response.data) {
-        setOrganizationSelected({ organizationId: selectedId, organizationName: response.data.name })
+        setExamCategorySelected({ id: selectedId, name: response.data.name })
       }
     })
   }
 
-  const cleanOrganization = () => {
-    setOrganizationSelected({ organizationId: 0, organizationName: '' })
+  const cleanExamCategory = () => {
+    setExamCategorySelected({ id: 0, name: '' })
   }
+
+  useEffect(() => {
+    if (categoryId && examId && examId === '0') {
+      ExamCategoryApi.get(categoryId).then(response => {
+        if (response.data) {
+          setExamCategorySelected({ id: categoryId, name: response.data.name })
+        }
+      })
+    }
+  }, [categoryId])
+
   /*
-   * end handle organization
+   * end handle exam category
    */
 
   /*
@@ -314,6 +325,16 @@ const EditExamPage = () => {
     setParentId(parentId)
   }
 
+  const backUrl = () => {
+    if (folderId) {
+      return `/apps/exam/view/${folderId}/`
+    }
+    if (categoryId) {
+      return `/apps/exam-category/${categoryId}/exams/`
+    }
+    return `/apps/exam/`
+  }
+
   return (
     <>
       <HelmetProvider>
@@ -343,11 +364,7 @@ const EditExamPage = () => {
                           &nbsp;
                         </>
                       )}
-                      <Button
-                        variant='outlined'
-                        component={Link}
-                        href={folderId > 0 ? `/apps/exam/view/${folderId}` : `/apps/exam/`}
-                      >
+                      <Button variant='outlined' component={Link} href={backUrl()}>
                         <ArrowBackIcon />
                         &nbsp;Quay lại
                       </Button>
@@ -441,13 +458,13 @@ const EditExamPage = () => {
                                       readOnly: true,
                                       className: 'Mui-disabled'
                                     }}
-                                    value={organizationSelected.organizationName ?? ''}
+                                    value={examCategorySelected.name ?? ''}
                                     endAdornment={
                                       <InputAdornment position='end'>
                                         <IconButton
                                           aria-label='toggle password visibility'
                                           edge='end'
-                                          onClick={cleanOrganization}
+                                          onClick={cleanExamCategory}
                                         >
                                           <DeleteOutline />
                                         </IconButton>

@@ -1,13 +1,20 @@
 import React, { useState } from 'react'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import DescriptionIcon from '@mui/icons-material/Description'
-import Folder from '@mui/icons-material/Folder'
-import FolderOpenIcon from '@mui/icons-material/FolderOpen'
+
+import {
+  mdilChevronDown,
+  mdilChevronUp,
+  mdilFile,
+  mdilFolder
+} from '@mdi/light-js'
+import IconReact from '@mdi/react'
+import Radio from '@mui/material/Radio'
+// import DescriptionIcon from '@mui/icons-material/Description'
+// import Folder from '@mui/icons-material/Folder'
+// import FolderOpenIcon from '@mui/icons-material/FolderOpen'
 import Stack from '@mui/material/Stack'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
-import Radio from '@mui/material/Radio'
 
 type TreeRowProps = {
   item: any
@@ -22,7 +29,14 @@ type TreeRowProps = {
 const TreeRow: React.FC<TreeRowProps> = (props: TreeRowProps) => {
   const { item } = props
   const [isCollapsed, setIsCollapsed] = useState(true)
-  const entityIcon = item.children.length > 0 ? isCollapsed ? <Folder /> : <FolderOpenIcon /> : <DescriptionIcon />
+  // const entityIcon = item.children.length > 0 ? isCollapsed ? <Folder /> : <FolderOpenIcon /> : <DescriptionIcon />
+  const entityIcon =
+    item.children.length > 0 ? (
+      <IconReact path={mdilFolder} title='Folder' color='black' size={1} />
+    ) : (
+      <IconReact path={mdilFile} title='File' color='black' size={1} />
+    )
+
   const isDisabled = item.key.toString() === props.currentId.toString() || props.disabled
 
   const children = (item.children || []).map((child: any, index: number) => {
@@ -74,7 +88,10 @@ const TreeRow: React.FC<TreeRowProps> = (props: TreeRowProps) => {
             {!(item.children.length > 0) ? (
               <span style={{ display: 'inline-block', width: 24 }}></span>
             ) : (
-              <ChevronRightIcon />
+              <>
+                {isCollapsed && <IconReact path={mdilChevronUp} title='Folder' color='black' size={1} />}
+                {!isCollapsed && <IconReact path={mdilChevronDown} title='Folder' color='black' size={1} />}
+              </>
             )}
             {entityIcon}
             <Typography variant='body1'>{item.title}</Typography>

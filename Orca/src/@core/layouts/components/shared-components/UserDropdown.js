@@ -191,6 +191,12 @@ const UserDropdown = props => {
             </MenuItem>
             <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/account-settings/account')}>
               <Box sx={styles}>
+                <Icon icon='mdi:cart-outline' />
+                Thông tin gói dịch vụ
+              </Box>
+            </MenuItem>
+            <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/account-settings/account')}>
+              <Box sx={styles}>
                 <Icon icon='mdi:cog-outline' />
                 Thông tin tài khoản
               </Box>
