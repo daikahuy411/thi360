@@ -281,7 +281,7 @@ const QuestionTable = () => {
             <tr>
               <td
                 style={{
-                  width: '25%',
+                  width: '28%',
                   padding: 5,
                   verticalAlign: 'top',
                   borderRight: '1px solid rgba(58, 53, 65, 0.12)'
@@ -308,10 +308,10 @@ const QuestionTable = () => {
                           <TableCell align='center' style={{ width: 30 }}>
                             Sửa
                           </TableCell>
-                          <TableCell style={{ width: 160 }}>Mã</TableCell>
+                          <TableCell style={{ width: 130 }}>Mã</TableCell>
                           <TableCell>Nội dung</TableCell>
-                          <TableCell style={{ width: 280 }}>Danh mục</TableCell>
-                          <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
+                          <TableCell style={{ width: 210 }}>Danh mục</TableCell>
+                          <TableCell style={{ width: 130 }}>Loại câu hỏi</TableCell>
                           <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
                         </TableRow>
                       </TableHead>

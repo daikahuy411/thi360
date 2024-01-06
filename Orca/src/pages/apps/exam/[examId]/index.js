@@ -486,7 +486,11 @@ const EditExamPage = () => {
                                         >
                                           <MenuItem value={0}>Chọn Chương trình</MenuItem>
                                           {programs &&
-                                            programs.map(item => <MenuItem value={item.id}>{item.name}</MenuItem>)}
+                                            programs.map(item => (
+                                              <MenuItem key={`program-item${item.id}`} value={item.id}>
+                                                {item.name}
+                                              </MenuItem>
+                                            ))}
                                         </Select>
                                       </>
                                     )}
@@ -513,7 +517,11 @@ const EditExamPage = () => {
                                         >
                                           <MenuItem value={0}>Chọn Môn học/ Chủ đề</MenuItem>
                                           {subjects &&
-                                            subjects.map(item => <MenuItem value={item.id}>{item.name}</MenuItem>)}
+                                            subjects.map(item => (
+                                              <MenuItem key={`subject-item${item.id}`} value={item.id}>
+                                                {item.name}
+                                              </MenuItem>
+                                            ))}
                                         </Select>
                                       </>
                                     )}

@@ -28,11 +28,9 @@ export default function QuestionCatalogTree(props: Props) {
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
-  const [anchorEl, setAnchorEl] = useState(null)
-  const [questionTypes, setQuestionTypes] = useState(null)
   const [categoryId, setCategoryId] = useState(0)
   const [totalItems, setTotalItems] = useState(0)
-  const [keyword, setKeyword] = useState(null)
+  const [keyword, setKeyword] = useState('')
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -57,7 +55,7 @@ export default function QuestionCatalogTree(props: Props) {
   }
 
   const fetchData = () => {
-    new QuestionCatalogApi().getCatalogTree().then((response: any) => {
+    new QuestionCatalogApi().getCatalogTree({ page: 0, keyword: keyword }).then((response: any) => {
       setData([{ id: 0, name: 'Tất cả Bộ Câu hỏi' }, ...response.data.value])
     })
   }
@@ -94,8 +92,8 @@ export default function QuestionCatalogTree(props: Props) {
         </Grid>
         <Grid item md={12} lg={12} alignContent={'right'}>
           <TablePagination
-            rowsPerPageOptions={[20, 30, 50]}
             labelRowsPerPage='Hiển thị'
+            rowsPerPageOptions={[]}
             component='div'
             count={totalItems}
             rowsPerPage={rowsPerPage}

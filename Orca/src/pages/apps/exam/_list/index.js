@@ -331,7 +331,7 @@ const ExamTable = () => {
                         <TableCell component='th' scope='row'>
                           {row.type == 1 && (
                             <Typography variant='body1' component={Link} href={`/apps/exam/view/${row.id}`}>
-                              <FolderIcon /> &nbsp; [{row.id}]-{row.name}
+                              <FolderIcon /> &nbsp;{row.name}
                             </Typography>
                           )}
                           {row.type != 1 && <Typography variant='body1'>{row.name}</Typography>}

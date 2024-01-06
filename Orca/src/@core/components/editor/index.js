@@ -26,6 +26,7 @@ export default function ContentEditor({ content, isReadOnly, onChange }) {
           } catch (ex) {
             setError(true)
             alert('Vui lòng tải lại trang do không thể tải được trình soạn thảo')
+            window.location.reload()
           }
         }, 250)
       }

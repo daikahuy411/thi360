@@ -30,7 +30,7 @@ const schema = yup.object().shape({
   name: yup.string().required('* bắt buộc')
 })
 
-export default function EditFolderDialog({ id = 0, api, onClose, parentId = 0, entity }) {
+export default function EditFolderDialog({ id = 0, api, onClose, folderType, parentId = 0, entity }) {
   const [loading, setLoading] = useState(false)
   const [openFolderSelectorDialog, setOpenFolderSelectorDialog] = useState(false)
   const [hasChanged, setHasChanged] = useState(false)
@@ -88,7 +88,7 @@ export default function EditFolderDialog({ id = 0, api, onClose, parentId = 0, e
     reset(item)
   }, [item])
 
-  const clearParent = () => {}
+  const clearParent = () => { }
 
   return (
     <>
@@ -132,7 +132,7 @@ export default function EditFolderDialog({ id = 0, api, onClose, parentId = 0, e
                   <Grid item xs={12}>
                     <ParentFolderField
                       api={api}
-                      type={entity.type}
+                      type={folderType}
                       parentId={item ? item.parentId : parentId}
                     />
                   </Grid>

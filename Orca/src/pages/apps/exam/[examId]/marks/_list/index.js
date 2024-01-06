@@ -231,7 +231,9 @@ const UserTable = () => {
                 >
                   <MenuItem value={0}>Chọn Môn thi</MenuItem>
                   {currentExam.examItems.map(item => (
-                    <MenuItem value={item.id}>{item.name}</MenuItem>
+                    <MenuItem key={`examitem-${item.id}`} value={item.id}>
+                      {item.name}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>

@@ -7,9 +7,9 @@ export default class QuestionCatalogApi extends ApiBase {
     super('questioncatalogs')
   }
 
-  getCatalogTree = () => {
+  getCatalogTree = query => {
     const url = `${this.baseApiUrl}/GetCatalogTree`
-    const response = axios.post(url, { page: 1 })
+    const response = axios.post(url, query)
     return response
   }
 }

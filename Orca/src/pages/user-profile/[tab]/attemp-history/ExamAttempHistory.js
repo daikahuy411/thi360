@@ -44,12 +44,12 @@ const ExamAttempHistory = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage, keyword])
+  }, [page, rowsPerPage])
 
   const fetchData = () => {
     setLoading(true)
     const param = {
-      Page: page ,
+      Page: page,
       Limit: rowsPerPage
     }
     new TestingApi()

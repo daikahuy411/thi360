@@ -67,8 +67,8 @@ const StyledTreeItem = (props: StyledTreeItemProps) => {
       {...other}
       label={
         <Box sx={{ py: 1, display: 'flex', alignItems: 'center', '& svg': { mr: 1 } }}>
-          {hasChildren && <Icon path={mdilFolder} title='Folder' size={1} />}
-          {!hasChildren && <Icon path={mdilFile} title='Folder' size={1} />}
+          {hasChildren && <Icon path={mdilFolder} title='Folder' color='black' size={1} />}
+          {!hasChildren && <Icon path={mdilFile} title='Folder' color='black' size={1} />}
           <Typography variant='body1' sx={{ flexGrow: 1, fontWeight: 'inherit' }}>
             {label}
           </Typography>

@@ -250,9 +250,8 @@ const UserTable = () => {
                         />
                       </TableCell>
                       <TableCell style={{ width: 30 }}>Sửa</TableCell>
-                      <TableCell style={{ width: 240 }}>Tên đăng nhập</TableCell>
+                      <TableCell style={{ width: 210 }}>Tên đăng nhập</TableCell>
                       <TableCell>Tên đầy đủ </TableCell>
-                      <TableCell style={{ width: 120 }}>Giới tính</TableCell>
                       <TableCell style={{ width: 180 }}>Lớp</TableCell>
                       <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
                     </TableRow>
@@ -291,10 +290,12 @@ const UserTable = () => {
                               </Typography>
                             </TableCell>
                             <TableCell>
-                              <Typography variant='body1'>{row.fullName}</Typography>{' '}
+                              <Typography variant='body1'>{row.fullName}</Typography>
+                              <Typography variant='body1'>{row.genderName}</Typography>
                             </TableCell>
-                            <TableCell>{row.genderName}</TableCell>
-                            <TableCell>{row.organizationName}</TableCell>
+                            <TableCell>
+                              <Typography variant='body1'>{row.organizationName}</Typography>
+                            </TableCell>
                             <TableCell>
                               <Typography variant='body1'>
                                 {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}

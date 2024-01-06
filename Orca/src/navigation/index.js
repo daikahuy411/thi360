@@ -76,7 +76,8 @@ export const studentLinks = [
 export const helpLink = {
   icon: 'mdi:help-circle-outline',
   title: 'Hướng dẫn',
-  path: 'http://help.thi360.com'
+  path: 'http://help.thi360.com',
+  openInNewTab: true
 }
 
 export const teacherLinks = [

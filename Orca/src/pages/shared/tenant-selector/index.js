@@ -51,6 +51,7 @@ export default function TenantSelector({ onClose, onNodeSelected = null }) {
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [selectedData, setSelectedData] = useState()
   const [selectedValue, setSelectedValue] = React.useState(null)
+  const [keyword, setKeyword] = useState(null)
 
   const handleChange = event => {
     const selectedId = parseInt(event.target.value)
@@ -72,7 +73,7 @@ export default function TenantSelector({ onClose, onNodeSelected = null }) {
   }, [page, rowsPerPage, keyword])
 
   const fetchData = () => {
-    new TenantApi().searches({ page: page , limit: rowsPerPage }).then(response => {
+    new TenantApi().searches({ page: page, keyword: keyword, limit: rowsPerPage }).then(response => {
       if (response.data.isSuccess) {
         setData(response.data.value)
         setTotalItem(response.data.totalItems)
@@ -121,12 +122,17 @@ export default function TenantSelector({ onClose, onNodeSelected = null }) {
         </Box>
         <Grid container>
           <Grid item md={4}>
-            <IconButton aria-label='filter' style={{display: 'none'}}>
+            <IconButton aria-label='filter' style={{ display: 'none' }}>
               <FilterAltOutlinedIcon />
             </IconButton>
           </Grid>
           <Grid item md={4}>
-            <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
+            <TextField
+              fullWidth
+              placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+              onChange={e => setKeyword(e.target.value)}
+              size='small'
+            />
           </Grid>
           <Grid item md={4} alignContent={'right'} alignItems={'right'}>
             <Button
