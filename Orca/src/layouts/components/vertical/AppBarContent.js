@@ -19,9 +19,11 @@ const AppBarContent = props => {
     if (router.asPath.indexOf('/home') > -1) {
       currentPage = 'Trang chủ'
     }
+
     if (router.asPath.indexOf('/apps') > -1) {
       currentPage = 'LMS'
     }
+
     if (router.asPath.indexOf('/program') > -1) {
       currentPage = 'Chương trình'
     }
@@ -31,18 +33,22 @@ const AppBarContent = props => {
     if (router.asPath.indexOf('/exam') > -1) {
       currentPage = 'Kỳ thi'
     }
+
     if (router.asPath.indexOf('/user-profile/profile') > -1) {
       currentPage = 'Trang cá nhân'
     }
+
     if (router.asPath.indexOf('/account-settings') > -1) {
       currentPage = 'Thông tin tài khoản'
     }
     if (router.asPath.indexOf('/attemp-history') > -1) {
       currentPage = 'Lịch sử thi'
     }
+
     if (router.asPath.indexOf('/test-result') > -1) {
       currentPage = 'Kết quả thi'
     }
+
     if (router.asPath.indexOf('/pricing') > -1) {
       currentPage = 'Bảng giá'
     }
@@ -52,17 +58,29 @@ const AppBarContent = props => {
     if (router.asPath.indexOf('/apps/class') > -1) {
       currentPage = 'Quản lý Lớp học'
     }
+
     if (router.asPath.indexOf('/apps/user') > -1) {
       currentPage = 'Quản lý Học viên'
     }
+
     if (router.asPath.indexOf('/apps/post') > -1) {
       currentPage = 'Quản lý Tin bài'
     }
+
     if (router.asPath.indexOf('/apps/post-category') > -1) {
       currentPage = 'Quản lý Danh mục Tin bài'
     }
+
     if (router.asPath.indexOf('/apps/exam') > -1) {
       currentPage = 'Quản lý Kỳ thi'
+    }
+
+    if (router.asPath.indexOf('/my-practice') > -1) {
+      currentPage = 'Luyện tập'
+    }
+
+    if (router.asPath.indexOf('/my-assignment') > -1) {
+      currentPage = 'Thi- Kiểm tra'
     }
 
     setPage(currentPage)
@@ -82,7 +100,9 @@ const AppBarContent = props => {
       <div className='navbar-nav-right d-flex align-items-center' id='navbar-collapse'>
         <div className='navbar-nav align-items-center' style={{ paddingLeft: 24 }}>
           {/* <h3 className='mb-0' style={{fontSize: '1.2rem'}}>{page}</h3> */}
-          <Typography variant='h5' style={{fontSize: '1.2rem'}}>{page}</Typography>
+          <Typography variant='h5' style={{ fontSize: '1.2rem' }}>
+            {page}
+          </Typography>
           {path}
         </div>
         <ul className='navbar-nav flex-row align-items-center ms-auto'>

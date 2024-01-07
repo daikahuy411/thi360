@@ -61,6 +61,24 @@ class V1Api extends ApiBase {
     return response
   }
 
+  getExamCategories = () => {
+    const url = `${this.baseApiUrl}/ExamCategories`
+    const response = axios.get(url)
+    return response
+  }
+
+  getMyPractice = () => {
+    const url = `${this.baseApiUrl}/MyPractice`
+    const response = axios.post(url, {keyword: ''})
+    return response
+  }
+
+  getMyAssignment = () => {
+    const url = `${this.baseApiUrl}/MyAssignment`
+    const response = axios.post(url, {keyword: ''})
+    return response
+  }
+
   getCurriculums = (programId: number, subjectId: number) => {
     const url = `${this.baseApiUrl}/programcatalogs/${programId}/subjectcatalogs/${subjectId}`
     const response = axios.get(url)

@@ -189,7 +189,7 @@ const UserDropdown = props => {
                 Lịch sử Thi
               </Box>
             </MenuItem>
-            <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/account-settings/account')}>
+            <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/user-profile/pricing')}>
               <Box sx={styles}>
                 <Icon icon='mdi:cart-outline' />
                 Thông tin gói dịch vụ

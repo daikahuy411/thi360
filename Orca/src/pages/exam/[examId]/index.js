@@ -211,8 +211,7 @@ const ExamPage = () => {
                             <div className='d-flex align-items-center justify-content-between mb-4'>
                               {exam && (
                                 <p className='mb-0 text-black'>
-                                  <img src='/themes/default/assets/img/icon-dethi.svg' />{' '}
-                                  <b> {exam.examItems[0].tests.length} đề thi</b>
+                                  <img src='/themes/default/assets/img/icon-dethi.svg' /> <b> 10 đề thi</b>
                                 </p>
                               )}
                               <div className='d-flex align-items-center justify-content-end'>
@@ -250,6 +249,7 @@ const ExamPage = () => {
                                 </thead>
                                 <tbody className='table-border-bottom-0'>
                                   {exam &&
+                                    exam.examItems &&
                                     exam.examItems.map(item => {
                                       return (
                                         <>

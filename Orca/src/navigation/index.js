@@ -10,11 +10,11 @@ export const studentLinks = [
     children: [
       {
         title: 'Luyện tập',
-        path: '/apps/my-practice'
+        path: '/my-practice'
       },
       {
         title: 'Thi-Kiểm tra',
-        path: '/apps/my-assignment'
+        path: '/my-assignment'
       }
     ]
   },
