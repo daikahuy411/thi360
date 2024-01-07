@@ -69,13 +69,19 @@ class V1Api extends ApiBase {
 
   getMyPractice = () => {
     const url = `${this.baseApiUrl}/MyPractice`
-    const response = axios.post(url, {keyword: ''})
+    const response = axios.post(url, { keyword: '' })
     return response
   }
 
   getMyAssignment = () => {
     const url = `${this.baseApiUrl}/MyAssignment`
-    const response = axios.post(url, {keyword: ''})
+    const response = axios.post(url, { keyword: '' })
+    return response
+  }
+
+  getCurrentUserPlans = () => {
+    const url = `${this.baseApiUrl}/GetCurrentUserPlans`
+    const response = axios.get(url)
     return response
   }
 
@@ -104,9 +110,9 @@ class V1Api extends ApiBase {
   }
 
   verifyCodePromotion = (request: any) => {
-    const url = `${this.baseApiUrl}/VerifyCodePromotions`;
-    const response = axios.post(url, request);
-    return response;
+    const url = `${this.baseApiUrl}/VerifyCodePromotions`
+    const response = axios.post(url, request)
+    return response
   }
 
   getPricingPlans = () => {
@@ -115,22 +121,22 @@ class V1Api extends ApiBase {
     return response
   }
 
-  createOrder = (request) => {
+  createOrder = request => {
     const url = `${this.baseApiUrl}/Orders`
-    const response = axios.post(url, request);
+    const response = axios.post(url, request)
     return response
   }
 
   completeOrder = (request: any) => {
     const url = `${this.baseApiUrl}/CompleteOrder`
-    const response = axios.post(url, request);
-    return response;
+    const response = axios.post(url, request)
+    return response
   }
 
   cancelOrder = (param: any) => {
-    const url = `${this.baseApiUrl}/CancelOrder`;
-    const response = axios.post(url, param);
-    return response;
+    const url = `${this.baseApiUrl}/CancelOrder`
+    const response = axios.post(url, param)
+    return response
   }
 }
 

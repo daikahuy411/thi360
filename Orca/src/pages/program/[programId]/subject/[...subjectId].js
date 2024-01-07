@@ -201,7 +201,7 @@ const SubjectPage = () => {
                             {exams &&
                               exams.map((item, index) => (
                                 <div key={`exam-${item.id}`}>
-                                  <NavLink href={`/exam/${item.id}`} className='TC-detail'>
+                                  <NavLink href={`/program/${programId}/exam/${item.id}`} className='TC-detail'>
                                     <article style={{ width: '100%' }}>
                                       <label>
                                         {(page - 1) * rowsPerPage + index + 1}.&nbsp;{item.name}
