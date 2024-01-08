@@ -1,10 +1,15 @@
 import * as React from 'react'
-import { useEffect } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import TestGroupApi from 'api/test-group-api'
+import { FolderType } from 'enum/FolderType'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
+import ParentFolderField from 'pages/shared/folder/parent-folder-field'
 import Draggable from 'react-draggable'
 import {
   Helmet,
@@ -60,7 +65,8 @@ function PaperComponent(props) {
 const EditTestGroupPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { testGroupId } = router.query
+  const { testGroupId, folderId } = router.query
+  const [parentId, setParentId] = useState(0)
   const currentTestGroup = useSelector(selectedTestGroup)
 
   const {
@@ -76,25 +82,45 @@ const EditTestGroupPage = () => {
   })
 
   useEffect(() => {
+    if (!router.isReady) {
+      return
+    }
+    dispatch(selectTestGroup(null))
     if (!testGroupId || testGroupId == 0) {
       dispatch(selectTestGroup({ id: 0, name: '' }))
       return
     }
     new TestGroupApi().get(testGroupId).then(response => {
       dispatch(selectTestGroup(response.data))
+      setParentId(isNaN(response.data.parentId) ? 0 : parseInt(response.data.parentId))
     })
   }, [testGroupId])
 
   useEffect(() => {
+    if (!router.isReady) {
+      return
+    }
     if (currentTestGroup) reset(currentTestGroup)
   }, [currentTestGroup])
+
+  useEffect(() => {
+    if (!router.isReady) {
+      return
+    }
+    isNaN(folderId) ? 0 : folderId
+    setParentId(parseInt(folderId))
+  }, [folderId])
+
+  const handleParentChanged = parentId => {
+    setParentId(parentId)
+  }
 
   /*
    * save data
    */
   const save = code => {
     const item = getValues()
-    // item.parentId = isNaN(parentId) ? 0 : parseInt(parentId)
+    item.parentId = isNaN(parentId) ? 0 : parseInt(parentId)
     new TestGroupApi()
       .save(item)
       .then(response => {
@@ -144,6 +170,13 @@ const EditTestGroupPage = () => {
    * remove test-group
    */
 
+  const backUrl = () => {
+    if (folderId & parseInt(parentId) > 0) {
+      return `/apps/test-group/view/${folderId}/`
+    }
+    return `/apps/test-group/`
+  }
+
   return (
     <>
       <HelmetProvider>
@@ -173,7 +206,7 @@ const EditTestGroupPage = () => {
                           &nbsp;
                         </>
                       )}
-                      <Button variant='outlined' component={Link} href='/apps/test-group/'>
+                      <Button variant='outlined' component={Link} href={backUrl()}>
                         <ArrowBackIcon />
                         &nbsp;Quay lại
                       </Button>
@@ -224,6 +257,18 @@ const EditTestGroupPage = () => {
                                 </FormHelperText>
                               )}
                             </FormControl>
+                          </Grid>
+                          <Grid item xs={12} md={12}>
+                            <ParentFolderField
+                              api={new TestGroupApi()}
+                              type={FolderType.TESTGROUP}
+                              onSave={handleParentChanged}
+                              parentId={
+                                !currentTestGroup || currentTestGroup.id == 0
+                                  ? parseInt(isNaN(folderId) ? '0' : folderId)
+                                  : currentTestGroup.parentId
+                              }
+                            />
                           </Grid>
                           <Grid item xs={12} md={12}>
                             <FormControl fullWidth>
