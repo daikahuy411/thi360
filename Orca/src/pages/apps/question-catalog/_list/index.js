@@ -13,6 +13,7 @@ import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
+import { formatCurrency } from '@core/utils/format'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import FolderIcon from '@mui/icons-material/Folder'
@@ -166,7 +167,7 @@ const QuestionCatalogTable = () => {
       <Divider />
       <Toolbar style={{ padding: 0 }}>
         <Typography sx={{ flex: '1 1 100%' }} variant='h5' id='tableTitle' component='div'>
-          {totalItem} Bộ Câu hỏi
+          {formatCurrency(totalItem, 0)} Bộ Câu hỏi
         </Typography>
         &nbsp; &nbsp;
         <Tooltip title='Import'>

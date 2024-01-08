@@ -13,6 +13,7 @@ import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
+import { formatCurrency } from '@core/utils/format'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import FolderIcon from '@mui/icons-material/Folder'
@@ -169,7 +170,7 @@ const TestGroupTable = () => {
       <Divider />
       <Toolbar style={{ padding: 0 }}>
         <Typography sx={{ flex: '1 1 100%' }} variant='h5' id='tableTitle' component='div'>
-          {totalItem} Bộ Đề thi
+          {formatCurrency(totalItem, 0)} Bộ Đề thi
         </Typography>
         &nbsp; &nbsp;
         <Tooltip title='Import'>
@@ -198,7 +199,7 @@ const TestGroupTable = () => {
         &nbsp; &nbsp;
         <Button
           component={Link}
-          href={`/apps/test-group/0`}
+          href={`/apps/test-group/0/${folderId}`}
           variant='contained'
           style={{ width: 210 }}
           color='primary'

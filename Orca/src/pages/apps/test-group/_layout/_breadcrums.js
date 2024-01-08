@@ -1,4 +1,7 @@
-import { useEffect } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import TestGroupApi from 'api/test-group-api'
 import Link from 'next/link'
@@ -21,24 +24,25 @@ const TopNav = props => {
   const dispatch = useDispatch()
   const { testGroupId, folderId } = router.query
   const currentTestGroup = useSelector(selectedTestGroup)
+  const [testGroup, setTestGroup] = useState(null)
 
   useEffect(() => {
-    if (testGroupId && parseInt(testGroupId) > 0) {
+    if (testGroupId && parseInt(testGroupId) > 0) {      
       new TestGroupApi().get(testGroupId).then(response => {
         dispatch(selectTestGroup(response.data))
       })
     } else {
       dispatch(selectTestGroup(null))
     }
+
   }, [testGroupId])
 
   useEffect(() => {
     if (folderId && parseInt(folderId) > 0) {
       new TestGroupApi().get(folderId).then(response => {
-        dispatch(selectTestGroup(response.data))
+        // dispatch(selectTestGroup(response.data))
+        setTestGroup(response.data)
       })
-    } else {
-      dispatch(selectTestGroup(null))
     }
   }, [folderId])
 
@@ -57,7 +61,7 @@ const TopNav = props => {
             {item.name}
           </Link>
         ))}
-      {currentTestGroup && <Typography color='text.primary'>{currentTestGroup.name}</Typography>}
+      {testGroup && <Typography color='text.primary'>{testGroup.name}</Typography>}
     </Breadcrumbs>
   )
 }

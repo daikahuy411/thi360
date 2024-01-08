@@ -27,10 +27,6 @@ const PlanDetails = props => {
   // ** Props
   const { plan, data, isCurrentPlan, currentPlanItem, addPayment } = props
 
-  console.log('isCurrentPlan:', isCurrentPlan)
-  console.log('currentPlanItem:', currentPlanItem)
-  console.log('data:', data)
-
   const renderFeatures = () => {
     return data?.planBenefitsObject.map((item, index) => (
       <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
