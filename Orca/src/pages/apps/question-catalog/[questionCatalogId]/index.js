@@ -4,9 +4,11 @@ import {
 } from 'react'
 
 import QuestionCatalogApi from 'api/question-catalog-api'
+import { FolderType } from 'enum/FolderType'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
+import ParentFolderField from 'pages/shared/folder/parent-folder-field'
 import Draggable from 'react-draggable'
 import {
   Controller,
@@ -59,7 +61,8 @@ function PaperComponent(props) {
 const EditQuestionCatalogPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { questionCatalogId } = router.query
+  const { questionCatalogId, folderId } = router.query
+  const [parentId, setParentId] = useState(0)
   const currentQuestionCatalog = useSelector(selectedQuestionCatalog)
 
   const {
@@ -81,6 +84,7 @@ const EditQuestionCatalogPage = () => {
     }
     new QuestionCatalogApi().get(questionCatalogId).then(response => {
       dispatch(selectQuestionCatalog(response.data))
+      setParentId(isNaN(response.data.parentId) ? 0 : parseInt(response.data.parentId))
     })
   }, [questionCatalogId])
 
@@ -88,14 +92,24 @@ const EditQuestionCatalogPage = () => {
     if (currentQuestionCatalog) reset(currentQuestionCatalog)
   }, [currentQuestionCatalog])
 
+  useEffect(() => {
+    if (!router.isReady) {
+      return
+    }
+    isNaN(folderId) ? 0 : folderId
+    setParentId(parseInt(folderId))
+  }, [folderId])
+
   const save = code => {
     const item = getValues()
+    item.parentId = isNaN(parentId) ? 0 : parseInt(parentId)
     new QuestionCatalogApi()
       .save(item)
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code == 1) {
-          router.push('/apps/question-catalog/')
+          router.query.questionCatalogId = response.data.id
+          router.push(router)
         } else {
           reset()
         }
@@ -136,6 +150,17 @@ const EditQuestionCatalogPage = () => {
    * handle remove question-catalog
    */
 
+  const handleParentChanged = parentId => {
+    setParentId(parentId)
+  }
+
+  const backUrl = () => {
+    if (folderId) {
+      return `/apps/question-catalog/view/${folderId}/`
+    }
+    return `/apps/question-catalog/`
+  }
+
   return (
     <>
       <div style={{ padding: 0 }}>
@@ -165,7 +190,7 @@ const EditQuestionCatalogPage = () => {
                         &nbsp;
                       </>
                     )}
-                    <Button variant='outlined' component={Link} href='/apps/question-catalog/'>
+                    <Button variant='outlined' component={Link} href={backUrl()}>
                       <ArrowBackIcon />
                       &nbsp;Quay lại
                     </Button>
@@ -212,6 +237,18 @@ const EditQuestionCatalogPage = () => {
                               </FormHelperText>
                             )}
                           </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <ParentFolderField
+                            api={new QuestionCatalogApi()}
+                            type={FolderType.QUESTIONCATALOG}
+                            onSave={handleParentChanged}
+                            parentId={
+                              !currentQuestionCatalog || currentQuestionCatalog.id == 0
+                                ? parseInt(isNaN(folderId) ? '0' : folderId)
+                                : currentQuestionCatalog.parentId
+                            }
+                          />
                         </Grid>
                         <Grid item xs={12}>
                           <FormControl fullWidth>
