@@ -183,7 +183,7 @@ const UserTable = () => {
         </Tooltip>
         &nbsp; &nbsp;
         {selected.length > 0 ? (
-          <Tooltip title='Xóa lớp học'>
+          <Tooltip title='Xóa'>
             <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete}>
               <Icon icon='mdi:delete-outline' />
             </IconButton>

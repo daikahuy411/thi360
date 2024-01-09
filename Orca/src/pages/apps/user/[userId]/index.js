@@ -7,7 +7,7 @@ import OrganizationApi from 'api/organization-api'
 import UserApi from 'api/user-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CatalogDialog from 'pages/shared/catalog'
+import ClassDialog from 'pages/shared/class-dialog'
 import Draggable from 'react-draggable'
 import {
   Controller,
@@ -23,7 +23,6 @@ import {
   selectedUser,
   selectUser
 } from 'store/slices/userSlice'
-import { CatalogType } from 'types/CatalogType'
 import * as yup from 'yup'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -72,6 +71,7 @@ const schema = yup.object().shape(
       otherwise: yup.string().nullable().notRequired()
     }),
     gender: yup.number().required('* bắt buộc').moreThan(-1, '* bắt buộc'),
+    organizationId: yup.number().required('* bắt buộc').moreThan(0, '* bắt buộc'),
     phoneNumber: yup
       .string()
       .nullable()
@@ -97,13 +97,14 @@ const EditUserPage = () => {
   const dispatch = useDispatch()
   const { userId, classId } = router.query
   const currentUser = useSelector(selectedUser)
-  const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
+  const [openClassDialog, setOpenClassDialog] = useState(false)
   const [cbChangePassword, setCbChangePassword] = useState(false)
 
   const {
     control,
     handleSubmit,
     getValues,
+    setValue,
     reset,
     formState: { isValid, errors }
   } = useForm({
@@ -127,8 +128,14 @@ const EditUserPage = () => {
       dispatch(selectClass({ id: 0, name: '', description: '', group: 0 }))
       return
     }
+
     new OrganizationApi().get(classId).then(response => {
       dispatch(selectClass(response.data))
+      setOrganizationSelected({
+        id: response.data.id,
+        name: response.data.name
+      })
+      setValue('organizationId', response.data.id)
     })
   }, [classId])
 
@@ -143,8 +150,8 @@ const EditUserPage = () => {
         dispatch(selectUser(response.data))
 
         setOrganizationSelected({
-          organizationId: response.data.organizationId,
-          organizationName: response.data.organizationName
+          id: response.data.organizationId,
+          name: response.data.organizationName
         })
       })
       .catch(e => console.log(e))
@@ -157,16 +164,16 @@ const EditUserPage = () => {
     const item = getValues()
     let param
     if (item.id == '0') {
-      param = { ...item, changePassword: cbChangePassword, organizationId: organizationSelected.organizationId }
+      param = { ...item, changePassword: cbChangePassword, organizationId: organizationSelected.id }
     } else {
       if (cbChangePassword) {
-        param = { ...item, changePassword: cbChangePassword, organizationId: organizationSelected.organizationId }
+        param = { ...item, changePassword: cbChangePassword, organizationId: organizationSelected.id }
       } else {
         param = {
           ...item,
           passwordHash: undefined,
           changePassword: cbChangePassword,
-          organizationId: organizationSelected.organizationId
+          organizationId: organizationSelected.id
         }
       }
     }
@@ -216,20 +223,15 @@ const EditUserPage = () => {
    */
 
   /*
-   * handle organization
+   * handle organization (Lớp học)
    */
-  const [organizationSelected, setOrganizationSelected] = useState({ organizationId: 0, organizationName: '' })
-  const handleSelectedOrganization = selectedId => {
-    new OrganizationApi().get(selectedId).then(response => {
-      if (response.data) {
-        setOrganizationSelected({ organizationId: selectedId, organizationName: response.data.name })
-      }
-    })
+  const [organizationSelected, setOrganizationSelected] = useState({ id: 0, name: '' })
+  const cleanOrganization = () => {
+    currentUser.organizationId = 0
+    dispatch(selectUser(currentUser))
+    setOrganizationSelected({ id: 0, name: '' })
   }
 
-  const cleanOrganization = () => {
-    setOrganizationSelected({ organizationId: 0, organizationName: '' })
-  }
   /*
    * end handle organization
    */
@@ -257,6 +259,11 @@ const EditUserPage = () => {
   /*
    * end remove user
    */
+
+  const updateUserClass = selectedClass => {
+    setValue('organizationId', selectedClass.id)
+    setOrganizationSelected(selectedClass)
+  }
 
   return (
     <>
@@ -467,6 +474,50 @@ const EditUserPage = () => {
                             />
                           </Grid>
                         )}
+                        <Grid item xs={12}>
+                          <FormControl required fullWidth variant='outlined'>
+                            <Controller
+                              name='organizationId'
+                              control={control}
+                              rules={{ required: true }}
+                              render={({ field: { value, onChange } }) => (
+                                <>
+                                  <InputLabel htmlFor='outlined-adornment-parent-class'>Lớp học</InputLabel>
+                                  <OutlinedInput
+                                    id='outlined-adornment-parent-class'
+                                    inputprops={{
+                                      readOnly: true,
+                                      className: 'Mui-disabled'
+                                    }}
+                                    value={organizationSelected.name ?? 0}
+                                    endAdornment={
+                                      <InputAdornment position='end'>
+                                        <IconButton edge='end' onClick={() => cleanOrganization()}>
+                                          <DeleteOutline />
+                                        </IconButton>
+                                        &nbsp;
+                                        <IconButton
+                                          edge='end'
+                                          onClick={() => {
+                                            setOpenClassDialog(true)
+                                          }}
+                                        >
+                                          <FolderIcon />
+                                        </IconButton>
+                                      </InputAdornment>
+                                    }
+                                    label='Lớp học'
+                                  />
+                                </>
+                              )}
+                            />
+                            {errors.organizationId && (
+                              <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-organizationId'>
+                                {errors.organizationId.message}
+                              </FormHelperText>
+                            )}
+                          </FormControl>
+                        </Grid>
                         <Grid item xs={12} md={6}>
                           <FormControl fullWidth>
                             <Controller
@@ -540,7 +591,7 @@ const EditUserPage = () => {
                             )}
                           </FormControl>
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        {/* <Grid item xs={12} md={6}>
                           <FormControlLabel
                             name='isDayBoarding'
                             control={
@@ -555,7 +606,7 @@ const EditUserPage = () => {
                             }
                             label='Bán trú'
                           />
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={12}>
                           <FormControl fullWidth>
                             <Controller
@@ -575,63 +626,18 @@ const EditUserPage = () => {
                             />
                           </FormControl>
                         </Grid>
-                        <Grid item xs={12}>
-                          <FormControl fullWidth variant='outlined'>
-                            <Controller
-                              name='organizationId'
-                              control={control}
-                              rules={{ required: true }}
-                              render={({ field: { value, onChange } }) => (
-                                <>
-                                  <InputLabel htmlFor='outlined-adornment-parent-category'>Đơn vị</InputLabel>
-                                  <OutlinedInput
-                                    id='outlined-adornment-parent-category'
-                                    inputprops={{
-                                      readOnly: true,
-                                      className: 'Mui-disabled'
-                                    }}
-                                    value={organizationSelected.organizationName ?? 0}
-                                    endAdornment={
-                                      <InputAdornment position='end'>
-                                        <IconButton
-                                          aria-label='toggle password visibility'
-                                          edge='end'
-                                          onClick={cleanOrganization}
-                                        >
-                                          <DeleteOutline />
-                                        </IconButton>
-                                        &nbsp;
-                                        <IconButton
-                                          edge='end'
-                                          onClick={() => {
-                                            setOpenCatalogDialog(true)
-                                          }}
-                                        >
-                                          <FolderIcon />
-                                        </IconButton>
-                                      </InputAdornment>
-                                    }
-                                    label='Đơn vị'
-                                  />
-                                </>
-                              )}
-                            />
-                          </FormControl>
-                        </Grid>
                       </Grid>
                     </form>
 
-                    {openCatalogDialog && (
-                      <CatalogDialog
-                        catalogType={CatalogType.DEPARTMENT}
-                        excludedId={0}
-                        onNodeSelected={nodeId => {
-                          handleSelectedOrganization(nodeId)
+                    {openClassDialog && (
+                      <ClassDialog
+                        onOk={selectedClass => {
+                          updateUserClass(selectedClass)
                         }}
                         onClose={() => {
-                          setOpenCatalogDialog(false)
+                          setOpenClassDialog(false)
                         }}
-                        open={openCatalogDialog}
+                        open={openClassDialog}
                       />
                     )}
 

@@ -6,12 +6,25 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import Draggable from 'react-draggable'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Helmet,
+  HelmetProvider
+} from 'react-helmet-async'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedTenant, selectTenant } from 'store/slices/tenantSlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedTenant,
+  selectTenant
+} from 'store/slices/tenantSlice'
 import * as yup from 'yup'
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'

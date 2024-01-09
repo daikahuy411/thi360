@@ -10,6 +10,7 @@ import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
@@ -51,6 +52,7 @@ const UserTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const { classId } = router.query
   const [keyword, setKeyword] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -63,14 +65,16 @@ const UserTable = () => {
 
   const fetchData = () => {
     if (!classId || classId == 0) return
+    setLoading(true)
     new UserApi()
       .searches({
-        Page: page ,
+        Page: page,
         Limit: rowsPerPage,
         Keyword: keyword,
         organizationId: classId
       })
       .then(response => {
+        setLoading(false)
         if (response.data.isSuccess) {
           setData(response.data.value)
           setTotalItem(response.data.totalItems)
@@ -80,7 +84,7 @@ const UserTable = () => {
 
   useEffect(() => {
     fetchData()
-  }, [classId, page, rowsPerPage])
+  }, [classId, page, keyword, rowsPerPage])
 
   /*
    * handle checkbox
@@ -214,74 +218,76 @@ const UserTable = () => {
           />
         </Grid>
       </Grid>
-      <TableContainer component={Paper} style={{ marginTop: 5 }}>
-        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-          <TableHead>
-            <TableRow>
-              <TableCell padding='checkbox'>
-                <Checkbox
-                  onChange={handleSelectAllClick}
-                  checked={data.length > 0 && selected.length === data.length}
-                  indeterminate={selected.length > 0 && selected.length < data.length}
-                  inputProps={{ 'aria-label': 'select all desserts' }}
-                />
-              </TableCell>
-              <TableCell style={{ width: 30 }}>Sửa</TableCell>
-              <TableCell style={{ width: 240 }}>Tên đăng nhập</TableCell>
-              <TableCell>Tên đầy đủ </TableCell>
-              <TableCell style={{ width: 120 }}>Giới tính</TableCell>
-              <TableCell style={{ width: 180 }}>Lớp</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data &&
-              data.map((row, index) => {
-                const isItemSelected = isSelected(row.id)
-                const labelId = `enhanced-table-checkbox-${index}`
-                return (
-                  <TableRow
-                    hover
-                    tabIndex={-1}
-                    role='checkbox'
-                    key={row.id}
-                    selected={isItemSelected}
-                    aria-checked={isItemSelected}
-                    sx={{
-                      '&:last-of-type td, &:last-of-type th': {
-                        border: 0
-                      }
-                    }}
-                  >
-                    <TableCell padding='checkbox'>
-                      <Checkbox
-                        checked={isItemSelected}
-                        inputProps={{ 'aria-labelledby': labelId }}
-                        onClick={event => handleClick(event, row.id)}
-                      />
-                    </TableCell>
-                    <TableCell component='th' scope='row'>
-                      <IconButton aria-label='edit' component={Link} href={`/apps/class/${classId}/users/${row.id}`}>
-                        <EditIcon />
-                      </IconButton>
-                    </TableCell>
-                    <TableCell component='th' scope='row'>
-                      <Typography variant='body1'>{row.userName}</Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant='body1'>{row.fullName}</Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant='body1'>{row.genderName}</Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant='body1'>{row.organizationName}</Typography>
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <LoadingSpinner active={loading}>
+        <TableContainer component={Paper} style={{ marginTop: 5 }}>
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+            <TableHead>
+              <TableRow>
+                <TableCell padding='checkbox'>
+                  <Checkbox
+                    onChange={handleSelectAllClick}
+                    checked={data.length > 0 && selected.length === data.length}
+                    indeterminate={selected.length > 0 && selected.length < data.length}
+                    inputProps={{ 'aria-label': 'select all desserts' }}
+                  />
+                </TableCell>
+                <TableCell style={{ width: 30 }}>Sửa</TableCell>
+                <TableCell style={{ width: 240 }}>Tên đăng nhập</TableCell>
+                <TableCell>Tên đầy đủ </TableCell>
+                <TableCell style={{ width: 120 }}>Giới tính</TableCell>
+                <TableCell style={{ width: 180 }}>Lớp</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data &&
+                data.map((row, index) => {
+                  const isItemSelected = isSelected(row.id)
+                  const labelId = `enhanced-table-checkbox-${index}`
+                  return (
+                    <TableRow
+                      hover
+                      tabIndex={-1}
+                      role='checkbox'
+                      key={row.id}
+                      selected={isItemSelected}
+                      aria-checked={isItemSelected}
+                      sx={{
+                        '&:last-of-type td, &:last-of-type th': {
+                          border: 0
+                        }
+                      }}
+                    >
+                      <TableCell padding='checkbox'>
+                        <Checkbox
+                          checked={isItemSelected}
+                          inputProps={{ 'aria-labelledby': labelId }}
+                          onClick={event => handleClick(event, row.id)}
+                        />
+                      </TableCell>
+                      <TableCell component='th' scope='row'>
+                        <IconButton aria-label='edit' component={Link} href={`/apps/class/${classId}/users/${row.id}`}>
+                          <EditIcon />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell component='th' scope='row'>
+                        <Typography variant='body1'>{row.userName}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant='body1'>{row.fullName}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant='body1'>{row.genderName}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant='body1'>{row.organizationName}</Typography>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </LoadingSpinner>
       <TablePagination
         rowsPerPageOptions={[20, 30, 50]}
         component='div'

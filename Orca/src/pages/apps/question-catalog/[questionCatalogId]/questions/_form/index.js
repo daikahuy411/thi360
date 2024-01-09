@@ -5,9 +5,11 @@ import {
 
 import { QuestionCategoryApi } from 'api/catalog-api'
 import QuestionApi from 'api/question-api'
+import QuestionCatalogApi from 'api/question-catalog-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
+import QuestionCatalogDialog from 'pages/shared/question-catalog-dialog'
 import QuestionCategoryDialog from 'pages/shared/question-category-selector'
 import AddQuestionAnswer from 'pages/shared/question-form'
 import Draggable from 'react-draggable'
@@ -86,17 +88,19 @@ const QuestionEditForm = () => {
   const [item, setItem] = useState(null)
   const [answers, setAnswers] = useState([])
   const [anchorEl, setAnchorEl] = useState(null)
-  const [questionTypes, setQuestionTypes] = useState(null)
   const [questionTypeName, setQuestionTypeName] = useState('')
-  const [openCatalogDialog, setOpenCatalogDialog] = useState(false)
+  const [openQuestionCategoryDialog, setOpenQuestionCategoryDialog] = useState(false)
+  const [openQuestionCatalogDialog, setOpenQuestionCatalogDialog] = useState(false)
   const [openAddQuestionAnswer, setOpenAddQuestionAnswer] = useState(false)
   const [isValidAnswer, setIsValidAnswer] = useState(false)
   const [isloadingQuestion, setIsLoadingQuestion] = useState(false)
   const [category, setCategory] = useState(null)
   const [answerGroups, setAnswerGroups] = useState([])
+  const [catalogSelected, setCatalogSelected] = useState({ id: 0, name: '' })
 
   let schema = yup.object().shape({
-    content: yup.string().required('* bắt buộc')
+    content: yup.string().required('* bắt buộc'),
+    catalogId: yup.number().required('* bắt buộc')
   })
 
   const {
@@ -120,11 +124,20 @@ const QuestionEditForm = () => {
     }
 
     fetchData(questionId)
-
-    if (questionId > 0) {
-      getAllQuestionTypes()
-    }
   }, [questionId])
+
+  useEffect(() => {
+    if (!questionCatalogId || questionCatalogId == '0' || (item && item.id > 0)) {
+      return
+    }
+
+    new QuestionCatalogApi().get(questionCatalogId).then(response => {
+      if (response.data) {
+        setCatalogSelected({ id: response.data.id, name: response.data.name })
+        setItem({ ...item, catalogId: Number(questionCatalogId) })
+      }
+    })
+  }, [questionCatalogId])
 
   useEffect(() => {
     if (!questionCategoryId || questionCategoryId == '0') {
@@ -133,7 +146,7 @@ const QuestionEditForm = () => {
 
     QuestionCategoryApi.get(questionCategoryId).then(response => {
       if (response.data) {
-        setCategorySelected({ categoryId: questionCategoryId, categoryName: response.data.name })
+        setCategorySelected({ id: questionCategoryId, name: response.data.name })
         setItem({ ...item, categoryId: Number(questionCategoryId) })
       }
     })
@@ -146,9 +159,16 @@ const QuestionEditForm = () => {
     new QuestionApi().get(questionId).then(response => {
       let data = response.data
       dispatch(selectQuestion(data))
+
       setQuestionTypeName(data.questionTypeName)
 
-      setCategorySelected({ categoryId: response.data.categoryId, categoryName: response.data.categoryName })
+      if (response.data.category) {
+        setCategorySelected({ id: response.data.categoryId, name: response.data.category.name })
+      }
+
+      if (response.data.catalog) {
+        setCatalogSelected({ id: response.data.catalogId, name: response.data.catalog.name })
+      }
 
       setAnswers(Object.values(data.answers))
       setIsLoadingQuestion(false)
@@ -165,12 +185,6 @@ const QuestionEditForm = () => {
         })
         setAnswerGroups([...ags])
       }
-    })
-  }
-
-  const getAllQuestionTypes = () => {
-    new QuestionApi().getQuestionTypes().then(response => {
-      setQuestionTypes(response.data)
     })
   }
 
@@ -261,7 +275,8 @@ const QuestionEditForm = () => {
     param.name = itemValue.name
     param.content = itemValue.content
     param.explain = itemValue.explain
-    param.categoryId = parseInt(categorySelected.categoryId)
+    param.categoryId = parseInt(categorySelected.id)
+    param.catalogId = parseInt(catalogSelected.id)
     param.catalogName = ''
 
     if (parentId && parentId != '0' && !isNaN(parentId)) {
@@ -313,21 +328,42 @@ const QuestionEditForm = () => {
   /*
    * handle category
    */
-  const [categorySelected, setCategorySelected] = useState({ categoryId: 0, categoryName: '' })
+  const [categorySelected, setCategorySelected] = useState({ id: 0, name: '' })
   const handleSelectedCategory = selectedId => {
     QuestionCategoryApi.get(selectedId).then(response => {
       if (response.data) {
-        setCategorySelected({ categoryId: selectedId, categoryName: response.data.name })
+        setCategorySelected({ id: selectedId, name: response.data.name })
         setItem({ ...item, categoryId: Number(selectedId) })
       }
     })
   }
 
   const cleanCategory = () => {
-    setCategorySelected({ categoryId: 0, categoryName: '', anwser: null })
+    setCategorySelected({ id: 0, name: '', anwser: null })
   }
+
   /*
    * end handle category
+   */
+
+  /*
+   * handle catalog
+   */
+  const handleSelectedCatalog = selectedId => {
+    new QuestionCatalogApi().get(selectedId).then(response => {
+      if (response.data) {
+        setCatalogSelected({ id: selectedId, name: response.data.name })
+        setItem({ ...item, catalogId: Number(selectedId) })
+      }
+    })
+  }
+
+  const cleanCatalog = () => {
+    setCatalogSelected({ id: 0, name: '' })
+  }
+
+  /*
+   * end handle catalog
    */
 
   useEffect(() => {
@@ -570,7 +606,46 @@ const QuestionEditForm = () => {
                           <Grid item xs={12}>
                             <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', paddingTop: 10 }}>
                               <Grid container spacing={5}>
-                                <Grid item xs={12} md={6}>
+                                <Grid item xs={12} md={7}>
+                                  <FormControl fullWidth variant='outlined' required>
+                                    <InputLabel htmlFor='outlined-adornment-parent-category'>Bộ Câu hỏi</InputLabel>
+                                    <OutlinedInput
+                                      id='outlined-adornment-parent-category'
+                                      inputprops={{
+                                        readOnly: true,
+                                        className: 'Mui-disabled'
+                                      }}
+                                      value={catalogSelected.name ?? ''}
+                                      endAdornment={
+                                        <InputAdornment position='end'>
+                                          <IconButton
+                                            aria-label='toggle password visibility'
+                                            edge='end'
+                                            onClick={cleanCatalog}
+                                          >
+                                            <DeleteOutline />
+                                          </IconButton>
+                                          &nbsp;
+                                          <IconButton
+                                            edge='end'
+                                            onClick={() => {
+                                              setOpenQuestionCatalogDialog(true)
+                                            }}
+                                          >
+                                            <FolderIcon />
+                                          </IconButton>
+                                        </InputAdornment>
+                                      }
+                                      label='Bộ Câu hỏi'
+                                    />
+                                  </FormControl>
+                                  {errors.catalogId && (
+                                    <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-catalogId'>
+                                      {errors.catalogId.message}
+                                    </FormHelperText>
+                                  )}
+                                </Grid>
+                                <Grid item xs={12} md={7}>
                                   <FormControl fullWidth variant='outlined'>
                                     <InputLabel htmlFor='outlined-adornment-parent-category'>
                                       Danh mục câu hỏi
@@ -581,7 +656,7 @@ const QuestionEditForm = () => {
                                         readOnly: true,
                                         className: 'Mui-disabled'
                                       }}
-                                      value={categorySelected.categoryName ?? ''}
+                                      value={categorySelected.name ?? ''}
                                       endAdornment={
                                         <InputAdornment position='end'>
                                           <IconButton
@@ -595,7 +670,7 @@ const QuestionEditForm = () => {
                                           <IconButton
                                             edge='end'
                                             onClick={() => {
-                                              setOpenCatalogDialog(true)
+                                              setOpenQuestionCategoryDialog(true)
                                             }}
                                           >
                                             <FolderIcon />
@@ -1023,13 +1098,20 @@ const QuestionEditForm = () => {
               </Box>
             )}
 
-            {openCatalogDialog && (
+            {openQuestionCatalogDialog && (
+              <QuestionCatalogDialog
+                onOk={catalog => setCatalogSelected(catalog)}
+                onClose={() => setOpenQuestionCatalogDialog(false)}
+              />
+            )}
+
+            {openQuestionCategoryDialog && (
               <QuestionCategoryDialog
-                open={openCatalogDialog}
+                open={openQuestionCategoryDialog}
                 onClose={() => {
-                  setOpenCatalogDialog(false)
+                  setOpenQuestionCategoryDialog(false)
                 }}
-                catalogId={questionCatalogId}
+                catalogId={catalogSelected?.id ?? 0}
                 currentId={0}
                 onNodeSelected={nodeId => {
                   handleSelectedCategory(nodeId)

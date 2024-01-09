@@ -255,10 +255,13 @@ const ClassTable = () => {
               </TableCell>
               <TableCell style={{ width: 30 }}>Sửa</TableCell>
               <TableCell>Tên</TableCell>
-              <TableCell align='right' style={{ width: 80 }}>
-                Khối
+              <TableCell align='right' style={{ width: 120 }}>
+                Năm học
               </TableCell>
               <TableCell align='right' style={{ width: 120 }}>
+                Khối Lớp
+              </TableCell>
+              <TableCell align='right' style={{ width: 160 }}>
                 Học viên
               </TableCell>
               <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
@@ -324,8 +327,15 @@ const ClassTable = () => {
                       )}
                       {row.type != 1 && <Typography variant='body1'>{row.name}</Typography>}
                     </TableCell>
-                    <TableCell align='right'>{row.group}</TableCell>
-                    <TableCell align='right'>{row.totalUser}</TableCell>
+                    <TableCell align='right'>
+                      <Typography variant='body1'>{row.startYear}</Typography>
+                    </TableCell>
+                    <TableCell align='right'>
+                      <Typography variant='body1'>{row.group}</Typography>
+                    </TableCell>
+                    <TableCell align='right'>
+                      <Typography variant='body1'>{row.totalUser}</Typography>
+                    </TableCell>
                     <TableCell>
                       <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
                     </TableCell>

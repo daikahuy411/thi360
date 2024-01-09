@@ -56,11 +56,9 @@ export default function ClassTree(props: Props) {
         defaultEndIcon={<div style={{ width: 24 }} />}
       >
         {data &&
-          data
-            .filter(x => x.id !== props.excludedId)
-            .map((item: any) => (
-              <TreeNode excludedId={props.excludedId ?? 0} key={item.id} item={item} nodeId={item.id} />
-            ))}
+          data.map((item: any) => (
+            <TreeNode excludedId={props.excludedId ?? -1} key={item.id} item={item} nodeId={item.id} />
+          ))}
       </TreeView>
     </LoadingSpinner>
   )

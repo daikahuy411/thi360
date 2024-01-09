@@ -183,11 +183,12 @@ const QuestionTable = () => {
     setCategoryId(parseInt(nodeId))
   }
 
-  const editUrl = id => {
-    if (questionCategoryId && questionCategoryId != '0') {
-      return `/apps/question-catalog/${questionCatalogId}/categories/${questionCategoryId}/questions/${id}`
+  const editUrl = item => {
+    if (item.categoryId > 0) {
+      return `/apps/question-catalog/${item.catalogId}/questions/${item.id}`
+    } else {
+      return `/apps/question-catalog/${item.catalogId}/categories/${item.categoryId}/questions/${item.id}`
     }
-    return `/apps/question-catalog/${questionCatalogId}/questions/${id}`
   }
 
   return (
@@ -343,7 +344,7 @@ const QuestionTable = () => {
                                   />
                                 </TableCell>
                                 <TableCell component='th' scope='row'>
-                                  <IconButton aria-label='filter' component={Link} href={editUrl(row.id)}>
+                                  <IconButton aria-label='filter' component={Link} href={editUrl(row)}>
                                     <EditIcon />
                                   </IconButton>
                                 </TableCell>

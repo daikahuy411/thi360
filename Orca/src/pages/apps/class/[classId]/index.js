@@ -89,12 +89,13 @@ const EditClassPage = () => {
     }
     new OrganizationApi().get(classId).then(response => {
       dispatch(selectClass(response.data))
+      setParentId(response.data.parentId)
     })
     setParentId(parseInt(classId))
   }, [classId])
 
   useEffect(() => {
-    setParentId(parseInt(folderId))
+    setParentId(folderId ? parseInt(folderId) : 0)
   }, [folderId])
 
   useEffect(() => {
@@ -205,7 +206,7 @@ const EditClassPage = () => {
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                     <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', paddingTop: 10 }}>
-                      <Grid container spacing={5}>
+                    <Grid container spacing={5} maxWidth={"md"}>
                         <Grid item xs={12}>
                           <FormControl fullWidth>
                             <Controller
@@ -243,27 +244,8 @@ const EditClassPage = () => {
                             }
                           />
                         </Grid>
-                        <Grid item xs={12}>
-                          <FormControl fullWidth>
-                            <Controller
-                              name='description'
-                              control={control}
-                              rules={{ required: false }}
-                              render={({ field: { value, onChange } }) => (
-                                <TextField
-                                  multiline
-                                  rows={3}
-                                  fullWidth
-                                  value={value ?? ''}
-                                  label='Mô tả'
-                                  InputLabelProps={{ shrink: true }}
-                                  onChange={onChange}
-                                />
-                              )}
-                            />
-                          </FormControl>
-                        </Grid>
-                        <Grid item xs={12}>
+
+                        <Grid item xs={12} md={6} lg={6}>
                           <FormControl fullWidth>
                             <Controller
                               name='group'
@@ -305,6 +287,46 @@ const EditClassPage = () => {
                                 {errors.group.message}
                               </FormHelperText>
                             )}
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={6}>
+                          <FormControl fullWidth>
+                            <Controller
+                              name='startYear'
+                              control={control}
+                              rules={{ required: false }}
+                              render={({ field: { value, onChange } }) => (
+                                <TextField
+                                  type='number'
+                                  rows={3}
+                                  fullWidth
+                                  value={value ?? ''}
+                                  label='Năm học'
+                                  InputLabelProps={{ shrink: true }}
+                                  onChange={onChange}
+                                />
+                              )}
+                            />
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <FormControl fullWidth>
+                            <Controller
+                              name='description'
+                              control={control}
+                              rules={{ required: false }}
+                              render={({ field: { value, onChange } }) => (
+                                <TextField
+                                  multiline
+                                  rows={3}
+                                  fullWidth
+                                  value={value ?? ''}
+                                  label='Mô tả'
+                                  InputLabelProps={{ shrink: true }}
+                                  onChange={onChange}
+                                />
+                              )}
+                            />
                           </FormControl>
                         </Grid>
                       </Grid>
