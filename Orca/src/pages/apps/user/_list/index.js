@@ -170,7 +170,7 @@ const UserTable = () => {
           {totalItem} Học viên
         </Typography>
         &nbsp; &nbsp;
-        <Tooltip title='Import'>
+        {/* <Tooltip title='Import'>
           <IconButton sx={{ color: 'text.secondary' }} onClick={() => setOpenImportDialog(true)}>
             <Icon icon='mdi:upload' />
           </IconButton>
@@ -181,14 +181,14 @@ const UserTable = () => {
             <Icon icon='mdi:download' />
           </IconButton>
         </Tooltip>
-        &nbsp; &nbsp;
-        {selected.length > 0 ? (
-          <Tooltip title='Xóa'>
-            <IconButton sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete}>
-              <Icon icon='mdi:delete-outline' />
-            </IconButton>
-          </Tooltip>
-        ) : null}
+        &nbsp; &nbsp; */}
+        <Tooltip title='Xóa'>
+          <IconButton
+            disabled={selected.length > 0 ? false : true}
+            sx={{ color: 'text.secondary' }} onClick={handleClickOpenDelete}>
+            <Icon icon='mdi:delete-outline' />
+          </IconButton>
+        </Tooltip>
         &nbsp; &nbsp;
         <Button
           component={Link}

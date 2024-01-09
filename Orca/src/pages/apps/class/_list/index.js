@@ -167,7 +167,7 @@ const ClassTable = () => {
           {totalItem} Lớp học
         </Typography>
         &nbsp; &nbsp;
-        <Tooltip title='Import'>
+        {/* <Tooltip title='Import'>
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:upload' />
           </IconButton>
@@ -177,7 +177,7 @@ const ClassTable = () => {
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:download' />
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
         &nbsp; &nbsp;
         <Tooltip title='Xóa lớp học'>
           <span>

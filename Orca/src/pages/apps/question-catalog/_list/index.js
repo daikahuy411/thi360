@@ -170,7 +170,7 @@ const QuestionCatalogTable = () => {
           {formatCurrency(totalItem, 0)} Bộ Câu hỏi
         </Typography>
         &nbsp; &nbsp;
-        <Tooltip title='Import'>
+        {/* <Tooltip title='Import'>
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:upload' />
           </IconButton>
@@ -181,7 +181,7 @@ const QuestionCatalogTable = () => {
             <Icon icon='mdi:download' />
           </IconButton>
         </Tooltip>
-        &nbsp; &nbsp;
+        &nbsp; &nbsp; */}
         <Tooltip title='Delete'>
           <span>
             <IconButton

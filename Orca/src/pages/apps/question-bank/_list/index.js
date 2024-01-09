@@ -12,6 +12,8 @@ import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
+import { mdilTag } from '@mdi/light-js'
+import IconReact from '@mdi/react'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
@@ -197,7 +199,7 @@ const QuestionTable = () => {
         <Typography sx={{ flex: '1 1 50%' }} variant='h5' id='tableTitle' component='div'>
           {totalItems} Câu hỏi
         </Typography>
-        &nbsp; &nbsp;
+        {/* &nbsp; &nbsp;
         <Tooltip title='Import'>
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:upload' />
@@ -208,7 +210,7 @@ const QuestionTable = () => {
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:download' />
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
         &nbsp; &nbsp;
         <Tooltip title='Xóa câu hỏi'>
           <span>
@@ -288,9 +290,7 @@ const QuestionTable = () => {
                   borderRight: '1px solid rgba(58, 53, 65, 0.12)'
                 }}
               >
-                <QuestionCatalogTree
-                  onNodeSelected={handleNodeSelected}
-                />
+                <QuestionCatalogTree onNodeSelected={handleNodeSelected} />
               </td>
               <td style={{ verticalAlign: 'top', padding: 5 }}>
                 <TableContainer component={Paper} style={{ marginTop: 5 }}>
@@ -355,9 +355,17 @@ const QuestionTable = () => {
                                   {row.shortContent}
                                 </TableCell>
                                 <TableCell>
+                                  {row.catalog ? (
+                                    <Chip
+                                      icon={<IconReact path={mdilTag} title='Bộ Câu hỏi' size={1} />}
+                                      label={row.catalog.name}
+                                      color='secondary'
+                                      variant='outlined'
+                                    />
+                                  ) : null}
                                   {row.category ? (
                                     <Chip
-                                      icon={<Icon icon='mdi:tag' />}
+                                      icon={<IconReact path={mdilTag} title='Danh mục Câu hỏi' size={1} />}
                                       label={row.category.name}
                                       color='secondary'
                                       variant='outlined'

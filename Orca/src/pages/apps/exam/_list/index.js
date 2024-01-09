@@ -183,7 +183,7 @@ const ExamTable = () => {
           <Typography sx={{ flex: '1 1 100%' }} variant='h5' id='tableTitle' component='div'>
             {formatCurrency(totalItem, 0)} Kỳ thi
           </Typography>
-          &nbsp; &nbsp;
+          {/* &nbsp; &nbsp;
           <Tooltip title='Import'>
             <IconButton sx={{ color: 'text.secondary' }}>
               <Icon icon='mdi:upload' />
@@ -194,7 +194,7 @@ const ExamTable = () => {
             <IconButton sx={{ color: 'text.secondary' }}>
               <Icon icon='mdi:download' />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
           &nbsp; &nbsp;
           <Tooltip title='Xóa kỳ thi'>
             <span>
