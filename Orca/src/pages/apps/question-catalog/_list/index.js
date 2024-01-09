@@ -196,7 +196,7 @@ const QuestionCatalogTable = () => {
         &nbsp; &nbsp;
         <Button
           component={Link}
-          href={`/apps/question-catalog/0`}
+          href={`/apps/question-catalog/0/${questionCatalogId > 0 ? questionCatalogId : ''}`}
           variant='contained'
           style={{ width: 220 }}
           color='primary'
@@ -306,7 +306,7 @@ const QuestionCatalogTable = () => {
                           </IconButton>
                         )}
                         {item.type !== 1 && (
-                          <IconButton aria-label='edit' component={Link} href={`/apps/question-catalog/${item.id}`}>
+                          <IconButton aria-label='edit' component={Link} href={`/apps/question-catalog/${item.id}/${item.parentId > 0 ? item.parentId : ''}`}>
                             <EditIcon />
                           </IconButton>
                         )}
