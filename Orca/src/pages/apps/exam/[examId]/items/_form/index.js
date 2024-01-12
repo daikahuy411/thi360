@@ -285,7 +285,7 @@ const ExamItemEditForm = () => {
 
                         {!loading && (
                           <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', paddingTop: 10 }}>
-                            <Grid container spacing={5} maxWidth={'md'}>
+                            <Grid container spacing={5} maxWidth={'sm'}>
                               <Grid item xs={12}>
                                 <FormControl fullWidth variant='outlined'>
                                   <InputLabel htmlFor='outlined-adornment-parent-category'>Bộ đề thi</InputLabel>

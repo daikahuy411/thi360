@@ -231,7 +231,7 @@ const EditTestGroupPage = () => {
                         onSubmit={handleSubmit(onSubmit)}
                         style={{ height: '100vh', width: '100%', paddingTop: 10 }}
                       >
-                        <Grid container maxWidth={'md'} spacing={5}>
+                        <Grid container maxWidth={'sm'} spacing={5}>
                           <Grid item xs={12} md={12}>
                             <FormControl fullWidth>
                               <Controller
@@ -275,7 +275,6 @@ const EditTestGroupPage = () => {
                               <Controller
                                 name='content'
                                 control={control}
-                                rules={{ required: true }}
                                 render={({ field: { value, onChange } }) => (
                                   <TextField
                                     fullWidth
@@ -284,7 +283,6 @@ const EditTestGroupPage = () => {
                                     value={value ?? ''}
                                     label='Mô tả'
                                     InputLabelProps={{ shrink: true }}
-                                    required
                                     onChange={onChange}
                                     aria-describedby='validation-schema-content'
                                   />

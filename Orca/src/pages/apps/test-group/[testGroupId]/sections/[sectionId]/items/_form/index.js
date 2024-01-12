@@ -30,6 +30,8 @@ import CustomRadioBasic from '@core/components/custom-radio/basic'
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { mdilTag } from '@mdi/light-js'
+import IconReact from '@mdi/react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
@@ -418,17 +420,24 @@ const ItemEditForm = () => {
                                                 {row.shortContent}
                                               </TableCell>
                                               <TableCell component='th' scope='row'>
-                                                <p style={{ paddingBottom: 5 }}>{row.catalogName}</p>
-                                                <div>
-                                                  {row.categoryName ? (
-                                                    <Chip
-                                                      icon={<Icon icon='mdi:tag' />}
-                                                      label={row.categoryName}
-                                                      color='secondary'
-                                                      variant='outlined'
-                                                    />
-                                                  ) : null}
-                                                </div>
+                                                {row.catalog ? (
+                                                  <Chip
+                                                    icon={<IconReact path={mdilTag} title='Bộ Câu hỏi' size={1} />}
+                                                    label={row.catalog.name}
+                                                    color='secondary'
+                                                    variant='outlined'
+                                                  />
+                                                ) : null}
+                                                {row.category ? (
+                                                  <Chip
+                                                    icon={
+                                                      <IconReact path={mdilTag} title='Danh mục Câu hỏi' size={1} />
+                                                    }
+                                                    label={row.category.name}
+                                                    color='secondary'
+                                                    variant='outlined'
+                                                  />
+                                                ) : null}
                                               </TableCell>
                                               <TableCell>
                                                 <Typography variant='body1'>{row.questionTypeName}</Typography>

@@ -152,7 +152,7 @@ const ProfileTab = ({ data }) => {
                 </Card>
               </Grid>
             )}
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Card>
                 <CardContent>
                   <div>
@@ -163,7 +163,7 @@ const ProfileTab = ({ data }) => {
                   </div>
                 </CardContent>
               </Card>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
       </Grid>

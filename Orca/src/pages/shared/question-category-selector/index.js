@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import LoadingSpinner from '@core/components/loading-spinner'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -10,7 +9,6 @@ import DialogTitle from '@mui/material/DialogTitle'
 import FolderTree from './Tree'
 
 export default function QuestionCategoryDialog({ catalogId, onClose, onNodeSelected, excludedId = 0 }) {
-  const [loading, setLoading] = useState(false)
   const [nodeId, setNodeId] = useState(null)
 
   const handleNodeSelected = nodeId => {
@@ -36,11 +34,9 @@ export default function QuestionCategoryDialog({ catalogId, onClose, onNodeSelec
     <Dialog open={true} onClose={handleClose}>
       <DialogTitle>Chọn Danh mục Câu hỏi</DialogTitle>
       <DialogContent>
-        <LoadingSpinner active={loading} minHeight={0}>
-          <div style={{ padding: 5, width: 360, minHeight: 200 }}>
-            <FolderTree catalogId={catalogId} excludedId={excludedId} onNodeSelected={handleNodeSelected} />
-          </div>
-        </LoadingSpinner>
+        <div style={{ padding: 5, width: 360, minHeight: 200 }}>
+          <FolderTree catalogId={catalogId} excludedId={excludedId} onNodeSelected={handleNodeSelected} />
+        </div>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Hủy bỏ</Button>

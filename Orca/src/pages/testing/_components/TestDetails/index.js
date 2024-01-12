@@ -1384,7 +1384,7 @@ class TestDetails extends React.Component {
                                     </div>
                                     <div className='flex flex-column w-100'>
                                       <b>Ghép đôi</b>
-                                      <MatchingQuestion />
+                                      <MatchingQuestion question={this.state.currentQuestion} />
                                     </div>
                                   </div>
                                 )}
@@ -1512,7 +1512,6 @@ class TestDetails extends React.Component {
                               {this.state.userProfile && (
                                 <>
                                   <span>{this.state.userProfile.name}</span>
-                                  &nbsp;({this.state.userProfile.userName})
                                 </>
                               )}
                             </span>

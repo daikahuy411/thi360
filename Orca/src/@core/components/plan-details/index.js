@@ -28,7 +28,7 @@ const PlanDetails = props => {
   const { plan, data, isCurrentPlan, currentPlanItem, addPayment } = props
 
   const renderFeatures = () => {
-    return data?.planBenefitsObject.map((item, index) => (
+    return data?.itemPlanBenefits.map((item, index) => (
       <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
         <Box component='span' sx={{ display: 'inline-flex', color: 'text.secondary', mr: 2 }}>
           <Icon icon='mdi:circle-outline' fontSize='0.75rem' />
@@ -40,15 +40,12 @@ const PlanDetails = props => {
 
   const handleClick = () => {
     if (!isCurrentPlan) {
-
       props.addPayment()
     } else {
       if (data.price != 0) {
         props.addPayment()
       }
     }
-
-
   }
   return (
     <BoxWrapper
@@ -79,10 +76,8 @@ const PlanDetails = props => {
       ) : null}
       <Box sx={{ mb: 5, display: 'flex', justifyContent: 'center' }}>
         <img
-          style={{ width: '230px', height: '205px' }}
-          width={data?.imgWidth}
+          style={{ width: 120 }}
           src={`${data?.imageSrc}`}
-          height={data?.imgHeight}
           alt={`${data?.name.toLowerCase().replace(' ', '-')}-plan-img`}
         />
       </Box>
@@ -112,12 +107,16 @@ const PlanDetails = props => {
           // (isCurrentPlan) ? null : () => props.addPayment()
         }
         fullWidth
-        color={(isCurrentPlan && currentPlanItem[0].status == 1) ? 'success' : 'primary'}
+        color={isCurrentPlan && currentPlanItem[0].status == 1 ? 'success' : 'primary'}
         variant={isCurrentPlan ? 'contained' : 'outlined'}
       >
-        {(isCurrentPlan && currentPlanItem[0].status == 1) ? 'Đang sử dụng' : (isCurrentPlan && currentPlanItem[0].status == 5) ? 'Đã đăng ký' : 'Đăng ký'}
+        {isCurrentPlan && currentPlanItem[0].status == 1
+          ? 'Đang sử dụng'
+          : isCurrentPlan && currentPlanItem[0].status == 5
+          ? 'Đã đăng ký'
+          : 'Đăng ký'}
       </Button>
-    </BoxWrapper >
+    </BoxWrapper>
   )
 }
 

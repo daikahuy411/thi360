@@ -3,6 +3,7 @@ import React from 'react'
 import QuestionCategoryApi from 'api/question-category-api'
 import Folder from 'interfaces/Folder'
 
+import LoadingSpinner from '@core/components/loading-spinner'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import TreeView from '@mui/lab/TreeView'
@@ -18,13 +19,15 @@ export interface Props {
 export interface States {
   data?: Array<Folder>
   excludedId: number
+  loading: boolean
 }
 
 export default class FolderTree extends React.Component<Props, States> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      excludedId: this.props.excludedId ? this.props.excludedId : 0
+      excludedId: this.props.excludedId ? this.props.excludedId : 0,
+      loading: false
     }
   }
 
@@ -50,8 +53,9 @@ export default class FolderTree extends React.Component<Props, States> {
   }
 
   fetchData = () => {
+    this.setState({ loading: true })
     new QuestionCategoryApi().getByCatalog(this.props.catalogId).then((response: any) => {
-      this.setState({ data: response.data })
+      this.setState({ data: response.data, loading: false })
     })
   }
 
@@ -61,21 +65,25 @@ export default class FolderTree extends React.Component<Props, States> {
 
   render() {
     return (
-      <TreeView
-        style={{ flexGrow: 1, maxWidth: '400' }}
-        onNodeSelect={this.handleSelect}
-        onNodeToggle={this.handleToggle}
-        defaultCollapseIcon={<ArrowDropDownIcon />}
-        defaultExpandIcon={<ArrowRightIcon />}
-        defaultEndIcon={<div style={{ width: 24 }} />}
-      >
-        {this.state.data &&
-          this.state.data
-            .filter(x => x.id !== this.state.excludedId)
-            .map((item: any) => (
-              <TreeNode excludedId={this.state.excludedId} key={item.id} item={item} nodeId={item.id} />
-            ))}
-      </TreeView>
+      <>
+        <LoadingSpinner active={this.state.loading} minHeight={0}>
+          <TreeView
+            style={{ flexGrow: 1, maxWidth: '400' }}
+            onNodeSelect={this.handleSelect}
+            onNodeToggle={this.handleToggle}
+            defaultCollapseIcon={<ArrowDropDownIcon />}
+            defaultExpandIcon={<ArrowRightIcon />}
+            defaultEndIcon={<div style={{ width: 24 }} />}
+          >
+            {this.state.data &&
+              this.state.data
+                .filter(x => x.id !== this.state.excludedId)
+                .map((item: any) => (
+                  <TreeNode excludedId={this.state.excludedId} key={item.id} item={item} nodeId={item.id} />
+                ))}
+          </TreeView>
+        </LoadingSpinner>
+      </>
     )
   }
 }

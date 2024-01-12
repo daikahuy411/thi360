@@ -87,7 +87,6 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
     const promotionType2 = promotions.filter((x) => x.type == 2)
     if (promotionType2) {
       if (parseInt(value) === parseInt(promotionType2[0].condition)) {
-        console.log('promotionType2:', promotionType2)
         let item = {
           name: 'Tặng thêm',
           type: 1,
@@ -115,7 +114,6 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
     }
     new V1Api().verifyCodePromotion(param).then(response => {
       const data = response.data
-      console.log('procode:', data)
       if (data.isSuccess) {
         setTruthPromotionCode(data.value.code)
         let item = {
@@ -169,9 +167,6 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
     if (!plan) return
     setAmount(plan.price)
     setTotalAmount(plan.price * parseInt(month))
-
-    console.log('plan-regs:', open)
-    console.log('promotions-regs:', promotions)
   }, [plan])
 
   useEffect(() => {
@@ -180,8 +175,6 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
 
   const createOrder = () => {
     setLoading(true)
-
-    console.log('orderDetailPromotion:', orderDetailPromotion)
     let detailTemp = []
     let itemDetail = {
       name: 'Gói sản phẩm',
@@ -204,12 +197,10 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
       orderDetail: [...detailTemp, ...orderDetailPromotion]
     }
 
-    console.log('orderInfo:', orderInfo)
     new V1Api().createOrder(orderInfo).then(response => {
       const data = response.data
       if (data.isSuccess) {
         setLoading(false)
-        console.log('data:', data)
         toast.success('Đăng ký gói dịch vụ thành công!')
         if (plan.price != 0) {
           window.location.href = response.data.value.checkoutUrl
@@ -221,21 +212,16 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
         closeButton.current.click()
         toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu')
       }
-
-
     })
   }
 
   if (plan == null) return null
 
-
   const handleClose = (event, reason) => {
     if (reason === "backdropClick") {
-      console.log(reason)
       return
     }
     else if (reason === 'escapeKeyDown') {
-      console.log('mmm', reason)
       closeButton.current.click()
     }
   }
@@ -243,6 +229,7 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
   const cleanForm = () => {
 
   }
+
   return (
     <Drawer
       open={open}
@@ -353,7 +340,7 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
                     loading={loadingApply}
                     loadingIndicator="Loading…"
                   >
-                    Apply
+                    Sử dụng
                   </LoadingButton>
                 </Box>
                 <Collapse in={settingMsgPromotionCode.isOpen}>
@@ -377,7 +364,7 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
                     <Typography variant='body2' sx={{ color: 'text.primary' }}>
                       Số tháng
                     </Typography>
-                    <Typography variant='body2'>{formatNumber.add0(month)} tháng</Typography>
+                    <Typography variant='body2'>{formatNumber.add0(month)}</Typography>
                   </Box>
                   <Box
                     sx={{

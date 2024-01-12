@@ -83,7 +83,7 @@ const SectionEditForm = () => {
 
   useEffect(() => {
     if (!sectionId || sectionId == 0) {
-      dispatch(selectTestGroupSection({ id: 0, name: '', description: '' }))
+      dispatch(selectTestGroupSection({ id: 0, order: 0, name: '', description: '' }))
       return
     }
     new TestGroupSectionApi().get(sectionId).then(response => {
@@ -104,11 +104,18 @@ const SectionEditForm = () => {
       .save({ ...item, testGroupId: testGroupId })
       .then(response => {
         toast.success('Cập nhật thành công')
-        if (code == 1) {
-          router.query.sectionId = response.data.id
-          router.push(router)
+
+        if (sectionId && parseInt(sectionId) > 0) {
+          new TestGroupSectionApi().get(sectionId).then(response => {
+            dispatch(selectTestGroupSection(response.data))
+          })
         } else {
-          reset()
+          if (code == 1) {
+            router.query.sectionId = response.data.id
+            router.push(router)
+          } else {
+            reset()
+          }
         }
       })
       .catch(() => {
@@ -209,7 +216,7 @@ const SectionEditForm = () => {
                     <Nav />
                     <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                       <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', paddingTop: 10 }}>
-                        <Grid container spacing={5} maxWidth={"md"}>
+                        <Grid container spacing={5} maxWidth={'sm'}>
                           <Grid item xs={12}>
                             <FormControl fullWidth>
                               <Controller
@@ -280,8 +287,13 @@ const SectionEditForm = () => {
                               />
                             </FormControl>
                           </Grid>
+                        </Grid>
+                        <br />
+                        <Grid container spacing={5}>
                           <Grid item xs={12}>
-                            <Typography>Nội dung Hướng dẫn</Typography>
+                            <Typography>
+                              <b>Nội dung Hướng dẫn</b>
+                            </Typography>
                           </Grid>
                           <Grid item xs={12}>
                             <FormControl fullWidth>

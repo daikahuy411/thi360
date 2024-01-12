@@ -12,6 +12,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
 
 const EntityInfoModal = ({ entity }) => {
   // ** States
@@ -35,21 +36,27 @@ const EntityInfoModal = ({ entity }) => {
             <TableBody>
               <TableRow>
                 <TableCell style={{ width: 180 }} component='th' scope='row'>
-                  Ngày tạo
+                  <Typography variant='body1'> Ngày tạo</Typography>
                 </TableCell>
-                <TableCell align='right'>{moment(entity.createdTime).format('DD-MM-YYYY HH:mm')}</TableCell>
+                <TableCell align='right'>
+                  <Typography variant='body1'>{moment(entity.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell style={{ width: 180 }} component='th' scope='row'>
-                  Người tạo
+                  <Typography variant='body1'> Người tạo</Typography>
                 </TableCell>
-                <TableCell align='right'>{entity.createdByName}</TableCell>
+                <TableCell align='right'>
+                  <Typography variant='body1'>{entity.createdByName}</Typography>
+                </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell style={{ width: 180 }} component='th' scope='row'>
-                  Sửa gần nhất
+                  <Typography variant='body1'> Sửa gần nhất</Typography>
                 </TableCell>
-                <TableCell align='right'>{moment(entity.lastModifiedTime).format('DD-MM-YYYY HH:mm')}</TableCell>
+                <TableCell align='right'>
+                  <Typography variant='body1'>{moment(entity.lastModifiedTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>

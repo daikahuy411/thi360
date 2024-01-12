@@ -6,10 +6,7 @@ import React, {
 
 import Configuration from 'configs/auth'
 
-// import { CKEditor } from '@ckeditor/ckeditor5-react'
-// import Editor from 'ckeditor5-custom-build/build/ckeditor'
-
-export default function ContentEditor({ content, isReadOnly, onChange }) {
+export default function LiteContentEditor({ content, isReadOnly, onChange }) {
   const editorRef = useRef()
   const [editorLoaded, setEditorLoaded] = useState(false)
   const [error, setError] = useState(false)
@@ -59,8 +56,6 @@ export default function ContentEditor({ content, isReadOnly, onChange }) {
           items: [
             'ckfinder',
             '|',
-            'heading',
-            '|',
             'alignment',
             '|',
             'bold',
@@ -72,18 +67,11 @@ export default function ContentEditor({ content, isReadOnly, onChange }) {
             '|',
             'bulletedList',
             'numberedList',
-            'indent',
-            '|',
-            'insertTable',
             '|',
             'fontfamily',
             'fontsize',
             'fontColor',
-            'fontBackgroundColor',
-            '|',
-            'subscript',
-            'superscript',
-            'blockQuote'
+            'fontBackgroundColor'
           ],
           shouldNotGroupWhenFull: false
         },

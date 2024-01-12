@@ -206,7 +206,7 @@ const EditClassPage = () => {
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                     <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', paddingTop: 10 }}>
-                    <Grid container spacing={5} maxWidth={"md"}>
+                    <Grid container spacing={5} maxWidth={'sm'}>
                         <Grid item xs={12}>
                           <FormControl fullWidth>
                             <Controller

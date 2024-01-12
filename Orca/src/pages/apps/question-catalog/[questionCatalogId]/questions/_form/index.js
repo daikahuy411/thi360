@@ -31,6 +31,7 @@ import * as yup from 'yup'
 
 import ContentEditor from '@core/components/editor'
 import Icon from '@core/components/icon'
+import LiteContentEditor from '@core/components/lite-editor'
 import LoadingSpinner from '@core/components/loading-spinner'
 import { yupResolver } from '@hookform/resolvers/yup'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -175,12 +176,14 @@ const QuestionEditForm = () => {
 
       if (data.questionTypeId === QuestionType.MATCHING) {
         var ags = []
-        data.answers.forEach(a => {
-          const g = ags.find(x => x.index == a.group)
-          if (!g) {
-            ags.push({ index: a.group, answers: [...a] })
+        var groupIndex = 0
+        data.answers.forEach((a, index) => {
+          if (index % 2 == 0) {
+            groupIndex++
+            ags.push({ index: groupIndex, answers: [a] })
           } else {
-            g.answers.push(...a)
+            let g = ags.find(x => x.index == groupIndex)
+            g.answers.push(a)
           }
         })
         setAnswerGroups([...ags])
@@ -383,17 +386,15 @@ const QuestionEditForm = () => {
   // Matching Question
   const addMatchingAnswerGroup = () => {
     const groupIndex = answerGroups.length
-    let leftAnswer = new QuestionApi().createAnswer(-(groupIndex * 2 + 1), 1, '', false, {
+    let leftAnswer = new QuestionApi().createAnswer(-(groupIndex * 2 + 1), groupIndex + 1, '', false, {
       isError: false,
       message: ''
     })
-    leftAnswer.group = groupIndex
 
-    let rightAnswer = new QuestionApi().createAnswer(-(groupIndex * 2 + 2), 2, '', false, {
+    let rightAnswer = new QuestionApi().createAnswer(-(groupIndex * 2 + 2), groupIndex + 1, '', false, {
       isError: false,
       message: ''
     })
-    rightAnswer.group = groupIndex
 
     answerGroups.push({ id: groupIndex, order: groupIndex + 1, answers: [leftAnswer, rightAnswer] })
     setAnswerGroups([...answerGroups])
@@ -659,11 +660,7 @@ const QuestionEditForm = () => {
                                       value={categorySelected.name ?? ''}
                                       endAdornment={
                                         <InputAdornment position='end'>
-                                          <IconButton
-                                            aria-label='toggle password visibility'
-                                            edge='end'
-                                            onClick={cleanCategory}
-                                          >
+                                          <IconButton edge='end' onClick={cleanCategory}>
                                             <DeleteOutline />
                                           </IconButton>
                                           &nbsp;
@@ -700,7 +697,7 @@ const QuestionEditForm = () => {
                                       )}
                                     />
                                     {errors.content && (
-                                      <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
+                                      <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-content'>
                                         {errors.content.message}
                                       </FormHelperText>
                                     )}
@@ -759,8 +756,8 @@ const QuestionEditForm = () => {
                                                 <TableCell padding='checkbox' align='center'>
                                                   #
                                                 </TableCell>
-                                                <TableCell style={{ width: 50 }}></TableCell>
-                                                <TableCell style={{ width: 110 }}>Thứ tự</TableCell>
+                                                <TableCell style={{ width: 40 }}></TableCell>
+                                                <TableCell style={{ width: 90 }}>Thứ tự</TableCell>
                                                 {currentQuestion.questionTypeId !== QuestionType.ORDER && (
                                                   <TableCell style={{ width: 120 }}>Đáp án đúng</TableCell>
                                                 )}
@@ -810,6 +807,7 @@ const QuestionEditForm = () => {
                                                           name={`ans-order-${anwser.id}`}
                                                           value={anwser.order}
                                                           size={'small'}
+                                                          style={{ width: 60 }}
                                                           onChange={event => {
                                                             handleChangeAnwser(
                                                               anwser.id,
@@ -873,7 +871,7 @@ const QuestionEditForm = () => {
                                                             control={control}
                                                             rules={{ required: true }}
                                                             render={({ field: { value, onChange } }) => (
-                                                              <ContentEditor
+                                                              <LiteContentEditor
                                                                 content={value ?? anwser.content ?? ''}
                                                                 onChange={value => {
                                                                   onChange(value)
@@ -1024,8 +1022,8 @@ const QuestionEditForm = () => {
                                                     </TableCell>
                                                     <TableCell scope='row' component='th'>
                                                       <FormControl fullWidth>
-                                                        <ContentEditor
-                                                          value={group.answers[0].content ?? ''}
+                                                        <LiteContentEditor
+                                                          content={group.answers[0].content ?? ''}
                                                           onChange={data => {
                                                             group.answers[0].content = data
                                                           }}
@@ -1049,11 +1047,10 @@ const QuestionEditForm = () => {
                                                   >
                                                     <TableCell scope='row' component='th'>
                                                       <FormControl fullWidth>
-                                                        <ContentEditor
-                                                          value={group.answers[1].content ?? ''}
+                                                        <LiteContentEditor
+                                                          content={group.answers[1].content ?? ''}
                                                           onChange={data => {
                                                             group.answers[1].content = data
-                                                            onChange(data)
                                                           }}
                                                         />
                                                         <FormHelperText

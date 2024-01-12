@@ -28,96 +28,6 @@ import PricingTable from './PricingTable'
 
 const data = {
   pricingPlans: {
-    student: [
-      {
-        title: 'Miễn phí',
-        monthlyPrice: 0,
-        currentPlan: true,
-        popularPlan: false,
-        subtitle: 'A simple start for everyone',
-        imgSrc: '/images/pages/pricing-tree-1.png',
-        yearlyPlan: {
-          perMonth: 0,
-          totalAnnual: 0
-        },
-        planBenefits: ['5 luyện tập mỗi ngày', 'Truy cập chương trình THPT, THCS']
-      },
-      {
-        monthlyPrice: 60,
-        title: 'Standard',
-        popularPlan: true,
-        currentPlan: false,
-        subtitle: 'For small to medium businesses',
-        imgSrc: '/images/pages/pricing-tree-2.png',
-        yearlyPlan: {
-          perMonth: 40,
-          totalAnnual: 480
-        },
-        planBenefits: ['30 luyện tập mỗi ngày', 'Truy cập chương trình THPT, THCS, TOEIC']
-      }
-      // {
-      //   monthlyPrice: 99,
-      //   popularPlan: false,
-      //   currentPlan: false,
-      //   title: 'Enterprise',
-      //   subtitle: 'Solution for big organizations',
-      //   imgSrc: '/images/pages/pricing-tree-3.png',
-      //   yearlyPlan: {
-      //     perMonth: 80,
-      //     totalAnnual: 960
-      //   },
-      //   planBenefits: [
-      //     'PayPal payments',
-      //     'Logic Jumps',
-      //     'File upload with 5GB storage',
-      //     'Custom domain support',
-      //     'Stripe integration'
-      //   ]
-      // }
-    ],
-    teacher: [
-      {
-        title: 'Nhỏ',
-        monthlyPrice: 80,
-        currentPlan: true,
-        popularPlan: false,
-        subtitle: 'A simple start for everyone',
-        imgSrc: '/images/pages/pricing-tree-1.png',
-        yearlyPlan: {
-          perMonth: 80,
-          totalAnnual: 0
-        },
-        planBenefits: ['30 học viên', '1 tài khoản giáo viên', '1000 câu hỏi', 'Sử dụng ngân hàng câu hỏi Thi360']
-      },
-      {
-        monthlyPrice: 180,
-        title: 'Cơ bản',
-        popularPlan: true,
-        currentPlan: false,
-        subtitle: 'For small to medium businesses',
-        imgSrc: '/images/pages/pricing-tree-2.png',
-        yearlyPlan: {
-          perMonth: 180,
-          totalAnnual: 480
-        },
-        planBenefits: ['90 học viên', '3 tài khoản giáo viên', '3000 câu hỏi', 'Sử dụng ngân hàng câu hỏi Thi360']
-      }
-    ],
-    enterprise: [
-      {
-        title: 'Liên hệ',
-        monthlyPrice: 80,
-        currentPlan: true,
-        popularPlan: false,
-        subtitle: 'Giải pháp dành cho Tổ chức, Trung tâm',
-        imgSrc: '/images/pages/pricing-tree-3.png',
-        yearlyPlan: {
-          perMonth: 0,
-          totalAnnual: 0
-        },
-        planBenefits: ['Không giới hạn học viên', 'Không giới hạn tài khoản giáo viên', 'Hệ thống độc lập']
-      }
-    ]
   },
   faq: [
     {
@@ -241,7 +151,6 @@ const PricingPage = () => {
     new V1Api().getPromotions().then(response => {
       const data = response.data.value
       setPromotions(data)
-      console.log('data-promotions:', data)
     })
 
     new V1Api().getPricingPlans().then(response => {

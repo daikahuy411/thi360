@@ -5,6 +5,8 @@ import React, {
   useState
 } from 'react'
 
+import ReactHtmlParser from 'react-html-parser'
+
 import styles from './styles.module.css'
 
 var targetOption = {
@@ -30,7 +32,7 @@ var sourceOption = {
   setDragAllowedWhenFull: true
 }
 
-export default function MatchingQuestion() {
+export default function MatchingQuestion({ question, onChanged }) {
   const editorRef = useRef()
   const [jsPlumbLoaded, setJsPlumbLoaded] = useState(false)
   const { jsPlumb } = editorRef.current || {}
@@ -48,9 +50,14 @@ export default function MatchingQuestion() {
     setJsPlumbLoaded(true)
   }, [])
 
-  const [nodes, setNodes] = useState([])
   const [jsPlumbInstance, setJsPlumbInstance] = useState(null)
   const container = useRef(null)
+
+  useEffect(() => {
+    if (!question) return
+    setLeftNodes(question.answers.filter(x => x.order % 2 == 0))
+    setRightNodes(question.answers.filter(x => x.order % 2 != 0))
+  }, [question])
 
   useEffect(() => {
     if (targetElm && sourceElm) {
@@ -109,6 +116,40 @@ export default function MatchingQuestion() {
     <>
       <div ref={container}>
         <table style={{ width: '100%' }}>
+          <tr>
+            <td style={{ width: '50%' }}>
+              <div id='select_list_lebensbereiche'>
+                <ul className={styles.ul}>
+                  {leftNodes.map(item => (
+                    <li
+                      className={styles.li}
+                      id={`s-${item.id}`}
+                      key={`s-${item.id}`}
+                      onClick={() => setSourceElm(`s-${item.id}`)}
+                    >
+                      {ReactHtmlParser(item.content)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </td>
+            <td style={{ width: '50%' }}>
+              <div id='select_list_wirkdimensionen'>
+                <ul className={styles.ul}>
+                  {rightNodes.map(item => (
+                    <li
+                      className={styles.li}
+                      id={`t-${item.id}`}
+                      key={`t-${item.id}`}
+                      onClick={() => setSourceElm(`t-${item.id}`)}
+                    >
+                      {ReactHtmlParser(item.content)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </td>
+          </tr>
           <tr>
             <td style={{ width: '50%' }}>
               <div id='select_list_lebensbereiche'>

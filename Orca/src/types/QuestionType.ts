@@ -4,8 +4,8 @@ export enum QuestionType {
   SC = 12,
   GQ = 9,
   TF = 13,
-  FB = 19,
   ST = 7,
+  FB = 19,
   ORDER = 21,
   MATCHING=20,
 }
