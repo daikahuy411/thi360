@@ -12,19 +12,24 @@ import LoadingSpinner from '@core/components/loading-spinner'
 import CustomChip from '@core/components/mui/chip'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
-// ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import Grid from '@mui/material/Grid'
 import LinearProgress from '@mui/material/LinearProgress'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
 
 const MyPricingPage = () => {
   const [data, setData] = useState([])
   const [orderData, setOrderData] = useState([])
   const [loading, setLoading] = useState(false)
+  const [loadingOrder, setLoadingOrder] = useState(false)
 
   useEffect(() => {
     fetchData()
@@ -36,6 +41,12 @@ const MyPricingPage = () => {
       setData(response.data.value)
       setLoading(false)
     })
+
+    setLoadingOrder(true)
+    new V1Api().getOrderHistory().then(response => {
+      setOrderData(response.data.value)
+      setLoadingOrder(false)
+    })
   }
 
   return (
@@ -43,25 +54,25 @@ const MyPricingPage = () => {
       <Head>
         <title>{`Thông tin gói dịch vụ`}</title>
       </Head>
-      <LoadingSpinner active={loading}>
-        <Grid container spacing={8} justifyContent='center'>
-          <Grid item md={12} lg={10} xl={10}>
-            <Card>
-              <CardContent>
-                <br />
-                <Box sx={{ mb: [8, 9], textAlign: 'center' }}>
-                  <Typography variant='h5'>Thông tin gói dịch vụ đang sử dụng</Typography>
-                  <Box sx={{ mt: 2.5, mb: 2 }}>
-                    <Typography variant='body2'>
-                      Tất cả các gói dịch vụ được phân loại tính năng để phù hợp với từng đối tượng người dùng.
-                    </Typography>
-                    <Typography variant='body2'>Chọn gói tốt nhất và phù hợp nhất với nhu cầu của bạn.</Typography>
-                  </Box>
+      <Grid container spacing={8} justifyContent='center'>
+        <Grid item md={12} lg={10} xl={10}>
+          <Card>
+            <CardContent>
+              <br />
+              <Box sx={{ mb: [8, 9], textAlign: 'center' }}>
+                <Typography variant='h5'>Thông tin gói dịch vụ đang sử dụng</Typography>
+                <Box sx={{ mt: 2.5, mb: 2 }}>
+                  <Typography variant='body2'>
+                    Tất cả các gói dịch vụ được phân loại tính năng để phù hợp với từng đối tượng người dùng.
+                  </Typography>
+                  <Typography variant='body2'>Chọn gói tốt nhất và phù hợp nhất với nhu cầu của bạn.</Typography>
                 </Box>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item md={12} lg={10} xl={10}>
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item md={12} lg={10} xl={10}>
+          <LoadingSpinner active={loading}>
             <Grid container>
               <Grid item md={6} lg={6} xl={12}>
                 {data &&
@@ -85,7 +96,6 @@ const MyPricingPage = () => {
                                   </ul>
                                 </div>
                                 <div>
-
                                   <Box sx={{ display: 'flex', mb: 1, alignItems: 'center' }}>
                                     <Typography variant='body2' sx={{ mr: 4, fontWeight: 600, color: 'text.primary' }}>
                                       {item.plan.price} đ
@@ -144,20 +154,67 @@ const MyPricingPage = () => {
               </Grid>
               <Grid item md={6} lg={6} xl={12}></Grid>
             </Grid>
-          </Grid>
-          <Grid item md={6} lg={6} xl={6} sm={12}>
-            <Card>
-              <CardContent>
-                <br />
-                <Box sx={{ mb: [8, 9], textAlign: 'center' }}>
-                  <Typography variant='h5'>Lịch sử thanh toán</Typography>
-                  <Box sx={{ mt: 2.5, mb: 2 }}></Box>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
+          </LoadingSpinner>
         </Grid>
-      </LoadingSpinner>
+        <Grid item md={12} lg={10} xl={10}>
+          <Card>
+            <CardContent>
+              <Typography variant='caption' sx={{ mb: 5, display: 'block', textTransform: 'uppercase' }}>
+                Lịch sử thanh toán
+              </Typography>
+              <LoadingSpinner active={loadingOrder}>
+                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                      <TableCell>Gói dịch vụ</TableCell>
+                      <TableCell style={{ width: 120 }}>Giá</TableCell>
+                      <TableCell style={{ width: 280 }}>Loại gói</TableCell>
+                      <TableCell style={{ width: 180 }}>Trạng thái</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {orderData &&
+                      orderData.map((row, index) => {
+                        return (
+                          <TableRow
+                            hover
+                            tabIndex={-1}
+                            role='checkbox'
+                            key={row.id}
+                            sx={{
+                              '&:last-of-type td, &:last-of-type th': {
+                                border: 0
+                              }
+                            }}
+                          >
+                            <TableCell>
+                              <Typography variant='body1'>
+                                {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
+                              </Typography>
+                            </TableCell>
+                            <TableCell component='th' scope='row'>
+                              {row.pricingPlan && <Typography variant='body1'>{row.pricingPlan.name}</Typography>}
+                            </TableCell>
+                            <TableCell component='th' scope='row'>
+                              {row.pricingPlan && <Typography variant='body1'>{row.pricingPlan.totalVN}</Typography>}
+                            </TableCell>
+                            <TableCell component='th' scope='row'>
+                              {row.pricingPlan && <Typography variant='body1'>{row.pricingPlan.typeName}</Typography>}
+                            </TableCell>
+                            <TableCell>
+                              <Typography variant='body1'>{row.statusName}</Typography>
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })}
+                  </TableBody>
+                </Table>
+              </LoadingSpinner>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </>
   )
 }

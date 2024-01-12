@@ -121,6 +121,12 @@ class V1Api extends ApiBase {
     return response
   }
 
+  getOrderHistory = request => {
+    const url = `${this.baseApiUrl}/Orders`
+    const response = axios.get(url, request)
+    return response
+  }
+
   createOrder = request => {
     const url = `${this.baseApiUrl}/Orders`
     const response = axios.post(url, request)

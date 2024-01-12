@@ -207,7 +207,7 @@ const ExamCategoryEditPage = () => {
                   <div className='grid-block' style={{ padding: 50 }}>
                     <>
                       <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', paddingTop: 10 }}>
-                        <Grid container spacing={5}>
+                        <Grid container spacing={5} maxWidth={'sm'}>
                           <Grid item xs={12}>
                             <FormControl fullWidth variant='outlined'>
                               <Controller

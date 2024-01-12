@@ -389,378 +389,371 @@ const EditExamPage = () => {
                         onSubmit={handleSubmit(onSubmit)}
                         style={{ height: '100vh', width: '100%', paddingTop: 10 }}
                       >
-                        <Grid container spacing={5}>
-                          <Grid item xs={12} md={8}>
-                            <Grid container spacing={5}>
-                              <Grid item xs={12}>
-                                <FormControl fullWidth>
-                                  <Controller
-                                    name='name'
-                                    control={control}
-                                    rules={{ required: true }}
-                                    render={({ field: { value, onChange } }) => (
-                                      <TextField
-                                        value={value ?? ''}
-                                        label='Tên'
-                                        InputLabelProps={{ shrink: true }}
-                                        required
-                                        onChange={onChange}
-                                        error={Boolean(errors.name)}
-                                        aria-describedby='validation-schema-name'
-                                      />
-                                    )}
+                        <Grid container spacing={5} maxWidth={'sm'}>
+                          <Grid item xs={12}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='name'
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field: { value, onChange } }) => (
+                                  <TextField
+                                    value={value ?? ''}
+                                    label='Tên'
+                                    InputLabelProps={{ shrink: true }}
+                                    required
+                                    onChange={onChange}
+                                    error={Boolean(errors.name)}
+                                    aria-describedby='validation-schema-name'
                                   />
-                                  {errors.name && (
-                                    <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
-                                      {errors.name.message}
-                                    </FormHelperText>
-                                  )}
-                                </FormControl>
-                              </Grid>
-                              <Grid item xs={12}>
-                                <ParentFolderField
-                                  api={new ExamApi()}
-                                  type={FolderType.EXAM}
-                                  onSave={handleParentChanged}
-                                  parentId={
-                                    !currentExam || currentExam.id == 0
-                                      ? parseInt(isNaN(folderId) ? '0' : folderId)
-                                      : currentExam.parentId
-                                  }
-                                />
-                              </Grid>
-                              <Grid item xs={12}>
-                                <FormControl fullWidth>
-                                  <Controller
-                                    name='content'
-                                    control={control}
-                                    rules={{ required: false }}
-                                    render={({ field: { value, onChange } }) => (
-                                      <TextField
-                                        multiline
-                                        rows={3}
-                                        fullWidth
-                                        value={value ?? ''}
-                                        label='Mô tả'
-                                        InputLabelProps={{ shrink: true }}
-                                        onChange={onChange}
-                                      />
-                                    )}
-                                  />
-                                </FormControl>
-                              </Grid>
-                              <Grid item xs={12}>
-                                <FormControl fullWidth variant='outlined'>
-                                  <InputLabel htmlFor='outlined-adornment-parent-category'>Danh mục Kỳ thi</InputLabel>
-                                  <OutlinedInput
-                                    id='outlined-adornment-parent-category'
-                                    inputprops={{
-                                      readOnly: true,
-                                      className: 'Mui-disabled'
-                                    }}
-                                    value={examCategorySelected.name ?? ''}
-                                    endAdornment={
-                                      <InputAdornment position='end'>
-                                        <IconButton
-                                          aria-label='toggle password visibility'
-                                          edge='end'
-                                          onClick={cleanExamCategory}
-                                        >
-                                          <DeleteOutline />
-                                        </IconButton>
-                                        &nbsp;
-                                        <IconButton
-                                          edge='end'
-                                          onClick={() => {
-                                            setOpenCatalogDialog(true)
-                                          }}
-                                        >
-                                          <FolderIcon />
-                                        </IconButton>
-                                      </InputAdornment>
-                                    }
-                                    label='Danh mục Kỳ thi'
-                                  />
-                                </FormControl>
-                              </Grid>
-                              <Grid item xs={6}>
-                                <FormControl fullWidth>
-                                  <Controller
-                                    name='programId'
-                                    control={control}
-                                    render={({ field: { value, onChange } }) => (
-                                      <>
-                                        <InputLabel id='select-program-label'>Chương trình</InputLabel>
-                                        <Select
-                                          label='Chương trình'
-                                          labelId='select-program-label'
-                                          aria-describedby='validation-schema-exam-type'
-                                          value={value ?? 0}
-                                          onChange={e => {
-                                            onChange(parseInt(e.target.value))
-                                            setProgramCatalogId(parseInt(e.target.value))
-                                          }}
-                                        >
-                                          <MenuItem value={0}>Chọn Chương trình</MenuItem>
-                                          {programs &&
-                                            programs.map(item => (
-                                              <MenuItem key={`program-item${item.id}`} value={item.id}>
-                                                {item.name}
-                                              </MenuItem>
-                                            ))}
-                                        </Select>
-                                      </>
-                                    )}
-                                  />
-                                </FormControl>
-                              </Grid>
-                              <Grid item xs={6}>
-                                <FormControl fullWidth>
-                                  <Controller
-                                    name='subjectId'
-                                    control={control}
-                                    render={({ field: { value, onChange } }) => (
-                                      <>
-                                        <InputLabel id='select-subject-catalog'>Môn học/ Chủ đề</InputLabel>
-                                        <Select
-                                          label='Môn học/ Chủ đề'
-                                          labelId='select-subject-catalog'
-                                          aria-describedby='validation-schema-group'
-                                          value={value ?? 0}
-                                          onChange={e => {
-                                            onChange(parseInt(e.target.value))
-                                            setSubjectCatalogId(parseInt(e.target.value))
-                                          }}
-                                        >
-                                          <MenuItem value={0}>Chọn Môn học/ Chủ đề</MenuItem>
-                                          {subjects &&
-                                            subjects.map(item => (
-                                              <MenuItem key={`subject-item${item.id}`} value={item.id}>
-                                                {item.name}
-                                              </MenuItem>
-                                            ))}
-                                        </Select>
-                                      </>
-                                    )}
-                                  />
-                                </FormControl>
-                              </Grid>
-                              <Grid item xs={6}>
-                                <FormControl fullWidth>
-                                  <Controller
-                                    name='status'
-                                    rules={{ required: true }}
-                                    control={control}
-                                    render={({ field: { value, onChange } }) => (
-                                      <>
-                                        <InputLabel id='demo-simple-select-label' required>
-                                          Trạng thái
-                                        </InputLabel>
-                                        <Select
-                                          label='Trạng thái'
-                                          labelId='demo-simple-select-label'
-                                          aria-describedby='validation-schema-group'
-                                          error={Boolean(errors.status)}
-                                          value={value ?? 0}
-                                          onChange={onChange}
-                                        >
-                                          <MenuItem value={0}>Chọn trạng thái</MenuItem>
-                                          <MenuItem value={1}>Chuẩn bị</MenuItem>
-                                          <MenuItem value={2}>Đang diễn ra</MenuItem>
-                                          <MenuItem value={3}>Kết thúc</MenuItem>
-                                        </Select>
-                                      </>
-                                    )}
-                                  />
-                                  {errors.status && (
-                                    <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-group'>
-                                      {errors.status.message}
-                                    </FormHelperText>
-                                  )}
-                                </FormControl>
-                              </Grid>
-                              <Grid item xs={6}>
-                                <FormControl fullWidth>
-                                  <Controller
-                                    name='examType'
-                                    rules={{ required: true }}
-                                    control={control}
-                                    render={({ field: { value, onChange } }) => (
-                                      <>
-                                        <InputLabel id='demo-simple-select-label' required>
-                                          Hình thức tổ chức
-                                        </InputLabel>
-                                        <Select
-                                          label='Hình thức tổ chức'
-                                          labelId='demo-simple-select-label'
-                                          aria-describedby='validation-schema-exam-type'
-                                          error={Boolean(errors.examType)}
-                                          value={value ?? 0}
-                                          onChange={onChange}
-                                        >
-                                          <MenuItem value={0}>Chọn Hình thức tổ chức </MenuItem>
-                                          <MenuItem value={1}>Luyện tập</MenuItem>
-                                          <MenuItem value={2}>Thi-Kiểm tra</MenuItem>
-                                        </Select>
-                                      </>
-                                    )}
-                                  />
-                                  {errors.examType && (
-                                    <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-exam-type'>
-                                      {errors.examType.message}
-                                    </FormHelperText>
-                                  )}
-                                </FormControl>
-                              </Grid>
-                              <Grid item xs={6}>
-                                <FormControl fullWidth>
-                                  <Controller
-                                    name='registrationType'
-                                    rules={{ required: true }}
-                                    control={control}
-                                    render={({ field: { value, onChange } }) => (
-                                      <>
-                                        <InputLabel id='demo-simple-select-label' required>
-                                          Hình thức đăng ký
-                                        </InputLabel>
-                                        <Select
-                                          label='Hình thức đăng ký'
-                                          labelId='demo-simple-select-label'
-                                          aria-describedby='validation-schema-registration-type'
-                                          error={Boolean(errors.registrationType)}
-                                          value={value ?? 0}
-                                          onChange={onChange}
-                                        >
-                                          <MenuItem value={0}>Chọn Hình thức đăng ký</MenuItem>
-                                          <MenuItem value={1}>Hạn chế</MenuItem>
-                                          <MenuItem value={2}>Công khai</MenuItem>
-                                        </Select>
-                                      </>
-                                    )}
-                                  />
-                                  {errors.registrationType && (
-                                    <FormHelperText
-                                      sx={{ color: 'error.main' }}
-                                      id='validation-schema-registration-type'
-                                    >
-                                      {errors.registrationType.message}
-                                    </FormHelperText>
-                                  )}
-                                </FormControl>
-                              </Grid>
-                              <Grid item xs={6}>
-                                <FormControl fullWidth>
-                                  <Controller
-                                    name='viewPermissionAfterFinish'
-                                    rules={{ required: true }}
-                                    control={control}
-                                    render={({ field: { value, onChange } }) => (
-                                      <>
-                                        <InputLabel id='demo-simple-select-label' required>
-                                          Hiển thị kết quả sau khi thi
-                                        </InputLabel>
-                                        <Select
-                                          label='Hiển thị kết quả sau khi thi'
-                                          labelId='demo-simple-select-label'
-                                          aria-describedby='validation-schema-viewPermissionAfterFinish'
-                                          error={Boolean(errors.viewPermissionAfterFinish)}
-                                          value={value ?? 0}
-                                          onChange={onChange}
-                                        >
-                                          <MenuItem value={0}>Chọn hiển thị kết quả </MenuItem>
-                                          <MenuItem value={1}>Chỉ xem điểm</MenuItem>
-                                          <MenuItem value={2}>Xem điểm và chi tiết bài làm</MenuItem>
-                                          <MenuItem value={4}>Không xem điểm và chi tiết bài làm</MenuItem>
-                                        </Select>
-                                      </>
-                                    )}
-                                  />
-                                  {errors.viewPermissionAfterFinish && (
-                                    <FormHelperText
-                                      sx={{ color: 'error.main' }}
-                                      id='validation-schema-viewPermissionAfterFinish'
-                                    >
-                                      {errors.viewPermissionAfterFinish.message}
-                                    </FormHelperText>
-                                  )}
-                                </FormControl>
-                              </Grid>
-                              <Grid item xs={12}>
-                                <FormControlLabel
-                                  name='isSpecificDuration'
-                                  control={
-                                    <Controller
-                                      name='isSpecificDuration'
-                                      control={control}
-                                      rules={{ required: false }}
-                                      render={({ field: { value, onChange } }) => (
-                                        <Checkbox
-                                          checked={value ?? false}
-                                          onChange={e => {
-                                            onChange(e)
-                                            handleChangeIsSpecificDuration(e)
-                                          }}
-                                        />
-                                      )}
-                                    />
-                                  }
-                                  label='Xác định thời gian bắt đầu/ kết thúc'
-                                />
-                              </Grid>
-                              {checkedIsSpecificDuration && (
-                                <>
-                                  <Grid item xs={6}>
-                                    <FormControl fullWidth>
-                                      <Controller
-                                        name='startDate'
-                                        control={control}
-                                        rules={{ required: true }}
-                                        render={({ field: { value, onChange } }) => (
-                                          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale='vi'>
-                                            <DateTimePicker
-                                              label='Thời gian bắt đầu'
-                                              value={moment(value) ?? null}
-                                              inputFormat='DD-MM-YYYY HH:mm hh:mm'
-                                              onChange={onChange}
-                                            />
-                                          </LocalizationProvider>
-                                        )}
-                                      />
-                                      {errors.startDate && (
-                                        <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-startDate'>
-                                          {errors.startDate.message}
-                                        </FormHelperText>
-                                      )}
-                                    </FormControl>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <FormControl fullWidth>
-                                      <Controller
-                                        name='endDate'
-                                        control={control}
-                                        rules={{ required: true }}
-                                        render={({ field: { value, onChange } }) => (
-                                          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale='vi'>
-                                            <DateTimePicker
-                                              label='Thời gian kết thúc'
-                                              value={moment(value) ?? null}
-                                              inputFormat='DD-MM-YYYY HH:mm hh:mm'
-                                              onChange={onChange}
-                                            />
-                                          </LocalizationProvider>
-                                        )}
-                                      />
-                                      {errors.endDate && (
-                                        <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
-                                          {errors.endDate.message}
-                                        </FormHelperText>
-                                      )}
-                                    </FormControl>
-                                  </Grid>
-                                </>
+                                )}
+                              />
+                              {errors.name && (
+                                <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
+                                  {errors.name.message}
+                                </FormHelperText>
                               )}
-                            </Grid>
+                            </FormControl>
                           </Grid>
+                          <Grid item xs={12}>
+                            <ParentFolderField
+                              api={new ExamApi()}
+                              type={FolderType.EXAM}
+                              onSave={handleParentChanged}
+                              parentId={
+                                !currentExam || currentExam.id == 0
+                                  ? parseInt(isNaN(folderId) ? '0' : folderId)
+                                  : currentExam.parentId
+                              }
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='content'
+                                control={control}
+                                rules={{ required: false }}
+                                render={({ field: { value, onChange } }) => (
+                                  <TextField
+                                    multiline
+                                    rows={3}
+                                    fullWidth
+                                    value={value ?? ''}
+                                    label='Mô tả'
+                                    InputLabelProps={{ shrink: true }}
+                                    onChange={onChange}
+                                  />
+                                )}
+                              />
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <FormControl fullWidth variant='outlined'>
+                              <InputLabel htmlFor='outlined-adornment-parent-category'>Danh mục Kỳ thi</InputLabel>
+                              <OutlinedInput
+                                id='outlined-adornment-parent-category'
+                                inputprops={{
+                                  readOnly: true,
+                                  className: 'Mui-disabled'
+                                }}
+                                value={examCategorySelected.name ?? ''}
+                                endAdornment={
+                                  <InputAdornment position='end'>
+                                    <IconButton
+                                      aria-label='toggle password visibility'
+                                      edge='end'
+                                      onClick={cleanExamCategory}
+                                    >
+                                      <DeleteOutline />
+                                    </IconButton>
+                                    &nbsp;
+                                    <IconButton
+                                      edge='end'
+                                      onClick={() => {
+                                        setOpenCatalogDialog(true)
+                                      }}
+                                    >
+                                      <FolderIcon />
+                                    </IconButton>
+                                  </InputAdornment>
+                                }
+                                label='Danh mục Kỳ thi'
+                              />
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='programId'
+                                control={control}
+                                render={({ field: { value, onChange } }) => (
+                                  <>
+                                    <InputLabel id='select-program-label'>Chương trình</InputLabel>
+                                    <Select
+                                      label='Chương trình'
+                                      labelId='select-program-label'
+                                      aria-describedby='validation-schema-exam-type'
+                                      value={value ?? 0}
+                                      onChange={e => {
+                                        onChange(parseInt(e.target.value))
+                                        setProgramCatalogId(parseInt(e.target.value))
+                                      }}
+                                    >
+                                      <MenuItem value={0}>Chọn Chương trình</MenuItem>
+                                      {programs &&
+                                        programs.map(item => (
+                                          <MenuItem key={`program-item${item.id}`} value={item.id}>
+                                            {item.name}
+                                          </MenuItem>
+                                        ))}
+                                    </Select>
+                                  </>
+                                )}
+                              />
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='subjectId'
+                                control={control}
+                                render={({ field: { value, onChange } }) => (
+                                  <>
+                                    <InputLabel id='select-subject-catalog'>Môn học/ Chủ đề</InputLabel>
+                                    <Select
+                                      label='Môn học/ Chủ đề'
+                                      labelId='select-subject-catalog'
+                                      aria-describedby='validation-schema-group'
+                                      value={value ?? 0}
+                                      onChange={e => {
+                                        onChange(parseInt(e.target.value))
+                                        setSubjectCatalogId(parseInt(e.target.value))
+                                      }}
+                                    >
+                                      <MenuItem value={0}>Chọn Môn học/ Chủ đề</MenuItem>
+                                      {subjects &&
+                                        subjects.map(item => (
+                                          <MenuItem key={`subject-item${item.id}`} value={item.id}>
+                                            {item.name}
+                                          </MenuItem>
+                                        ))}
+                                    </Select>
+                                  </>
+                                )}
+                              />
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='status'
+                                rules={{ required: true }}
+                                control={control}
+                                render={({ field: { value, onChange } }) => (
+                                  <>
+                                    <InputLabel id='demo-simple-select-label' required>
+                                      Trạng thái
+                                    </InputLabel>
+                                    <Select
+                                      label='Trạng thái'
+                                      labelId='demo-simple-select-label'
+                                      aria-describedby='validation-schema-group'
+                                      error={Boolean(errors.status)}
+                                      value={value ?? 0}
+                                      onChange={onChange}
+                                    >
+                                      <MenuItem value={0}>Chọn trạng thái</MenuItem>
+                                      <MenuItem value={1}>Chuẩn bị</MenuItem>
+                                      <MenuItem value={2}>Đang diễn ra</MenuItem>
+                                      <MenuItem value={3}>Kết thúc</MenuItem>
+                                    </Select>
+                                  </>
+                                )}
+                              />
+                              {errors.status && (
+                                <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-group'>
+                                  {errors.status.message}
+                                </FormHelperText>
+                              )}
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='examType'
+                                rules={{ required: true }}
+                                control={control}
+                                render={({ field: { value, onChange } }) => (
+                                  <>
+                                    <InputLabel id='demo-simple-select-label' required>
+                                      Hình thức tổ chức
+                                    </InputLabel>
+                                    <Select
+                                      label='Hình thức tổ chức'
+                                      labelId='demo-simple-select-label'
+                                      aria-describedby='validation-schema-exam-type'
+                                      error={Boolean(errors.examType)}
+                                      value={value ?? 0}
+                                      onChange={onChange}
+                                    >
+                                      <MenuItem value={0}>Chọn Hình thức tổ chức </MenuItem>
+                                      <MenuItem value={1}>Luyện tập</MenuItem>
+                                      <MenuItem value={2}>Thi-Kiểm tra</MenuItem>
+                                    </Select>
+                                  </>
+                                )}
+                              />
+                              {errors.examType && (
+                                <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-exam-type'>
+                                  {errors.examType.message}
+                                </FormHelperText>
+                              )}
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='registrationType'
+                                rules={{ required: true }}
+                                control={control}
+                                render={({ field: { value, onChange } }) => (
+                                  <>
+                                    <InputLabel id='demo-simple-select-label' required>
+                                      Hình thức đăng ký
+                                    </InputLabel>
+                                    <Select
+                                      label='Hình thức đăng ký'
+                                      labelId='demo-simple-select-label'
+                                      aria-describedby='validation-schema-registration-type'
+                                      error={Boolean(errors.registrationType)}
+                                      value={value ?? 0}
+                                      onChange={onChange}
+                                    >
+                                      <MenuItem value={0}>Chọn Hình thức đăng ký</MenuItem>
+                                      <MenuItem value={1}>Hạn chế</MenuItem>
+                                      <MenuItem value={2}>Công khai</MenuItem>
+                                    </Select>
+                                  </>
+                                )}
+                              />
+                              {errors.registrationType && (
+                                <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-registration-type'>
+                                  {errors.registrationType.message}
+                                </FormHelperText>
+                              )}
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <FormControl fullWidth>
+                              <Controller
+                                name='viewPermissionAfterFinish'
+                                rules={{ required: true }}
+                                control={control}
+                                render={({ field: { value, onChange } }) => (
+                                  <>
+                                    <InputLabel id='demo-simple-select-label' required>
+                                      Hiển thị kết quả sau khi thi
+                                    </InputLabel>
+                                    <Select
+                                      label='Hiển thị kết quả sau khi thi'
+                                      labelId='demo-simple-select-label'
+                                      aria-describedby='validation-schema-viewPermissionAfterFinish'
+                                      error={Boolean(errors.viewPermissionAfterFinish)}
+                                      value={value ?? 0}
+                                      onChange={onChange}
+                                    >
+                                      <MenuItem value={0}>Chọn hiển thị kết quả </MenuItem>
+                                      <MenuItem value={1}>Chỉ xem điểm</MenuItem>
+                                      <MenuItem value={2}>Xem điểm và chi tiết bài làm</MenuItem>
+                                      <MenuItem value={4}>Không xem điểm và chi tiết bài làm</MenuItem>
+                                    </Select>
+                                  </>
+                                )}
+                              />
+                              {errors.viewPermissionAfterFinish && (
+                                <FormHelperText
+                                  sx={{ color: 'error.main' }}
+                                  id='validation-schema-viewPermissionAfterFinish'
+                                >
+                                  {errors.viewPermissionAfterFinish.message}
+                                </FormHelperText>
+                              )}
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <FormControlLabel
+                              name='isSpecificDuration'
+                              control={
+                                <Controller
+                                  name='isSpecificDuration'
+                                  control={control}
+                                  rules={{ required: false }}
+                                  render={({ field: { value, onChange } }) => (
+                                    <Checkbox
+                                      checked={value ?? false}
+                                      onChange={e => {
+                                        onChange(e)
+                                        handleChangeIsSpecificDuration(e)
+                                      }}
+                                    />
+                                  )}
+                                />
+                              }
+                              label='Xác định thời gian bắt đầu/ kết thúc'
+                            />
+                          </Grid>
+                          {checkedIsSpecificDuration && (
+                            <>
+                              <Grid item xs={6}>
+                                <FormControl fullWidth>
+                                  <Controller
+                                    name='startDate'
+                                    control={control}
+                                    rules={{ required: true }}
+                                    render={({ field: { value, onChange } }) => (
+                                      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale='vi'>
+                                        <DateTimePicker
+                                          label='Thời gian bắt đầu'
+                                          value={moment(value) ?? null}
+                                          inputFormat='DD-MM-YYYY HH:mm hh:mm'
+                                          onChange={onChange}
+                                        />
+                                      </LocalizationProvider>
+                                    )}
+                                  />
+                                  {errors.startDate && (
+                                    <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-startDate'>
+                                      {errors.startDate.message}
+                                    </FormHelperText>
+                                  )}
+                                </FormControl>
+                              </Grid>
+                              <Grid item xs={6}>
+                                <FormControl fullWidth>
+                                  <Controller
+                                    name='endDate'
+                                    control={control}
+                                    rules={{ required: true }}
+                                    render={({ field: { value, onChange } }) => (
+                                      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale='vi'>
+                                        <DateTimePicker
+                                          label='Thời gian kết thúc'
+                                          value={moment(value) ?? null}
+                                          inputFormat='DD-MM-YYYY HH:mm hh:mm'
+                                          onChange={onChange}
+                                        />
+                                      </LocalizationProvider>
+                                    )}
+                                  />
+                                  {errors.endDate && (
+                                    <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
+                                      {errors.endDate.message}
+                                    </FormHelperText>
+                                  )}
+                                </FormControl>
+                              </Grid>
+                            </>
+                          )}
                         </Grid>
                       </form>
 

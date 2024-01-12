@@ -119,8 +119,8 @@ const TreeRow: React.FC<TreeRowProps> = (props: TreeRowProps) => {
               <span style={{ display: 'inline-block', width: 24 }}></span>
             ) : (
               <>
-                {isCollapsed && <IconReact path={mdilChevronUp} title='Folder' color='black' size={1} />}
-                {!isCollapsed && <IconReact path={mdilChevronDown} title='Folder' color='black' size={1} />}
+                {isCollapsed && <IconReact path={mdilChevronDown} title='Folder' color='black' size={1} />}
+                {!isCollapsed && <IconReact path={mdilChevronUp} title='Folder' color='black' size={1} />}
               </>
             )}
             {entityIcon}
