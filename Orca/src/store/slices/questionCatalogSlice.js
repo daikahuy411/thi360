@@ -9,7 +9,7 @@ export const questionCatalogSlice = createSlice({
   initialState,
   reducers: {
     selectQuestionCatalog: (state, action) => {
-      state.selectedQuestionCatalog = { ...action.payload }
+      state.selectedQuestionCatalog = action.payload ? { ...action.payload } : null
     }
   }
 })

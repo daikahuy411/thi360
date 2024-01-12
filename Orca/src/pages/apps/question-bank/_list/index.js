@@ -193,6 +193,13 @@ const QuestionTable = () => {
     }
   }
 
+  const addUrl = typeId => {
+    if (questionCatalogId && parseInt(questionCatalogId) > 0) {
+      return `/apps/question-catalog/${questionCatalogId ?? 0}/questions/add/${item.typeId}`
+    }
+    return `/apps/question-bank/add/${typeId}`
+  }
+
   return (
     <>
       <Toolbar style={{ padding: 0 }}>
@@ -236,11 +243,7 @@ const QuestionTable = () => {
         {questionTypes && (
           <Menu keepMounted id='simple-menu' anchorEl={anchorEl} onClose={handleClose} open={Boolean(anchorEl)}>
             {questionTypes.map(item => (
-              <MenuItem
-                component={Link}
-                key={item.id}
-                href={`/apps/question-catalog/${questionCatalogId ?? 0}/questions/add/${item.typeId}`}
-              >
+              <MenuItem component={Link} key={item.id} href={addUrl(item.typeId)}>
                 {item.name}
               </MenuItem>
             ))}

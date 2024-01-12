@@ -9,7 +9,7 @@ export const testGroupSectionItemSlice = createSlice({
   initialState,
   reducers: {
     selectTestGroupSectionItem: (state, action) => {
-      state.selectedTestGroupSectionItem = { ...action.payload }
+      state.selectedTestGroupSectionItem = action.payload ? { ...action.payload } : null
     }
   }
 })

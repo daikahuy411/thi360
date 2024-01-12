@@ -101,7 +101,7 @@ const QuestionEditForm = () => {
 
   let schema = yup.object().shape({
     content: yup.string().required('* bắt buộc'),
-    catalogId: yup.number().required('* bắt buộc')
+    catalogId: yup.number().required('* bắt buộc').moreThan(0, '* bắt buộc')
   })
 
   const {
@@ -309,8 +309,7 @@ const QuestionEditForm = () => {
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code == 1) {
-          router.query.questionId = response.data.id
-          router.push(router)
+          router.push(`/apps/question-catalog/${response.data.catalogId}/questions/${response.data.id}`)
         } else {
           reset()
           cleanCategory()
@@ -362,6 +361,7 @@ const QuestionEditForm = () => {
   }
 
   const cleanCatalog = () => {
+    setValue('catalogId', 0)
     setCatalogSelected({ id: 0, name: '' })
   }
 
@@ -1097,7 +1097,10 @@ const QuestionEditForm = () => {
 
             {openQuestionCatalogDialog && (
               <QuestionCatalogDialog
-                onOk={catalog => setCatalogSelected(catalog)}
+                onOk={catalog => {
+                  setValue('catalogId', catalog.id)
+                  setCatalogSelected(catalog)
+                }}
                 onClose={() => setOpenQuestionCatalogDialog(false)}
               />
             )}

@@ -9,7 +9,7 @@ export const tenantSlice = createSlice({
   initialState,
   reducers: {
     selectTenant: (state, action) => {
-      state.selectedTenant = { ...action.payload }
+      state.selectedTenant = action.payload ? { ...action.payload } : null
     }
   }
 })

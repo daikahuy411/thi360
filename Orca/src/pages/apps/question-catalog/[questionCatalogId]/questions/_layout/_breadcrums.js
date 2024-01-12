@@ -36,22 +36,30 @@ const TopNav = props => {
       <Link underline='hover' color='inherit' href='/'>
         <HomeOutlinedIcon />
       </Link>
-      <Link underline='hover' color='inherit' href='/apps/question-catalog/'>
-        Bộ Câu hỏi
-      </Link>
+      {currentQuestionCatalog && (
+        <Link underline='hover' color='inherit' href='/apps/question-catalog/'>
+          Bộ Câu hỏi
+        </Link>
+      )}
+      {!currentQuestionCatalog && (
+        <Link underline='hover' color='inherit' href='/apps/question-bank/'>
+          Ngân hàng Câu hỏi
+        </Link>
+      )}
       {currentQuestionCatalog &&
+        currentQuestionCatalog.id > 0 &&
         currentQuestionCatalog.ancestors &&
         currentQuestionCatalog.ancestors.map(item => (
           <Link underline='hover' color='inherit' key={`br-${item.id}`} href={`/apps/question-catalog/view/${item.id}`}>
             {item.name}
           </Link>
         ))}
-      {currentQuestionCatalog && (
+      {currentQuestionCatalog && currentQuestionCatalog.id > 0 && (
         <Link underline='hover' color='inherit' href={`/apps/question-catalog/${currentQuestionCatalog.id}`}>
           {currentQuestionCatalog.name}
         </Link>
       )}
-      {currentQuestionCatalog && (
+      {currentQuestionCatalog && currentQuestionCatalog.id > 0 && (
         <Link underline='hover' color='inherit' href={`/apps/question-catalog/${currentQuestionCatalog.id}/questions/`}>
           Câu hỏi
         </Link>
