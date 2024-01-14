@@ -98,7 +98,7 @@ const QuestionEditForm = () => {
   const [category, setCategory] = useState(null)
   const [answerGroups, setAnswerGroups] = useState([])
   const [catalogSelected, setCatalogSelected] = useState({ id: 0, name: '' })
-  const [setting, setSetting] = useState(null)
+  const [setting, setSetting] = useState({ controlType: -1, caseSensitive: -1 })
 
   let schema = yup.object().shape({
     content: yup.string().required('* bắt buộc'),
@@ -121,7 +121,9 @@ const QuestionEditForm = () => {
 
   useEffect(() => {
     if (!questionId || questionId == 0) {
-      dispatch(selectQuestion({ id: 0, name: '', content: '', answers: [] }))
+      dispatch(
+        selectQuestion({ id: 0, name: '', content: '', answers: [] })
+      )
       return
     }
 
@@ -174,7 +176,7 @@ const QuestionEditForm = () => {
       }
 
       setAnswers(Object.values(data.answers))
-      setSetting(response.data.setting)
+      setSetting(response.data.setting || { controlType: -1, caseSensitive: -1 })
       setIsLoadingQuestion(false)
 
       if (data.questionTypeId === QuestionType.MATCHING) {
