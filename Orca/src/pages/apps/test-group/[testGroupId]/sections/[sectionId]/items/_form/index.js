@@ -102,6 +102,11 @@ const ItemEditForm = () => {
     setSelectedQuestions(reOrderItems)
   }
 
+  const deleteItem = item => {
+    var newItems = selectedQuestions.filter(x => x.id != item.id)
+    setSelectedQuestions([...newItems])
+  }
+
   const {
     control,
     handleSubmit,
@@ -409,7 +414,7 @@ const ItemEditForm = () => {
                                                 >
                                                   <Icon icon='mdi:eye-outline' fontSize={20} />
                                                 </IconButton>
-                                                <IconButton onClick={() => moveItem(index, index + 1)}>
+                                                <IconButton onClick={() => deleteItem(row)}>
                                                   <Icon icon='mdi:trash' fontSize={20} />
                                                 </IconButton>
                                               </TableCell>
@@ -417,7 +422,7 @@ const ItemEditForm = () => {
                                                 <Typography variant='body1'>{row.id}</Typography>
                                               </TableCell>
                                               <TableCell component='th' scope='row'>
-                                                {row.shortContent}
+                                                <Typography variant='body1'>{row.shortContent}</Typography>
                                               </TableCell>
                                               <TableCell component='th' scope='row'>
                                                 {row.catalog ? (
@@ -444,7 +449,6 @@ const ItemEditForm = () => {
                                               </TableCell>
                                               <TableCell>
                                                 <Typography variant='body1'>
-                                                  {' '}
                                                   {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
                                                 </Typography>
                                               </TableCell>

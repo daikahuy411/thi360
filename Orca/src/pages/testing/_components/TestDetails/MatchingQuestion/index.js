@@ -32,7 +32,8 @@ var sourceOption = {
   setDragAllowedWhenFull: true
 }
 
-export default function MatchingQuestion({ question, onChanged }) {
+/// data: trả lời của Học viên, theo format:  {anserId1:anserId2,anserId3:anserId4}
+export default function MatchingQuestion({ question, onChanged, data }) {
   const editorRef = useRef()
   const [jsPlumbLoaded, setJsPlumbLoaded] = useState(false)
   const { jsPlumb } = editorRef.current || {}
@@ -40,7 +41,7 @@ export default function MatchingQuestion({ question, onChanged }) {
   const [targetElm, setTargetElm] = useState(null)
   const [leftNodes, setLeftNodes] = useState([])
   const [rightNodes, setRightNodes] = useState([])
-  const [connections, setConnections] = useState([])
+  const [connections, setConnections] = useState(null)
   const [endpoints, setEndpoints] = useState([])
 
   useEffect(() => {
@@ -49,6 +50,13 @@ export default function MatchingQuestion({ question, onChanged }) {
     }
     setJsPlumbLoaded(true)
   }, [])
+
+  useEffect(() => {
+    if (!connections) return
+    if (onChanged) {
+      onChanged(connections)
+    }
+  }, [connections])
 
   const [jsPlumbInstance, setJsPlumbInstance] = useState(null)
   const container = useRef(null)
@@ -100,17 +108,34 @@ export default function MatchingQuestion({ question, onChanged }) {
 
       setEndpoints(prev => [...prev, p1, p2])
 
-      setConnections(prev => [
-        ...prev,
-        {
-          s: sourceElm,
-          t: targetElm
-        }
-      ])
+      let newConnections = connections || {}
+      newConnections[sourceElm.toString()] = targetElm
+      setConnections({ ...newConnections })
 
       jsPlumbInstance.repaintEverything()
     }
   }
+
+  useEffect(() => {
+    if (!data || !jsPlumbInstance) return
+
+    let endpoints = []
+    Object.keys(data).forEach(s => {
+      const p1 = jsPlumbInstance.addEndpoint(s, sourceOption)
+      const p2 = jsPlumbInstance.addEndpoint(data[s], targetOption)
+
+      jsPlumbInstance.connect({
+        source: p1,
+        target: p2
+      })
+
+      endpoints.push(p1)
+      endpoints.push(p2)
+    })
+
+    setEndpoints(endpoints)
+    jsPlumbInstance.repaintEverything()
+  }, [data, jsPlumbInstance])
 
   return (
     <>
@@ -123,9 +148,9 @@ export default function MatchingQuestion({ question, onChanged }) {
                   {leftNodes.map(item => (
                     <li
                       className={styles.li}
-                      id={`s-${item.id}`}
-                      key={`s-${item.id}`}
-                      onClick={() => setSourceElm(`s-${item.id}`)}
+                      id={`${item.id}`}
+                      key={`${item.id}`}
+                      onClick={() => setSourceElm(`${item.id}`)}
                     >
                       {ReactHtmlParser(item.content)}
                     </li>
@@ -139,51 +164,13 @@ export default function MatchingQuestion({ question, onChanged }) {
                   {rightNodes.map(item => (
                     <li
                       className={styles.li}
-                      id={`t-${item.id}`}
-                      key={`t-${item.id}`}
-                      onClick={() => setSourceElm(`t-${item.id}`)}
+                      id={`${item.id}`}
+                      key={`${item.id}`}
+                      onClick={() => setTargetElm(`${item.id}`)}
                     >
                       {ReactHtmlParser(item.content)}
                     </li>
                   ))}
-                </ul>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td style={{ width: '50%' }}>
-              <div id='select_list_lebensbereiche'>
-                <ul className={styles.ul}>
-                  <li className={styles.li} id='match1' onClick={() => setSourceElm('match1')}>
-                    Source 1
-                  </li>
-                  <li className={styles.li} id='match2' onClick={() => setSourceElm('match2')}>
-                    Source 2
-                  </li>
-                  <li className={styles.li} id='match3' onClick={() => setSourceElm('match3')}>
-                    Source 3
-                  </li>
-                  <li className={styles.li} id='match4' onClick={() => setSourceElm('match4')}>
-                    Source 4
-                  </li>
-                </ul>
-              </div>
-            </td>
-            <td style={{ width: '50%' }}>
-              <div id='select_list_wirkdimensionen'>
-                <ul className={styles.ul}>
-                  <li className={styles.li} id='answer1' onClick={() => setTargetElm('answer1')}>
-                    Target 1
-                  </li>
-                  <li className={styles.li} id='answer2' onClick={() => setTargetElm('answer2')}>
-                    Target 2
-                  </li>
-                  <li className={styles.li} id='answer3' onClick={() => setTargetElm('answer3')}>
-                    Target 3
-                  </li>
-                  <li className={styles.li} id='answer4' onClick={() => setTargetElm('answer4')}>
-                    Target 4
-                  </li>
                 </ul>
               </div>
             </td>

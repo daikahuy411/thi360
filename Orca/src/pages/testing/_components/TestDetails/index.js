@@ -250,6 +250,7 @@ class TestDetails extends React.Component {
 
     const totalQuestion = this.state.examAttempt.testGroup.questionMaps.length
     if (currentQuestionIndex == totalQuestion) {
+      this.updateExamAttempt()
       // this.setState({ disableNextButton: true });
       return
     }
@@ -686,6 +687,24 @@ class TestDetails extends React.Component {
         }).length
       )
     }
+  }
+
+  // Sắp xếp lại thứ tự của câu trả lời đối với Câu hỏi sắp xếp
+  syncAnswerOrder = function () {
+    const orders = this.state.userAnswers[this.state.currentQuestionId]
+    if (orders) {
+      let newAnswers = []
+      orders.split(';').map(item => {
+        newAnswers.push(this.state.currentQuestion.answers.find(x => x.id.toString() == item))
+      })
+      return newAnswers
+    } else {
+      return this.state.currentQuestion.answers
+    }
+  }
+
+  getUserAnswerOfCurrentQuestion = function () {
+    return this.state.userAnswers[this.state.currentQuestionId] ?? null
   }
 
   render() {
@@ -1359,7 +1378,7 @@ class TestDetails extends React.Component {
                                     <div className='flex flex-column w-100'>
                                       <OrderQuestion
                                         onChanged={ids => this.saveQuestionAttemptedState(ids)}
-                                        data={this.state.currentQuestion.answers}
+                                        data={this.syncAnswerOrder()}
                                       />
                                     </div>
                                   </div>
@@ -1384,7 +1403,11 @@ class TestDetails extends React.Component {
                                     </div>
                                     <div className='flex flex-column w-100'>
                                       <b>Ghép đôi</b>
-                                      <MatchingQuestion question={this.state.currentQuestion} />
+                                      <MatchingQuestion
+                                        onChanged={ids => this.saveQuestionAttemptedState(ids)}
+                                        question={this.state.currentQuestion}
+                                        data={this.getUserAnswerOfCurrentQuestion()}
+                                      />
                                     </div>
                                   </div>
                                 )}
