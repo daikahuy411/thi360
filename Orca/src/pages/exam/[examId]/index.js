@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-  forwardRef,
   useEffect,
   useState
 } from 'react'
@@ -12,6 +11,7 @@ import { useAuth } from 'hooks/useAuth'
 import Head from 'next/head'
 import NavLink from 'next/link'
 import { useRouter } from 'next/router'
+import LoginRequiredDialog from 'pages/shared/login-required-dialog'
 import TestAttemptHistoryDialog from 'pages/shared/test-attempt-history-dialog'
 import toast from 'react-hot-toast'
 
@@ -20,20 +20,11 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import Link from '@mui/material/Link'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import Slide from '@mui/material/Slide'
-
-const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction='up' ref={ref} {...props} />
-})
 
 const ExamPage = () => {
   const router = useRouter()
@@ -93,6 +84,13 @@ const ExamPage = () => {
   const handleActionClose = (id, event) => {
     anchorEls[id] = null
     setAnchorEls([...anchorEls])
+  }
+
+  const returnUrl = () => {
+    if (exam && exam.program) {
+      return `/program/${exam.program.id}/exam/${exam.id}`
+    }
+    return ''
   }
 
   return (
@@ -511,25 +509,9 @@ const ExamPage = () => {
           </LoadingSpinner>
         </Grid>
       </Grid>
-      <Dialog
-        open={showLogin}
-        keepMounted
-        onClose={() => setShowLogin(false)}
-        TransitionComponent={Transition}
-        aria-labelledby='alert-dialog-slide-title'
-        aria-describedby='alert-dialog-slide-description'
-      >
-        <DialogContent>
-          <DialogContentText id='alert-dialog-slide-description'>
-            Vui lòng đăng nhập hoặc đăng ký để tiếp tục
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions className='dialog-actions-dense'>
-          <NavLink href={'/login'}>
-            <Button>Đăng nhập/ Đăng ký</Button>
-          </NavLink>
-        </DialogActions>
-      </Dialog>
+
+      {showLogin && <LoginRequiredDialog returnUrl={returnUrl()} onClose={() => setShowLogin(false)} />}
+
       <TestAttemptHistoryDialog
         open={openTestAttemptHistory}
         test={selectedTest}

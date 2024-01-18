@@ -1,4 +1,7 @@
-import React, { Component } from 'react'
+import React, {
+  Component,
+  useState
+} from 'react'
 
 import JsxParser from 'react-jsx-parser'
 
@@ -14,10 +17,9 @@ class TexctFieldQuestion extends Component {
   render() {
     return (
       <>
-        <b>inject component</b> &nbsp;
         <TextField
           value={this.props.value}
-          onChange={e => this.props.eventHandler(`${this.props.name}:${e.target.value}`)}
+          onChange={e => this.props.eventHandler(`${this.props.name}`, e.target.value)}
         />
       </>
     )
@@ -36,7 +38,7 @@ class SelectQuestion extends Component {
         <Select
           label='Trạng thái'
           value={this.props.value}
-          onChange={e => this.props.eventHandler(`${this.props.name}:${e.target.value}`)}
+          onChange={e => this.props.eventHandler(`${this.props.name}`, e.target.value)}
         >
           <MenuItem value={'0'}>Chọn trạng thái</MenuItem>
           <MenuItem value={'1'}>Chuẩn bị</MenuItem>
@@ -48,9 +50,16 @@ class SelectQuestion extends Component {
   }
 }
 
-const FbQuestion = ({ question, onChanged }) => {
-  const onChange = value => {
-    console.log(value)
+const FbQuestion = ({ question, onChanged, userAnswer }) => {
+  const [answer, setAnswer] = useState(userAnswer)
+
+  const onChange = (name, value) => {
+    let newAnswer = { ...answer }
+    newAnswer[name] = value
+    setAnswer(newAnswer)
+    if (onChanged) {
+      onChanged(newAnswer)
+    }
   }
 
   return (
@@ -58,8 +67,8 @@ const FbQuestion = ({ question, onChanged }) => {
       <JsxParser
         bindings={{
           foo: 'bar',
-          onChanged: value => {
-            onChange(value)
+          onChanged: (name, value) => {
+            onChange(name, value)
           }
         }}
         components={{ TexctFieldQuestion, SelectQuestion }}

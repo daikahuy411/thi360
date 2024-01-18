@@ -144,6 +144,28 @@ class V1Api extends ApiBase {
     const response = axios.post(url, param)
     return response
   }
+
+  updateProfile = (request: any) => {
+    const url = `${this.baseApiUrl}/UpdateProfile`
+    const response = axios.put(url, request, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response
+  }
+
+  me = () => {
+    return axios.get(this.baseApiUrl + '/me')
+  }
+
+  requestEmailConfirmed = () => {
+    return axios.post(this.baseApiUrl + '/requestEmailConfirmed')
+  }
+
+  sendActiveCodeEmail = () => {
+    return axios.post(this.baseApiUrl + '/SendActiveCodeEmail')
+  }
 }
 
 export default V1Api

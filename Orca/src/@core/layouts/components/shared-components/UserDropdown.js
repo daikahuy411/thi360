@@ -128,7 +128,7 @@ const UserDropdown = props => {
             }}
           >
             <Avatar
-              alt='John Doe'
+              alt=''
               onClick={handleDropdownOpen}
               sx={{ width: 40, height: 40 }}
               src={currentUser?.pictureUrl ? currentUser.pictureUrl : '/images/avatars/default1.png'}
@@ -183,12 +183,12 @@ const UserDropdown = props => {
                 Trang cá nhân
               </Box>
             </MenuItem>
-            <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/user-profile/attemp-history')}>
+            {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/user-profile/attemp-history')}>
               <Box sx={styles}>
                 <Icon icon='mdi:history' />
                 Lịch sử Thi
               </Box>
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/user-profile/pricing')}>
               <Box sx={styles}>
                 <Icon icon='mdi:cart-outline' />
@@ -197,7 +197,7 @@ const UserDropdown = props => {
             </MenuItem>
             <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/account-settings/account')}>
               <Box sx={styles}>
-                <Icon icon='mdi:cog-outline' />
+                <Icon icon='mdi:account-outline' />
                 Thông tin tài khoản
               </Box>
             </MenuItem>

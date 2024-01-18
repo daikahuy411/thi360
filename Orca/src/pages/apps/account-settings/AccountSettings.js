@@ -1,8 +1,15 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
 import { useRouter } from 'next/router'
 import TabAccount from 'pages/apps/account-settings/account/TabAccount'
 import TabSecurity from 'pages/apps/account-settings/security/TabSecurity'
+import TeacherProfile from 'pages/apps/account-settings/teacher-profile'
+
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import TabContext from '@mui/lab/TabContext'
 import MuiTabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
@@ -11,7 +18,6 @@ import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
 import Tab from '@mui/material/Tab'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import LoadingSpinner from '@core/components/loading-spinner'
 
 const TabList = styled(MuiTabList)(({ theme }) => ({
   '& .MuiTabs-indicator': {
@@ -59,7 +65,8 @@ const AccountSettings = () => {
 
   const tabContentList = {
     account: <TabAccount tab={tab} />,
-    security: <TabSecurity />
+    security: <TabSecurity />,
+    teacher: <TeacherProfile />
   }
 
   return (
@@ -80,6 +87,15 @@ const AccountSettings = () => {
                     <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
                       <Icon icon='mdi:account-outline' />
                       {!hideText && 'Thông tin tài khoản'}
+                    </Box>
+                  }
+                />
+                <Tab
+                  value='teacher'
+                  label={
+                    <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
+                      <Icon icon='mdi:school-outline' />
+                      {!hideText && 'Hồ sơ Giáo viên'}
                     </Box>
                   }
                 />

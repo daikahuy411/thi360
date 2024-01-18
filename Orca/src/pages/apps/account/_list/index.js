@@ -8,6 +8,8 @@ import moment from 'moment'
 import Link from 'next/link'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { selectAccount } from 'store/slices/accountSlice'
 
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
@@ -35,8 +37,6 @@ import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import { useDispatch } from 'react-redux'
-import { selectAccount } from 'store/slices/accountSlice'
 
 function PaperComponent(props) {
   return (
@@ -198,7 +198,7 @@ const UserTable = () => {
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
-            labelRowsPerPage='Số dòng/trang'
+            labelRowsPerPage='Hiển thị'
             rowsPerPageOptions={[20, 30, 50]}
             component='div'
             count={totalItem}
@@ -283,7 +283,7 @@ const UserTable = () => {
         </LoadingSpinner>
       </TableContainer>
       <TablePagination
-        labelRowsPerPage='Số dòng/trang'
+        labelRowsPerPage='Hiển thị'
         rowsPerPageOptions={[20, 30, 50]}
         component='div'
         count={totalItem}

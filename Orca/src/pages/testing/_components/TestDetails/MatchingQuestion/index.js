@@ -33,7 +33,7 @@ var sourceOption = {
 }
 
 /// data: trả lời của Học viên, theo format:  {anserId1:anserId2,anserId3:anserId4}
-export default function MatchingQuestion({ question, onChanged, data }) {
+export default function MatchingQuestion({ question, onChanged, data, readOnly }) {
   const editorRef = useRef()
   const [jsPlumbLoaded, setJsPlumbLoaded] = useState(false)
   const { jsPlumb } = editorRef.current || {}
@@ -147,7 +147,7 @@ export default function MatchingQuestion({ question, onChanged, data }) {
                 <ul className={styles.ul}>
                   {leftNodes.map(item => (
                     <li
-                      className={styles.li}
+                      className={sourceElm == item.id ? `${styles.active} ${styles.li}` : `${styles.li}`}
                       id={`${item.id}`}
                       key={`${item.id}`}
                       onClick={() => setSourceElm(`${item.id}`)}
@@ -163,7 +163,7 @@ export default function MatchingQuestion({ question, onChanged, data }) {
                 <ul className={styles.ul}>
                   {rightNodes.map(item => (
                     <li
-                      className={styles.li}
+                      className={targetElm == item.id ? `${styles.active} ${styles.li}` : `${styles.li}`}
                       id={`${item.id}`}
                       key={`${item.id}`}
                       onClick={() => setTargetElm(`${item.id}`)}

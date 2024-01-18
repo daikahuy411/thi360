@@ -121,9 +121,7 @@ const QuestionEditForm = () => {
 
   useEffect(() => {
     if (!questionId || questionId == 0) {
-      dispatch(
-        selectQuestion({ id: 0, name: '', content: '', answers: [] })
-      )
+      dispatch(selectQuestion({ id: 0, name: '', content: '', answers: [] }))
       return
     }
 
@@ -544,7 +542,11 @@ const QuestionEditForm = () => {
       return `/apps/question-catalog/${questionCatalogId}/categories/${questionCategoryId}/questions/`
     }
 
-    return `/apps/question-catalog/${questionCatalogId}/questions/`
+    if (questionCatalogId && questionCatalogId != '0') {
+      return `/apps/question-catalog/${questionCatalogId}/questions/`
+    }
+
+    return `/apps/question-bank`
   }
 
   return (

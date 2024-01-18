@@ -233,6 +233,7 @@ const ClassTable = () => {
             rowsPerPageOptions={[20, 30, 50]}
             component='div'
             count={totalItem}
+            labelRowsPerPage="Hiển thị"
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -350,6 +351,7 @@ const ClassTable = () => {
         component='div'
         count={totalItem}
         rowsPerPage={rowsPerPage}
+        labelRowsPerPage="Hiển thị"
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}

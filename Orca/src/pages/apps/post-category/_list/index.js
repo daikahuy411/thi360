@@ -113,7 +113,7 @@ const ExamCategoryTable = () => {
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
-            labelRowsPerPage='Số dòng/trang'
+            labelRowsPerPage='Hiển thị'
             rowsPerPageOptions={[20, 30, 50]}
             component='div'
             count={totalParentItem}
@@ -139,7 +139,7 @@ const ExamCategoryTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        labelRowsPerPage='Số dòng/trang'
+        labelRowsPerPage='Hiển thị'
         rowsPerPageOptions={[20, 30, 50]}
         component='div'
         count={totalParentItem}

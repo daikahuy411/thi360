@@ -237,7 +237,7 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
       onClose={handleClose}
       variant='temporary'
       ModalProps={{ keepMounted: true }}
-      sx={{ '& .MuiDrawer-paper': { width: [350, 400] } }}
+      sx={{ '& .MuiDrawer-paper': { width: [360, 400] } }}
     >
       <Header>
         <Typography variant='h6'>Đăng ký</Typography>
@@ -333,12 +333,13 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
               <CardContent>
                 <Typography sx={{ mb: 4, fontWeight: 600 }}>Mã giảm giá</Typography>
                 <Box sx={{ mb: 4, display: 'flex', alignItems: 'center' }}>
-                  <TextField fullWidth sx={{ mr: 4 }} size='small' value={inputCodeValue} onChange={(e) => setInputCodeValue(e.target.value)} placeholder='Nhập mã và nhấn Apply' />
+                  <TextField fullWidth sx={{ mr: 4 }} size='small' value={inputCodeValue} onChange={(e) => setInputCodeValue(e.target.value)} placeholder='Nhập mã...' />
                   <LoadingButton
                     variant='outlined'
                     onClick={handleApplyCode}
                     loading={loadingApply}
                     loadingIndicator="Loading…"
+                    style={{width: 180}}
                   >
                     Sử dụng
                   </LoadingButton>
