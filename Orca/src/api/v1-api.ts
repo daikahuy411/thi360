@@ -147,12 +147,11 @@ class V1Api extends ApiBase {
 
   updateProfile = (request: any) => {
     const url = `${this.baseApiUrl}/UpdateProfile`
-    const response = axios.put(url, request, {
+    return axios.put(url, request, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     })
-    return response
   }
 
   me = () => {
@@ -165,6 +164,18 @@ class V1Api extends ApiBase {
 
   sendActiveCodeEmail = () => {
     return axios.post(this.baseApiUrl + '/SendActiveCodeEmail')
+  }
+
+  updateTenant = (tenant: any) => {
+    return axios.post(this.baseApiUrl + '/UpdateTenant', tenant)
+  }
+
+  getTenant = () => {
+    return axios.get(this.baseApiUrl + '/Tenant')
+  }
+
+  requestBecomeTeacher = () => {
+    return axios.post(this.baseApiUrl + '/RequestBecomeTeacher')
   }
 }
 
