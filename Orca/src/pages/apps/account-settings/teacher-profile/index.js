@@ -19,6 +19,8 @@ import * as yup from 'yup'
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { mdilClock } from '@mdi/light-js'
+import IconReact from '@mdi/react'
 import { Button } from '@mui/material'
 import Alert from '@mui/material/Alert'
 import Card from '@mui/material/Card'
@@ -116,12 +118,7 @@ const TeacherProfile = props => {
       .updateTenant(item)
       .then(response => {
         setTenantLoading(false)
-        const data = response.data
-        if (data.succeeded) {
-          toast.success('Cập nhật dữ liệu thành công')
-        } else {
-          toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu')
-        }
+        toast.success('Cập nhật dữ liệu thành công.')
       })
       .catch(e => {
         setTenantLoading(false)
@@ -287,6 +284,19 @@ const TeacherProfile = props => {
                     {data && data.requestBecomeTeacher && data.requestBecomeTeacherDate && (
                       <FormHelperText>
                         Gửi đăng ký vào ngày: {moment(data.requestBecomeTeacherDate).format('DD-MM-YYYY HH:mm')}
+                      </FormHelperText>
+                    )}
+                    {data && (!data.approveBecomeTeacherNote || data.approveBecomeTeacherNote == false) && (
+                      <>
+                        <FormHelperText>
+                          Trạng thái: Chờ duyệt. (Vui lòng chờ Quản trị duyệt.) &nbsp;{' '}
+                          <IconReact path={mdilClock} title='Folder' size={0.8} />
+                        </FormHelperText>
+                      </>
+                    )}
+                    {data && data.approveBecomeTeacherDate && data.approveBecomeTeacherNote && (
+                      <FormHelperText>
+                        Đã duyệt ngày: {moment(data.approveBecomeTeacherDate).format('DD-MM-YYYY HH:mm')}
                       </FormHelperText>
                     )}
                   </Grid>

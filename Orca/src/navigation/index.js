@@ -229,6 +229,10 @@ export const systemLinks = [
         path: '/apps/account'
       },
       {
+        title: 'Duyệt Hồ sơ GV',
+        path: '/apps/teacher-request'
+      },
+      {
         title: 'Tenant',
         path: '/apps/tenant'
       },

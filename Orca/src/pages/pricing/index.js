@@ -6,6 +6,7 @@ import {
 
 import V1Api from 'api/v1-api'
 import themeConfig from 'configs/themeConfig'
+import { useAuth } from 'hooks/useAuth'
 import Head from 'next/head'
 
 import Icon from '@core/components/icon'
@@ -132,7 +133,9 @@ const data = {
 }
 
 const PricingPage = () => {
-  const [value, setValue] = useState('student')
+  const auth = useAuth()
+
+  const [tab, setTab] = useState('student')
   const [promotions, setPromotions] = useState([])
   const [plans, setPlans] = useState([])
   const [addPaymentOpen, setAddPaymentOpen] = useState(false)
@@ -140,7 +143,7 @@ const PricingPage = () => {
   const toggleAddPaymentDrawer = () => setAddPaymentOpen(!addPaymentOpen)
 
   const handleChange = (event, newValue) => {
-    setValue(newValue)
+    setTab(newValue)
   }
 
   useEffect(() => {
@@ -165,7 +168,7 @@ const PricingPage = () => {
   }
   return (
     <>
-    <Head>
+      <Head>
         <title>{`Danh sách gói đăng ký, Chương trình khuyến mãi - ${themeConfig.templateName}`}</title>
       </Head>
       <Grid container spacing={8} justifyContent='center'>
@@ -174,6 +177,22 @@ const PricingPage = () => {
             <CardContent>
               <br />
               <PricingHeader />
+              {!auth.user && (
+                <>
+                  <Alert severity='success' icon={<Icon icon='mdi:tag-outline' />} sx={{ mb: 4 }}>
+                    Bạn đăng nhập trước.
+                  </Alert>
+                </>
+              )}
+
+              {auth.user && tab == 'teacher' && (
+                <>
+                  <Alert severity='success' icon={<Icon icon='mdi:tag-outline' />} sx={{ mb: 4 }}>
+                    Gói giáo viên phải xác thực tài khoản và đăng ký hồ sơ trước được duyệt.
+                  </Alert>
+                </>
+              )}
+
               <Alert severity='success' icon={<Icon icon='mdi:tag-outline' />} sx={{ mb: 4 }}>
                 <AlertTitle>Khuyến mại</AlertTitle>
                 <div>
@@ -185,8 +204,8 @@ const PricingPage = () => {
                     ))}
                 </div>
               </Alert>
-              <TabContext value={value}>
-                <TabList variant='fullWidth' onChange={handleChange} aria-label='full width tabs example'>
+              <TabContext value={tab}>
+                <TabList variant='fullWidth' onChange={handleChange}>
                   <Tab value='student' label='HỌC VIÊN' />
                   <Tab value='teacher' label='GIÁO VIÊN' />
                   <Tab value='enterprise' label='TRUNG TÂM, TỔ CHỨC' />
@@ -194,7 +213,7 @@ const PricingPage = () => {
               </TabContext>
               <br />
               <Grid container spacing={6}>
-                {plans[value]?.map(item => (
+                {plans[tab]?.map(item => (
                   <Grid item xs={12} md={4} key={item.id}>
                     <PlanDetails
                       isCurrentPlan={
