@@ -132,7 +132,7 @@ const CategoryTable = () => {
         </Grid>
         <Grid item md={6} alignContent={'right'}>
           <TablePagination
-            labelRowsPerPage='Số dòng/trang'
+            labelRowsPerPage='Hiển thị'
             rowsPerPageOptions={[20, 30, 50]}
             component='div'
             count={totalParentItem}
@@ -172,7 +172,7 @@ const CategoryTable = () => {
         </LoadingSpinner>
       </TableContainer>
       <TablePagination
-        labelRowsPerPage='Số dòng/trang'
+        labelRowsPerPage='Hiển thị'
         rowsPerPageOptions={[20, 30, 50]}
         component='div'
         count={totalParentItem}

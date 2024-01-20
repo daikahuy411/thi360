@@ -1,5 +1,8 @@
 // ** React Imports
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import moment from 'moment'
 import { useRouter } from 'next/router'
@@ -79,7 +82,7 @@ const UserProfileHeader = props => {
           >
             <Box sx={{ mb: [6, 0], display: 'flex', flexDirection: 'column', alignItems: ['center', 'flex-start'] }}>
               <Typography variant='h5' sx={{ mb: 4 }}>
-                {data?.fullName} <span style={{ fontSize: '1.2993rem' }}>({data?.userName})</span>
+                {data?.fullName}
               </Typography>
               <Box
                 sx={{

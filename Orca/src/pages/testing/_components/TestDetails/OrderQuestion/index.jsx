@@ -66,8 +66,10 @@ const SortableItem = SortableElement(({ value }) => (
 
 class OrderQuestion extends Component {
   state = {
-    items: this.props.data
+    items: this.props.data,
+    readOnly: this.props.readOnly
   }
+
   onSortEnd = ({ oldIndex, newIndex }) => {
     const newItems = arrayMoveImmutable(this.state.items, oldIndex, newIndex)
     this.setState({ items: newItems })
@@ -76,7 +78,22 @@ class OrderQuestion extends Component {
     }
   }
   render() {
-    return <SortableList items={this.state.items} onSortEnd={this.onSortEnd} />
+    return (
+      <>
+        {(!this.props.readOnly || this.props.readOnly === false) && (
+          <SortableList items={this.state.items} onSortEnd={this.onSortEnd} />
+        )}
+        {this.props.readOnly && this.props.readOnly === true && (
+          <StyledList disablePadding>
+            {items.map((value, index) => (
+              <div className='MuiListItem-root' key={`view-answers-${index}`}>
+                <div>{ReactHtmlParser(value.content)}</div>
+              </div>
+            ))}
+          </StyledList>
+        )}
+      </>
+    )
   }
 }
 

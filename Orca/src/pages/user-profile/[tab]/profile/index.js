@@ -152,18 +152,6 @@ const ProfileTab = ({ data }) => {
                 </Card>
               </Grid>
             )}
-            {/* <Grid item xs={12}>
-              <Card>
-                <CardContent>
-                  <div>
-                    <Typography variant='caption' sx={{ mb: 5, display: 'block', textTransform: 'uppercase' }}>
-                      Gói sản phẩm
-                    </Typography>
-                    Bạn đang dùng gói Standard
-                  </div>
-                </CardContent>
-              </Card>
-            </Grid> */}
           </Grid>
         </Grid>
       </Grid>

@@ -15,8 +15,6 @@ import {
   Controller,
   useForm
 } from 'react-hook-form'
-// ** Demo Imports
-import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
 // ** Third Party Imports
 import * as yup from 'yup'
 
@@ -184,14 +182,18 @@ const Register = () => {
       </Head>
       <Box className='content-right'>
         {!hidden ? (
-          <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
-            <RegisterIllustrationWrapper>
-              <RegisterIllustration
-                alt='register-illustration'
-                src={`/images/pages/misc-coming-soon.png`}
-              />
-            </RegisterIllustrationWrapper>
-            <FooterIllustrationsV2 image={<TreeIllustration alt='tree' src='/images/pages/tree-2.png' />} />
+          <Box
+            sx={{
+              flex: 1,
+              display: 'flex',
+              position: 'relative',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundImage: "url('/images/pages/misc-coming-soon.png')",
+              backgroundSize: 'cover'
+            }}
+          >
+            <RegisterIllustrationWrapper></RegisterIllustrationWrapper>
           </Box>
         ) : null}
         <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
@@ -221,15 +223,13 @@ const Register = () => {
                     <div
                       style={{
                         borderRadius: 15,
-                        width: 50,
-                        height: 50,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                      margin: '0 auto'
+                        margin: '0 auto'
                       }}
                     >
-                    <img src='/themes/default/assets/img/edu-icon.svg' />
+                      <img src='/themes/default/assets/img/edu-icon.svg' />
                     </div>
                   </div>
                 </Link>
@@ -242,7 +242,7 @@ const Register = () => {
                 <LoadingSpinner active={loading}>
                   <Grid container spacing={2} maxWidth={'sm'}>
                     <Grid item xs={12} md={12}>
-                      <FormControl fullWidth sx={{ mb: 4 }}>
+                      <FormControl fullWidth sx={{ mb: 4 }} required>
                         <InputLabel htmlFor='auth-username' error={Boolean(errors.username)}>
                           Tên đăng nhập
                         </InputLabel>
@@ -282,7 +282,7 @@ const Register = () => {
                       </FormControl>
                     </Grid>
                     <Grid item xs={12} md={8}>
-                      <FormControl fullWidth sx={{ mb: 4 }}>
+                      <FormControl fullWidth sx={{ mb: 4 }} required>
                         <Controller
                           name='lastName'
                           control={control}
@@ -290,6 +290,7 @@ const Register = () => {
                           render={({ field: { value, onChange } }) => (
                             <TextField
                               value={value ?? ''}
+                              required
                               label='Họ & Tên đệm'
                               onChange={onChange}
                               error={Boolean(errors.lastName)}
@@ -300,7 +301,7 @@ const Register = () => {
                       </FormControl>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                      <FormControl fullWidth sx={{ mb: 4 }}>
+                      <FormControl fullWidth sx={{ mb: 4 }} required>
                         <Controller
                           name='firstName'
                           control={control}
@@ -308,6 +309,7 @@ const Register = () => {
                           render={({ field: { value, onChange } }) => (
                             <TextField
                               value={value ?? ''}
+                              required
                               label='Tên'
                               onChange={onChange}
                               error={Boolean(errors.firstName)}
@@ -318,7 +320,7 @@ const Register = () => {
                       </FormControl>
                     </Grid>
                     <Grid item xs={12} md={12}>
-                      <FormControl fullWidth sx={{ mb: 4 }}>
+                      <FormControl fullWidth sx={{ mb: 4 }} required>
                         <Controller
                           name='email'
                           control={control}
@@ -341,7 +343,7 @@ const Register = () => {
                       </FormControl>
                     </Grid>
                     <Grid item xs={12} md={12}>
-                      <FormControl fullWidth sx={{ mb: 4 }}>
+                      <FormControl fullWidth sx={{ mb: 4 }} required>
                         <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.passwordHash)}>
                           Mật khẩu
                         </InputLabel>
@@ -387,45 +389,6 @@ const Register = () => {
                         )}
                       </FormControl>
                     </Grid>
-                    {/* <Grid item xs={12} md={12}>
-                    <FormControl fullWidth sx={{ mb: 4 }}>
-                      <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.passwordConfirmation)}>
-                        Xác nhận mật khẩu
-                      </InputLabel>
-                      <Controller
-                        name='passwordConfirmation'
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { value, onChange, onBlur } }) => (
-                          <OutlinedInput
-                            value={value ?? ''}
-                            label='Xác nhận mật khẩu'
-                            onBlur={onBlur}
-                            onChange={onChange}
-                            id='auth-login-v2-password'
-                            error={Boolean(errors.passwordConfirmation)}
-                            type={showPassword ? 'text' : 'password'}
-                            endAdornment={
-                              <InputAdornment position='end'>
-                                <IconButton
-                                  edge='end'
-                                  onMouseDown={e => e.preventDefault()}
-                                  onClick={() => setShowPassword(!showPassword)}
-                                >
-                                  <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} />
-                                </IconButton>
-                              </InputAdornment>
-                            }
-                          />
-                        )}
-                      />
-                      {errors.passwordConfirmation && (
-                        <FormHelperText sx={{ color: 'error.main' }}>
-                          {errors.passwordConfirmation.message}
-                        </FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid> */}
                     <Grid item xs={12} md={12}>
                       <FormControl sx={{ mt: 1.5, mb: 4 }} error={Boolean(errors.terms)}>
                         <Controller
@@ -507,9 +470,9 @@ const Register = () => {
         </RightWrapper>
       </Box>
     </Fragment>
-
   )
 }
+
 Register.getLayout = page => <BlankLayout>{page}</BlankLayout>
 Register.guestGuard = true
 

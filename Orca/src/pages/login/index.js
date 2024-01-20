@@ -14,7 +14,6 @@ import {
   Controller,
   useForm
 } from 'react-hook-form'
-import FooterIllustrationsV2 from 'views/pages/auth/FooterIllustrationsV2'
 import * as yup from 'yup'
 
 import Icon from '@core/components/icon'
@@ -165,190 +164,193 @@ const LoginPage = () => {
 
   return (
     <>
-    <Head>
-      <title>{`Đăng nhập - ${themeConfig.templateName}`}</title>
-    </Head>
-    <Box className='content-right'>
-      {!hidden ? (
-        <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
-          <LoginIllustrationWrapper>
-            <LoginIllustration alt='login-illustration' src={`/images/pages/misc-coming-soon.png`} />
-          </LoginIllustrationWrapper>
-          <FooterIllustrationsV2 />
-        </Box>
-      ) : null}
-      <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
-        <Box
-          sx={{
-            p: 12,
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'background.paper'
-          }}
-        >
-          <BoxWrapper>
-            <Box
-              sx={{
-                top: 30,
-                left: 40,
-                display: 'flex',
-                position: 'absolute',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <Link href='/'>
-                <div style={{ textAlign: 'center' }}>
-                  <div
-                    style={{
-                      borderRadius: 15,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      margin: '0 auto'
-                    }}
-                  >
-                    <img src='/themes/default/assets/img/edu-icon.svg' />
-                  </div>
-                </div>
-              </Link>
-            </Box>
-            <Box sx={{ mb: 6 }}>
-              <Link href='/'>
-                <div style={{ textAlign: 'center' }}>
-                  <div
-                    style={{
-                      borderRadius: 15,
-                      width: 120,
-                      height: 120,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      margin: '0 auto'
-                    }}
-                  >
-                    <img src='/themes/default/assets/img/edu-icon.svg' />
-                  </div>
-                </div>
-              </Link>
-              <br />
-              <TypographyStyled variant='h5'>Chào mừng bạn tới Thi360 👋🏻</TypographyStyled>
-              <Typography variant='body2'>Đăng nhập vào hệ thống để tiếp tục</Typography>
-            </Box>
-            <LoadingSpinner active={loading}>
-              <Box sx={{ mb: 6, mt: 6 }}>
-                <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
-                  <FormControl fullWidth sx={{ mb: 4 }}>
-                    <Controller
-                      name='email'
-                      control={control}
-                      rules={{ required: true }}
-                      render={({ field: { value, onChange, onBlur } }) => (
-                        <TextField
-                          autoFocus
-                          label='Tên đăng nhập'
-                          value={value}
-                          onBlur={onBlur}
-                          onChange={onChange}
-                          error={Boolean(errors.email)}
-                          placeholder='Tên đăng nhập hoặc email'
-                        />
-                      )}
-                    />
-                    {errors.email && (
-                      <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>
-                    )}
-                  </FormControl>
-                  <FormControl fullWidth>
-                    <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>
-                      Mật khẩu
-                    </InputLabel>
-                    <Controller
-                      name='password'
-                      control={control}
-                      rules={{ required: true }}
-                      render={({ field: { value, onChange, onBlur } }) => (
-                        <OutlinedInput
-                          value={value}
-                          onBlur={onBlur}
-                          label='Password'
-                          onChange={onChange}
-                          id='auth-login-v2-password'
-                          error={Boolean(errors.password)}
-                          type={showPassword ? 'text' : 'password'}
-                          endAdornment={
-                            <InputAdornment position='end'>
-                              <IconButton
-                                edge='end'
-                                onMouseDown={e => e.preventDefault()}
-                                onClick={() => setShowPassword(!showPassword)}
-                              >
-                                <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} fontSize={20} />
-                              </IconButton>
-                            </InputAdornment>
-                          }
-                        />
-                      )}
-                    />
-                    {errors.password && (
-                      <FormHelperText sx={{ color: 'error.main' }} id=''>
-                        {errors.password.message}
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-                  <Box
-                    sx={{
-                      mb: 4,
-                      display: 'flex',
-                      alignItems: 'center',
-                      flexWrap: 'wrap',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <FormControlLabel
-                      label='Ghi nhớ tôi'
-                      control={<Checkbox checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />}
-                    />
-                    <LinkStyled href='/forgot-password'>Quên mật khẩu?</LinkStyled>
-                  </Box>
-                  <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
-                    Đăng nhập
-                  </Button>
-                  <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-                    <Typography variant='body2' sx={{ mr: 2 }}>
-                      Bạn chưa có tài khoản?
-                    </Typography>
-                    <Typography variant='body2'>
-                      <LinkStyled href='/register'>Tạo mới tài khoản</LinkStyled>
-                    </Typography>
-                  </Box>
-                  <Divider sx={{ my: theme => `${theme.spacing(5)} !important` }}>hoặc đăng nhập bằng</Divider>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
-                      <Icon icon='mdi:facebook' />
-                    </IconButton>
-                    <IconButton
-                      href='/'
-                      component={Link}
-                      sx={{ color: '#db4437' }}
-                      onClick={e => {
-                        loginWithGoogle()
-                        e.preventDefault()
+      <Head>
+        <title>{`Đăng nhập - ${themeConfig.templateName}`}</title>
+      </Head>
+      <Box className='content-right'>
+        {!hidden ? (
+          <Box sx={{
+            flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center',
+            backgroundImage: "url('/images/pages/misc-coming-soon.png')",
+            backgroundSize: 'cover'
+          }}>
+            <LoginIllustrationWrapper>
+            </LoginIllustrationWrapper>
+          </Box>
+        ) : null}
+        <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
+          <Box
+            sx={{
+              p: 12,
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'background.paper',
+
+            }}
+          >
+            <BoxWrapper>
+              <Box
+                sx={{
+                  top: 30,
+                  left: 40,
+                  display: 'flex',
+                  position: 'absolute',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <Link href='/'>
+                  <div style={{ textAlign: 'center' }}>
+                    <div
+                      style={{
+                        borderRadius: 15,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto'
                       }}
                     >
-                      <Icon icon='mdi:google' />
-                    </IconButton>
-                  </Box>
-                </form>
+                      <img src='/themes/default/assets/img/edu-icon.svg' />
+                    </div>
+                  </div>
+                </Link>
               </Box>
-            </LoadingSpinner>
-          </BoxWrapper>
-        </Box>
-      </RightWrapper>
-    </Box>
-    </>    
+              <Box sx={{ mb: 6 }}>
+                <Link href='/'>
+                  <div style={{ textAlign: 'center' }}>
+                    <div
+                      style={{
+                        borderRadius: 15,
+                        width: 120,
+                        height: 120,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto'
+                      }}
+                    >
+                      <img src='/themes/default/assets/img/edu-icon.svg' />
+                    </div>
+                  </div>
+                </Link>
+                <br />
+                <TypographyStyled variant='h5'>Chào mừng bạn tới Thi360 👋🏻</TypographyStyled>
+                <Typography variant='body2'>Đăng nhập vào hệ thống để tiếp tục</Typography>
+              </Box>
+              <LoadingSpinner active={loading}>
+                <Box sx={{ mb: 6, mt: 6 }}>
+                  <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+                    <FormControl fullWidth sx={{ mb: 4 }}>
+                      <Controller
+                        name='email'
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { value, onChange, onBlur } }) => (
+                          <TextField
+                            autoFocus
+                            label='Tên đăng nhập'
+                            value={value}
+                            onBlur={onBlur}
+                            onChange={onChange}
+                            error={Boolean(errors.email)}
+                            placeholder='Tên đăng nhập hoặc email'
+                          />
+                        )}
+                      />
+                      {errors.email && (
+                        <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>
+                      )}
+                    </FormControl>
+                    <FormControl fullWidth>
+                      <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>
+                        Mật khẩu
+                      </InputLabel>
+                      <Controller
+                        name='password'
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { value, onChange, onBlur } }) => (
+                          <OutlinedInput
+                            value={value}
+                            onBlur={onBlur}
+                            label='Password'
+                            onChange={onChange}
+                            id='auth-login-v2-password'
+                            error={Boolean(errors.password)}
+                            type={showPassword ? 'text' : 'password'}
+                            endAdornment={
+                              <InputAdornment position='end'>
+                                <IconButton
+                                  edge='end'
+                                  onMouseDown={e => e.preventDefault()}
+                                  onClick={() => setShowPassword(!showPassword)}
+                                >
+                                  <Icon icon={showPassword ? 'mdi:eye-outline' : 'mdi:eye-off-outline'} fontSize={20} />
+                                </IconButton>
+                              </InputAdornment>
+                            }
+                          />
+                        )}
+                      />
+                      {errors.password && (
+                        <FormHelperText sx={{ color: 'error.main' }} id=''>
+                          {errors.password.message}
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                    <Box
+                      sx={{
+                        mb: 4,
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexWrap: 'wrap',
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      <FormControlLabel
+                        label='Ghi nhớ tôi'
+                        control={<Checkbox checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />}
+                      />
+                      <LinkStyled href='/forgot-password'>Quên mật khẩu?</LinkStyled>
+                    </Box>
+                    <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
+                      Đăng nhập
+                    </Button>
+                    <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+                      <Typography variant='body2' sx={{ mr: 2 }}>
+                        Bạn chưa có tài khoản?
+                      </Typography>
+                      <Typography variant='body2'>
+                        <LinkStyled href='/register'>Tạo mới tài khoản</LinkStyled>
+                      </Typography>
+                    </Box>
+                    <Divider sx={{ my: theme => `${theme.spacing(5)} !important` }}>hoặc đăng nhập bằng</Divider>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
+                        <Icon icon='mdi:facebook' />
+                      </IconButton>
+                      <IconButton
+                        href='/'
+                        component={Link}
+                        sx={{ color: '#db4437' }}
+                        onClick={e => {
+                          loginWithGoogle()
+                          e.preventDefault()
+                        }}
+                      >
+                        <Icon icon='mdi:google' />
+                      </IconButton>
+                    </Box>
+                  </form>
+                </Box>
+              </LoadingSpinner>
+            </BoxWrapper>
+          </Box>
+        </RightWrapper>
+      </Box>
+    </>
   )
 }
 

@@ -220,7 +220,7 @@ const UserTable = () => {
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
-            labelRowsPerPage='Số dòng/trang'
+            labelRowsPerPage='Hiển thị'
             rowsPerPageOptions={[20, 30, 50]}
             component='div'
             count={totalItem}
@@ -317,7 +317,7 @@ const UserTable = () => {
         </tr>
       </table>
       <TablePagination
-        labelRowsPerPage='Số dòng/trang'
+        labelRowsPerPage='Hiển thị'
         rowsPerPageOptions={[20, 30, 50]}
         component='div'
         count={totalItem}

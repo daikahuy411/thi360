@@ -1,19 +1,16 @@
+// ** Icon Imports
+import Icon from '@core/components/icon'
+// ** Custom Components Imports
+import CustomChip from '@core/components/mui/chip'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
-import Button from '@mui/material/Button'
-import TableRow from '@mui/material/TableRow'
-import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
-import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
-
-// ** Icon Imports
-import Icon from '@core/components/icon'
-
-// ** Custom Components Imports
-import CustomChip from '@core/components/mui/chip'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
 
 const PricingTable = ({ data }) => {
   const renderTableCell = row => {

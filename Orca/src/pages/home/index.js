@@ -112,9 +112,8 @@ const HomePage = () => {
 
         <section className='Home-exam'>
           <div className='ba-title'>
-            <h2> Start your preparation</h2>
+            <h2 className='home-h2'> Chuẩn bị cho Kỳ thi của bạn</h2>
           </div>
-          {/* <h3 className="home_head__DVePE tc mb3 mt0">Start your preparation</h3> */}
           <div className='He-box'>
             <Grid container md={12} spacing={6}>
               <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -295,7 +294,7 @@ const HomePage = () => {
         <br />
         <section className='Home-num1'>
           <div className='ba-title'>
-            <h2> Số #1 về luyện thi trực tuyến </h2>
+            <h2> Số #1 về Thi trực tuyến </h2>
           </div>
           <div className='Hn-box'>
             <div className='row g-2'>
