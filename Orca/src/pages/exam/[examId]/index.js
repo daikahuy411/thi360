@@ -144,7 +144,7 @@ const ExamPage = () => {
                     underline='hover'
                     key={item.id}
                     color='inherit'
-                    href={`/program/${exam.program.id}/subject/${exam.subject.id}/${item.id}`}
+                    href={`/program/${exam.program.id}/subject/${exam.subject.id}/${exam.curriculum.id}/${item.id}`}
                     component={NavLink}
                   >
                     {item.name}
