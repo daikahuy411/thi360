@@ -94,7 +94,7 @@ const Program = () => {
                       component={NavLink}
                       href={`/program/${programId}/subject/${item.oldId}`}
                     >
-                      <Grid container sx={6} md={12}>
+                      <Grid container item={true} xs={6} md={12}>
                         <Grid item container xs={3} sm={3} md={3} style={{ display: 'flex', justifyContent: 'center' }}>
                           <img style={{ marginRight: 10 }} alt={item.name} src={catalogImages[item.oldId.toString()]} />
                         </Grid>
@@ -131,7 +131,7 @@ const Program = () => {
                                   '& svg': { color: 'primary.secondary', mr: 2 }
                                 }}
                               >
-                                <Image src={IconKyThi} width={20} height={20}></Image>
+                                <Image src={IconKyThi} width={20} height={20} alt=''></Image>
                                 <Typography
                                   sx={{
                                     color: '#333',
@@ -157,7 +157,7 @@ const Program = () => {
                                   alignItems: 'end'
                                 }}
                               >
-                                <Image src={IconDeThi} width={20} height={20}></Image>
+                                <Image src={IconDeThi} width={20} height={20} alt=''></Image>
                                 <Typography
                                   sx={{
                                     color: '#333',
