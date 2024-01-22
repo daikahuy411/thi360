@@ -262,20 +262,11 @@ const TabAccount = props => {
 
     new V1Api()
       .updateProfile(formData)
-      .then(res => {
-        const response = res.data
-        if (response.error) {
-          console.log('error')
-          console.log(response.error)
-          return;
-          // if (e.response.data.Email) {
-          //   setError('email', e.response.data.Email[0])
-          // }
-        }
-
+      .then(response => {
+        console.log(response)
         setLoading(false)
-        const data = response.data
-        if (data.succeeded) {
+        Object.keys(response.data.modelErrors).forEach(key => setError(key, response.data.modelErrors[key][0]))
+        if (response.data.isSuccess) {
           toast.success('Cập nhật dữ liệu thành công')
           me()
         } else {
@@ -283,8 +274,6 @@ const TabAccount = props => {
         }
       })
       .catch(e => {
-        console.log(e)
-
         setLoading(false)
       })
   }

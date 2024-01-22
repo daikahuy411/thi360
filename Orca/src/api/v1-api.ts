@@ -147,11 +147,12 @@ class V1Api extends ApiBase {
 
   updateProfile = (request: any) => {
     const url = `${this.baseApiUrl}/UpdateProfile`
-    return axios.put(url, request, {
+    const response = axios.put(url, request, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     })
+    return response
   }
 
   me = () => {
