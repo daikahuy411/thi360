@@ -101,7 +101,9 @@ const AuthProvider = ({ children }) => {
   }
 
   const me = async () => {
-    await new UserApi()
+    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+    if(storedToken){debugger
+      await new UserApi()
       .me()
       .then(response => {
         const data = response.data
@@ -113,13 +115,17 @@ const AuthProvider = ({ children }) => {
         window.localStorage.removeItem(authConfig.storageTokenKeyName)
         router.push('/home')
       })
+    }    
   }
 
-  const handleLogout = () => {
-    setUser(null)
-    window.localStorage.removeItem('userData')
-    window.localStorage.removeItem(authConfig.storageTokenKeyName)
-    router.push('/home')
+  const handleLogout = () => {    
+    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+    if(storedToken){
+      setUser(null)
+      window.localStorage.removeItem('userData')
+      window.localStorage.removeItem(authConfig.storageTokenKeyName)
+      router.push('/home')
+    }    
   }
 
   const handleRegister = (params, errorCallback) => {

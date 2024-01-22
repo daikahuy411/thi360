@@ -71,7 +71,9 @@ const UserDropdown = props => {
   }, [currentUser])
 
   const me = () => {
-    new UserApi()
+    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+    if(storedToken){
+      new UserApi()
       .me()
       .then(response => {
         const data = response.data
@@ -80,6 +82,7 @@ const UserDropdown = props => {
       .catch(e => {
         logout()
       })
+    }    
   }
 
   const handleDropdownOpen = event => {

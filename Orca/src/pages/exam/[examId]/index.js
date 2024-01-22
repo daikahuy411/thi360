@@ -107,6 +107,7 @@ const ExamPage = () => {
               <Link underline='hover' color='inherit' href='/' component={NavLink}>
                 <img
                   style={{ width: 18 }}
+                  alt=''
                   src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQVJREFUSEvtldERgyAMhpNN7CY6ApmgnaTXSZxAGKFuUjehh2c4jCDhwbs+lEcM//cnJoBw8cKL9UENcM513vsxGELEhzFm0ZhTARLxfhNdEHHQQKoAIc6uOwBQQU4BUpyIbtveGwBUkCIgJ841b4FkAWfirZADQCPeAtkBWsS1kAiQrUhE1Q4TkE+uhaPINE0jIt75UAsgnLHW+mTwZiIa1qHkzcsBDGInnIFzrvfePwGAp5hDZ0R8GWPmNAOZ+aHOEmCtDbUNQ5VbsRTyHAdrAGttpbOMkWzcHxBL91P/4Kxrao/YEq70NCh32YW+D09jqTVLkN1cFNu0ZrH1u/pCaxXm+C/ebQ4oUTUexgAAAABJRU5ErkJggg=='
                 />
               </Link>
@@ -143,7 +144,7 @@ const ExamPage = () => {
                     underline='hover'
                     key={item.id}
                     color='inherit'
-                    href={`/program/${exam.program.id}/subject/${exam.subject.id}/${item.id}`}
+                    href={`/program/${exam.program.id}/subject/${exam.subject.id}/${exam.curriculum.id}/${item.id}`}
                     component={NavLink}
                   >
                     {item.name}
@@ -164,7 +165,7 @@ const ExamPage = () => {
                       <div className='card-body'>
                         <div className='detail-title'>
                           <span>
-                            <img src='/images/home/grad-icon.svg' width={100} />
+                            <img src='/images/home/grad-icon.svg' alt='' width={100} />
                             {/* <img src='/themes/default/assets/img/icons/exam1.png' width={100} /> */}
                           </span>
                           <article>
@@ -209,7 +210,7 @@ const ExamPage = () => {
                             <div className='d-flex align-items-center justify-content-between mb-4'>
                               {exam && (
                                 <p className='mb-0 text-black'>
-                                  <img src='/themes/default/assets/img/icon-dethi.svg' /> <b> 10 đề thi</b>
+                                  <img src='/themes/default/assets/img/icon-dethi.svg' alt='' /> <b> 10 đề thi</b>
                                 </p>
                               )}
                               <div className='d-flex align-items-center justify-content-end'>
@@ -249,8 +250,8 @@ const ExamPage = () => {
                                   {exam &&
                                     exam.examItems &&
                                     exam.examItems.map(item => {
-                                      return (
-                                        <>
+                                      return (                                        
+                                        <React.Fragment key={item.id}>
                                           {item.tests.map(row => {
                                             return (
                                               <tr key={row.id}>
@@ -349,7 +350,7 @@ const ExamPage = () => {
                                               </tr>
                                             )
                                           })}
-                                        </>
+                                        </React.Fragment>                                        
                                       )
                                     })}
                                 </tbody>
