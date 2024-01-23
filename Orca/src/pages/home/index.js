@@ -47,7 +47,7 @@ const HomePage = () => {
           </h1>
           <br />
           <h2 className='' style={{ fontSize: 18 }}>
-            Hệ thống Thi và tổ chức Thi online toàn diện cho Học viên và Giáo viên, Trung tâm, Nhà trường.
+            Hệ thống Thi và tổ chức Thi trực tuyến toàn diện cho Học viên và Giáo viên, Trung tâm, Nhà trường.
           </h2>
           {/* <p>Thực hiện các bài kiểm tra thử của chúng tôi bao nhiêu tùy thích MIỄN PHÍ!</p> */}
           {/* <button type='button' className='btn btn-outline-primary btn-sm waves-effect text-white'>
@@ -64,9 +64,10 @@ const HomePage = () => {
                     <div className='section-heading'>
                       <h2>Kỳ thi xem gần đây </h2>
                     </div>
-                    <p>Top 10 Kỳ thi tham gia gần nhất </p>
+                    <p>Top 6 Kỳ thi tham gia gần nhất </p>
                   </div>
                 </div>
+                <br/>
                 <section className='Home-exam'>
                   <div className='He-box'>
                     <div className='row g2'>

@@ -102,7 +102,7 @@ const AuthProvider = ({ children }) => {
 
   const me = async () => {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-    if(storedToken){debugger
+    if(storedToken){
       await new UserApi()
       .me()
       .then(response => {

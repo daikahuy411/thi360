@@ -8,6 +8,7 @@ import V1Api from 'api/v1-api'
 import themeConfig from 'configs/themeConfig'
 import { useAuth } from 'hooks/useAuth'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 import Icon from '@core/components/icon'
 import PlanDetails from '@core/components/plan-details'
@@ -28,8 +29,7 @@ import PricingHeader from './PricingHeader'
 import PricingTable from './PricingTable'
 
 const data = {
-  pricingPlans: {
-  },
+  pricingPlans: {},
   faq: [
     {
       id: 'responses-limit',
@@ -134,17 +134,27 @@ const data = {
 
 const PricingPage = () => {
   const auth = useAuth()
+  const router = useRouter()
 
-  const [tab, setTab] = useState('student')
   const [promotions, setPromotions] = useState([])
   const [plans, setPlans] = useState([])
   const [addPaymentOpen, setAddPaymentOpen] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState(null)
   const toggleAddPaymentDrawer = () => setAddPaymentOpen(!addPaymentOpen)
+  const { type } = router.query
+  const [tab, setTab] = useState('student')
 
   const handleChange = (event, newValue) => {
+    router.query.type = newValue
+    router.push(router)
     setTab(newValue)
   }
+
+  useEffect(() => {
+    if (type) {
+      setTab(type)
+    }
+  }, [type])
 
   useEffect(() => {
     fetchData()
@@ -185,7 +195,7 @@ const PricingPage = () => {
                 </>
               )}
 
-              {auth.user && tab == 'teacher' && (
+              {auth.user && !auth.user.approveBecomeTeacher && tab == 'teacher' && (
                 <>
                   <Alert severity='success' icon={<Icon icon='mdi:tag-outline' />} sx={{ mb: 4 }}>
                     Gói giáo viên phải xác thực tài khoản và đăng ký hồ sơ trước được duyệt.
@@ -222,9 +232,7 @@ const PricingPage = () => {
                           return x.pricingPlanId == item.id
                         }).length > 0
                       }
-                      currentPlanItem={
-                        plans.userCurrentPlans.filter(x => x.pricingPlanId == item.id)
-                      }
+                      currentPlanItem={plans.userCurrentPlans.filter(x => x.pricingPlanId == item.id)}
                       addPayment={() => {
                         setSelectedPlan(item)
                         setAddPaymentOpen(true)
@@ -246,7 +254,12 @@ const PricingPage = () => {
           </Card>
         </Grid>
       </Grid>
-      <AddPaymentDrawer open={addPaymentOpen} plan={selectedPlan} toggle={toggleAddPaymentDrawer} promotions={promotions} />
+      <AddPaymentDrawer
+        open={addPaymentOpen}
+        plan={selectedPlan}
+        toggle={toggleAddPaymentDrawer}
+        promotions={promotions}
+      />
     </>
   )
 }
