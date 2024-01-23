@@ -55,6 +55,7 @@ export default function ContentEditor({ content, isReadOnly, onChange }) {
         }
       }}
       config={{
+        removePlugins: ['Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed'],
         toolbar: {
           items: [
             'ckfinder',

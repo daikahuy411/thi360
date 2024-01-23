@@ -42,12 +42,12 @@ const HomePage = () => {
         <section className='Home-banner'>
           {/* <img src='/themes/default/assets/img/intro.png' /> */}
           {/* <label>Sẵn sàng cho kỳ thi của bạn</label> */}
-          <h1 className='' style={{ fontSize: 40 }}>
-            Thi360 Testing online
+          <h1 className='' style={{ fontSize: 36,}}>
+            Giải pháp Thi trực tuyến Thi360.com.
           </h1>
           <br />
           <h2 className='' style={{ fontSize: 18 }}>
-            The Most Comprehensive Preparation App for All Exams{' '}
+            Hệ thống Thi và tổ chức Thi online toàn diện cho Học viên và Giáo viên, Trung tâm, Nhà trường.
           </h2>
           {/* <p>Thực hiện các bài kiểm tra thử của chúng tôi bao nhiêu tùy thích MIỄN PHÍ!</p> */}
           {/* <button type='button' className='btn btn-outline-primary btn-sm waves-effect text-white'>
@@ -67,8 +67,6 @@ const HomePage = () => {
                     <p>Top 10 Kỳ thi tham gia gần nhất </p>
                   </div>
                 </div>
-                <br />
-                <br />
                 <section className='Home-exam'>
                   <div className='He-box'>
                     <div className='row g2'>
@@ -93,63 +91,10 @@ const HomePage = () => {
           </>
         </LoadingSpinner>
 
-        <section className='Home-exam'>
-          <div className='row'>
-            <div className='col-12 text-center'>
-              <div className='section-heading'>
-                <h2>Chuẩn bị cho Kỳ thi của bạn</h2>
-              </div>
-              <p>Salient features that makes Materio stand out 🤩</p>
-            </div>
-          </div>
-          <br />
-          <div className='He-box'>
-            <Grid container md={12} spacing={6}>
-              <Grid item xs={12} md={4} lg={4} xl={4}>
-                <Card>
-                  <CardContent>
-                    <Typography gutterBottom variant='h6' color='text.primary'>
-                      Ngân hàng câu hỏi chất lượng.
-                    </Typography>
-                    <Typography variant='body2' color='text.secondary'>
-                      Live &amp; Recorded courses by Top Faculty
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item xs={12} md={4} lg={4} xl={4}>
-                <Card>
-                  <CardContent>
-                    <Typography gutterBottom variant='h6' color='text.primary'>
-                      Dễ dàng theo dõi sự tiến bộ.
-                    </Typography>
-                    <Typography variant='body2' color='text.secondary'>
-                      Live &amp; Recorded courses by Top Faculty
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item xs={12} md={4} lg={4} xl={4}>
-                <Card>
-                  <CardContent>
-                    <Typography gutterBottom variant='h6' color='text.primary'>
-                      2 chế độ Ôn luyện và Thi- Kiểm tra.
-                    </Typography>
-                    <Typography variant='body2' color='text.secondary'>
-                      Live &amp; Recorded courses by Top Faculty
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-          </div>
-        </section>
-        <br />
-        <br />
         <div className='row'>
           <div className='col-12 text-center'>
             <div className='section-heading'>
-              <h2>5 phút để trải nghiệm LMS miễn phí với đầy đủ tính năng</h2>
+              <h2>Chuẩn bị cho Kỳ thi của bạn</h2>
             </div>
             <p>Salient features that makes Materio stand out 🤩</p>
           </div>
@@ -163,12 +108,72 @@ const HomePage = () => {
                   <CustomAvatar
                     skin='light'
                     color='primary'
-                    sx={{ mb: 3, width: [70, 100], height: [70, 100], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                    sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                  >
+                    <Icon icon='mdi:star-outline' />
+                  </CustomAvatar>
+                  <Typography sx={{ mb: 3, fontWeight: '600' }}>Ngân hàng câu hỏi phong phú, chất lượng. 🤟🏻</Typography>
+                  <Typography>Đăng ký tài khoản hoặc Đăng nhập qua Google/Facebook.</Typography>
+                </Box>
+              </Grid>
+              <Grid item md={4} xs={12}>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                  <CustomAvatar
+                    skin='light'
+                    color='primary'
+                    sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                  >
+                    <Icon icon='mdi:progress-check' />
+                  </CustomAvatar>
+                  <Typography sx={{ mb: 3, fontWeight: '600' }}>Dễ dàng theo dõi sự tiến bộ. 👩🏻‍💻</Typography>
+                  <Typography>Gửi yêu cầu đăng ký Hồ sơ giáo viên cho chúng tôi.</Typography>
+                </Box>
+              </Grid>
+              <Grid item md={4} xs={12}>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                  <CustomAvatar
+                    skin='light'
+                    color='primary'
+                    sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                  >
+                    <Icon icon='mdi:medal' />
+                  </CustomAvatar>
+                  <Typography sx={{ mb: 3, fontWeight: '600' }}>2 chế độ Ôn luyện và Thi- Kiểm tra.🎉</Typography>
+                  <Typography>
+                    Sử dụng gói Miễn phí dành cho Giáo viên để sử dụng LMS miễn phí với đầy đủ tính năng.
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+        <br />
+
+        <br />
+        <br />
+        <div className='row'>
+          <div className='col-12 text-center'>
+            <div className='section-heading'>
+              <h2>3 bước để trải nghiệm LMS miễn phí với đầy đủ tính năng</h2>
+            </div>
+            <p>Salient features that makes Materio stand out 🤩</p>
+          </div>
+        </div>
+        <br />
+        <Card>
+          <CardContent>
+            <Grid container spacing={6} sx={{ textAlign: 'center' }}>
+              <Grid item md={4} xs={12}>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                  <CustomAvatar
+                    skin='light'
+                    color='primary'
+                    sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                   >
                     <Icon icon='mdi:account-plus-outline' />
                   </CustomAvatar>
                   <Typography sx={{ mb: 3, fontWeight: '600' }}>1. Đăng ký và xác nhận tài khoản 🤟🏻</Typography>
-                  <Typography>Send your referral link to your friend</Typography>
+                  <Typography>Đăng ký tài khoản hoặc Đăng nhập qua Google/Facebook.</Typography>
                 </Box>
               </Grid>
               <Grid item md={4} xs={12}>
@@ -176,12 +181,12 @@ const HomePage = () => {
                   <CustomAvatar
                     skin='light'
                     color='primary'
-                    sx={{ mb: 3, width: [70, 100], height: [70, 100], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                    sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                   >
                     <Icon icon='mdi:school-outline' />
                   </CustomAvatar>
                   <Typography sx={{ mb: 3, fontWeight: '600' }}>2. Đăng ký tài khoản Giáo viên 👩🏻‍💻</Typography>
-                  <Typography>Let them register to our services</Typography>
+                  <Typography>Gửi yêu cầu đăng ký Hồ sơ giáo viên cho chúng tôi.</Typography>
                 </Box>
               </Grid>
               <Grid item md={4} xs={12}>
@@ -189,12 +194,14 @@ const HomePage = () => {
                   <CustomAvatar
                     skin='light'
                     color='primary'
-                    sx={{ mb: 3, width: [70, 100], height: [70, 100], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                    sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                   >
                     <Icon icon='mdi:speedometer' />
                   </CustomAvatar>
                   <Typography sx={{ mb: 3, fontWeight: '600' }}>3. Đăng ký sử dụng gói Miễn phí🎉</Typography>
-                  <Typography>Your friend will get 30 days free trial</Typography>
+                  <Typography>
+                    Sử dụng gói Miễn phí dành cho Giáo viên để sử dụng LMS miễn phí với đầy đủ tính năng.
+                  </Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -214,6 +221,82 @@ const HomePage = () => {
         <Card>
           <div className='row bg-white border-radius-15 py-4'>
             <div className='col-sm-12 col-md-6 col-lg-4 p-0'>
+              <div className='single-feature p-4'>
+                <div className='row'>
+                  <div className='col-lg-3 col-12 text-right text-gradient'>
+                    <span className='ti-map-alt text-medium'>
+                      <CustomAvatar
+                        skin='light'
+                        color='primary'
+                        sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                      >
+                        <Icon icon='mdi:rocket-launch' />
+                      </CustomAvatar>
+                    </span>
+                  </div>
+                  <div className='col-lg-9 col-12'>
+                    <h5>Đầy đủ nghiệp vụ</h5>
+                    <p className='text-sm'>
+                      Multi language support enable you to create your personalized apps in your language.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='col-sm-12 col-md-6 col-lg-4 p-0'>
+              <div className='single-feature p-4'>
+                <div className='row'>
+                  <div className='col-lg-3 col-12 text-right text-gradient'>
+                    <span className='ti-direction-alt text-medium'>
+                      <span className='ti-map-alt text-medium'>
+                        <CustomAvatar
+                          skin='light'
+                          color='primary'
+                          sx={{
+                            mb: 3,
+                            width: [70, 80],
+                            height: [70, 80],
+                            '& svg': { fontSize: ['2.2rem', '2.5rem'] }
+                          }}
+                        >
+                          <Icon icon='mdi:lifebuoy' />
+                        </CustomAvatar>
+                      </span>
+                    </span>
+                  </div>
+                  <div className='col-lg-9 col-12'>
+                    <h5>Hướng dẫn chi tiết</h5>
+                    <p className='text-sm'>
+                      Materio supports RTL (right to left) languages such as Arabic, Persian or Hebrew are supported.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='col-sm-12 col-md-6 col-lg-4 p-0'>
+              <div className='single-feature p-4'>
+                <div className='row'>
+                  <div className='col-lg-3 col-12 text-right text-gradient'>
+                    <span className='ti-layout text-medium'>
+                      <CustomAvatar
+                        skin='light'
+                        color='primary'
+                        sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                      >
+                        <Icon icon='mdi:chat-processing-outline' />
+                      </CustomAvatar>
+                    </span>
+                  </div>
+                  <div className='col-lg-9 col-12'>
+                    <h5>Hỗ trợ 24/7</h5>
+                    <p className='text-sm'>
+                      A starter kit is a set of pre-existing code that you can launch to automate your repetitive tasks.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='col-sm-12 col-md-6 col-lg-4 p-0'>
               <div className='single-feature px-4 pt-10'>
                 <div className='row'>
                   <div className='col-lg-3 col-12 text-right text-gradient'>
@@ -221,7 +304,7 @@ const HomePage = () => {
                       <CustomAvatar
                         skin='light'
                         color='primary'
-                        sx={{ mb: 3, width: [70, 100], height: [70, 100], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                        sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:help-circle-outline' />
                       </CustomAvatar>
@@ -244,7 +327,7 @@ const HomePage = () => {
                       <CustomAvatar
                         skin='light'
                         color='primary'
-                        sx={{ mb: 3, width: [70, 100], height: [70, 100], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                        sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:tune-vertical-variant' />
                       </CustomAvatar>
@@ -271,8 +354,8 @@ const HomePage = () => {
                           color='primary'
                           sx={{
                             mb: 3,
-                            width: [70, 100],
-                            height: [70, 100],
+                            width: [70, 80],
+                            height: [70, 80],
                             '& svg': { fontSize: ['2.2rem', '2.5rem'] }
                           }}
                         >
@@ -291,86 +374,74 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-
             <div className='col-sm-12 col-md-6 col-lg-4 p-0'>
               <div className='single-feature p-4'>
                 <div className='row'>
                   <div className='col-lg-3 col-12 text-right text-gradient'>
-                    <span className='ti-map-alt text-medium'>
+                    <span className='ti-check-box text-medium'>
                       <CustomAvatar
                         skin='light'
                         color='primary'
-                        sx={{ mb: 3, width: [70, 100], height: [70, 100], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                        sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
-                        <Icon icon='mdi:rocket-launch' />
+                        <Icon icon='mdi:flash-outline' />
                       </CustomAvatar>
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>Đầy đủ nghiệp vụ</h5>
+                    <h5>Tùy biến Cấu trúc đề thi</h5>
                     <p className='text-sm'>
-                      Multi language support enable you to create your personalized apps in your language.
+                      We follow the best industry code structure that all developers will be able to pick up easily and
+                      fall in love
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-
             <div className='col-sm-12 col-md-6 col-lg-4 p-0'>
               <div className='single-feature p-4'>
                 <div className='row'>
                   <div className='col-lg-3 col-12 text-right text-gradient'>
-                    <span className='ti-direction-alt text-medium'>
-                      <span className='ti-map-alt text-medium'>
-                        <CustomAvatar
-                          skin='light'
-                          color='primary'
-                          sx={{
-                            mb: 3,
-                            width: [70, 100],
-                            height: [70, 100],
-                            '& svg': { fontSize: ['2.2rem', '2.5rem'] }
-                          }}
-                        >
-                          <Icon icon='mdi:lifebuoy' />
-                        </CustomAvatar>
-                      </span>
-                    </span>
-                  </div>
-                  <div className='col-lg-9 col-12'>
-                    <h5>Hướng dẫn chi tiết</h5>
-                    <p className='text-sm'>
-                      Materio supports RTL (right to left) languages such as Arabic, Persian or Hebrew are supported.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className='col-sm-12 col-md-6 col-lg-4 p-0'>
-              <div className='single-feature p-4'>
-                <div className='row'>
-                  <div className='col-lg-3 col-12 text-right text-gradient'>
-                    <span className='ti-layout text-medium'>
+                    <span className='ti-cloud-up text-medium'>
                       <CustomAvatar
                         skin='light'
                         color='primary'
-                        sx={{ mb: 3, width: [70, 100], height: [70, 100], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                        sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
-                        <Icon icon='mdi:chat-processing-outline' />
+                        <Icon icon='mdi:database-outline' />
                       </CustomAvatar>
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>Hỗ trợ 24/7</h5>
+                    <h5>Báo cáo chi tiết</h5>
+                    <p className='text-sm'>12 Months Free updates with new demos and features is guaranteed</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='col-sm-12 col-md-6 col-lg-4 p-0'>
+              <div className='single-feature p-4'>
+                <div className='row'>
+                  <div className='col-lg-3 col-12 text-right text-gradient'>
+                    <span className='ti-headphone-alt text-medium'>
+                      <CustomAvatar
+                        skin='light'
+                        color='primary'
+                        sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                      >
+                        <Icon icon='mdi:file-word-outline' />
+                      </CustomAvatar>
+                    </span>
+                  </div>
+                  <div className='col-lg-9 col-12'>
+                    <h5>Xuất đề thi offline</h5>
                     <p className='text-sm'>
-                      A starter kit is a set of pre-existing code that you can launch to automate your repetitive tasks.
+                      Get access to premium customer support from the actual people who have created.
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-
             <div className='col-sm-12 col-md-6 col-lg-4 p-0'>
               <div className='single-feature p-4'>
                 <div className='row'>
@@ -379,7 +450,7 @@ const HomePage = () => {
                       <CustomAvatar
                         skin='light'
                         color='primary'
-                        sx={{ mb: 3, width: [70, 100], height: [70, 100], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                        sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:thumb-up' />
                       </CustomAvatar>
@@ -403,7 +474,7 @@ const HomePage = () => {
                       <CustomAvatar
                         skin='light'
                         color='primary'
-                        sx={{ mb: 3, width: [70, 100], height: [70, 100], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                        sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:navigation' />
                       </CustomAvatar>
@@ -423,79 +494,11 @@ const HomePage = () => {
               <div className='single-feature p-4'>
                 <div className='row'>
                   <div className='col-lg-3 col-12 text-right text-gradient'>
-                    <span className='ti-cloud-up text-medium'>
-                      <CustomAvatar
-                        skin='light'
-                        color='primary'
-                        sx={{ mb: 3, width: [70, 100], height: [70, 100], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
-                      >
-                        <Icon icon='mdi:database-outline' />
-                      </CustomAvatar>
-                    </span>
-                  </div>
-                  <div className='col-lg-9 col-12'>
-                    <h5>Báo cáo chi tiết</h5>
-                    <p className='text-sm'>12 Months Free updates with new demos and features is guaranteed</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='col-sm-12 col-md-6 col-lg-4 p-0'>
-              <div className='single-feature p-4'>
-                <div className='row'>
-                  <div className='col-lg-3 col-12 text-right text-gradient'>
-                    <span className='ti-check-box text-medium'>
-                      <CustomAvatar
-                        skin='light'
-                        color='primary'
-                        sx={{ mb: 3, width: [70, 100], height: [70, 100], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
-                      >
-                        <Icon icon='mdi:flash-outline' />
-                      </CustomAvatar>
-                    </span>
-                  </div>
-                  <div className='col-lg-9 col-12'>
-                    <h5>Tùy biến Cấu trúc đề thi</h5>
-                    <p className='text-sm'>
-                      We follow the best industry code structure that all developers will be able to pick up easily and
-                      fall in love
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='col-sm-12 col-md-6 col-lg-4 p-0'>
-              <div className='single-feature p-4'>
-                <div className='row'>
-                  <div className='col-lg-3 col-12 text-right text-gradient'>
-                    <span className='ti-headphone-alt text-medium'>
-                      <CustomAvatar
-                        skin='light'
-                        color='primary'
-                        sx={{ mb: 3, width: [70, 100], height: [70, 100], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
-                      >
-                        <Icon icon='mdi:file-word-outline' />
-                      </CustomAvatar>
-                    </span>
-                  </div>
-                  <div className='col-lg-9 col-12'>
-                    <h5>Xuất đề thi offline</h5>
-                    <p className='text-sm'>
-                      Get access to premium customer support from the actual people who have created.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='col-sm-12 col-md-6 col-lg-4 p-0'>
-              <div className='single-feature p-4'>
-                <div className='row'>
-                  <div className='col-lg-3 col-12 text-right text-gradient'>
                     <span className='ti-plus text-medium'>
                       <CustomAvatar
                         skin='light'
                         color='primary'
-                        sx={{ mb: 3, width: [70, 100], height: [70, 100], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                        sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:more' />
                       </CustomAvatar>

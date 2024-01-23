@@ -1935,3 +1935,7 @@ th {
 .layout-container {
   display: inline-block;
 }
+
+.section-heading h2 {
+  font-size: 1.5rem;
+}
