@@ -28,110 +28,6 @@ import PricingFooter from './PricingFooter'
 import PricingHeader from './PricingHeader'
 import PricingTable from './PricingTable'
 
-const data = {
-  pricingPlans: {},
-  faq: [
-    {
-      id: 'responses-limit',
-      question: 'What counts towards the 100 responses limit?',
-      answer:
-        'We count all responses submitted through all your forms in a month. If you already received 100 responses this month, you won’t be able to receive any more of them until next month when the counter resets.'
-    },
-    {
-      id: 'process-payments',
-      question: 'How do you process payments?',
-      answer:
-        'We accept Visa®, MasterCard®, American Express®, and PayPal®. So you can be confident that your credit card information will be kept safe and secure.'
-    },
-    {
-      id: 'payment-methods',
-      question: 'What payment methods do you accept?',
-      answer: '2Checkout accepts all types of credit and debit cards.'
-    },
-    {
-      id: 'money-back-guarantee',
-      question: 'Do you have a money-back guarantee?',
-      answer: 'Yes. You may request a refund within 30 days of your purchase without any additional explanations.'
-    },
-    {
-      id: 'more-questions',
-      question: 'I have more questions. Where can I get help?',
-      answer: 'Please contact us if you have any other questions or concerns. We’re here to help!'
-    }
-  ],
-  pricingTable: {
-    header: [
-      {
-        title: 'TÍNH NĂNG',
-        subtitle: 'Native Front Features'
-      },
-      {
-        title: 'Starter',
-        subtitle: 'Free'
-      },
-      {
-        isPro: true,
-        title: 'Pro',
-        subtitle: '$7.5/month'
-      },
-      {
-        title: 'Enterprise',
-        subtitle: '$16/month'
-      }
-    ],
-    rows: [
-      {
-        pro: true,
-        starter: true,
-        enterprise: true,
-        feature: 'Quản lý ngân hàng câu hỏi với 7 loại định dạng'
-      },
-      {
-        pro: false,
-        starter: false,
-        enterprise: true,
-        feature: 'Quản lý Lớp học, Học viên'
-      },
-      {
-        pro: true,
-        starter: false,
-        enterprise: true,
-        feature: 'Import Ngân hàng câu hỏi bằng Excel'
-      },
-      {
-        starter: false,
-        enterprise: true,
-        pro: 'Add-On Available',
-        feature: 'Export đề thi với định dạng word'
-      },
-      {
-        pro: true,
-        starter: false,
-        enterprise: true,
-        feature: 'Thống kê, báo cáo kết quả Thi của Học viên trong lớp'
-      },
-      {
-        starter: false,
-        enterprise: true,
-        pro: 'Add-On Available',
-        feature: 'Removal of Front branding'
-      },
-      {
-        pro: false,
-        starter: false,
-        enterprise: true,
-        feature: 'Active maintenance & support'
-      },
-      {
-        pro: false,
-        starter: false,
-        enterprise: true,
-        feature: 'Data storage for 365 days'
-      }
-    ]
-  }
-}
-
 const PricingPage = () => {
   const auth = useAuth()
   const router = useRouter()
@@ -244,12 +140,14 @@ const PricingPage = () => {
                 ))}
               </Grid>
             </CardContent>
-            <PricingCTA />
+            <br />
+            {type != 'student' && <PricingCTA />}
             <CardContent>
-              <PricingTable data={data} />
+              <br />
+              <PricingTable type={tab} />
             </CardContent>
             <CardContent sx={{ backgroundColor: 'action.hover' }}>
-              <PricingFooter data={data} />
+              <PricingFooter />
             </CardContent>
           </Card>
         </Grid>

@@ -110,21 +110,32 @@ const PlanDetails = props => {
           </Box>
         </Box>
         <BoxFeature>{renderFeatures()}</BoxFeature>
-        <Button
-          onClick={
-            handleClick
-            // (isCurrentPlan) ? null : () => props.addPayment()
-          }
-          fullWidth
-          color={isCurrentPlan && currentPlanItem[0].status == 1 ? 'success' : 'primary'}
-          variant={isCurrentPlan ? 'contained' : 'outlined'}
-        >
-          {isCurrentPlan && currentPlanItem[0].status == 1
-            ? 'Đang sử dụng'
-            : isCurrentPlan && currentPlanItem[0].status == 5
-            ? 'Đã đăng ký'
-            : 'Đăng ký'}
-        </Button>
+        {!data.cantBuy && (
+          <Button
+            onClick={
+              handleClick
+              // (isCurrentPlan) ? null : () => props.addPayment()
+            }
+            fullWidth
+            color={isCurrentPlan && currentPlanItem[0].status == 1 ? 'success' : 'primary'}
+            variant={isCurrentPlan ? 'contained' : 'outlined'}
+          >
+            {isCurrentPlan && currentPlanItem[0].status == 1
+              ? 'Đang sử dụng'
+              : isCurrentPlan && currentPlanItem[0].status == 5
+              ? 'Đã đăng ký'
+              : 'Đăng ký'}
+          </Button>
+        )}
+        {data.cantBuy && (
+          <Button
+            fullWidth
+            color={isCurrentPlan && currentPlanItem[0].status == 1 ? 'success' : 'primary'}
+            variant={isCurrentPlan ? 'contained' : 'outlined'}
+          >
+            Liên hệ
+          </Button>
+        )}
       </BoxWrapper>
       {showLogin && <LoginRequiredDialog returnUrl={'/pricing'} onClose={() => setShowLogin(false)} />}
     </>

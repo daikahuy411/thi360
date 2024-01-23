@@ -42,7 +42,7 @@ const HomePage = () => {
         <section className='Home-banner'>
           {/* <img src='/themes/default/assets/img/intro.png' /> */}
           {/* <label>Sẵn sàng cho kỳ thi của bạn</label> */}
-          <h1 className='' style={{ fontSize: 36,}}>
+          <h1 className='' style={{ fontSize: 36, }}>
             Giải pháp Thi trực tuyến Thi360.com.
           </h1>
           <br />
@@ -67,7 +67,7 @@ const HomePage = () => {
                     <p>Top 6 Kỳ thi tham gia gần nhất </p>
                   </div>
                 </div>
-                <br/>
+                <br />
                 <section className='Home-exam'>
                   <div className='He-box'>
                     <div className='row g2'>
@@ -513,6 +513,64 @@ const HomePage = () => {
               </div>
             </div>
           </div>
+        </Card>
+        <br />
+        <br />
+        <div className='row'>
+          <div className='col-12 text-center'>
+            <div className='section-heading'>
+              <h2>Bạn cần trợ giúp</h2>
+            </div>
+            <p>Chúng tôi luôn sẵn sàng trợ giúp 🤩</p>
+          </div>
+        </div>
+        <br />
+        <Card>
+          <CardContent>
+            <Grid container spacing={6} sx={{ textAlign: 'center' }}>
+              <Grid item md={4} xs={12}>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                  <CustomAvatar
+                    skin='light'
+                    color='primary'
+                    sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                  >
+                    <Icon icon='mdi:phone-dial-outline' />
+                  </CustomAvatar>
+                  <Typography sx={{ mb: 3, fontWeight: '600' }}>0988.397.448</Typography>
+                  <Typography>Gọi vào hotline hoặc nhắn tin, chúng tôi sẽ gọi lại.</Typography>
+                </Box>
+              </Grid>
+              <Grid item md={4} xs={12}>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                  <CustomAvatar
+                    skin='light'
+                    color='primary'
+                    sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                  >
+                    <Icon icon='mdi:star-outline' />
+                  </CustomAvatar>
+                  <Typography sx={{ mb: 3, fontWeight: '600' }}>Zalo: </Typography>
+                  <Typography>Hỗ trợ thông qua Zalo.</Typography>
+                </Box>
+              </Grid>
+              <Grid item md={4} xs={12}>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                  <CustomAvatar
+                    skin='light'
+                    color='primary'
+                    sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
+                  >
+                    <Icon icon='mdi:facebook' />
+                  </CustomAvatar>
+                  <Typography sx={{ mb: 3, fontWeight: '600' }}>Facebook</Typography>
+                  <Typography>
+                    Hỗ trợ thông qua Facebook.
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </CardContent>
         </Card>
         <br />
         <br />

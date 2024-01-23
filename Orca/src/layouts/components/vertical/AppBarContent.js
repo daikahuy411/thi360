@@ -108,7 +108,7 @@ const AppBarContent = props => {
         <ul className='navbar-nav flex-row align-items-center ms-auto'>
           <li className='nav-item' style={{ marginRight: 10 }}>
             <Link
-              href={'/pricing'}
+              href={'/pricing/student/'}
               className='btn btn-primary waves-effect waves-light btn-sm'
               style={{ textTransform: 'none', fontSize: 14 }}
             >
