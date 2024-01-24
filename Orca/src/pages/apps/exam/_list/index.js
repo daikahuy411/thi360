@@ -4,6 +4,7 @@ import {
 } from 'react'
 
 import ExamApi from 'api/exam-api'
+import { FolderType } from 'enum/FolderType'
 import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -222,7 +223,7 @@ const ExamTable = () => {
           <Button
             variant='contained'
             onClick={() => {
-              setCurrentFolder({id: 0, type: 1})
+              setCurrentFolder({ id: 0, type: 1 })
               setEditFolder(true)
             }}
             style={{ width: 210 }}
@@ -370,6 +371,7 @@ const ExamTable = () => {
 
         {editFolder && (
           <EditFolderDialog
+            folderType={FolderType.EXAM}
             onClose={hasChanged => handleEditFolderClose(hasChanged)}
             entity={currentFolder}
             parentId={examId}

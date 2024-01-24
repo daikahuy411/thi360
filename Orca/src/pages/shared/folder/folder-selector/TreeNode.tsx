@@ -1,5 +1,10 @@
 import React from 'react'
 
+import {
+  mdilFile,
+  mdilFolder
+} from '@mdi/light-js'
+import Icon from '@mdi/react'
 import TreeItem, { TreeItemProps } from '@mui/lab/TreeItem'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
@@ -12,10 +17,12 @@ type TreeNodeProps = TreeItemProps & {
 
 type StyledTreeItemProps = TreeItemProps & {
   label?: string
+  hasChildren?: boolean
 }
 
 export default function TreeNode(props: TreeNodeProps) {
   const { item } = props
+  const hasChildren = item.children && item.children.length > 0 ? true : false
 
   const children = (item.children || [])
     .filter((x: any) => {
@@ -26,7 +33,7 @@ export default function TreeNode(props: TreeNodeProps) {
     })
 
   return (
-    <StyledTreeItem key={item.id} nodeId={item.id.toString()} label={item.name}>
+    <StyledTreeItem key={item.id} hasChildren={hasChildren} nodeId={item.id.toString()} label={item.name}>
       {children}
     </StyledTreeItem>
   )
@@ -58,21 +65,18 @@ const StyledTreeItemRoot = styled(TreeItem)<TreeItemProps>(({ theme }) => ({
 
 const StyledTreeItem = (props: StyledTreeItemProps) => {
   // ** Props
-  const { label, ...other } = props
+  const { hasChildren, label, ...other } = props
 
   return (
     <StyledTreeItemRoot
       {...other}
       label={
         <Box sx={{ py: 1, display: 'flex', alignItems: 'center', '& svg': { mr: 1 } }}>
+          {hasChildren && <Icon path={mdilFolder} title='Folder' color='black' size={1} />}
+          {!hasChildren && <Icon path={mdilFile} title='Folder' color='black' size={1} />}
           <Typography variant='body1' sx={{ flexGrow: 1, fontWeight: 'inherit' }}>
             {label}
           </Typography>
-          {/* {labelInfo ? (
-            <Typography variant='caption' color='inherit'>
-              {labelInfo}
-            </Typography>
-          ) : null} */}
         </Box>
       }
     />

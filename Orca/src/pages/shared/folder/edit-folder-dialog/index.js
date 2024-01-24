@@ -65,10 +65,17 @@ export default function EditFolderDialog({ id = 0, api, onClose, folderType, par
     api
       .save(entity)
       .then(response => {
-        setLoading(false)
-        toast.success('Cập nhật thành công')
-        if (onClose) {
-          onClose(true)
+        if (response.data.isSuccess) {
+          setLoading(false)
+          toast.success('Cập nhật thành công')
+          if (onClose) {
+            onClose(true)
+          }
+        } else {
+          toast.error(response.data.message)
+          if (onClose) {
+            onClose(true)
+          }
         }
       })
       .catch(e => {
@@ -88,7 +95,7 @@ export default function EditFolderDialog({ id = 0, api, onClose, folderType, par
     reset(item)
   }, [item])
 
-  const clearParent = () => { }
+  const clearParent = () => {}
 
   return (
     <>
@@ -130,11 +137,7 @@ export default function EditFolderDialog({ id = 0, api, onClose, folderType, par
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
-                    <ParentFolderField
-                      api={api}
-                      type={folderType}
-                      parentId={item ? item.parentId : parentId}
-                    />
+                    <ParentFolderField api={api} type={folderType} parentId={item ? item.parentId : parentId} />
                   </Grid>
                 </Grid>
               </div>

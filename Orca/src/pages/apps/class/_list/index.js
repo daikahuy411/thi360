@@ -4,6 +4,7 @@ import {
 } from 'react'
 
 import OrganizationApi from 'api/organization-api'
+import { FolderType } from 'enum/FolderType'
 import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -233,7 +234,7 @@ const ClassTable = () => {
             rowsPerPageOptions={[20, 30, 50]}
             component='div'
             count={totalItem}
-            labelRowsPerPage="Hiển thị"
+            labelRowsPerPage='Hiển thị'
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -351,7 +352,7 @@ const ClassTable = () => {
         component='div'
         count={totalItem}
         rowsPerPage={rowsPerPage}
-        labelRowsPerPage="Hiển thị"
+        labelRowsPerPage='Hiển thị'
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
@@ -359,7 +360,8 @@ const ClassTable = () => {
 
       {editFolder && (
         <EditFolderDialog
-          id={currentFolder ? currentFolder.id : 0}
+          folderType={FolderType.CLASS}
+          entity={currentFolder}
           onClose={hasChanged => handleEditFolderClose(hasChanged)}
           parentId={classId}
           api={new OrganizationApi()}

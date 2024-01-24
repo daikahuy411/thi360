@@ -4,6 +4,7 @@ import {
 } from 'react'
 
 import QuestionCatalogApi from 'api/question-catalog-api'
+import { FolderType } from 'enum/FolderType'
 import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -306,7 +307,11 @@ const QuestionCatalogTable = () => {
                           </IconButton>
                         )}
                         {item.type !== 1 && (
-                          <IconButton aria-label='edit' component={Link} href={`/apps/question-catalog/${item.id}/${item.parentId > 0 ? item.parentId : ''}`}>
+                          <IconButton
+                            aria-label='edit'
+                            component={Link}
+                            href={`/apps/question-catalog/${item.id}/${item.parentId > 0 ? item.parentId : ''}`}
+                          >
                             <EditIcon />
                           </IconButton>
                         )}
@@ -353,6 +358,7 @@ const QuestionCatalogTable = () => {
 
       {editFolder && (
         <EditFolderDialog
+          folderType={FolderType.QUESTIONCATALOG}
           onClose={hasChanged => handleEditFolderClose(hasChanged)}
           entity={currentFolder}
           parentId={questionCatalogId}

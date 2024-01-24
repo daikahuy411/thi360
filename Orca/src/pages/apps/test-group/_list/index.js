@@ -4,6 +4,7 @@ import {
 } from 'react'
 
 import TestGroupApi from 'api/test-group-api'
+import { FolderType } from 'enum/FolderType'
 import moment from 'moment'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -229,7 +230,12 @@ const TestGroupTable = () => {
           </IconButton>
         </Grid>
         <Grid item md={4}>
-          <TextField fullWidth placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'  onChange={e => setKeyword(e.target.value)} size='small' />
+          <TextField
+            fullWidth
+            placeholder='Tìm kiếm, nhập ít nhất 3 ký tự'
+            onChange={e => setKeyword(e.target.value)}
+            size='small'
+          />
         </Grid>
         <Grid item md={4} alignContent={'right'}>
           <TablePagination
@@ -317,10 +323,8 @@ const TestGroupTable = () => {
                           {row.type != 1 && <Typography variant='body1'>{row.name}</Typography>}
                         </TableCell>
                         <TableCell>
-                            <Typography variant='body1'>
-                              {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
-                            </Typography>
-                          </TableCell>
+                          <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                        </TableCell>
                       </TableRow>
                     )
                   })}
@@ -341,6 +345,7 @@ const TestGroupTable = () => {
       />
       {editFolder && (
         <EditFolderDialog
+          folderType={FolderType.TESTGROUP}
           onClose={hasChanged => handleEditFolderClose(hasChanged)}
           entity={currentFolder}
           parentId={folderId}
