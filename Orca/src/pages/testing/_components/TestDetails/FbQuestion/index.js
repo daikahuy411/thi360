@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 
-class TexctFieldQuestion extends Component {
+class TextQuestion extends Component {
   static defaultProps = {
     eventHandler: value => {},
     value: ''
@@ -36,7 +36,7 @@ class SelectQuestion extends Component {
     return (
       <>
         <Select
-          label='Trạng thái'
+          label=''
           value={this.props.value}
           onChange={e => this.props.eventHandler(`${this.props.name}`, e.target.value)}
         >
@@ -71,12 +71,13 @@ const FbQuestion = ({ question, onChanged, userAnswer }) => {
             onChange(name, value)
           }
         }}
-        components={{ TexctFieldQuestion, SelectQuestion }}
-        jsx={`
-         <div> Điền từ vào chỗ trống
-         Text field:<TexctFieldQuestion name='0' value={'abc'} eventHandler={onChanged} truthyProp />
-         <SelectQuestion  name='1' value={'1'} eventHandler={onChanged} truthyProp /> </div>
-        `}
+        components={{ TextQuestion, SelectQuestion }}
+        jsx={question.htmlContent}
+        // jsx={`
+        //  <div> Điền từ vào chỗ trống
+        //  Text field:<TextQuestion name='0' value={'abc'} eventHandler={onChanged} truthyProp />
+        //  <SelectQuestion  name='1' value={'1'} eventHandler={onChanged} truthyProp /> </div>
+        // `}
       />
     </>
   )

@@ -9,7 +9,7 @@ export default {
   // baseApiUrl: 'http://thi360.com/api/',
 
   meEndpoint: '/auth/me',
-  loginEndpoint: 'users/authenticate',
+  loginEndpoint: 'v1/authenticate',
   googleLoginEndpoint: 'users/googlelogin',
   userInfoEndpoint: 'users/userinfo',
   registerEndpoint: 'users/register',

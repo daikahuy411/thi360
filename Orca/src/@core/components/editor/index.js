@@ -5,6 +5,8 @@ import React, {
 } from 'react'
 
 import Configuration from 'configs/auth'
+import { useRouter } from 'next/router'
+import toast from 'react-hot-toast'
 
 // import { CKEditor } from '@ckeditor/ckeditor5-react'
 // import Editor from 'ckeditor5-custom-build/build/ckeditor'
@@ -14,23 +16,17 @@ export default function ContentEditor({ content, isReadOnly, onChange }) {
   const [editorLoaded, setEditorLoaded] = useState(false)
   const [error, setError] = useState(false)
   const { CKEditor, Editor } = editorRef.current || {}
+  const router = useRouter()
 
   useEffect(() => {
     setTimeout(() => {
       try {
         loadRequire()
       } catch (ex) {
-        setTimeout(() => {
-          try {
-            loadRequire()
-          } catch (ex) {
-            setError(true)
-            alert('Vui lòng tải lại trang do không thể tải được trình soạn thảo')
-            window.location.reload()
-          }
-        }, 250)
+        toast.error('Không thể tải editor, tự động refresh lại trang.')
+        router.refresh()
       }
-    }, 250)
+    }, 350)
   }, [])
 
   const loadRequire = () => {
