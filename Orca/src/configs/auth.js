@@ -10,12 +10,12 @@ export default {
 
   meEndpoint: '/auth/me',
   loginEndpoint: 'v1/authenticate',
-  googleLoginEndpoint: 'users/googlelogin',
+  googleLoginEndpoint: 'v1/googlelogin',
   userInfoEndpoint: 'users/userinfo',
-  registerEndpoint: 'users/register',
-  verifyActivateCodeEndpoint: 'users/verify-acctivate-code',
-  sendMailForgotPasswordEndpoint: 'users/send-mail-forgot-password',
-  forgotPasswordEndpoint: 'users/forgot-password',
+  registerEndpoint: 'v1/register',
+  verifyActivateCodeEndpoint: 'v1/verify-acctivate-code',
+  sendMailForgotPasswordEndpoint: 'v1/send-mail-forgot-password',
+  forgotPasswordEndpoint: 'v1/forgot-password',
   storageTokenKeyName: 'accessToken',
   storageUserDataKeyName: 'userData',
   onTokenExpiration: 'refreshToken' // logout | refreshToken
