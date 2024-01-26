@@ -10,8 +10,6 @@ import { useRouter } from 'next/router'
 import AttemHistory from 'pages/user-profile/[tab]/attemp-history'
 // import Connections from 'pages/user-profile/[tab]/connections'
 import Profile from 'pages/user-profile/[tab]/profile'
-// ** Demo Components
-import Teams from 'pages/user-profile/[tab]/teams'
 import UserProfileHeader from 'pages/user-profile/UserProfileHeader'
 
 // ** Icon Imports
@@ -94,7 +92,7 @@ const UserProfile = ({ tab }) => {
 
   const tabContentList = {
     profile: <Profile data={data} />,
-    teams: <Teams data={[{ id: data.organizationId, name: data.organizationName }]} />,
+    // teams: <Teams data={[{ id: data.organizationId, name: data.organizationName }]} />,
     'attemp-history': <AttemHistory data={data} />
   }
 

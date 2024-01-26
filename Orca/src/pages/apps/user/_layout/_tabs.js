@@ -13,7 +13,10 @@ const Nav = () => {
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
         <Link
           className={`finger-tabs__tab flex-none ${
-            router.asPath.indexOf(`/users/${userId}/`) >= 0 ? 'is-active' : 'disabled'
+            (router.asPath.indexOf(`/user/${userId}/`) >= 0 || router.asPath.indexOf(`/users/${userId}/`) >= 0) &&
+            router.asPath.indexOf(`testinghistory`) < 0
+              ? 'is-active'
+              : 'disabled'
           }`}
           title='Chi tiết'
           component={Link}
@@ -21,7 +24,7 @@ const Nav = () => {
         >
           Chi tiết
         </Link>
-        {currentUser && currentUser.id ? (
+        {currentUser ? (
           <Link
             className={`finger-tabs__tab flex-none ${
               router.asPath === `/apps/user/${userId}/testinghistory/` ? 'is-active' : 'disabled'
@@ -33,12 +36,7 @@ const Nav = () => {
             Lịch sử Thi
           </Link>
         ) : (
-          <p
-            className={`finger-tabs__tab flex-none ${
-              router.asPath === `/apps/user/${userId}/testinghistory/` ? 'is-active' : 'disabled'
-            }`}
-            title='Lịch sử Thi'
-          >
+          <p className={`finger-tabs__tab flex-none disabled`} title='Lịch sử Thi'>
             Lịch sử Thi
           </p>
         )}

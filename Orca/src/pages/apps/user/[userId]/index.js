@@ -116,7 +116,7 @@ const EditUserPage = () => {
   useEffect(() => {
     if (!userId || userId == 0) {
       dispatch(
-        selectUser({ id: '0', firstName: '', lastName: '', userName: '', passwordHash: '', changePassword: false })
+        selectUser({ id: '0', firstName: '', lastName: '', userName: '', passwordHash: '', gender: 0, changePassword: false })
       )
       return
     }
@@ -380,15 +380,30 @@ const EditUserPage = () => {
                               control={control}
                               rules={{ required: true }}
                               render={({ field: { value, onChange } }) => (
-                                <TextField
-                                  value={value ?? ''}
-                                  label='Tên đăng nhập'
-                                  required
-                                  disabled={currentUser && currentUser.id != '0' ? true : false}
-                                  onChange={onChange}
-                                  error={Boolean(errors.userName)}
-                                  aria-describedby='validation-schema-userName'
-                                />
+                                <>
+                                  <InputLabel htmlFor='outlined-adornment-username'>Tên đăng nhập</InputLabel>
+                                  <OutlinedInput
+                                    value={value ?? ''}
+                                    label='Tên đăng nhập'
+                                    required
+                                    disabled={currentUser && currentUser.id != '0' ? true : false}
+                                    onChange={onChange}
+                                    error={Boolean(errors.userName)}
+                                    aria-describedby='validation-schema-userName'
+                                    endAdornment={
+                                      <InputAdornment position='end'>
+                                        <Tooltip
+                                          placement='right-start'
+                                          title='Sử dụng số điện thoại hoặc email đặt cho tên đăng nhập để tránh trùng với học viên của toàn bộ hệ thống.'
+                                        >
+                                          <IconButton>
+                                            <InfoOutlinedIcon />
+                                          </IconButton>
+                                        </Tooltip>
+                                      </InputAdornment>
+                                    }
+                                  />
+                                </>
                               )}
                             />
                             {errors.userName && (
@@ -530,7 +545,7 @@ const EditUserPage = () => {
                                     Giới tính
                                   </InputLabel>
                                   <Select
-                                    label='Khối lớp'
+                                    label='Giới tính'
                                     labelId='demo-simple-select-label'
                                     aria-describedby='validation-schema-group'
                                     error={Boolean(errors.gender)}

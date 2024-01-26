@@ -1,5 +1,8 @@
 // ** React Imports
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
 import UserApi from 'api/user-api'
 // ** Next Import
@@ -7,8 +10,6 @@ import { useRouter } from 'next/router'
 import AttemHistory from 'pages/user-profile/[tab]/attemp-history'
 // import Connections from 'pages/user-profile/[tab]/connections'
 import Profile from 'pages/user-profile/[tab]/profile'
-// ** Demo Components
-import Teams from 'pages/user-profile/[tab]/teams'
 import UserProfileHeader from 'pages/user-profile/UserProfileHeader'
 
 // ** Icon Imports
@@ -91,7 +92,7 @@ const UserProfile = ({ tab }) => {
 
   const tabContentList = {
     profile: <Profile data={data} />,
-    teams: <Teams data={data} />,
+    // teams: <Teams data={data} />,
     'attemp-history': <AttemHistory data={data} />
   }
 
@@ -120,7 +121,7 @@ const UserProfile = ({ tab }) => {
                       </Box>
                     }
                   />
-                  <Tab
+                  {/* <Tab
                     value='teams'
                     label={
                       <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
@@ -128,7 +129,7 @@ const UserProfile = ({ tab }) => {
                         {!hideText && 'Lớp học'}
                       </Box>
                     }
-                  />
+                  /> */}
                   <Tab
                     value='attemp-history'
                     label={

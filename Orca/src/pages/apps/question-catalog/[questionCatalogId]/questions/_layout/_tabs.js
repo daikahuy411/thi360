@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { selectedQuestion } from 'store/slices/questionSlice'
 
-const Nav = ({ children }) => {
+const Nav = () => {
   const router = useRouter()
   const currentQuestion = useSelector(selectedQuestion)
   const { questionId, questionCatalogId, type } = router.query
@@ -13,9 +13,7 @@ const Nav = ({ children }) => {
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
         <Link
           className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/question-catalog/${questionCatalogId}/questions/${questionId}/`
-              ? 'is-active'
-              : 'disabled'
+            router.asPath.indexOf(`/questions/`) >= 0 ? 'is-active' : 'disabled'
           }`}
           title='Chi tiết'
           component={Link}

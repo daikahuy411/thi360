@@ -95,13 +95,13 @@ export default function EditFolderDialog({ id = 0, api, onClose, folderType, par
     reset(item)
   }, [item])
 
-  const clearParent = () => {}
+  const clearParent = () => { }
 
   return (
     <>
       <Dialog open={true} onClose={handleClose}>
-        <DialogTitle>
-          {item && <>Chỉnh sửa {item.name}</>}
+        <DialogTitle style={{ fontSize: 18 }}>
+          {item && <>Chỉnh sửa</>}
           {!item && <>Tạo mới Thư mục</>}
         </DialogTitle>
         <DialogContent>

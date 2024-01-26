@@ -309,7 +309,7 @@ const QuestionEditForm = () => {
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code == 1) {
-          router.push(`/apps/question-catalog/${response.data.catalogId}/questions/${response.data.id}`)
+          router.push(`/apps/question-catalog/${response.data.value.catalogId}/questions/${response.data.value.id}`)
         } else {
           reset()
           cleanCategory()

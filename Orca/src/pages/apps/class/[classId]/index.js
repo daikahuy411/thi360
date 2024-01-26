@@ -114,12 +114,16 @@ const EditClassPage = () => {
     new OrganizationApi()
       .save({ ...item, type: 2 })
       .then(response => {
-        toast.success('Cập nhật thành công')
-        if (code === 1) {
-          router.query.classId = response.data.id
-          router.push(router)
+        if (response.data.isSuccess) {
+          toast.success('Cập nhật thành công')
+          if (code === 1) {
+            router.query.classId = response.data.value.id
+            router.push(router)
+          } else {
+            reset()
+          }
         } else {
-          reset()
+          toast.error(response.data.message)
         }
       })
       .catch(e => {
@@ -206,7 +210,7 @@ const EditClassPage = () => {
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                     <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100vh', paddingTop: 10 }}>
-                    <Grid container spacing={5} maxWidth={'sm'}>
+                      <Grid container spacing={5} maxWidth={'sm'}>
                         <Grid item xs={12}>
                           <FormControl fullWidth>
                             <Controller
