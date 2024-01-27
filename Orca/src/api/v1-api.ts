@@ -178,6 +178,10 @@ class V1Api extends ApiBase {
   requestBecomeTeacher = () => {
     return axios.post(this.baseApiUrl + '/RequestBecomeTeacher')
   }
+
+  getTenantUsage = () => {
+    return axios.get(this.baseApiUrl + '/GetTenantUsage')
+  }
 }
 
 export default V1Api

@@ -1,5 +1,10 @@
 import * as React from 'react'
-import { useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
+import V1Api from 'api/v1-api'
 
 import Icon from '@core/components/icon'
 import MuiAvatar from '@mui/material/Avatar'
@@ -28,14 +33,14 @@ const Avatar = styled(MuiAvatar)(({ theme }) => ({
 
 const CardStatsHorizontal = props => {
   // ** Props
-  const { title, icon, stats, trendNumber, color = 'primary', trend = 'positive' } = props
+  const { title, icon, stats, color = 'primary' } = props
 
   return (
     <Card
       sx={{
-        backgroundColor: 'transparent !important',
-        boxShadow: theme => `${theme.shadows[0]} !important`,
-        border: theme => `1px solid ${theme.palette.divider}`
+        // backgroundColor: 'transparent !important',
+        // boxShadow: theme => `${theme.shadows[0]} !important`,
+        // border: theme => `1px solid ${theme.palette.divider}`
       }}
     >
       <CardContent>
@@ -63,58 +68,16 @@ const CardStatsHorizontal = props => {
   )
 }
 
-const cardStatsData = {
-  statsHorizontal: [
-    {
-      stats: '2,856',
-      trend: 'negative',
-      trendNumber: '10.2%',
-      title: 'Học viên',
-      icon: 'mdi:account-outline'
-    },
-    {
-      stats: '28.6K',
-      trendNumber: '25.8%',
-      title: 'Lớp học',
-      icon: 'mdi:accounts'
-    },
-    {
-      stats: '16.6K',
-      trend: 'negative',
-      trendNumber: '12.1%',
-      title: 'Kỳ thi',
-      icon: 'mdi:trophy-outline'
-    },
-    {
-      stats: '2,856',
-      icon: 'mdi:question-mark-circle-outline',
-      trendNumber: '54.6%',
-      title: 'Câu hỏi'
-    },
-    {
-      stats: '2,856',
-      icon: 'mdi:briefcase-outline',
-      trendNumber: '54.6%',
-      title: 'Bộ Câu hỏi'
-    },
-    {
-      stats: '2,856',
-      icon: 'mdi:book-cog-outline',
-      trendNumber: '54.6%',
-      title: 'Bộ Đề thi'
-    },
-    {
-      stats: '2,856',
-      icon: 'mdi:check-circle-outline',
-      trendNumber: '54.6%',
-      title: 'Lượt thi'
-    }
-  ]
-}
-
 const TeacherDashboard = () => {
   // ** States
   const [show, setShow] = useState(false)
+  const [data, setData] = useState(false)
+
+  useEffect(() => {
+    new V1Api().getTenantUsage().then(response => {
+      setData(response.data)
+    })
+  }, [])
 
   return (
     <Grid container spacing={6}>
@@ -123,13 +86,63 @@ const TeacherDashboard = () => {
           <span>Tổng quan</span>
         </span>
       </Grid>
-      {cardStatsData.statsHorizontal.map((item, index) => {
-        return (
-          <Grid item xs={12} md={3} sm={6} key={index}>
-            <CardStatsHorizontal {...item} icon={<Icon icon={item.icon} />} />
-          </Grid>
-        )
-      })}
+      <Grid item xs={12} md={12} lg={12}>
+        <Grid container spacing={6}>
+          {data && (
+            <>
+             <Grid item xs={12} md={3} sm={6}>
+                <CardStatsHorizontal
+                  title='Lớp học'
+                  stats={data.totalClass}
+                  icon={<Icon icon={'mdi:accounts-outline'} />}
+                />
+              </Grid>
+              <Grid item xs={12} md={3} sm={6}>
+                <CardStatsHorizontal
+                  title='Học viên'
+                  stats={data.totalUser}
+                  icon={<Icon icon={'mdi:account-outline'} />}
+                />
+              </Grid>
+              <Grid item xs={12} md={3} sm={6}>
+                <CardStatsHorizontal
+                  title='Bộ Câu hỏi'
+                  stats={data.totalQuestionCatalog}
+                  icon={<Icon icon={'mdi:briefcase-outline'} />}
+                />
+              </Grid>
+              <Grid item xs={12} md={3} sm={6}>
+                <CardStatsHorizontal
+                  title='Câu hỏi'
+                  stats={data.totalQuestion}
+                  icon={<Icon icon={'mdi:question-mark-circle-outline'} />}
+                />
+              </Grid>
+              <Grid item xs={12} md={3} sm={6}>
+                <CardStatsHorizontal
+                  title='Kỳ thi'
+                  stats={data.totalExam}
+                  icon={<Icon icon={'mdi:trophy-outline'} />}
+                />
+              </Grid>
+              <Grid item xs={12} md={3} sm={6}>
+                <CardStatsHorizontal
+                  title='Bộ đề thi'
+                  stats={data.totalTestGroup}
+                  icon={<Icon icon={'mdi:book-cog-outline'} />}
+                />
+              </Grid>
+              <Grid item xs={12} md={3} sm={6}>
+                <CardStatsHorizontal
+                  title='Lượt thi'
+                  stats={data.totalQuestion}
+                  icon={<Icon icon={'mdi:check-circle-outline'} />}
+                />
+              </Grid>
+            </>
+          )}
+        </Grid>
+      </Grid>
       <Grid item xs={12} md={5} lg={5}>
         <UserCurrentPlan />
       </Grid>
