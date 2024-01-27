@@ -36,7 +36,7 @@ import Typography from '@mui/material/Typography'
 import TopNav from '../../_layout/_breadcrums'
 import Nav from '../../_layout/_tabs'
 
-const ExamAttempHistory = () => {
+const UserExamAttempHistory = () => {
   const [data, setData] = useState()
   const [totalItem, setTotalItem] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -258,4 +258,4 @@ const ExamAttempHistory = () => {
   )
 }
 
-export default ExamAttempHistory
+export default UserExamAttempHistory

@@ -24,7 +24,8 @@ export default function ContentEditor({ content, isReadOnly, onChange }) {
         loadRequire()
       } catch (ex) {
         toast.error('Không thể tải editor, tự động refresh lại trang.')
-        router.refresh()
+        router.query.reload= true
+        router.push(router)
       }
     }, 350)
   }, [])

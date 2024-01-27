@@ -24,7 +24,7 @@ const Nav = () => {
         >
           Chi tiết
         </Link>
-        {currentUser ? (
+        {currentUser && userId != '0' ? (
           <Link
             className={`finger-tabs__tab flex-none ${
               router.asPath === `/apps/user/${userId}/testinghistory/` ? 'is-active' : 'disabled'
