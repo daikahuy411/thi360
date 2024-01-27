@@ -85,6 +85,11 @@ export const teacherLinks = [
     sectionTitle: 'LMS'
   },
   {
+    title: 'Tổng quan',
+    icon: 'mdi:view-dashboard',
+    path: '/dashboard'
+  },
+  {
     title: 'Thi & Kiểm tra',
     icon: 'mdi:trophy-outline',
     children: [

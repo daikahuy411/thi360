@@ -5,27 +5,23 @@ import React, {
 } from 'react'
 
 import Configuration from 'configs/auth'
+import { useRouter } from 'next/router'
+import toast from 'react-hot-toast'
 
 export default function LiteContentEditor({ content, isReadOnly, onChange }) {
   const editorRef = useRef()
   const [editorLoaded, setEditorLoaded] = useState(false)
   const [error, setError] = useState(false)
   const { CKEditor, Editor } = editorRef.current || {}
+  const router = useRouter()
 
   useEffect(() => {
     setTimeout(() => {
       try {
         loadRequire()
       } catch (ex) {
-        setTimeout(() => {
-          try {
-            loadRequire()
-          } catch (ex) {
-            setError(true)
-            alert('Vui lòng tải lại trang do không thể tải được trình soạn thảo')
-            window.location.reload()
-          }
-        }, 250)
+        toast.error('Không thể tải editor, tự động refresh lại trang.')
+        router.push(router)
       }
     }, 250)
   }, [])

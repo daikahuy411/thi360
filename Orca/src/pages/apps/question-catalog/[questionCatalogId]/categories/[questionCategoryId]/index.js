@@ -211,7 +211,7 @@ const QuestionCategoryEditPage = () => {
                   </div>
                   <div className='grid-block' style={{ padding: 10 }}>
                     <form onSubmit={e => e.preventDefault()} style={{ height: 'auto', width: '100%', paddingTop: 10 }}>
-                      <Grid container maxWidth={'md'} spacing={5}>
+                      <Grid container maxWidth={'sm'} spacing={5}>
                         <Grid item xs={12}>
                           <FormControl fullWidth variant='outlined'>
                             <InputLabel htmlFor='outlined-adornment-parent-category'>Danh mục cha</InputLabel>
