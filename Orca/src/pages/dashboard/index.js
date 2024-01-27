@@ -37,11 +37,13 @@ const CardStatsHorizontal = props => {
 
   return (
     <Card
-      sx={{
-        // backgroundColor: 'transparent !important',
-        // boxShadow: theme => `${theme.shadows[0]} !important`,
-        // border: theme => `1px solid ${theme.palette.divider}`
-      }}
+      sx={
+        {
+          // backgroundColor: 'transparent !important',
+          // boxShadow: theme => `${theme.shadows[0]} !important`,
+          // border: theme => `1px solid ${theme.palette.divider}`
+        }
+      }
     >
       <CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -72,10 +74,15 @@ const TeacherDashboard = () => {
   // ** States
   const [show, setShow] = useState(false)
   const [data, setData] = useState(false)
+  const [plan, setPlan] = useState(null)
 
   useEffect(() => {
     new V1Api().getTenantUsage().then(response => {
       setData(response.data)
+    })
+
+    new V1Api().getCurrentUserPlans().then(response => {
+      setPlan(response.data.value.find(x => x.pricingPlanType == 1))
     })
   }, [])
 
@@ -90,7 +97,7 @@ const TeacherDashboard = () => {
         <Grid container spacing={6}>
           {data && (
             <>
-             <Grid item xs={12} md={3} sm={6}>
+              <Grid item xs={12} md={3} sm={6}>
                 <CardStatsHorizontal
                   title='Lớp học'
                   stats={data.totalClass}
@@ -144,7 +151,7 @@ const TeacherDashboard = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} md={5} lg={5}>
-        <UserCurrentPlan />
+        {plan && <UserCurrentPlan userPlan={plan} />}
       </Grid>
       <Grid item xs={12} md={7} lg={7}>
         <AttemptWeeklyOverview />

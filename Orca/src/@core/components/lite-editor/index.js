@@ -21,6 +21,7 @@ export default function LiteContentEditor({ content, isReadOnly, onChange }) {
         loadRequire()
       } catch (ex) {
         toast.error('Không thể tải editor, tự động refresh lại trang.')
+        router.query.reload= true
         router.push(router)
       }
     }, 250)
