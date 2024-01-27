@@ -257,5 +257,5 @@ export default class TestingApi extends ApiBase {
   // lấy lịch sử thi của người dùng theo userid, kỳ thi, môn thi, đề thi
   UserExamAttemptHistory = (param: any) => {
     return axios.post(this.baseApiUrl + '/UserExamAttemptHistory', param)
-  }
+  } 
 }

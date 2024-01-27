@@ -175,7 +175,7 @@ const UserTable = () => {
           <Typography sx={{ flex: '1 1 50%' }} variant='h5' id='tableTitle' component='div'>
             {totalItem} Học viên
           </Typography>
-          &nbsp; &nbsp;
+          {/* &nbsp; &nbsp;
           <Tooltip title='Import'>
             <IconButton sx={{ color: 'text.secondary' }}>
               <Icon icon='mdi:upload' />
@@ -186,7 +186,7 @@ const UserTable = () => {
             <IconButton sx={{ color: 'text.secondary' }}>
               <Icon icon='mdi:download' />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
           &nbsp; &nbsp;
           <Tooltip title='Xóa học viên khỏi kỳ thi'>
             <span>

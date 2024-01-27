@@ -16,7 +16,7 @@ import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 import AttemptWeeklyOverview from './attempt-weekly-overview'
-import UserActivityTimeline from './user-activity-timeline'
+import RencentUserExamAttempt from './recent-user-exam-atempt'
 import UserCurrentPlan from './user-curent-plan'
 
 // ** Styled Avatar component
@@ -75,6 +75,7 @@ const TeacherDashboard = () => {
   const [show, setShow] = useState(false)
   const [data, setData] = useState(false)
   const [plan, setPlan] = useState(null)
+  const [examAttemptWeekly, setExamAttemptWeekly] = useState(null)
 
   useEffect(() => {
     new V1Api().getTenantUsage().then(response => {
@@ -83,6 +84,10 @@ const TeacherDashboard = () => {
 
     new V1Api().getCurrentUserPlans().then(response => {
       setPlan(response.data.value.find(x => x.pricingPlanType == 1))
+    })
+
+    new V1Api().getExamAttemptWeekly().then(response => {
+      setExamAttemptWeekly(response.data)
     })
   }, [])
 
@@ -150,13 +155,17 @@ const TeacherDashboard = () => {
           )}
         </Grid>
       </Grid>
-      <Grid item xs={12} md={5} lg={5}>
-        {plan && <UserCurrentPlan userPlan={plan} />}
-      </Grid>
-      <Grid item xs={12} md={7} lg={7}>
+      <Grid item xs={12} md={4} lg={4}>
         <AttemptWeeklyOverview />
         <br />
-        <UserActivityTimeline />
+        {plan && <UserCurrentPlan userPlan={plan} />}
+      </Grid>
+      <Grid item xs={12} md={8} lg={8}>
+        <span className='title__label'>
+          <span>Lượt thi gần nhất</span>
+        </span>
+        <RencentUserExamAttempt />
+        {/* <UserActivityTimeline /> */}
       </Grid>
     </Grid>
   )

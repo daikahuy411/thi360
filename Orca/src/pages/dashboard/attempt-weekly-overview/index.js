@@ -1,14 +1,10 @@
 // ** Custom Components Imports
 // import OptionsMenu from '@core/components/option-menu'
 import ReactApexcharts from '@core/components/react-apexcharts'
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import { useTheme } from '@mui/material/styles'
-import Typography from '@mui/material/Typography'
 
 const AttemptWeeklyOverview = () => {
   // ** Hook
@@ -95,7 +91,7 @@ const AttemptWeeklyOverview = () => {
       />
       <CardContent sx={{ '& .apexcharts-xcrosshairs.apexcharts-active': { opacity: 0 } }}>
         <ReactApexcharts type='bar' height={205} options={options} series={[{ data: [37, 57, 45, 75, 57, 40, 65] }]} />
-        <Box sx={{ mb: 7, display: 'flex', alignItems: 'center' }}>
+        {/* <Box sx={{ mb: 7, display: 'flex', alignItems: 'center' }}>
           <Typography variant='h5' sx={{ mr: 4 }}>
             45%
           </Typography>
@@ -103,7 +99,7 @@ const AttemptWeeklyOverview = () => {
         </Box>
         <Button fullWidth variant='contained'>
           Xem chi tiết
-        </Button>
+        </Button> */}
       </CardContent>
     </Card>
   )

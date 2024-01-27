@@ -26,7 +26,6 @@ import DialogTitle from '@mui/material/DialogTitle'
 import Divider from '@mui/material/Divider'
 import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
-import IconButton from '@mui/material/IconButton'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Paper from '@mui/material/Paper'
@@ -40,7 +39,6 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
-import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
 function PaperComponent(props) {
@@ -173,15 +171,12 @@ const UserTable = () => {
   return (
     <>
       <HelmetProvider>
-        <Helmet>
-          {currentExam && (
-            <title>Báo cáo Kỳ thi {currentExam.name}</title>)}
-        </Helmet>
+        <Helmet>{currentExam && <title>Báo cáo Kỳ thi {currentExam.name}</title>}</Helmet>
         <Toolbar style={{ padding: 0 }}>
           <Typography sx={{ flex: '1 1 50%' }} variant='h5' id='tableTitle' component='div'>
             {totalItem} Học viên
           </Typography>
-          &nbsp; &nbsp;
+          {/* &nbsp; &nbsp;
           <Tooltip title='Import'>
             <IconButton sx={{ color: 'text.secondary' }}>
               <Icon icon='mdi:upload' />
@@ -192,7 +187,17 @@ const UserTable = () => {
             <IconButton sx={{ color: 'text.secondary' }}>
               <Icon icon='mdi:download' />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
+          &nbsp; &nbsp;
+          <Button
+            variant='contained'
+            style={{ width: 130 }}
+            onClick={() => setOpenUserModal(true)}
+            color='primary'
+            startIcon={<Icon icon='mdi:file-excel' />}
+          >
+            Export
+          </Button>
         </Toolbar>
         <Divider />
         <Grid container spacing={6}>
@@ -210,7 +215,9 @@ const UserTable = () => {
                 >
                   <MenuItem value={0}>Chọn Môn thi</MenuItem>
                   {currentExam.examItems.map(item => (
-                    <MenuItem key={`examitem-${item.id}`} value={item.id}>{item.name}</MenuItem>
+                    <MenuItem key={`examitem-${item.id}`} value={item.id}>
+                      {item.name}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>

@@ -182,6 +182,14 @@ class V1Api extends ApiBase {
   getTenantUsage = () => {
     return axios.get(this.baseApiUrl + '/GetTenantUsage')
   }
+
+  getExamAttemptWeekly = () => {
+    return axios.get(this.baseApiUrl + '/GetExamAttemptWeekly')
+  }
+
+  getRecentUserExamAttempt = () => {
+    return axios.get(this.baseApiUrl + '/GetRecentUserExamAttempt')
+  }
 }
 
 export default V1Api
