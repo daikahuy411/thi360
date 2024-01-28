@@ -33,11 +33,12 @@ type TreeRowProps = {
   item: any
   excludedId: number
   level: number
+  onDeleted: ()=> void
 }
 
 // export default function TreeRow(props: TreeRowProps) {
 const TreeRow: React.FC<TreeRowProps> = (props: TreeRowProps) => {
-  const { item } = props
+  const { item, onDeleted } = props
   const router = useRouter()
 
   const [isCollapsed, setIsCollapsed] = useState(true)
@@ -56,6 +57,7 @@ const TreeRow: React.FC<TreeRowProps> = (props: TreeRowProps) => {
     .map((child: any, index: number) => {
       return (
         <TreeRow
+          onDeleted={onDeleted}
           level={props.level + 1}
           excludedId={props.excludedId}
           key={`${child.id}-${index}`}
@@ -84,7 +86,10 @@ const TreeRow: React.FC<TreeRowProps> = (props: TreeRowProps) => {
         .then(response => {
           handleCloseFormDelete()
           toast.success('Xóa dữ liệu thành công')
-          setTimeout(() => router.reload(), 1000)
+          if( onDeleted){
+            onDeleted()
+          }
+         
         })
         .catch(e => {
           handleCloseFormDelete()

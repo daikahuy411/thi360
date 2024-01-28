@@ -141,7 +141,13 @@ export default function CatalogDialog({
             <div style={{ overflowY: 'scroll', height: `calc(100vh - 130px)` }}>
               <TableContainer component={Paper} style={{ marginTop: 5, padding: 20 }}>
                 <LoadingSpinner active={loading}>
-                  {data && <CatalogTree onNodeSelected={nodeId => handleNodeSelected(nodeId)} data={data} />}
+                  {data && (
+                    <CatalogTree
+                      excludedId={currentId}
+                      onNodeSelected={nodeId => handleNodeSelected(nodeId)}
+                      data={data}
+                    />
+                  )}
                 </LoadingSpinner>
               </TableContainer>
             </div>

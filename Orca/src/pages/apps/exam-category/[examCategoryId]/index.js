@@ -109,7 +109,8 @@ const ExamCategoryEditPage = () => {
     ExamCategoryApi.save(currentExamCategory).then(response => {
       toast.success('Cập nhật thành công')
       if (code === 1) {
-        router.push('/apps/exam-category/')
+        router.query.examCategoryId = response.data.id
+        router.push(router)
       } else {
         cleanParent()
         reset()
@@ -169,7 +170,7 @@ const ExamCategoryEditPage = () => {
                   <h3 className='title left'>
                     <span className='title__label'>
                       {currentExamCategory && <span>{currentExamCategory.name}</span>}
-                      {!currentExamCategory && <span>Tạo Danh mục Kỳ thi</span>}
+                      {(!currentExamCategory || currentExamCategory.id == 0) && <span>Tạo mới Danh mục Kỳ thi</span>}
                     </span>
                     {currentExamCategory && currentExamCategory.id > 0 && (
                       <EntityInfoModal entity={currentExamCategory} />
@@ -300,7 +301,7 @@ const ExamCategoryEditPage = () => {
                       {openCatalogDialog && (
                         <CatalogDialog
                           categoryType={CatalogType.EXAM_CATEGORY}
-                          currentId={examCategoryId}
+                          currentId={parseInt(examCategoryId)}
                           onNodeSelected={nodeId => {
                             handleSelectedParent(nodeId)
                           }}

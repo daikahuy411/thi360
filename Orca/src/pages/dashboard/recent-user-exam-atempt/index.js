@@ -54,8 +54,6 @@ const RencentUserExamAttempt = () => {
                     <TableCell style={{ textAlign: 'center', width: 50 }}>Xem</TableCell>
                     <TableCell>Tên</TableCell>
                     <TableCell style={{ width: 120 }}>Học viên</TableCell>
-                    <TableCell style={{ width: 110 }}>Câu sai</TableCell>
-                    <TableCell style={{ width: 110 }}>Câu đúng</TableCell>
                     <TableCell style={{ width: 90 }}>Điểm</TableCell>
                     <TableCell style={{ width: 160 }}>Trạng thái</TableCell>
                   </TableRow>
@@ -93,12 +91,12 @@ const RencentUserExamAttempt = () => {
                             {row?.user?.fullName} &nbsp;
                             {row?.user?.userName}
                           </TableCell>
-                          <TableCell component='td' scope='row'>
+                          {/* <TableCell component='td' scope='row'>
                             <b style={{ color: 'rgb(237, 91, 108)' }}>{row?.totalIncorrectQuestion}</b>
                           </TableCell>
                           <TableCell component='td' scope='row'>
                             <b style={{ color: 'rgb(80, 177, 103)' }}>{row?.totalCorrectQuestion}</b>
-                          </TableCell>
+                          </TableCell> */}
                           <TableCell>
                             <b>{row?.score}</b>
                           </TableCell>

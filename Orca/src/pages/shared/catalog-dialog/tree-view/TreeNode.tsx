@@ -23,9 +23,13 @@ type StyledTreeItemProps = TreeItemProps & {
 export default function TreeNode(props: TreeNodeProps) {
   const { item } = props
   const hasChildren = item.children && item.children.length > 0 ? true : false
-  const children = (item.children || []).map((child: any) => {
-    return <TreeNode excludedId={0} key={child.key} nodeId={child.key} item={child} />
-  })
+  const children = (item.children || [])
+    .filter((x: any) => {
+      return x.id !== props.excludedId
+    })
+    .map((child: any) => {
+      return <TreeNode excludedId={0} key={child.key} nodeId={child.key} item={child} />
+    })
 
   return (
     <StyledTreeItem hasChildren={hasChildren} key={item.key} nodeId={item.key.toString()} label={item.title}>

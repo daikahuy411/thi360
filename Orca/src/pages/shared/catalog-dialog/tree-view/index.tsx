@@ -11,6 +11,7 @@ import TreeNode from './TreeNode'
 export interface Props {
   onNodeSelected: (nodeIds: string) => void
   data?: Array<Catalog>
+  excludedId?: number
 }
 
 export interface States {}
@@ -40,7 +41,9 @@ export default class CatalogTree extends React.Component<Props, States> {
         defaultEndIcon={<div style={{ width: 24 }} />}
       >
         {this.props.data &&
-          this.props.data.map((item: any) => <TreeNode excludedId={0} key={item.key} item={item} nodeId={item.key} />)}
+          this.props.data.map((item: any) => (
+            <TreeNode excludedId={this.props.excludedId} key={item.key} item={item} nodeId={item.key} />
+          ))}
       </TreeView>
     )
   }

@@ -75,7 +75,6 @@ const TeacherDashboard = () => {
   const [show, setShow] = useState(false)
   const [data, setData] = useState(false)
   const [plan, setPlan] = useState(null)
-  const [examAttemptWeekly, setExamAttemptWeekly] = useState(null)
 
   useEffect(() => {
     new V1Api().getTenantUsage().then(response => {
@@ -84,10 +83,6 @@ const TeacherDashboard = () => {
 
     new V1Api().getCurrentUserPlans().then(response => {
       setPlan(response.data.value.find(x => x.pricingPlanType == 1))
-    })
-
-    new V1Api().getExamAttemptWeekly().then(response => {
-      setExamAttemptWeekly(response.data)
     })
   }, [])
 

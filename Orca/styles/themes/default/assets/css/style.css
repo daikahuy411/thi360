@@ -1946,3 +1946,7 @@ th {
 .title__label span {
   font-size: 20px;
 }
+
+.customizer-header h6 {
+  font-size: 16px;
+}

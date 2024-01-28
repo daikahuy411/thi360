@@ -1,14 +1,25 @@
+import * as React from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
+
+import V1Api from 'api/v1-api'
+
 // ** Custom Components Imports
 // import OptionsMenu from '@core/components/option-menu'
 import ReactApexcharts from '@core/components/react-apexcharts'
+import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
 import { useTheme } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 const AttemptWeeklyOverview = () => {
   // ** Hook
   const theme = useTheme()
+  const [examAttemptWeekly, setExamAttemptWeekly] = useState(null)
 
   const options = {
     chart: {
@@ -47,6 +58,8 @@ const AttemptWeeklyOverview = () => {
       theme.palette.primary.main,
       theme.palette.primary.main,
       theme.palette.primary.main,
+      theme.palette.primary.main,
+      theme.palette.primary.main
     ],
     states: {
       hover: {
@@ -57,7 +70,7 @@ const AttemptWeeklyOverview = () => {
       }
     },
     xaxis: {
-      categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      categories: [],
       tickPlacement: 'on',
       labels: { show: false },
       axisTicks: { show: false },
@@ -70,10 +83,24 @@ const AttemptWeeklyOverview = () => {
         offsetY: 2,
         offsetX: -17,
         style: { colors: theme.palette.text.disabled },
-        formatter: value => `${value > 999 ? `${(value / 1000).toFixed(0)}` : value}k`
+        formatter: value => `${value > 999 ? `${(value / 1000).toFixed(0)}` : value} lượt`
       }
     }
   }
+
+  const [chartOptions, setChartOptions] = useState(options)
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    new V1Api().getExamAttemptWeekly().then(response => {
+      setExamAttemptWeekly(response.data)
+
+      chartOptions.xaxis.categories = response.data.map(x => x.name)
+      setChartOptions({ ...chartOptions })
+
+      setData(response.data.map(x => x.total))
+    })
+  }, [])
 
   return (
     <Card>
@@ -82,22 +109,24 @@ const AttemptWeeklyOverview = () => {
         titleTypographyProps={{
           sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important' }
         }}
-        // action={
-        //   <OptionsMenu
-        //     options={['Refresh', 'Update', 'Delete']}
-        //     iconButtonProps={{ size: 'small', sx: { color: 'text.primary' } }}
-        //   />
-        // }
+      // action={
+      //   <OptionsMenu
+      //     options={['Refresh', 'Update', 'Delete']}
+      //     iconButtonProps={{ size: 'small', sx: { color: 'text.primary' } }}
+      //   />
+      // }
       />
       <CardContent sx={{ '& .apexcharts-xcrosshairs.apexcharts-active': { opacity: 0 } }}>
-        <ReactApexcharts type='bar' height={205} options={options} series={[{ data: [37, 57, 45, 75, 57, 40, 65] }]} />
-        {/* <Box sx={{ mb: 7, display: 'flex', alignItems: 'center' }}>
+        {examAttemptWeekly && (
+          <ReactApexcharts type='bar' height={205} options={chartOptions} series={[{ data: data }]} />
+        )}
+        <Box sx={{ mb: 7, display: 'flex', alignItems: 'center' }}>
           <Typography variant='h5' sx={{ mr: 4 }}>
             45%
           </Typography>
           <Typography variant='body2'>Your sales performance is 45% 😎 better compared to last month</Typography>
         </Box>
-        <Button fullWidth variant='contained'>
+        {/* <Button fullWidth variant='contained'>
           Xem chi tiết
         </Button> */}
       </CardContent>

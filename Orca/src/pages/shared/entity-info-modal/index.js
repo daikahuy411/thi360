@@ -42,14 +42,14 @@ const EntityInfoModal = ({ entity }) => {
                   <Typography variant='body1'>{moment(entity.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
                 </TableCell>
               </TableRow>
-              <TableRow>
+              {/* <TableRow>
                 <TableCell style={{ width: 180 }} component='th' scope='row'>
                   <Typography variant='body1'> Người tạo</Typography>
                 </TableCell>
                 <TableCell align='right'>
                   <Typography variant='body1'>{entity.createdByName}</Typography>
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
               <TableRow>
                 <TableCell style={{ width: 180 }} component='th' scope='row'>
                   <Typography variant='body1'> Sửa gần nhất</Typography>
