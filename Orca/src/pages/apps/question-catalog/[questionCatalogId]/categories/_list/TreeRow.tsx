@@ -6,12 +6,15 @@ import { useRouter } from 'next/router'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
 
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import {
+  mdilChevronDown,
+  mdilChevronUp,
+  mdilFile,
+  mdilFolder
+} from '@mdi/light-js'
+import IconReact from '@mdi/react'
 import DeleteIcon from '@mui/icons-material/Delete'
-import DescriptionIcon from '@mui/icons-material/Description'
 import EditIcon from '@mui/icons-material/Edit'
-import Folder from '@mui/icons-material/Folder'
-import FolderOpenIcon from '@mui/icons-material/FolderOpen'
 import { Button } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -45,7 +48,14 @@ export default function TreeRow(props: TreeRowProps) {
   const { item } = props
   const { questionCatalogId } = router.query
   const [isCollapsed, setIsCollapsed] = useState(true)
-  const entityIcon = item.children.length > 0 ? isCollapsed ? <Folder /> : <FolderOpenIcon /> : <DescriptionIcon />
+  // const entityIcon = item.children.length > 0 ? isCollapsed ? <Folder /> : <FolderOpenIcon /> : <DescriptionIcon />
+
+  const entityIcon =
+    item.children.length > 0 ? (
+      <IconReact path={mdilFolder} title='Folder' color='black' size={1} />
+    ) : (
+      <IconReact path={mdilFile} title='File' color='black' size={1} />
+    )
 
   const children = (item.children || [])
     .filter((x: any) => {
@@ -110,7 +120,10 @@ export default function TreeRow(props: TreeRowProps) {
             {!(item.children.length > 0) ? (
               <span style={{ display: 'inline-block', width: 24 }}></span>
             ) : (
-              <ChevronRightIcon />
+              <>
+                {isCollapsed && <IconReact path={mdilChevronDown} title='Folder' color='black' size={1} />}
+                {!isCollapsed && <IconReact path={mdilChevronUp} title='Folder' color='black' size={1} />}
+              </>
             )}
             {entityIcon}
             <Typography variant='body1'>{item.title}</Typography>

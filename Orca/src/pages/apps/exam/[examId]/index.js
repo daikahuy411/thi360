@@ -234,7 +234,7 @@ const EditExamPage = () => {
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code === 1) {
-          router.query.examId = response.data.id
+          router.query.examId = response.data.value.id
           router.push(router)
         } else {
           reset()

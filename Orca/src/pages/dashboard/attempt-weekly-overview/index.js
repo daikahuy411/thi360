@@ -105,7 +105,7 @@ const AttemptWeeklyOverview = () => {
   return (
     <Card>
       <CardHeader
-        title='Lượt làm bài hàng tuần'
+        title='Lượt Thi hàng tuần'
         titleTypographyProps={{
           sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important' }
         }}

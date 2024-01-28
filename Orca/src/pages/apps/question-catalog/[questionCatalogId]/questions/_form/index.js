@@ -312,7 +312,7 @@ const QuestionEditForm = () => {
           router.push(`/apps/question-catalog/${response.data.value.catalogId}/questions/${response.data.value.id}`)
         } else {
           reset()
-          cleanCategory()
+          // cleanCategory()
           initQuestion(type)
         }
       })
@@ -592,7 +592,7 @@ const QuestionEditForm = () => {
                       <Button disabled={!isValid || !isValidAnswer} onClick={() => save(1)} variant='contained'>
                         Cập nhật
                       </Button>
-                      {questionId == '0' && (
+                      {(!currentQuestion || currentQuestion.id == 0) && (
                         <>
                           &nbsp;
                           <Button disabled={!isValid || !isValidAnswer} onClick={() => save(2)} variant='contained'>

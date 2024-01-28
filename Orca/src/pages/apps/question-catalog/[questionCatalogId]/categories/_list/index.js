@@ -24,7 +24,6 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import TextField from '@mui/material/TextField'
 import Toolbar from '@mui/material/Toolbar'
-import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
 import TreeRow from './TreeRow'
@@ -85,7 +84,7 @@ const CategoryTable = () => {
         <Typography sx={{ flex: '1 1 100%' }} variant='h5' id='tableTitle' component='div'>
           {totalItem} Danh mục Câu hỏi
         </Typography>
-        &nbsp; &nbsp;
+        {/* &nbsp; &nbsp;
         <Tooltip title='Import'>
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:upload' />
@@ -96,7 +95,7 @@ const CategoryTable = () => {
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:download' />
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
         {/* &nbsp; &nbsp;
         <Tooltip title='Delete'>
           <IconButton sx={{ color: 'text.secondary' }}>

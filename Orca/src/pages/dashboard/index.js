@@ -157,7 +157,7 @@ const TeacherDashboard = () => {
       </Grid>
       <Grid item xs={12} md={8} lg={8}>
         <span className='title__label'>
-          <span>Lượt thi gần nhất</span>
+          <span>Lượt Thi gần nhất</span>
         </span>
         <RencentUserExamAttempt />
         {/* <UserActivityTimeline /> */}

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 import { ExamCategoryApi } from 'api/catalog-api'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
 
 import {
@@ -33,13 +32,12 @@ type TreeRowProps = {
   item: any
   excludedId: number
   level: number
-  onDeleted: ()=> void
+  onDeleted: () => void
 }
 
 // export default function TreeRow(props: TreeRowProps) {
 const TreeRow: React.FC<TreeRowProps> = (props: TreeRowProps) => {
   const { item, onDeleted } = props
-  const router = useRouter()
 
   const [isCollapsed, setIsCollapsed] = useState(true)
   // const entityIcon = item.children.length > 0 ? isCollapsed ? <Folder /> : <FolderOpenIcon /> : <DescriptionIcon />
@@ -86,10 +84,9 @@ const TreeRow: React.FC<TreeRowProps> = (props: TreeRowProps) => {
         .then(response => {
           handleCloseFormDelete()
           toast.success('Xóa dữ liệu thành công')
-          if( onDeleted){
+          if (onDeleted) {
             onDeleted()
           }
-         
         })
         .catch(e => {
           handleCloseFormDelete()
