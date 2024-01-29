@@ -13,9 +13,9 @@ const Nav = () => {
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
         <Link
           className={`finger-tabs__tab flex-none ${
-            router.asPath.indexOf(`/apps/exam/${examId}/`) >= 0 ? 'is-active' : 'disabled'
+            router.asPath === `/apps/exam/${examId}/` >= 0 ? 'is-active' : 'disabled'
           }`}
-          title='Học viên'
+          title='Chi tiết'
           component={Link}
           href={`/apps/exam/${examId}`}
         >

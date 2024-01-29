@@ -42,7 +42,7 @@ const HomePage = () => {
         <section className='Home-banner'>
           {/* <img src='/themes/default/assets/img/intro.png' /> */}
           {/* <label>Sẵn sàng cho kỳ thi của bạn</label> */}
-          <h1 className='' style={{ fontSize: 36, }}>
+          <h1 className='' style={{ fontSize: 36 }}>
             Giải pháp Thi trực tuyến Thi360.com.
           </h1>
           <br />
@@ -97,7 +97,7 @@ const HomePage = () => {
             <div className='section-heading'>
               <h2>Chuẩn bị cho Kỳ thi của bạn</h2>
             </div>
-            <p>Salient features that makes Materio stand out 🤩</p>
+            <p>Hãy trải nghiệm hệ thống thi online ngay hôm nay và khám phá sự tiến bộ trong học tập của bạn</p>
           </div>
         </div>
         <br />
@@ -113,8 +113,11 @@ const HomePage = () => {
                   >
                     <Icon icon='mdi:star-outline' />
                   </CustomAvatar>
-                  <Typography sx={{ mb: 3, fontWeight: '600' }}>Ngân hàng câu hỏi phong phú, chất lượng. 🤟🏻</Typography>
-                  <Typography>Đăng ký tài khoản hoặc Đăng nhập qua Google/Facebook.</Typography>
+                  <Typography sx={{ mb: 3, fontWeight: '600' }}>Ngân hàng Câu hỏi phong phú, chất lượng.</Typography>
+                  <Typography>
+                    Bạn có thể lựa chọn nhiều môn học khác nhau, từ toán học, ngữ văn, khoa học đến lịch sử và ngoại
+                    ngữ..
+                  </Typography>
                 </Box>
               </Grid>
               <Grid item md={4} xs={12}>
@@ -126,8 +129,10 @@ const HomePage = () => {
                   >
                     <Icon icon='mdi:progress-check' />
                   </CustomAvatar>
-                  <Typography sx={{ mb: 3, fontWeight: '600' }}>Dễ dàng theo dõi sự tiến bộ. 👩🏻‍💻</Typography>
-                  <Typography>Gửi yêu cầu đăng ký Hồ sơ giáo viên cho chúng tôi.</Typography>
+                  <Typography sx={{ mb: 3, fontWeight: '600' }}>Dễ dàng theo dõi sự tiến bộ.</Typography>
+                  <Typography>
+                    Bạn cũng có thể theo dõi tiến độ học tập và tiến bộ của mình qua các báo cáo chi tiết.
+                  </Typography>
                 </Box>
               </Grid>
               <Grid item md={4} xs={12}>
@@ -139,10 +144,8 @@ const HomePage = () => {
                   >
                     <Icon icon='mdi:medal' />
                   </CustomAvatar>
-                  <Typography sx={{ mb: 3, fontWeight: '600' }}>2 chế độ Ôn luyện và Thi- Kiểm tra.🎉</Typography>
-                  <Typography>
-                    Sử dụng gói Miễn phí dành cho Giáo viên để sử dụng LMS miễn phí với đầy đủ tính năng.
-                  </Typography>
+                  <Typography sx={{ mb: 3, fontWeight: '600' }}>2 chế độ Ôn luyện và Thi- Kiểm tra</Typography>
+                  <Typography>Bạn cũng có thể tùy chỉnh cách làm bài thi và thời gian làm bài.</Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -157,7 +160,7 @@ const HomePage = () => {
             <div className='section-heading'>
               <h2>3 bước để trải nghiệm LMS miễn phí với đầy đủ tính năng</h2>
             </div>
-            <p>Salient features that makes Materio stand out 🤩</p>
+            <p>Đăng ký dùng thử miễn phí với đầy đủ tính năng để khám phá hệ thống.</p>
           </div>
         </div>
         <br />
@@ -173,7 +176,7 @@ const HomePage = () => {
                   >
                     <Icon icon='mdi:account-plus-outline' />
                   </CustomAvatar>
-                  <Typography sx={{ mb: 3, fontWeight: '600' }}>1. Đăng ký và xác nhận tài khoản 🤟🏻</Typography>
+                  <Typography sx={{ mb: 3, fontWeight: '600' }}>1. Đăng ký và xác nhận tài khoản</Typography>
                   <Typography>Đăng ký tài khoản hoặc Đăng nhập qua Google/Facebook.</Typography>
                 </Box>
               </Grid>
@@ -186,7 +189,7 @@ const HomePage = () => {
                   >
                     <Icon icon='mdi:school-outline' />
                   </CustomAvatar>
-                  <Typography sx={{ mb: 3, fontWeight: '600' }}>2. Đăng ký tài khoản Giáo viên 👩🏻‍💻</Typography>
+                  <Typography sx={{ mb: 3, fontWeight: '600' }}>2. Đăng ký tài khoản Giáo viên</Typography>
                   <Typography>Gửi yêu cầu đăng ký Hồ sơ giáo viên cho chúng tôi.</Typography>
                 </Box>
               </Grid>
@@ -199,7 +202,7 @@ const HomePage = () => {
                   >
                     <Icon icon='mdi:speedometer' />
                   </CustomAvatar>
-                  <Typography sx={{ mb: 3, fontWeight: '600' }}>3. Đăng ký sử dụng gói Miễn phí🎉</Typography>
+                  <Typography sx={{ mb: 3, fontWeight: '600' }}>3. Đăng ký sử dụng gói Miễn phí</Typography>
                   <Typography>
                     Sử dụng gói Miễn phí dành cho Giáo viên để sử dụng LMS miễn phí với đầy đủ tính năng.
                   </Typography>
@@ -215,7 +218,11 @@ const HomePage = () => {
             <div className='section-heading'>
               <h2>Tổ chức Thi online dễ dàng với Thi360 LMS</h2>
             </div>
-            <p>Salient features that makes Materio stand out 🤩</p>
+            <p>
+              Hãy để phần mềm dễ dàng vận hành của chúng tôi giúp bạn tiết kiệm thời gian và nỗ lực trong quá trình quản
+              lý và vận hành. Đừng để công việc trở nên phức tạp hơn cần thiết. Hãy trải nghiệm sự dễ dàng và hiệu quả
+              ngay hôm nay với phần mềm của chúng tôi.
+            </p>
           </div>
         </div>
         <br />
@@ -238,7 +245,8 @@ const HomePage = () => {
                   <div className='col-lg-9 col-12'>
                     <h5>Đầy đủ nghiệp vụ</h5>
                     <p className='text-sm'>
-                      Multi language support enable you to create your personalized apps in your language.
+                      Giải pháp hoàn hảo cho nhu cầu nghiệp vụ của bạn. Với cam kết cung cấp nghiệp vụ đầy đủ và tiện
+                      lợi, chúng tôi đảm bảo rằng bạn sẽ tiết kiệm thời gian và nỗ lực trong quá trình làm việc.
                     </p>
                   </div>
                 </div>
@@ -268,7 +276,8 @@ const HomePage = () => {
                   <div className='col-lg-9 col-12'>
                     <h5>Hướng dẫn chi tiết</h5>
                     <p className='text-sm'>
-                      Materio supports RTL (right to left) languages such as Arabic, Persian or Hebrew are supported.
+                      Tài liệu hướng dẫn cung cấp cho bạn một hướng dẫn chi tiết và dễ hiểu về cách sử dụng hệ thống.
+                      Hãy khám phá chức năng thông qua tài liệu hướng dẫn đầy đủ và chi tiết.
                     </p>
                   </div>
                 </div>
@@ -291,7 +300,8 @@ const HomePage = () => {
                   <div className='col-lg-9 col-12'>
                     <h5>Hỗ trợ 24/7</h5>
                     <p className='text-sm'>
-                      A starter kit is a set of pre-existing code that you can launch to automate your repetitive tasks.
+                      Với cam kết sẵn sàng phục vụ bạn mọi lúc, mọi nơi, chúng tôi đảm bảo rằng bạn sẽ luôn có sự hỗ trợ
+                      khi cần thiết.
                     </p>
                   </div>
                 </div>
@@ -314,7 +324,8 @@ const HomePage = () => {
                   <div className='col-lg-9 col-12'>
                     <h5>8 dạng câu hỏi phổ biến</h5>
                     <p className='text-sm'>
-                      Easy &amp; smart fuzzy search functionality which enables users to search quickly.
+                      Hệ thống cung cấp 8 dạng câu hỏi Trắc nghiệm và Tự luận phổ biến đáp ứng hầu hết các dạng thi thực
+                      tế.
                     </p>
                   </div>
                 </div>
@@ -337,8 +348,8 @@ const HomePage = () => {
                   <div className='col-lg-9 col-12'>
                     <h5>2 chế độ Kỳ thi</h5>
                     <p className='text-sm'>
-                      To avoid winding up with a large bundle, it’s good to get ahead of the problem and use "Code
-                      Splitting".
+                      Chế độ Ôn luyện cho phép Học viên dễ dàng Ôn thi đạt hiệu quả tốt nhất. Chế độ Kiểm tra mô phỏng
+                      bài thư như thật với nhiều tùy chọn hiển thị đáp án sau khi nộp bài.
                     </p>
                   </div>
                 </div>
@@ -368,8 +379,8 @@ const HomePage = () => {
                   <div className='col-lg-9 col-12'>
                     <h5>Chấm điểm tự luận</h5>
                     <p className='text-sm'>
-                      It's more efficient to split each route's components into a separate chunk, and only load them
-                      when the route is visited.
+                      Hệ thống cung cấp chức năng Chấm điểm tự luận cho Giáo viên chấm bài thi có câu hỏi Tự luận một
+                      cách dễ dàng.
                     </p>
                   </div>
                 </div>
@@ -392,8 +403,8 @@ const HomePage = () => {
                   <div className='col-lg-9 col-12'>
                     <h5>Tùy biến Cấu trúc đề thi</h5>
                     <p className='text-sm'>
-                      We follow the best industry code structure that all developers will be able to pick up easily and
-                      fall in love
+                      Tùy biến cấu trúc đề thi theo các phần thi. Mỗi phần thi có thể lấy câu hỏi trực tiếp hoặc ngẫu
+                      nhiên linh hoạt. Ngoài ra, Giáo viên có thể định nghĩa điểm cho từng phần thi.
                     </p>
                   </div>
                 </div>
@@ -415,7 +426,10 @@ const HomePage = () => {
                   </div>
                   <div className='col-lg-9 col-12'>
                     <h5>Báo cáo chi tiết</h5>
-                    <p className='text-sm'>12 Months Free updates with new demos and features is guaranteed</p>
+                    <p className='text-sm'>
+                      Cung cấp báo cáo chi tiết kết quả thi của Học viên trong Kỳ thi. Báo cáo chi tiết tỷ lệ đúng/sai
+                      trên câu hỏi trong đề thi.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -436,9 +450,7 @@ const HomePage = () => {
                   </div>
                   <div className='col-lg-9 col-12'>
                     <h5>Xuất đề thi offline</h5>
-                    <p className='text-sm'>
-                      Get access to premium customer support from the actual people who have created.
-                    </p>
+                    <p className='text-sm'>Giáo viên có thể xuất Đề thi dưới dạng word để thi offline.</p>
                   </div>
                 </div>
               </div>
@@ -460,7 +472,8 @@ const HomePage = () => {
                   <div className='col-lg-9 col-12'>
                     <h5>Giao diện thân thiện</h5>
                     <p className='text-sm'>
-                      Beautifully crafted, clean &amp; Eye-Catching admin theme with 4 unique layouts
+                      Với giao diện người dùng thân thiện và dễ sử dụng, bạn sẽ có thể nhanh chóng làm quen và bắt đầu
+                      sử dụng phần mềm một cách dễ dàng. .
                     </p>
                   </div>
                 </div>
@@ -484,7 +497,8 @@ const HomePage = () => {
                   <div className='col-lg-9 col-12'>
                     <h5>Điều hướng thông minh</h5>
                     <p className='text-sm'>
-                      Carefully crafted, clean, smart &amp; easy theme navigation with collapsible option.
+                      Không chỉ cung cấp các tính năng đầy đủ, phần mềm của chúng tôi còn mang lại sự tiện lợi tuyệt
+                      đối, giúp bạn dễ dàng điều hướng và tận dụng tối đa các tính năng.
                     </p>
                   </div>
                 </div>
@@ -507,7 +521,10 @@ const HomePage = () => {
                   </div>
                   <div className='col-lg-9 col-12'>
                     <h5>&amp; nhiều tính năng khác</h5>
-                    <p className='text-sm'>Many more features are available in Materio admin template.</p>
+                    <p className='text-sm'>
+                      Truy cập trang Hướng dẫn để khám phá các tính năng khác mà Thi360 cung cấp giúp Giáo viên dễ dàng
+                      tổ chức Kỳ thi online.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -564,9 +581,7 @@ const HomePage = () => {
                     <Icon icon='mdi:facebook' />
                   </CustomAvatar>
                   <Typography sx={{ mb: 3, fontWeight: '600' }}>Facebook</Typography>
-                  <Typography>
-                    Hỗ trợ thông qua Facebook.
-                  </Typography>
+                  <Typography>Hỗ trợ thông qua Facebook.</Typography>
                 </Box>
               </Grid>
             </Grid>
