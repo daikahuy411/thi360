@@ -1,43 +1,50 @@
 import clsx from 'clsx';
+
 import Heading from '@theme/Heading';
+
 import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: "Elearning thật dễ dàng",
+    Svg: require("@site/static/img/undraw_docusaurus_mountain.svg").default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Với giao diện người dùng thân thiện và dễ sử dụng, bạn sẽ có thể nhanh
+        chóng làm quen và bắt đầu sử dụng phần mềm một cách dễ dàng. Không chỉ
+        cung cấp các tính năng đầy đủ, phần mềm của chúng tôi còn mang lại sự
+        tiện lợi tuyệt đối, giúp bạn dễ dàng điều hướng và tận dụng tối đa các
+        tính năng.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: "Đầy đủ nghiệp vụ",
+    Svg: require("@site/static/img/undraw_docusaurus_tree.svg").default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Giải pháp hoàn hảo cho nhu cầu nghiệp vụ của bạn. Với cam kết cung cấp
+        nghiệp vụ đầy đủ và tiện lợi, chúng tôi đảm bảo rằng bạn sẽ tiết kiệm
+        thời gian và nỗ lực trong quá trình làm việc.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: "Hướng dẫn chi tiết",
+    Svg: require("@site/static/img/undraw_docusaurus_react.svg").default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Tài liệu hướng dẫn cung cấp cho bạn một hướng dẫn chi tiết và dễ hiểu về
+        cách sử dụng hệ thống. Hãy khám phá chức năng thông qua tài liệu hướng
+        dẫn đầy đủ và chi tiết
       </>
     ),
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({ Svg, title, description }) {
   return (
-    <div className={clsx('col col--4')}>
+    <div className={clsx("col col--4")}>
       <div className="text--center">
         <Svg className={styles.featureSvg} role="img" />
       </div>
