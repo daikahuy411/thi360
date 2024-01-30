@@ -42,11 +42,11 @@ const HomePage = () => {
         <section className='Home-banner'>
           {/* <img src='/themes/default/assets/img/intro.png' /> */}
           {/* <label>Sẵn sàng cho kỳ thi của bạn</label> */}
-          <h1 className='' style={{ fontSize: 36 }}>
+          <h1 className='' style={{ fontSize: '1.5rem' }}>
             Giải pháp Thi trực tuyến Thi360.com.
           </h1>
           <br />
-          <h2 className='' style={{ fontSize: 18 }}>
+          <h2 className='' style={{ fontSize: '1rem' }}>
             Hệ thống Thi và tổ chức Thi trực tuyến toàn diện cho Học viên và Giáo viên, Trung tâm, Nhà trường.
           </h2>
           {/* <p>Thực hiện các bài kiểm tra thử của chúng tôi bao nhiêu tùy thích MIỄN PHÍ!</p> */}
@@ -152,65 +152,50 @@ const HomePage = () => {
           </CardContent>
         </Card>
         <br />
-
-        <br />
         <br />
         <div className='row'>
           <div className='col-12 text-center'>
             <div className='section-heading'>
-              <h2>3 bước để trải nghiệm LMS miễn phí với đầy đủ tính năng</h2>
+              <h2>
+                3 bước để trải nghiệm LMS <br />
+                miễn phí với đầy đủ tính năng
+              </h2>
             </div>
-            <p>Đăng ký dùng thử miễn phí với đầy đủ tính năng để khám phá hệ thống.</p>
           </div>
         </div>
         <br />
-        <Card>
-          <CardContent>
-            <Grid container spacing={6} sx={{ textAlign: 'center' }}>
-              <Grid item md={4} xs={12}>
+        <Grid container spacing={6} sx={{ textAlign: 'center' }}>
+          <Grid item md={4} xs={12}>
+            <Card>
+              <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                  <CustomAvatar
-                    skin='light'
-                    color='primary'
-                    sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
-                  >
-                    <Icon icon='mdi:account-plus-outline' />
-                  </CustomAvatar>
                   <Typography sx={{ mb: 3, fontWeight: '600' }}>1. Đăng ký và xác nhận tài khoản</Typography>
                   <Typography>Đăng ký tài khoản hoặc Đăng nhập qua Google/Facebook.</Typography>
                 </Box>
-              </Grid>
-              <Grid item md={4} xs={12}>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item md={4} xs={12}>
+            <Card>
+              <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                  <CustomAvatar
-                    skin='light'
-                    color='primary'
-                    sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
-                  >
-                    <Icon icon='mdi:school-outline' />
-                  </CustomAvatar>
                   <Typography sx={{ mb: 3, fontWeight: '600' }}>2. Đăng ký tài khoản Giáo viên</Typography>
                   <Typography>Gửi yêu cầu đăng ký Hồ sơ giáo viên cho chúng tôi.</Typography>
                 </Box>
-              </Grid>
-              <Grid item md={4} xs={12}>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item md={4} xs={12}>
+            <Card>
+              <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                  <CustomAvatar
-                    skin='light'
-                    color='primary'
-                    sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
-                  >
-                    <Icon icon='mdi:speedometer' />
-                  </CustomAvatar>
                   <Typography sx={{ mb: 3, fontWeight: '600' }}>3. Đăng ký sử dụng gói Miễn phí</Typography>
-                  <Typography>
-                    Sử dụng gói Miễn phí dành cho Giáo viên để sử dụng LMS miễn phí với đầy đủ tính năng.
-                  </Typography>
+                  <Typography>Đăng ký sử dụng gói Miễn phí dành cho Giáo viên.</Typography>
                 </Box>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
         <br />
         <br />
         <div className='row'>
@@ -220,8 +205,8 @@ const HomePage = () => {
             </div>
             <p>
               Hãy để phần mềm dễ dàng vận hành của chúng tôi giúp bạn tiết kiệm thời gian và nỗ lực trong quá trình quản
-              lý và vận hành. Đừng để công việc trở nên phức tạp hơn cần thiết. Hãy trải nghiệm sự dễ dàng và hiệu quả
-              ngay hôm nay với phần mềm của chúng tôi.
+              lý và vận hành. <br /> Đừng để công việc trở nên phức tạp hơn cần thiết. Hãy trải nghiệm sự dễ dàng và
+              hiệu quả ngay hôm nay với phần mềm của chúng tôi.
             </p>
           </div>
         </div>
@@ -531,34 +516,21 @@ const HomePage = () => {
             </div>
           </div>
         </Card>
-        <br />
+        {/* <br />
         <br />
         <div className='row'>
           <div className='col-12 text-center'>
             <div className='section-heading'>
               <h2>Bạn cần trợ giúp</h2>
             </div>
-            <p>Chúng tôi luôn sẵn sàng trợ giúp 🤩</p>
+            <p>Chúng tôi luôn sẵn sàng trợ giúp.</p>
           </div>
         </div>
         <br />
         <Card>
           <CardContent>
             <Grid container spacing={6} sx={{ textAlign: 'center' }}>
-              <Grid item md={4} xs={12}>
-                <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                  <CustomAvatar
-                    skin='light'
-                    color='primary'
-                    sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
-                  >
-                    <Icon icon='mdi:phone-dial-outline' />
-                  </CustomAvatar>
-                  <Typography sx={{ mb: 3, fontWeight: '600' }}>0988.397.448</Typography>
-                  <Typography>Gọi vào hotline hoặc nhắn tin, chúng tôi sẽ gọi lại.</Typography>
-                </Box>
-              </Grid>
-              <Grid item md={4} xs={12}>
+              <Grid item md={6} xs={12}>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   <CustomAvatar
                     skin='light'
@@ -571,7 +543,7 @@ const HomePage = () => {
                   <Typography>Hỗ trợ thông qua Zalo.</Typography>
                 </Box>
               </Grid>
-              <Grid item md={4} xs={12}>
+              <Grid item md={6} xs={12}>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   <CustomAvatar
                     skin='light'
@@ -586,8 +558,8 @@ const HomePage = () => {
               </Grid>
             </Grid>
           </CardContent>
-        </Card>
-        <br />
+        </Card> */}
+        {/* <br />
         <br />
         <div className='row'>
           <div className='col-12 text-center'>
@@ -662,7 +634,31 @@ const HomePage = () => {
               </Grid>
             </Grid>
           </CardContent>
-        </Card>
+        </Card> */}
+      </div>
+      <div id='button-contact-vr' className=''>
+        <div id='gom-all-in-one'>
+          <div id='zalo-vr' className='button-contact'>
+            <div className='phone-vr'>
+              <div className='phone-vr-circle-fill'></div>
+              <div className='phone-vr-img-circle'>
+                <a target='_blank' href='https://zalo.me/0973408'>
+                  <img src='http://v8.mystudy.vn/wp-content/plugins/button-contact-vr/img/zalo.png' />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div id='phone-vr' className='button-contact'>
+            <div className='phone-vr'>
+              <div className='phone-vr-circle-fill'></div>
+              <div className='phone-vr-img-circle'>
+                <a href='tel:0973408'>
+                  <img src='http://v8.mystudy.vn/wp-content/plugins/button-contact-vr/img/phone.png' />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )

@@ -111,12 +111,18 @@ const App = props => {
           <CacheProvider value={emotionCache}>
             <Head>
               <title>{`${themeConfig.templateName} - Trang tài liệu, đề thi, luyện đề online, website giáo dục tại Việt Nam`}</title>
-              <meta name='description' content={`Trang tài liệu, đề thi, luyện đề online, website giáo dục tại Việt Nam`} />
-              <meta name='keywords' content='Thi360.com, luyện đề online, thi trắc nghiệm online, luyện đề toeic online' />
+              <meta
+                name='description'
+                content={`Trang tài liệu, đề thi, luyện đề online, website giáo dục tại Việt Nam`}
+              />
+              <meta
+                name='keywords'
+                content='Thi360.com, luyện đề online, thi trắc nghiệm online, luyện đề toeic online'
+              />
               <meta name='viewport' content='initial-scale=1, width=device-width' />
-              <meta charSet="utf-8" />
-              <meta property="og:image" content="/images/meta-page.jpg"></meta>
-              <meta name="author" content={`${themeConfig.templateName}`} />
+              <meta charSet='utf-8' />
+              <meta property='og:image' content='/images/meta-page.jpg'></meta>
+              <meta name='author' content={`${themeConfig.templateName}`} />
             </Head>
             <Script strategy='lazyOnload' id='ckfinder' src={`/ckfinder/ckfinder.js`} />
             <Script strategy='lazyOnload' id='gt' src={`https://www.googletagmanager.com/gtag/js?id=G-PYF88KK7GH`} />
@@ -154,6 +160,7 @@ const App = props => {
           </CacheProvider>
         </Provider>
       )}
+     
     </>
   )
 }
