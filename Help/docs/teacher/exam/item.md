@@ -4,40 +4,40 @@ sidebar_position: 2
 
 # Quản lý Môn thi
 
-Add **Markdown or React** files to `src/pages` to create a **standalone page**:
+Bước 1: Đăng nhập vào phần mềm elearning với tư cách quản trị viên.
 
-- `src/pages/index.js` → `localhost:3000/`
-- `src/pages/foo.md` → `localhost:3000/foo`
-- `src/pages/foo/bar.js` → `localhost:3000/foo/bar`
+Bước 2: Truy cập vào mục "Quản lý môn thi".
 
-## Create your first React Page
+Bước 3: Tạo môn thi mới:
 
-Create a file at `src/pages/my-react-page.js`:
+Nhấn vào nút "Tạo môn thi mới".
+Nhập tên môn thi, mô tả và thời gian dự kiến của môn thi.
+Thêm các thông tin cần thiết như số lượng câu hỏi, thời gian thi, điểm số tối đa, mức độ khó dễ của môn thi.
+Lưu lại thông tin và môn thi sẽ được tạo thành công.
+Bước 4: Quản lý các môn thi hiện có:
 
-```jsx title="src/pages/my-react-page.js"
-import React from 'react';
-import Layout from '@theme/Layout';
+Hiển thị danh sách các môn thi hiện có trong phần mềm.
+Thực hiện các thao tác quản lý như chỉnh sửa thông tin môn thi, xóa môn thi, xem báo cáo kết quả thi của sinh viên.
+Bước 5: Gán môn học vào các môn thi:
 
-export default function MyReactPage() {
-  return (
-    <Layout>
-      <h1>My React page</h1>
-      <p>This is a React page</p>
-    </Layout>
-  );
-}
-```
+Chọn môn thi mà bạn muốn gán môn học.
+Đồng thời chọn môn học tương ứng để gán.
+Lưu lại thông tin và môn học sẽ được gán vào môn thi thành công.
+Bước 6: Tạo bài thi:
 
-A new page is now available at [http://localhost:3000/my-react-page](http://localhost:3000/my-react-page).
+Chọn môn thi muốn tạo bài thi.
+Nhập thông tin bài thi như tên bài thi, thời gian làm bài, số câu hỏi và câu hỏi mẫu.
+Chọn đối tượng tham gia thi và lưu lại thông tin.
+Các sinh viên đã được chọn sẽ nhận được thông báo về bài thi và có thể bắt đầu làm bài.
+Bước 7: Kiểm tra kết quả thi:
 
-## Create your first Markdown Page
+Truy cập vào mục "Báo cáo kết quả thi".
+Chọn môn thi và bài thi muốn kiểm tra kết quả.
+Hiển thị danh sách sinh viên đã tham gia thi và kết quả của họ.
+Có thể xuất file báo cáo dạng Excel hoặc PDF.
+Bước 8: Cập nhật và sửa đổi thông tin môn thi:
 
-Create a file at `src/pages/my-markdown-page.md`:
-
-```mdx title="src/pages/my-markdown-page.md"
-# My Markdown page
-
-This is a Markdown page
-```
-
-A new page is now available at [http://localhost:3000/my-markdown-page](http://localhost:3000/my-markdown-page).
+Chọn môn thi cần chỉnh sửa.
+Nhấn nút "Chỉnh sửa" và thực hiện các thay đổi cần thiết như thay đổi tên môn thi, mô tả, thời gian dự kiến, câu hỏi, điểm số, mức độ khó dễ.
+Lưu lại thông tin chỉnh sửa.
+Lưu ý: Chức năng quản lý môn thi trong phần mềm elearning chỉ có sẵn cho quản trị viên. Người dùng khác không có quyền truy cập vào chức năng này.

@@ -4,44 +4,10 @@ sidebar_position: 1
 
 # Bắt đầu với Thi360
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Phần mềm E-Learning là một công cụ mạnh mẽ cho việc tạo và quản lý hệ thống giáo dục trực tuyến. Nó cho phép giảng viên và học viên tương tác qua internet để truy cập vào nội dung học tập, tạo ra các bài giảng, thực hiện bài kiểm tra và quản lý quá trình học tập.
 
-## Getting Started
+Hướng dẫn này sẽ giúp bạn làm quen với các chức năng cơ bản của phần mềm E-Learning, giúp bạn tận dụng hết tiềm năng của công nghệ trong việc xây dựng môi trường học tập trực tuyến hiệu quả. Với phần mềm E-Learning, bạn có thể tạo nội dung học tập đa dạng, tương tác với học viên, đánh giá kỹ năng và kiến thức của họ, và theo dõi quá trình học tập một cách dễ dàng.
 
-Get started by **creating a new site**.
+Hướng dẫn này sẽ đi qua các chức năng cốt lõi của phần mềm E-Learning, bao gồm quản lý khóa học, tạo bài giảng, tạo bài kiểm tra và theo dõi kết quả học tập. Bạn sẽ được hướng dẫn từ cách đăng nhập vào hệ thống, tạo khóa học mới, thêm nội dung học tập, thiết lập và triển khai bài kiểm tra, và cuối cùng là xem và phân tích kết quả học tập.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
-
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+Với sự hỗ trợ của hướng dẫn này, bạn sẽ có khả năng sử dụng phần mềm E-Learning một cách hiệu quả để tạo ra các khóa học trực tuyến chất lượng cao và nâng cao quá trình học tập của học viên. Hãy bắt đầu và khám phá tiềm năng không giới hạn của công nghệ E-Learning cùng hướng dẫn này!
