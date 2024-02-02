@@ -13,7 +13,7 @@ const Nav = () => {
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
         <Link
           className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/exam/${examId}/` >= 0 ? 'is-active' : 'disabled'
+            router.asPath === `/apps/exam/${examId}/` ? 'is-active' : 'disabled'
           }`}
           title='Chi tiết'
           component={Link}

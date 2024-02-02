@@ -71,16 +71,32 @@ const AppBarContent = props => {
       currentPage = 'Quản lý Danh mục Tin bài'
     }
 
-    if (router.asPath.indexOf('/apps/exam') > -1) {
+    if (router.asPath.indexOf('/apps/exam/') > -1) {
       currentPage = 'Quản lý Kỳ thi'
     }
 
-    if (router.asPath.indexOf('/my-practice') > -1) {
+    if (router.asPath.indexOf('/apps/exam-category/') > -1) {
+      currentPage = 'Quản lý Danh mục Kỳ thi'
+    }
+
+    if (router.asPath.indexOf('/my-practice/') > -1) {
       currentPage = 'Luyện tập'
     }
 
-    if (router.asPath.indexOf('/my-assignment') > -1) {
+    if (router.asPath.indexOf('/my-assignment/') > -1) {
       currentPage = 'Thi- Kiểm tra'
+    }
+
+    if (router.asPath.indexOf('/question-bank') > -1) {
+      currentPage = 'Quản lý Ngân hàng Câu hỏi'
+    }
+
+    if (router.asPath.indexOf('/question-catalog') > -1) {
+      currentPage = 'Quản lý Bộ Câu hỏi'
+    }
+
+    if (router.asPath.indexOf('/test-group') > -1) {
+      currentPage = 'Quản lý Bộ Đề thi'
     }
 
     setPage(currentPage)

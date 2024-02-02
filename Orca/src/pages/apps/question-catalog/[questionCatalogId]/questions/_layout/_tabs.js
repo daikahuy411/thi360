@@ -11,16 +11,36 @@ const Nav = () => {
   return (
     <>
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
-        <Link
-          className={`finger-tabs__tab flex-none ${
-            router.asPath.indexOf(`/questions/`) >= 0 ? 'is-active' : 'disabled'
-          }`}
-          title='Chi tiết'
-          component={Link}
-          href={`/apps/question-catalog/${questionCatalogId}/questions/${questionId}/`}
-        >
-          Chi tiết
-        </Link>
+        {questionId && questionId != '0' && (
+          <Link
+            className={`finger-tabs__tab flex-none ${
+              router.asPath.indexOf(`/questions/`) >= 0 ? 'is-active' : 'disabled'
+            }`}
+            title='Chi tiết'
+            component={Link}
+            href={
+              questionCatalogId && questionCatalogId != '0'
+                ? `/apps/question-catalog/${questionCatalogId}/questions/${questionId}/`
+                : `/apps/question-bank/${questionId}/`
+            }
+          >
+            Chi tiết
+          </Link>
+        )}
+
+        {(!questionId || questionId === '0') && (
+          <span
+            className={`finger-tabs__tab flex-none ${
+              router.asPath.indexOf(`/questions/`) >= 0 || router.asPath.indexOf(`/question-bank/add`)
+                ? 'is-active'
+                : 'disabled'
+            }`}
+            title='Chi tiết'
+          >
+            Chi tiết
+          </span>
+        )}
+
         {type === '9' && (!currentQuestion || currentQuestion.id == 0) && (
           <Link className={`finger-tabs__tab flex-none disabled`} title='Câu hỏi con' href={'#'}>
             Câu hỏi con
