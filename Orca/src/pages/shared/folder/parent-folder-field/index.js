@@ -13,7 +13,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
 
-export default function ParentFolderField({ api, type, parentId, onSave }) {
+export default function ParentFolderField({ api, type, parentId, onSave, currentId = 0 }) {
   const [openFolderSelector, setOpenFolderSelector] = useState(false)
   const [path, setPath] = useState('')
   const [currentParentId, setCurrentParentId] = useState(parentId)
@@ -88,7 +88,7 @@ export default function ParentFolderField({ api, type, parentId, onSave }) {
             }
             setOpenFolderSelector(false)
           }}
-          excludedId={0}
+          excludedId={currentId}
           onClose={() => setOpenFolderSelector(false)}
           folderType={type}
         />

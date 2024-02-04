@@ -240,6 +240,7 @@ const EditClassPage = () => {
                           <ParentFolderField
                             api={new OrganizationApi()}
                             type={FolderType.CLASS}
+                            currentId={currentClass ? currentClass.id : 0}
                             onSave={handleParentChanged}
                             parentId={
                               !currentClass || currentClass.id == 0

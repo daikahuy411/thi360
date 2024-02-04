@@ -21,7 +21,7 @@ export default function TreeNode(props: TreeNodeProps) {
 
   const children = (item.children || [])
     .filter((x: any) => {
-      return x.Id !== props.excludedId
+      return x.id !== props.excludedId
     })
     .map((child: any) => {
       return <TreeNode excludedId={props.excludedId} key={child.id} nodeId={child.id} item={child} />

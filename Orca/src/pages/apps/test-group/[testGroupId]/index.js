@@ -126,7 +126,7 @@ const EditTestGroupPage = () => {
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code === 1) {
-          router.query.testGroupId = response.data.id
+          router.query.testGroupId = response.data.value.id
           router.push(router)
         } else {
           reset()
@@ -260,6 +260,7 @@ const EditTestGroupPage = () => {
                           </Grid>
                           <Grid item xs={12} md={12}>
                             <ParentFolderField
+                              currentId={currentTestGroup ? currentTestGroup.id : 0}
                               api={new TestGroupApi()}
                               type={FolderType.TESTGROUP}
                               onSave={handleParentChanged}

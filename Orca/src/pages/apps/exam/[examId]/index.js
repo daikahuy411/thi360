@@ -420,6 +420,7 @@ const EditExamPage = () => {
                               api={new ExamApi()}
                               type={FolderType.EXAM}
                               onSave={handleParentChanged}
+                              currentId={currentExam ? currentExam.id : 0}
                               parentId={
                                 !currentExam || currentExam.id == 0
                                   ? parseInt(isNaN(folderId) ? '0' : folderId)

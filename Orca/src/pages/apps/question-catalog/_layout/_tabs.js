@@ -15,7 +15,7 @@ const Nav = ({ children }) => {
           className={`finger-tabs__tab flex-none ${
             router.asPath.indexOf(`/categories/`) < 0 && router.asPath.indexOf(`/questions/`) < 0
               ? 'is-active'
-              : 'disabled'
+              : ''
           }`}
           title='Chi tiết'
           component={Link}

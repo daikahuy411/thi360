@@ -272,7 +272,7 @@ const QuestionCategoryEditPage = () => {
 
                     {openCatalogDialog && (
                       <QuestionCategoryDialog
-                        currentId={questionCategoryId}
+                        excludedId={parseInt(questionCategoryId)}
                         catalogId={parseInt(questionCatalogId)}
                         onNodeSelected={nodeId => {
                           handleSelectedParent(nodeId)

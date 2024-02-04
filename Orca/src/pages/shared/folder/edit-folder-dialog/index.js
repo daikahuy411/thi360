@@ -95,13 +95,13 @@ export default function EditFolderDialog({ id = 0, api, onClose, folderType, par
     reset(item)
   }, [item])
 
-  const clearParent = () => { }
+  const clearParent = () => {}
 
   return (
     <>
       <Dialog open={true} onClose={handleClose}>
         <DialogTitle style={{ fontSize: 18 }}>
-          {item && <>Chỉnh sửa</>}
+          {item && <>Chỉnh sửa Thư mục</>}
           {!item && <>Tạo mới Thư mục</>}
         </DialogTitle>
         <DialogContent>
@@ -137,7 +137,12 @@ export default function EditFolderDialog({ id = 0, api, onClose, folderType, par
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
-                    <ParentFolderField api={api} type={folderType} parentId={item ? item.parentId : parentId} />
+                    <ParentFolderField
+                      api={api}
+                      type={folderType}
+                      currentId={item ? item.id : 0}
+                      parentId={item ? item.parentId : parentId}
+                    />
                   </Grid>
                 </Grid>
               </div>

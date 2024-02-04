@@ -108,7 +108,7 @@ const EditQuestionCatalogPage = () => {
       .then(response => {
         toast.success('Cập nhật thành công')
         if (code == 1) {
-          router.query.questionCatalogId = response.data.id
+          router.query.questionCatalogId = response.data.value.id
           router.push(router)
         } else {
           reset()
@@ -212,7 +212,7 @@ const EditQuestionCatalogPage = () => {
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                     <form onSubmit={handleSubmit(onSubmit)} style={{ height: 'auto', width: '100%', paddingTop: 10 }}>
-                      <Grid container spacing={5} maxWidth={"sm"}>
+                      <Grid container spacing={5} maxWidth={'sm'}>
                         <Grid item xs={12}>
                           <FormControl fullWidth>
                             <Controller
@@ -240,6 +240,7 @@ const EditQuestionCatalogPage = () => {
                         </Grid>
                         <Grid item xs={12}>
                           <ParentFolderField
+                            currentId={currentQuestionCatalog ? currentQuestionCatalog.id : 0}
                             api={new QuestionCatalogApi()}
                             type={FolderType.QUESTIONCATALOG}
                             onSave={handleParentChanged}
