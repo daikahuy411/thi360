@@ -7,6 +7,8 @@ import { useRouter } from 'next/router'
 import TabAccount from 'pages/apps/account-settings/account/TabAccount'
 import TabSecurity from 'pages/apps/account-settings/security/TabSecurity'
 import TeacherProfile from 'pages/apps/account-settings/teacher-profile'
+import { useSelector } from 'react-redux'
+import { selectedProfile } from 'store/slices/profileSlice'
 
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
@@ -48,6 +50,7 @@ const AccountSettings = () => {
   const router = useRouter()
   const { tab } = router.query
   const hideText = useMediaQuery(theme => theme.breakpoints.down('md'))
+  const currentUser = useSelector(selectedProfile)
 
   const handleChange = (event, value) => {
     setIsLoading(true)
@@ -90,15 +93,17 @@ const AccountSettings = () => {
                     </Box>
                   }
                 />
-                <Tab
-                  value='teacher'
-                  label={
-                    <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
-                      <Icon icon='mdi:school-outline' />
-                      {!hideText && 'Hồ sơ Giáo viên'}
-                    </Box>
-                  }
-                />
+                {currentUser && currentUser.accountType == 0 && (
+                  <Tab
+                    value='teacher'
+                    label={
+                      <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
+                        <Icon icon='mdi:school-outline' />
+                        {!hideText && 'Hồ sơ Giáo viên'}
+                      </Box>
+                    }
+                  />
+                )}
                 <Tab
                   value='security'
                   label={

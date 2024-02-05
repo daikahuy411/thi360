@@ -436,7 +436,7 @@ const TabAccount = props => {
                         {formData && formData.emailConfirmed && (
                           <Alert severity='success'>Email đã xác nhận thành công.</Alert>
                         )}
-                        {formData && !formData.emailConfirmed && (
+                        {formData && formData.email && !formData.emailConfirmed && (
                           <Alert
                             severity='error'
                             style={{ marginTop: 5 }}
@@ -541,11 +541,12 @@ const TabAccount = props => {
               </form>
             </Card>
           </Grid>
-
           {/* Delete Account Card */}
-          <Grid item xs={12}>
-            <SelfRemoveAccount />
-          </Grid>
+          {formData && formData.accountType == 0 && (
+            <Grid item xs={12}>
+              <SelfRemoveAccount />
+            </Grid>
+          )}
         </Grid>
       </DatePickerWrapper>
     </Fragment>

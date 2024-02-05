@@ -127,7 +127,7 @@ const UserExamAttempHistory = () => {
                       <Button
                         variant='outlined'
                         component={Link}
-                        href={classId ? `/apps/class/${classId}/users` : `/apps/user`}
+                        href={classId ? `/apps/class/${classId}/users/${currentUser.id}` : `/apps/user/${currentUser.id}`}
                       >
                         <ArrowBackIcon />
                         &nbsp;Quay lại

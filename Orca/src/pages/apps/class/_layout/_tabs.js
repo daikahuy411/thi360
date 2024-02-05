@@ -24,7 +24,7 @@ const Nav = ({ children }) => {
         </Link>
         {currentClass && currentClass.id > 0 ? (
           <Link
-            className={`finger-tabs__tab flex-none ${router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : 'disabled'
+            className={`finger-tabs__tab flex-none ${router.asPath === `/apps/class/${classId}/users/` ? 'is-active' : ''
               }`}
             title='Học viên'
             component={Link}

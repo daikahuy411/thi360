@@ -116,7 +116,7 @@ const EditUserPage = () => {
   useEffect(() => {
     if (!userId || userId == 0) {
       dispatch(
-        selectUser({ id: '0', firstName: '', lastName: '', userName: '', passwordHash: '', gender: 0, changePassword: false })
+        selectUser({ id: '0', firstName: '', lastName: '', userName: '', passwordHash: '', changePassword: false })
       )
       return
     }
@@ -333,6 +333,7 @@ const EditUserPage = () => {
                               rules={{ required: true }}
                               render={({ field: { value, onChange } }) => (
                                 <TextField
+                                  inputProps={{ maxLength: 20 }}
                                   value={value ?? ''}
                                   label='Họ'
                                   required
@@ -359,6 +360,7 @@ const EditUserPage = () => {
                                 <TextField
                                   value={value ?? ''}
                                   label='Tên'
+                                  inputProps={{ maxLength: 20 }}
                                   required
                                   onChange={onChange}
                                   error={Boolean(errors.firstName)}
@@ -387,6 +389,7 @@ const EditUserPage = () => {
                                     label='Tên đăng nhập'
                                     required
                                     disabled={currentUser && currentUser.id != '0' ? true : false}
+                                    inputProps={{ maxLength: 50 }}
                                     onChange={onChange}
                                     error={Boolean(errors.userName)}
                                     aria-describedby='validation-schema-userName'
@@ -431,6 +434,7 @@ const EditUserPage = () => {
                                       error={Boolean(errors.passwordHash)}
                                       aria-describedby='validation-schema-firstName'
                                       type={showPassword ? 'text' : 'password'}
+                                      inputProps={{ maxLength: 50 }}
                                       endAdornment={
                                         <InputAdornment position='end'>
                                           <IconButton
@@ -575,6 +579,7 @@ const EditUserPage = () => {
                               render={({ field: { value, onChange } }) => (
                                 <TextField
                                   value={value ?? ''}
+                                  inputProps={{ maxLength: 250 }}
                                   label='Email'
                                   onChange={onChange}
                                   aria-describedby='validation-schema-firstName'
@@ -593,6 +598,7 @@ const EditUserPage = () => {
                                 <TextField
                                   value={value ?? ''}
                                   label='Số điện thoại'
+                                  inputProps={{ maxLength: 20 }}
                                   onChange={onChange}
                                   error={Boolean(errors.phoneNumber)}
                                   aria-describedby='validation-schema-firstName'
@@ -630,6 +636,7 @@ const EditUserPage = () => {
                               rules={{ required: false }}
                               render={({ field: { value, onChange } }) => (
                                 <TextField
+                                  inputProps={{ maxLength: 500 }}
                                   multiline
                                   rows={2}
                                   fullWidth

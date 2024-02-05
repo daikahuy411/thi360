@@ -16,7 +16,7 @@ const Nav = () => {
             (router.asPath.indexOf(`/user/${userId}/`) >= 0 || router.asPath.indexOf(`/users/${userId}/`) >= 0) &&
             router.asPath.indexOf(`testinghistory`) < 0
               ? 'is-active'
-              : 'disabled'
+              : ''
           }`}
           title='Chi tiết'
           component={Link}
@@ -27,7 +27,7 @@ const Nav = () => {
         {currentUser && userId != '0' ? (
           <Link
             className={`finger-tabs__tab flex-none ${
-              router.asPath === `/apps/user/${userId}/testinghistory/` ? 'is-active' : 'disabled'
+              router.asPath === `/apps/user/${userId}/testinghistory/` ? 'is-active' : ''
             }`}
             title='Lịch sử Thi'
             component={Link}

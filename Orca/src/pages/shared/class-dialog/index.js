@@ -244,7 +244,9 @@ export default function ClassDialog({ onClose, onOk }) {
                                 </TableCell>
                               )}
                               <TableCell>
-                                <ChevronRightIcon />
+                                {item.type == 1 && (
+                                  <ChevronRightIcon />
+                                )}
                               </TableCell>
                             </TableRow>
                           ))}
