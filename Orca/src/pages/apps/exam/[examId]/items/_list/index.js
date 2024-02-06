@@ -238,7 +238,7 @@ const ExamItemTable = () => {
                 <TableCell align='right' style={{ width: 120 }}>
                   Số đề thi
                 </TableCell>
-                <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

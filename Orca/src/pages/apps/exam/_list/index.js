@@ -280,7 +280,7 @@ const ExamTable = () => {
                   <TableCell align='right'>Lượt thi</TableCell>
                   <TableCell align='right'>Học viên</TableCell>
                   <TableCell>Trạng thái</TableCell>
-                  <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                  <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

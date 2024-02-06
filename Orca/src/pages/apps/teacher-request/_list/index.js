@@ -170,7 +170,7 @@ const RequestTeacherTable = () => {
                   <TableCell>Học và Tên</TableCell>
                   <TableCell>Tên đăng nhập</TableCell>
                   <TableCell>Thông tin trường</TableCell>
-                  <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                  <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

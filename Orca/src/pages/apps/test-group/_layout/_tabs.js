@@ -11,16 +11,16 @@ const Nav = () => {
   return (
     <>
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
-        <Link
-          className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/test-group/${testGroupId}/` ? 'is-active' : 'disabled'
-          }`}
-          title='Chi tiết'
-          component={Link}
-          href={`/apps/test-group/${testGroupId}`}
-        >
-          Chi tiết
-        </Link>
+        {testGroupId && testGroupId == '0' && (
+          <span
+            className={`finger-tabs__tab flex-none ${
+              router.asPath.indexOf(`/apps/test-group/${testGroupId}/`) >= 0 ? 'is-active disabled' : ''
+            }`}
+            title='Chi tiết'
+          >
+            Chi tiết
+          </span>
+        )}
 
         {currentTestGroup && currentTestGroup.id > 0 ? (
           <Link
@@ -40,7 +40,7 @@ const Nav = () => {
         ) : (
           <p
             className={`finger-tabs__tab flex-none ${
-              router.asPath === `/apps/test-group/${testGroupId}/sections/` ? 'is-active' : 'disabled'
+              router.asPath === `/apps/test-group/${testGroupId}/sections/` ? 'is-active' : ''
             }`}
             title='Cấu trúc đề thi'
           >

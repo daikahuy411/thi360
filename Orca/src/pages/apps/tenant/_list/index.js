@@ -239,7 +239,7 @@ const TenantTable = () => {
                   </TableCell>
                   <TableCell style={{ width: 30 }}>Sửa</TableCell>
                   <TableCell>Tên</TableCell>
-                  <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                  <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

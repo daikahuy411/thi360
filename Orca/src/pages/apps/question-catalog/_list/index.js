@@ -264,7 +264,7 @@ const QuestionCatalogTable = () => {
                 <TableCell>Tên</TableCell>
                 <TableCell style={{ width: 130, textAlign: 'right' }}>Danh mục</TableCell>
                 <TableCell style={{ width: 130, textAlign: 'right' }}>Câu hỏi</TableCell>
-                <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

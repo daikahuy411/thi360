@@ -374,7 +374,7 @@ const ItemEditForm = () => {
                                           <TableCell>Nội dung</TableCell>
                                           <TableCell style={{ width: 210 }}>Bộ câu hỏi- Danh mục</TableCell>
                                           <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
-                                          <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                                          <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
                                         </TableRow>
                                       </TableHead>
                                       <TableBody>
@@ -429,6 +429,7 @@ const ItemEditForm = () => {
                                                   <Chip
                                                     icon={<IconReact path={mdilTag} title='Bộ Câu hỏi' size={1} />}
                                                     label={row.catalog.name}
+                                                    style={{marginBottom:2}}
                                                     color='secondary'
                                                     variant='outlined'
                                                   />

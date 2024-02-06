@@ -266,7 +266,7 @@ const ClassTable = () => {
               <TableCell align='right' style={{ width: 160 }}>
                 Học viên
               </TableCell>
-              <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+              <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

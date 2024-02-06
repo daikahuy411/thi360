@@ -256,7 +256,7 @@ const UserTable = () => {
                       <TableCell>Tên đầy đủ </TableCell>
                       <TableCell style={{ width: 120 }}>Giới tính</TableCell>
                       <TableCell style={{ width: 180 }}>Lớp</TableCell>
-                      <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                      <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

@@ -200,7 +200,7 @@ const TestGroupTable = () => {
         &nbsp; &nbsp;
         <Button
           component={Link}
-          href={`/apps/test-group/0/${folderId}`}
+          href={folderId ? `/apps/test-group/0/${folderId}` : `/apps/test-group/0/`}
           variant='contained'
           style={{ width: 210 }}
           color='primary'
@@ -266,7 +266,7 @@ const TestGroupTable = () => {
                   </TableCell>
                   <TableCell style={{ width: 30 }}>Sửa</TableCell>
                   <TableCell>Tên</TableCell>
-                  <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                  <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

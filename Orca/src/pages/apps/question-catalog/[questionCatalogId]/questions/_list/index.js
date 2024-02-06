@@ -318,7 +318,7 @@ const QuestionTable = () => {
                           <TableCell>Nội dung</TableCell>
                           <TableCell style={{ width: 280 }}>Danh mục</TableCell>
                           <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
-                          <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                          <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>

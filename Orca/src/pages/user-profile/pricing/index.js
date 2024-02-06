@@ -166,7 +166,7 @@ const MyPricingPage = () => {
                 <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                   <TableHead>
                     <TableRow>
-                      <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
+                      <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
                       <TableCell>Gói dịch vụ</TableCell>
                       <TableCell style={{ width: 120 }}>Giá</TableCell>
                       <TableCell style={{ width: 280 }}>Loại gói</TableCell>
