@@ -22,6 +22,19 @@ const Nav = () => {
           </span>
         )}
 
+        {testGroupId && testGroupId !== '0' && (
+          <Link
+            className={`finger-tabs__tab flex-none ${
+              router.asPath.indexOf(`/apps/test-group/${testGroupId}/`) >= 0 ? 'is-active' : ''
+            }`}
+            title='Chi tiết'
+            component={Link}
+            href={`/apps/test-group/${testGroupId}`}
+          >
+            Chi tiết
+          </Link>
+        )}
+
         {currentTestGroup && currentTestGroup.id > 0 ? (
           <Link
             className={`finger-tabs__tab flex-none ${

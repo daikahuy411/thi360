@@ -1,8 +1,13 @@
 import { useEffect } from 'react'
+
 import { PostCategoryApi } from 'api/catalog-api'
 import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedPostCategory, selectPostCategory } from 'store/slices/postCategorySlice'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import { selectedPostCategory } from 'store/slices/postCategorySlice'
+
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Link from '@mui/material/Link'
@@ -24,7 +29,7 @@ const TopNav = props => {
 
   return (
     <Breadcrumbs aria-label='breadcrumb' style={{ borderTop: '0px solid rgba(58, 53, 65, 0.12)', paddingTop: 0 }}>
-      <Link underline='hover' color='inherit' href='/'>
+      <Link underline='hover' color='inherit' href='/dashboard'>
         <HomeOutlinedIcon />
       </Link>
       <Typography color='text.primary'>Danh mục Tin bài</Typography>

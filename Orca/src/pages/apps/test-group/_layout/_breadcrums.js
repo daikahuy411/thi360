@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect } from 'react'
 
 import TestGroupApi from 'api/test-group-api'
 import Link from 'next/link'
@@ -22,33 +19,22 @@ import Typography from '@mui/material/Typography'
 const TopNav = props => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { testGroupId, folderId } = router.query
+  const { testGroupId } = router.query
   const currentTestGroup = useSelector(selectedTestGroup)
-  const [testGroup, setTestGroup] = useState(null)
 
   useEffect(() => {
-    if (testGroupId && parseInt(testGroupId) > 0) {      
+    if (testGroupId && parseInt(testGroupId) > 0) {
       new TestGroupApi().get(testGroupId).then(response => {
         dispatch(selectTestGroup(response.data))
       })
     } else {
       dispatch(selectTestGroup(null))
     }
-
   }, [testGroupId])
-
-  useEffect(() => {
-    if (folderId && parseInt(folderId) > 0) {
-      new TestGroupApi().get(folderId).then(response => {
-        // dispatch(selectTestGroup(response.data))
-        setTestGroup(response.data)
-      })
-    }
-  }, [folderId])
 
   return (
     <Breadcrumbs aria-label='breadcrumb' style={{ borderTop: '0px solid rgba(58, 53, 65, 0.12)', paddingTop: 0 }}>
-      <Link underline='hover' color='inherit' href='/'>
+      <Link underline='hover' color='inherit' href='/dashboard'>
         <HomeOutlinedIcon />
       </Link>
       <Link underline='hover' color='inherit' href='/apps/test-group/'>
@@ -61,7 +47,7 @@ const TopNav = props => {
             {item.name}
           </Link>
         ))}
-      {testGroup && <Typography color='text.primary'>{testGroup.name}</Typography>}
+      {currentTestGroup && <Typography color='text.primary'>{currentTestGroup.name}</Typography>}
     </Breadcrumbs>
   )
 }

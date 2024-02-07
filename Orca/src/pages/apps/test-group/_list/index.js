@@ -60,7 +60,7 @@ const TestGroupTable = () => {
   const [currentFolder, setCurrentFolder] = useState(null)
 
   const router = useRouter()
-  const { folderId } = router.query ?? '0'
+  const { testGroupId } = router.query ?? '0'
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -73,12 +73,12 @@ const TestGroupTable = () => {
 
   useEffect(() => {
     fetchData()
-  }, [page, rowsPerPage, folderId, keyword])
+  }, [page, rowsPerPage, testGroupId, keyword])
 
   const fetchData = () => {
     const param = {
       keyword: keyword,
-      folderId: folderId,
+      folderId: testGroupId,
       page: page,
       limit: rowsPerPage
     }
@@ -200,7 +200,7 @@ const TestGroupTable = () => {
         &nbsp; &nbsp;
         <Button
           component={Link}
-          href={folderId ? `/apps/test-group/0/${folderId}` : `/apps/test-group/0/`}
+          href={testGroupId ? `/apps/test-group/0/${testGroupId}` : `/apps/test-group/0/`}
           variant='contained'
           style={{ width: 210 }}
           color='primary'
