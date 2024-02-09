@@ -16,7 +16,6 @@ import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
-import Link from '@mui/material/Link'
 import Paper from '@mui/material/Paper'
 import Radio from '@mui/material/Radio'
 import Table from '@mui/material/Table'
@@ -113,22 +112,20 @@ export default function QuestionCatalogDialog({ onClose, onOk }) {
                       aria-label='breadcrumb'
                       style={{ borderTop: '0px solid rgba(58, 53, 65, 0.12)', paddingTop: 0 }}
                     >
-                      <Link
+                      <Button
                         underline='hover'
                         color='primary'
-                        href='#'
                         onClick={() => {
                           setCurrentFolder(null)
                           setFolderId(0)
                         }}
                       >
                         Bộ Câu hỏi
-                      </Link>
+                      </Button>
                       {currentFolder.ancestors &&
                         currentFolder.ancestors.map(item => (
-                          <Link
+                          <Button
                             underline='hover'
-                            href='#'
                             key={`l-${item.id}`}
                             color='primary'
                             onClick={() => {
@@ -136,7 +133,7 @@ export default function QuestionCatalogDialog({ onClose, onOk }) {
                             }}
                           >
                             {item.name}
-                          </Link>
+                          </Button>
                         ))}
                       <Typography color='text.primary'>{currentFolder.name}</Typography>
                     </Breadcrumbs>

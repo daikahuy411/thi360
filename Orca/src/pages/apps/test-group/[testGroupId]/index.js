@@ -85,7 +85,6 @@ const EditTestGroupPage = () => {
     if (!router.isReady) {
       return
     }
-    dispatch(selectTestGroup(null))
     if (!testGroupId || testGroupId == 0) {
       dispatch(selectTestGroup({ id: 0, name: '' }))
       return
@@ -128,6 +127,8 @@ const EditTestGroupPage = () => {
         if (code === 1) {
           router.query.testGroupId = response.data.value.id
           router.push(router)
+
+          dispatch(selectTestGroup(response.data.value))
         } else {
           reset()
         }

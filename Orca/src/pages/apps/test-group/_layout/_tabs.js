@@ -14,7 +14,11 @@ const Nav = () => {
         {testGroupId && testGroupId == '0' && (
           <span
             className={`finger-tabs__tab flex-none ${
-              router.asPath.indexOf(`/apps/test-group/${testGroupId}/`) >= 0 ? 'is-active disabled' : ''
+              router.asPath.indexOf(`/apps/test-group/${testGroupId}/`) >= 0 &&
+              router.asPath.indexOf('sections') < 0 &&
+              router.asPath.indexOf('tests') < 0
+                ? 'is-active disabled'
+                : ''
             }`}
             title='Chi tiết'
           >
@@ -25,7 +29,11 @@ const Nav = () => {
         {testGroupId && testGroupId !== '0' && (
           <Link
             className={`finger-tabs__tab flex-none ${
-              router.asPath.indexOf(`/apps/test-group/${testGroupId}/`) >= 0 ? 'is-active' : ''
+              router.asPath.indexOf(`/apps/test-group/${testGroupId}/`) >= 0 &&
+              router.asPath.indexOf('sections') < 0 &&
+              router.asPath.indexOf('tests') < 0
+                ? 'is-active'
+                : ''
             }`}
             title='Chi tiết'
             component={Link}

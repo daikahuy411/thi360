@@ -149,7 +149,7 @@ const ItemsTable = ({ data }) => {
         <Button
           variant='contained'
           component={Link}
-          href={`/apps/test-group/${testGroupId}/sections/${sectionId}/items/add`}
+          href={`/apps/test-group/${testGroupId}/sections/${sectionId}/items/0`}
           style={{ width: 180 }}
           color='primary'
           startIcon={<Icon icon='mdi:plus' />}

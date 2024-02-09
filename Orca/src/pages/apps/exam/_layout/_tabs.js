@@ -6,18 +6,24 @@ import { selectedExam } from 'store/slices/examSlice'
 const Nav = () => {
   const router = useRouter()
   const currentExam = useSelector(selectedExam)
-  const { examId } = router.query
+  const { examId, folderId } = router.query
 
   return (
     <>
       <div className='grid-block vertical flex-none finger-tabs__tabs'>
         <Link
           className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/exam/${examId}/` ? 'is-active' : 'disabled'
+            router.asPath.indexOf(`/apps/exam/${examId}/`) >= 0 &&
+            router.asPath.indexOf(`items/`) < 0 &&
+            router.asPath.indexOf(`users/`) < 0 &&
+            router.asPath.indexOf(`marks/`) < 0 &&
+            router.asPath.indexOf(`report/`) < 0
+              ? 'is-active'
+              : ''
           }`}
           title='Chi tiết'
           component={Link}
-          href={`/apps/exam/${examId}`}
+          href={`/apps/exam/${examId}/${folderId ?? 0}`}
         >
           Chi tiết
         </Link>
@@ -57,7 +63,7 @@ const Nav = () => {
         ) : (
           <p
             className={`finger-tabs__tab flex-none ${
-              router.asPath === `/apps/exam/${examId}/users/` ? 'is-active' : 'disabled'
+              router.asPath === `/apps/exam/${examId}/users/` ? 'is-active disabled' : ''
             }`}
             title='Học viên'
           >
@@ -66,7 +72,7 @@ const Nav = () => {
         )}
         <Link
           className={`finger-tabs__tab flex-none ${
-            router.asPath === `/apps/exam/${examId}/marks/` ? 'is-active' : 'disabled'
+            router.asPath === `/apps/exam/${examId}/marks/` ? 'is-active' : ''
           }`}
           title='Chấm điểm'
           component={Link}

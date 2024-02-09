@@ -232,12 +232,18 @@ const EditExamPage = () => {
     new ExamApi()
       .save(param)
       .then(response => {
-        toast.success('Cập nhật thành công')
-        if (code === 1) {
-          router.query.examId = response.data.value.id
-          router.push(router)
+        if (response.data.isSuccess) {
+          toast.success('Cập nhật thành công')
+          if (code === 1) {
+            router.query.examId = response.data.value.id
+            router.push(router)
+
+            dispatch(selectExam(response.data.value))
+          } else {
+            reset()
+          }
         } else {
-          reset()
+          toast.error(response.data.message)
         }
       })
       .catch(e => {
@@ -246,10 +252,11 @@ const EditExamPage = () => {
   }
 
   const onSubmit = data => {
-    new ExamApi().save(data).then(response => {
-      toast.success('Form Submitted')
-    })
+    // new ExamApi().save(data).then(response => {
+    //   toast.success('Form Submitted')
+    // })
   }
+  
   /*
    * end handle save
    */

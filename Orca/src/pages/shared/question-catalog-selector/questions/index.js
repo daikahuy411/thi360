@@ -9,6 +9,8 @@ import Link from 'next/link'
 
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
+import { mdilTag } from '@mdi/light-js'
+import IconReact from '@mdi/react'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
@@ -52,7 +54,7 @@ const Questions = props => {
         questionType: 0,
         categoryId: categoryId,
         keyword: keyword,
-        page: page ,
+        page: page,
         limit: rowsPerPage
       })
       .then(response => {
@@ -233,10 +235,19 @@ const Questions = props => {
                                   {row.shortContent}
                                 </TableCell>
                                 <TableCell>
-                                  {row.categoryName ? (
+                                  {row.catalog ? (
                                     <Chip
-                                      icon={<Icon icon='mdi:tag' />}
-                                      label={row.categoryName}
+                                      icon={<IconReact path={mdilTag} title='Bộ Câu hỏi' size={1} />}
+                                      label={row.catalog.name}
+                                      style={{ marginBottom: 2 }}
+                                      color='secondary'
+                                      variant='outlined'
+                                    />
+                                  ) : null}
+                                  {row.category ? (
+                                    <Chip
+                                      icon={<IconReact path={mdilTag} title='Danh mục Câu hỏi' size={1} />}
+                                      label={row.category.name}
                                       color='secondary'
                                       variant='outlined'
                                     />

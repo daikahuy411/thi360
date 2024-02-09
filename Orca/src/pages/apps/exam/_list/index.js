@@ -60,7 +60,7 @@ const ExamTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [totalItem, setTotalItem] = useState(0)
   const [keyword, setKeyword] = useState('')
-  const [treeData, setTreeData] = useState(null)
+
   const [status, setStatus] = useState(-1)
   const [categoryId, setCategoryId] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -211,7 +211,7 @@ const ExamTable = () => {
           &nbsp; &nbsp;
           <Button
             component={Link}
-            href={`/apps/exam/0/${examId}`}
+            href={`/apps/exam/0/${examId ?? 0}`}
             variant='contained'
             style={{ width: 180 }}
             color='primary'

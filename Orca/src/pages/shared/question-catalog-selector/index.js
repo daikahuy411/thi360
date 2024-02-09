@@ -19,7 +19,6 @@ import Dialog from '@mui/material/Dialog'
 import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
-import Link from '@mui/material/Link'
 import Paper from '@mui/material/Paper'
 import Slide from '@mui/material/Slide'
 import Snackbar from '@mui/material/Snackbar'
@@ -198,7 +197,7 @@ export default function QuestionCatalogSelector({ open, onClose, onOk, type = 2 
       if (type == 2) {
         setStep(3)
       } else {
-        onOk(selectedNode)
+        onOk(categoryId)
       }
     }
   }
@@ -288,10 +287,9 @@ export default function QuestionCatalogSelector({ open, onClose, onOk, type = 2 
                           aria-label='breadcrumb'
                           style={{ borderTop: '0px solid rgba(58, 53, 65, 0.12)', paddingTop: 0 }}
                         >
-                          <Link
+                          <Button
                             underline='hover'
                             color='primary'
-                            href='#'
                             onClick={() => {
                               setStep(1)
                               setSelectedQuestionCatalog(null)
@@ -301,12 +299,11 @@ export default function QuestionCatalogSelector({ open, onClose, onOk, type = 2 
                             }}
                           >
                             Bộ Câu hỏi
-                          </Link>
+                          </Button>
                           {currentQuestionCatalogFolder.ancestors &&
                             currentQuestionCatalogFolder.ancestors.map(item => (
-                              <Link
+                              <Button
                                 underline='hover'
-                                href='#'
                                 key={`l-${item.id}`}
                                 color='primary'
                                 onClick={() => {
@@ -314,7 +311,7 @@ export default function QuestionCatalogSelector({ open, onClose, onOk, type = 2 
                                 }}
                               >
                                 {item.name}
-                              </Link>
+                              </Button>
                             ))}
                           <Typography color='text.primary'>{currentQuestionCatalogFolder.name}</Typography>
                         </Breadcrumbs>
@@ -478,7 +475,10 @@ export default function QuestionCatalogSelector({ open, onClose, onOk, type = 2 
                   <Divider />
                 </Grid>
                 <Grid item xs={12} md={10} lg={8}>
-                  <QuestionCategoryTree onNodeSelected={nodeId => onCategorySelected(nodeId)} data={questionCates} />
+                  <QuestionCategoryTree
+                    onNodeSelected={nodeId => onCategorySelected(parseInt(nodeId))}
+                    data={questionCates}
+                  />
                 </Grid>
               </Grid>
             )}

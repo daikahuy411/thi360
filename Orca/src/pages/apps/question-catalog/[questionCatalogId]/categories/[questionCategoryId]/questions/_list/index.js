@@ -12,6 +12,8 @@ import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
+import { mdilTag } from '@mdi/light-js'
+import IconReact from '@mdi/react'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
@@ -88,7 +90,7 @@ const QuestionTable = () => {
         questionType: 0,
         categoryId: questionCategoryId,
         keyword: keyword,
-        page: page ,
+        page: page,
         limit: rowsPerPage
       })
       .then(response => {
@@ -338,10 +340,19 @@ const QuestionTable = () => {
                             {row.shortContent}
                           </TableCell>
                           <TableCell>
-                            {row.categoryName ? (
+                            {row.catalog ? (
                               <Chip
-                                icon={<Icon icon='mdi:tag' />}
-                                label={row.categoryName}
+                                icon={<IconReact path={mdilTag} title='Bộ Câu hỏi' size={1} />}
+                                label={row.catalog.name}
+                                style={{ marginBottom: 2 }}
+                                color='secondary'
+                                variant='outlined'
+                              />
+                            ) : null}
+                            {row.category ? (
+                              <Chip
+                                icon={<IconReact path={mdilTag} title='Danh mục Câu hỏi' size={1} />}
+                                label={row.category.name}
                                 color='secondary'
                                 variant='outlined'
                               />

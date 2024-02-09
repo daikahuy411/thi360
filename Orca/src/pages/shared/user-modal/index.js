@@ -64,8 +64,8 @@ function UserModal({ onClose, onOk }) {
 
   const fetchData = () => {
     new UserApi()
-      .searchesUserNotInExam({
-        Page: page ,
+      .searches({
+        Page: page,
         Limit: rowsPerPage,
         Keyword: keyword,
         ExamId: Number(examId),
@@ -127,7 +127,7 @@ function UserModal({ onClose, onOk }) {
   }
 
   return (
-    <Drawer open={true} anchor='right' onClose={onClose} variant='temporary'>
+    <Drawer open={true} anchor='right' onClose={onClose} variant='temporary' style={{ width: 980 }}>
       <>
         <Box
           className='customizer-header'

@@ -112,7 +112,11 @@ const ExamItemEditForm = () => {
 
     new ExamItemApi().get(itemId).then(response => {
       dispatch(selectExamItem(response.data))
-      setTestGroupSelected({ testGroupId: response.data.testGroupId, testGroupName: response.data.testGroup?.name })
+      setTestGroupSelected(
+        response.data.testgroup
+          ? { testGroupId: response.data.testGroupId, testGroupName: response.data.testGroup?.name }
+          : { testGroupId: 0, testGroupName: '' }
+      )
       setStateSetting({
         ...stateSetting,
         ['randomAnswerOrder']: response.data.settings.randomAnswerOrder,
@@ -296,7 +300,7 @@ const ExamItemEditForm = () => {
                                       className: 'Mui-disabled'
                                     }}
                                     readOnly={true}
-                                    value={testGroupSelected.testGroupName}
+                                    value={testGroupSelected.testGroupName ?? ''}
                                     endAdornment={
                                       <InputAdornment position='end'>
                                         {testGroupSelected && testGroupSelected.testGroupId > 0 && (
@@ -305,12 +309,12 @@ const ExamItemEditForm = () => {
                                               <VisibilityOutlinedIcon />
                                             </IconButton>
                                             &nbsp;
+                                            <IconButton edge='end' onClick={() => cleanTestGroup(true)}>
+                                              <DeleteOutline />
+                                            </IconButton>
+                                            &nbsp;
                                           </>
                                         )}
-                                        <IconButton edge='end' onClick={() => cleanTestGroup(true)}>
-                                          <DeleteOutline />
-                                        </IconButton>
-                                        &nbsp;
                                         <IconButton
                                           edge='end'
                                           onClick={() => {

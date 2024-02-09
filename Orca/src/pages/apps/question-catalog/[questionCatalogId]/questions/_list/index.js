@@ -364,6 +364,7 @@ const QuestionTable = () => {
                                     <Chip
                                       icon={<IconReact path={mdilTag} title='Bộ Câu hỏi' size={1} />}
                                       label={row.catalog.name}
+                                      style={{ marginBottom: 2 }}
                                       color='secondary'
                                       variant='outlined'
                                     />

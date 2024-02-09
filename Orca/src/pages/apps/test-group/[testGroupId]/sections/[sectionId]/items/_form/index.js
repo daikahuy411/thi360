@@ -3,6 +3,7 @@ import {
   useState
 } from 'react'
 
+import { QuestionCategoryApi } from 'api/catalog-api'
 import TestGroupSectionApi from 'api/test-group-section-api'
 import TestGroupSectionItemApi from 'api/test-group-section-item-api'
 import moment from 'moment'
@@ -10,6 +11,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
 import QuestionCatalogSelector from 'pages/shared/question-catalog-selector'
+import Draggable from 'react-draggable'
 import {
   Controller,
   useForm
@@ -39,6 +41,11 @@ import FolderIcon from '@mui/icons-material/FolderOpen'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
 import Grid from '@mui/material/Grid'
@@ -77,6 +84,14 @@ const schema = yup.object().shape({
   //numberOfQuestion: yup.number().required('* bắt buộc').moreThan(0, '* bắt buộc') //depends on type
 })
 
+function PaperComponent(props) {
+  return (
+    <Draggable handle='#draggable-dialog-title' cancel={'[class*="MuiDialogContent-root"]'}>
+      <Paper {...props} />
+    </Draggable>
+  )
+}
+
 const ItemEditForm = () => {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -104,7 +119,7 @@ const ItemEditForm = () => {
 
   const deleteItem = item => {
     var newItems = selectedQuestions.filter(x => x.id != item.id)
-    setSelectedQuestions([...newItems])
+    setSelectedQuestions(newItems ? [...newItems] : [])
   }
 
   const {
@@ -119,7 +134,7 @@ const ItemEditForm = () => {
     resolver: yupResolver(schema)
   })
 
-  const save = () => {
+  const save = code => {
     const item = getValues()
     item.testGroupId = parseInt(testGroupId)
     item.testGroupSectionId = parseInt(sectionId)
@@ -127,12 +142,21 @@ const ItemEditForm = () => {
     item.questionCategory = {}
     item.questions = []
     if (itemType == 2) {
-      item.value = selectedQuestions.map(n => n.id).join(',')
-    } else if (itemType == 4 && selectedQuestionCategory && selectedQuestionCategory.key) {
-      item.value = selectedQuestionCategory.key.toString()
+      item.value = selectedQuestions && selectedQuestions.length > 0 ? selectedQuestions.map(n => n.id).join(',') : ''
+    } else if (itemType == 4 && selectedQuestionCategory && selectedQuestionCategory.id) {
+      item.value = selectedQuestionCategory.id.toString()
     }
+
     new TestGroupSectionItemApi().save(item).then(response => {
       toast.success('Cập nhật thành công')
+
+      if (code == 1) {
+        router.query.itemId = response.data.id
+        router.push(router)
+      } else {
+        reset()
+      }
+
       dispatch(selectTestGroupSectionItem(response.data))
       new TestGroupSectionApi().get(sectionId).then(response => {
         dispatch(selectTestGroupSection(response.data))
@@ -142,8 +166,13 @@ const ItemEditForm = () => {
 
   const onCategoryOrQuestionsSelected = items => {
     if (itemType == 4) {
-      setSelectedQuestionCategory(items)
-      setOpenQuestionCatalogSelector(false)
+      // QuestionCategory: just only one Id of Category
+      setLoading(true)
+      QuestionCategoryApi.get(items).then(response => {
+        setLoading(false)
+        setSelectedQuestionCategory(response.data)
+        setOpenQuestionCatalogSelector(false)
+      })
     } else {
       var newSelectedQuestions = [...selectedQuestions]
       items.map(item => {
@@ -151,7 +180,7 @@ const ItemEditForm = () => {
           newSelectedQuestions.push(item)
         }
       })
-      setSelectedQuestions(newSelectedQuestions)
+      setSelectedQuestions(newSelectedQuestions ?? [])
       // toast.success('Cập nhật thành công')
       // setOpenQuestionCatalogSelector(false)
     }
@@ -173,13 +202,41 @@ const ItemEditForm = () => {
     if (currentTestGroupSectionItem) {
       reset(currentTestGroupSectionItem)
       setItemType(currentTestGroupSectionItem.type)
-      setSelectedQuestions(currentTestGroupSectionItem.questions)
+      setSelectedQuestions(currentTestGroupSectionItem.questions || [])
       setSelectedQuestionCategory({
-        key: currentTestGroupSectionItem.questionCategory?.id,
-        title: currentTestGroupSectionItem.questionCategory?.name
+        id: currentTestGroupSectionItem.questionCategory?.id,
+        name: currentTestGroupSectionItem.questionCategory?.name
       })
     }
   }, [currentTestGroupSectionItem])
+
+  /*
+   * remove test-group-section-item
+   */
+  const [openDelete, setOpenDelete] = useState(false)
+  const handleClickOpenDelete = () => setOpenDelete(true)
+  const handleCloseDelete = () => setOpenDelete(false)
+  const handleDelete = () => {
+    if (!itemId || itemId > 0) {
+      new TestGroupSectionItemApi()
+        .delete({ id: itemId })
+        .then(response => {
+          setLoading(true)
+          setOpenDelete(false)
+          toast.success('Xóa dữ liệu thành công.')
+
+          new TestGroupSectionApi().get(sectionId).then(response => {
+            dispatch(selectTestGroupSection(response.data))
+            setLoading(false)
+            router.push(`/apps/test-group/${testGroupId}/sections/${sectionId}/items`)
+          })
+        })
+        .catch(e => {
+          setOpenDelete(false)
+          toast.error('Xảy ra lỗi trong quá trình xóa dữ liệu. Vui lòng thử lại sau!')
+        })
+    }
+  }
 
   return (
     <>
@@ -206,7 +263,7 @@ const ItemEditForm = () => {
                   <span className='right'>
                     {currentTestGroupSectionItem && currentTestGroupSectionItem.id > 0 && (
                       <>
-                        <IconButton aria-label='delete'>
+                        <IconButton aria-label='delete' onClick={handleClickOpenDelete}>
                           <DeleteIcon />
                         </IconButton>
                         &nbsp;
@@ -221,13 +278,13 @@ const ItemEditForm = () => {
                       &nbsp;Quay lại
                     </Button>
                     &nbsp;
-                    <Button disabled={!isValid} onClick={save} variant='contained'>
+                    <Button disabled={!isValid} onClick={() => save(1)} variant='contained'>
                       Cập nhật
                     </Button>
                     {(!currentTestGroupSectionItem || currentTestGroupSectionItem.id == 0) && (
                       <>
                         &nbsp;
-                        <Button disabled={!isValid} variant='contained'>
+                        <Button disabled={!isValid} onClick={() => save(2)} variant='contained'>
                           Cập nhật &amp; Thêm mới
                         </Button>
                       </>
@@ -294,14 +351,10 @@ const ItemEditForm = () => {
                                         readOnly: true,
                                         className: 'Mui-disabled'
                                       }}
-                                      value={selectedQuestionCategory?.title ?? ''}
+                                      value={selectedQuestionCategory?.name ?? ''}
                                       endAdornment={
                                         <InputAdornment position='end'>
-                                          <IconButton
-                                            aria-label='toggle password visibility'
-                                            edge='end'
-                                            // onClick={cleanOrganization}
-                                          >
+                                          <IconButton edge='end' onClick={() => setSelectedQuestionCategory(null)}>
                                             <DeleteOutline />
                                           </IconButton>
                                           &nbsp;
@@ -429,7 +482,7 @@ const ItemEditForm = () => {
                                                   <Chip
                                                     icon={<IconReact path={mdilTag} title='Bộ Câu hỏi' size={1} />}
                                                     label={row.catalog.name}
-                                                    style={{marginBottom:2}}
+                                                    style={{ marginBottom: 2 }}
                                                     color='secondary'
                                                     variant='outlined'
                                                   />
@@ -484,6 +537,31 @@ const ItemEditForm = () => {
           setOpenQuestionCatalogSelector(false)
         }}
       />
+
+      <Dialog
+        open={openDelete}
+        onClose={handleCloseDelete}
+        PaperComponent={PaperComponent}
+        aria-labelledby='draggable-dialog-title'
+      >
+        <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
+          Xác nhận
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Dữ liệu xóa sẽ không thể khôi phục lại. Bạn có muốn xóa Phần thi này không?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleCloseDelete}>
+            {' '}
+            Hủy bỏ{' '}
+          </Button>
+          <Button onClick={handleDelete} color='error'>
+            Đồng ý
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }

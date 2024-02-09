@@ -10,7 +10,7 @@ import Box from '@mui/material/Box'
 
 import TopNav from '../../_layout/_breadcrums'
 import Nav from '../../_layout/_tabs'
-import ConfigsTable from './_list'
+import SectionsTable from './_list'
 
 const ConfigsList = () => {
   const router = useRouter()
@@ -43,7 +43,7 @@ const ConfigsList = () => {
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                     <div style={{ width: '100%' }}>
-                      <ConfigsTable testGroup={currentTestGroup} />
+                      <SectionsTable testGroup={currentTestGroup} />
                     </div>
                   </div>
                 </div>
