@@ -427,7 +427,7 @@ const ItemEditForm = () => {
                                           <TableCell>Nội dung</TableCell>
                                           <TableCell style={{ width: 210 }}>Bộ câu hỏi- Danh mục</TableCell>
                                           <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
-                                          <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
+                                          <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
                                         </TableRow>
                                       </TableHead>
                                       <TableBody>

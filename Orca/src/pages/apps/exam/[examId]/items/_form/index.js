@@ -113,7 +113,7 @@ const ExamItemEditForm = () => {
     new ExamItemApi().get(itemId).then(response => {
       dispatch(selectExamItem(response.data))
       setTestGroupSelected(
-        response.data.testgroup
+        response.data.testGroup
           ? { testGroupId: response.data.testGroupId, testGroupName: response.data.testGroup?.name }
           : { testGroupId: 0, testGroupName: '' }
       )
@@ -142,6 +142,7 @@ const ExamItemEditForm = () => {
       .save({ ...item, examId: examId, testGroupId: testGroupSelected.testGroupId })
       .then(response => {
         toast.success('Cập nhật thành công')
+        dispatch(selectExamItem(response.data))
         if (code === 1) {
           router.query.itemId = response.data.id
           router.push(router)

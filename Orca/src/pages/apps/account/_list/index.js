@@ -227,7 +227,7 @@ const UserTable = () => {
                 <TableCell>Tên đầy đủ </TableCell>
                 <TableCell style={{ width: 120 }}>Giới tính</TableCell>
                 <TableCell style={{ width: 180 }}>Lớp</TableCell>
-                <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
+                <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -273,7 +273,7 @@ const UserTable = () => {
                       <TableCell>{row.genderName}</TableCell>
                       <TableCell>{row.organizationName}</TableCell>
                       <TableCell>
-                        <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                        <Typography variant='body2'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
                       </TableCell>
                     </TableRow>
                   )

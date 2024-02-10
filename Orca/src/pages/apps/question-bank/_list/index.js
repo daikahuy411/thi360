@@ -315,8 +315,8 @@ const QuestionTable = () => {
                           <TableCell style={{ width: 130 }}>Mã</TableCell>
                           <TableCell>Nội dung</TableCell>
                           <TableCell style={{ width: 210 }}>Danh mục</TableCell>
-                          <TableCell style={{ width: 130 }}>Loại câu hỏi</TableCell>
-                          <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
+                          {/* <TableCell style={{ width: 130 }}>Loại câu hỏi</TableCell> */}
+                          <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -352,7 +352,8 @@ const QuestionTable = () => {
                                   </IconButton>
                                 </TableCell>
                                 <TableCell component='th' scope='row'>
-                                  <Typography variant='body1'>{row.id}</Typography>
+                                  <Typography variant='body2'>{row.id}</Typography>
+                                  <Typography variant='body2'>{row.questionTypeName}</Typography>
                                 </TableCell>
                                 <TableCell component='th' scope='row'>
                                   {row.shortContent}
@@ -377,10 +378,7 @@ const QuestionTable = () => {
                                   ) : null}
                                 </TableCell>
                                 <TableCell>
-                                  <Typography variant='body1'>{row.questionTypeName}</Typography>
-                                </TableCell>
-                                <TableCell>
-                                  <Typography variant='body1'>
+                                  <Typography variant='body2'>
                                     {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
                                   </Typography>
                                 </TableCell>

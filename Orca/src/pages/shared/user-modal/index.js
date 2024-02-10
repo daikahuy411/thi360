@@ -9,6 +9,7 @@ import ClassTree from 'pages/shared/class-tree'
 import PropTypes from 'prop-types'
 
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -52,6 +53,7 @@ function UserModal({ onClose, onOk }) {
   const [selectedUsers, setSelectedUsers] = useState([])
   const [keyword, setKeyword] = useState('')
   const [classId, setClassId] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -63,6 +65,7 @@ function UserModal({ onClose, onOk }) {
   }
 
   const fetchData = () => {
+    setLoading(true)
     new UserApi()
       .searches({
         Page: page,
@@ -76,6 +79,7 @@ function UserModal({ onClose, onOk }) {
           setData(response.data.value)
           setTotalItem(response.data.totalItems)
         }
+        setLoading(false)
       })
   }
 
@@ -193,69 +197,71 @@ function UserModal({ onClose, onOk }) {
                   <ClassTree onNodeSelected={handleNodeSelected} />
                 </td>
                 <td style={{ verticalAlign: 'top' }}>
-                  <TableContainer component={Paper} style={{ marginTop: 5 }}>
-                    <Table sx={{}} aria-label='simple table'>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell padding='checkbox'>
-                            <Checkbox
-                              checked={selectedData.length === data.length}
-                              color='primary'
-                              indeterminate={selectedData.length > 0 && selectedData.length < data.length}
-                              onChange={handleSelectAll}
-                              inputProps={{ 'aria-label': 'select all desserts' }}
-                            />
-                          </TableCell>
-                          <TableCell style={{ width: 120 }}>Tên đăng nhập</TableCell>
-                          <TableCell style={{ width: 120 }}>Tên đầy đủ </TableCell>
-                          <TableCell style={{ width: 120 }}>Giới tính</TableCell>
-                          <TableCell style={{ width: 120 }}>Lớp</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {data &&
-                          data.map(item => (
-                            <TableRow
-                              key={item.id}
-                              sx={{
-                                '&:last-of-type td, &:last-of-type th': {
-                                  border: 0
-                                }
-                              }}
-                            >
-                              <TableCell padding='checkbox'>
-                                <Checkbox
-                                  checked={selectedData.indexOf(item.id) !== -1}
-                                  color='primary'
-                                  onChange={event => handleSelectOne(event, item)}
-                                  value={selectedData.indexOf(item.id) !== -1}
-                                />
-                              </TableCell>
-                              <TableCell component='th' scope='row'>
-                                <Typography noWrap variant='body1'>
-                                  {item.userName}
-                                </Typography>
-                              </TableCell>
-                              <TableCell>
-                                <Typography noWrap variant='body1'>
-                                  {item.fullName}
-                                </Typography>
-                              </TableCell>
-                              <TableCell>
-                                <Typography noWrap variant='body1'>
-                                  {item.genderName}
-                                </Typography>
-                              </TableCell>
-                              <TableCell>
-                                <Typography noWrap variant='body1'>
-                                  {item.organizationName}
-                                </Typography>
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
+                  <LoadingSpinner active={loading}>
+                    <TableContainer component={Paper} style={{ marginTop: 5 }}>
+                      <Table sx={{}} aria-label='simple table'>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell padding='checkbox'>
+                              <Checkbox
+                                checked={selectedData.length === data.length}
+                                color='primary'
+                                indeterminate={selectedData.length > 0 && selectedData.length < data.length}
+                                onChange={handleSelectAll}
+                                inputProps={{ 'aria-label': 'select all desserts' }}
+                              />
+                            </TableCell>
+                            <TableCell style={{ width: 120 }}>Tên đăng nhập</TableCell>
+                            <TableCell style={{ width: 120 }}>Tên đầy đủ </TableCell>
+                            <TableCell style={{ width: 120 }}>Giới tính</TableCell>
+                            <TableCell style={{ width: 120 }}>Lớp</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {data &&
+                            data.map(item => (
+                              <TableRow
+                                key={item.id}
+                                sx={{
+                                  '&:last-of-type td, &:last-of-type th': {
+                                    border: 0
+                                  }
+                                }}
+                              >
+                                <TableCell padding='checkbox'>
+                                  <Checkbox
+                                    checked={selectedData.indexOf(item.id) !== -1}
+                                    color='primary'
+                                    onChange={event => handleSelectOne(event, item)}
+                                    value={selectedData.indexOf(item.id) !== -1}
+                                  />
+                                </TableCell>
+                                <TableCell component='th' scope='row'>
+                                  <Typography noWrap variant='body1'>
+                                    {item.userName}
+                                  </Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <Typography noWrap variant='body1'>
+                                    {item.fullName}
+                                  </Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <Typography noWrap variant='body1'>
+                                    {item.genderName}
+                                  </Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <Typography noWrap variant='body1'>
+                                    {item.organizationName}
+                                  </Typography>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </LoadingSpinner>
                 </td>
               </tr>
             </table>

@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import TestGroupApi from 'api/test-group-api'
 import { FolderType } from 'enum/FolderType'
@@ -266,7 +263,7 @@ const TestGroupTable = () => {
                   </TableCell>
                   <TableCell style={{ width: 30 }}>Sửa</TableCell>
                   <TableCell>Tên</TableCell>
-                  <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
+                  <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -323,7 +320,7 @@ const TestGroupTable = () => {
                           {row.type != 1 && <Typography variant='body1'>{row.name}</Typography>}
                         </TableCell>
                         <TableCell>
-                          <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                          <Typography variant='body2'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
                         </TableCell>
                       </TableRow>
                     )
@@ -348,7 +345,11 @@ const TestGroupTable = () => {
           folderType={FolderType.TESTGROUP}
           onClose={hasChanged => handleEditFolderClose(hasChanged)}
           entity={currentFolder}
-          parentId={folderId}
+          parentId={
+            !currentFolder || currentFolder.id == 0
+              ? parseInt(isNaN(folderId) ? '0' : folderId)
+              : currentFolder.parentId
+          }
           api={new TestGroupApi()}
         />
       )}

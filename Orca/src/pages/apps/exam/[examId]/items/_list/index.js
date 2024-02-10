@@ -238,7 +238,7 @@ const ExamItemTable = () => {
                 <TableCell align='right' style={{ width: 120 }}>
                   Số đề thi
                 </TableCell>
-                <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
+                <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -281,7 +281,7 @@ const ExamItemTable = () => {
                       </TableCell>
                       <TableCell align='right'>{row.totalUser}</TableCell>
                       <TableCell>
-                        <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                        <Typography variant='body2'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
                       </TableCell>
                     </TableRow>
                   )

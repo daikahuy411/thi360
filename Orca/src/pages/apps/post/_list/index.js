@@ -236,7 +236,7 @@ const PostDataTable = () => {
                   </TableCell>
                   <TableCell style={{ width: 30 }}>Sửa</TableCell>
                   <TableCell>Tên</TableCell>
-                  <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
+                  <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -274,7 +274,7 @@ const PostDataTable = () => {
                           <Typography variant='body1'>{row.name}</Typography>
                         </TableCell>
                         <TableCell>
-                          <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                          <Typography variant='body2'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
                         </TableCell>
                       </TableRow>
                     )

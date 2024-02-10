@@ -189,7 +189,7 @@ const ItemsTable = ({ data }) => {
               <TableCell>Tên</TableCell>
               <TableCell>Loại cấu hình</TableCell>
               <TableCell>Số câu hỏi</TableCell>
-              <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
+              <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -232,7 +232,7 @@ const ItemsTable = ({ data }) => {
                       <Typography variant='body1'>{row.numberOfQuestion}</Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography variant='body1'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                      <Typography variant='body2'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
                     </TableCell>
                   </TableRow>
                 )

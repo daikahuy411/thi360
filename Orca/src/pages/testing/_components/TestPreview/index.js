@@ -364,10 +364,10 @@ class TestPreview extends React.Component {
                   <div className='flex-l dn w-20'>
                     <div className='flex flex-column flex-grow-1 content-container overflow-hidden'>
                       <div className='ph3 pv2 flex justify-between bt bb bw1 b--white'>
-                        <span className='f4-5 flex-grow-1 flex darkest-blue items-center'>
+                        <span className='flex-grow-1 flex darkest-blue items-center'>
                           {this.state.userProfile && (
                             <>
-                              <span>{this.state.userProfile.name}</span>
+                              <span style={{fontSize: '0.96rem'}}>{this.state.userProfile.name}</span>
                               &nbsp;({this.state.userProfile.userName})
                             </>
                           )}
@@ -386,53 +386,47 @@ class TestPreview extends React.Component {
                       </div>
                       {this.state.test.testGroup.sections.map(section => (
                         <div key={`section-panel-${section.id}`}>
-                          {this.state.currentSectionId == section.id && (
-                            <>
-                              <div className='flex pv2 ph3 f6 overflow-ellipsis flex-shrink-0 bg-light-sky-blue darkest-blue'>
-                                {/* <span>Phần:</span> */}
-                                <span className='ml1 overflow-ellipsis'>{section.name}</span>
-                              </div>
-                              <div className='flex flex-column pa3 flex-grow-1 overflow-auto'>
-                                <p className='ma0 f6 darkest-blue'>CÂU HỎI</p>
-                                <div className='flex flex-wrap mv3'>
-                                  {section.items.map(item => (
-                                    <>
-                                      {item.questions.map(question => (
-                                        <div
-                                          key={`question-panel-${question.id}`}
-                                          onClick={() => {
-                                            this.viewQuestion(
-                                              question.id,
-                                              question.parentId,
-                                              question.testGroupSectionItemId,
-                                              section.id
-                                            )
+                          <div className='flex pv2 ph3 f6 overflow-ellipsis flex-shrink-0 bg-light-sky-blue darkest-blue'>
+                            <span className='ml1 overflow-ellipsis'>{section.name}</span>
+                          </div>
+                          <div className='flex flex-column pa3 flex-grow-1 overflow-auto'>
+                            <div className='flex flex-wrap'>
+                              {section.items.map(item => (
+                                <>
+                                  {item.questions.map(question => (
+                                    <div
+                                      key={`question-panel-${question.id}`}
+                                      onClick={() => {
+                                        this.viewQuestion(
+                                          question.id,
+                                          question.parentId,
+                                          question.testGroupSectionItemId,
+                                          section.id
+                                        )
+                                      }}
+                                      className='flex items-center justify-center mb3 relative'
+                                      style={{ flexBasis: '20%' }}
+                                    >
+                                      <div className={this.questionClassName(question.id)}>
+                                        <span className='f6 z-1'>{question.order}</span>
+                                      </div>
+                                      {this.state.currentQuestionId === question.id && (
+                                        <span
+                                          className='w2 bg-sky-blue absolute left-0'
+                                          style={{
+                                            height: '2px',
+                                            bottom: '-10px',
+                                            left: '50%',
+                                            transform: 'translateX(-50%)'
                                           }}
-                                          className='flex items-center justify-center mb3 relative'
-                                          style={{ flexBasis: '20%' }}
-                                        >
-                                          <div className={this.questionClassName(question.id)}>
-                                            <span className='f6 z-1'>{question.order}</span>
-                                          </div>
-                                          {this.state.currentQuestionId === question.id && (
-                                            <span
-                                              className='w2 bg-sky-blue absolute left-0'
-                                              style={{
-                                                height: '2px',
-                                                bottom: '-10px',
-                                                left: '50%',
-                                                transform: 'translateX(-50%)'
-                                              }}
-                                            ></span>
-                                          )}
-                                        </div>
-                                      ))}
-                                    </>
+                                        ></span>
+                                      )}
+                                    </div>
                                   ))}
-                                </div>
-                              </div>
-                            </>
-                          )}
+                                </>
+                              ))}
+                            </div>
+                          </div>
                         </div>
                       ))}
                       <div className='flex flex-column mv2'>

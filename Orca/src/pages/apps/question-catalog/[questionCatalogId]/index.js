@@ -110,6 +110,7 @@ const EditQuestionCatalogPage = () => {
         if (code == 1) {
           router.query.questionCatalogId = response.data.value.id
           router.push(router)
+          dispatch(selectQuestionCatalog(response.data.value))
         } else {
           reset()
         }
