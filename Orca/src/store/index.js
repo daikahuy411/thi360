@@ -6,6 +6,7 @@ import { classSlice } from './slices/classSlice'
 import { examCategorySlice } from './slices/examCategorySlice'
 import { examItemSlice } from './slices/examItemSlice'
 import { examSlice } from './slices/examSlice'
+import { parentQuestionSlice } from './slices/parentQuestionSlice'
 import { postCategorySlice } from './slices/postCategorySlice'
 import { postSlice } from './slices/postSlice'
 import { profileSlice } from './slices/profileSlice'
@@ -35,6 +36,7 @@ export const store = configureStore({
     [blockSlice.name]: blockSlice.reducer,
     [tenantSlice.name]: tenantSlice.reducer,
     [accountSlice.name]: accountSlice.reducer,
+    [parentQuestionSlice.name]: parentQuestionSlice.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

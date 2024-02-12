@@ -12,7 +12,10 @@ import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
-import { mdilTag } from '@mdi/light-js'
+import {
+  mdilInformation,
+  mdilTag
+} from '@mdi/light-js'
 import IconReact from '@mdi/react'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
@@ -317,7 +320,7 @@ const QuestionTable = () => {
                           <TableCell style={{ width: 160 }}>Mã</TableCell>
                           <TableCell>Nội dung</TableCell>
                           <TableCell style={{ width: 280 }}>Danh mục</TableCell>
-                          <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
+                          <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -354,12 +357,18 @@ const QuestionTable = () => {
                                 </TableCell>
                                 <TableCell component='th' scope='row'>
                                   <Typography variant='body2'>{row.id}</Typography>
-                                  <Typography variant='body2'>{row.questionTypeName}</Typography>
                                 </TableCell>
                                 <TableCell component='th' scope='row'>
                                   <Typography variant='body1'>{row.shortContent}</Typography>
                                 </TableCell>
                                 <TableCell>
+                                  <Chip
+                                    icon={<IconReact path={mdilInformation} title='Bộ Câu hỏi' size={1} />}
+                                    label={row.questionTypeName}
+                                    style={{ marginBottom: 2 }}
+                                    color='secondary'
+                                    variant='outlined'
+                                  />
                                   {row.catalog ? (
                                     <Chip
                                       icon={<IconReact path={mdilTag} title='Bộ Câu hỏi' size={1} />}

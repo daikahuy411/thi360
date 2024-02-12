@@ -9,11 +9,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
-import { selectQuestion } from 'store/slices/questionSlice'
 
 import Icon from '@core/components/icon'
-import LoadingSpinner from '@core/components/loading-spinner'
+import {
+  mdilInformation,
+  mdilTag
+} from '@mdi/light-js'
+import IconReact from '@mdi/react'
 import EditIcon from '@mui/icons-material/Edit'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
@@ -50,18 +52,16 @@ function PaperComponent(props) {
   )
 }
 
-const QuestionTable = () => {
+const QuestionTable = props => {
   const router = useRouter()
 
-  const [data, setData] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [anchorEl, setAnchorEl] = useState(null)
   const [questionTypes, setQuestionTypes] = useState(null)
-  const [totalItems, setTotalItems] = useState(0)
-  const [loading, setLoading] = useState(false)
+  const [totalItems, setTotalItems] = useState(props.data.length)
   const [keyword, setKeyword] = useState(null)
-  const dispatch = useDispatch()
+  const [data, setData] = useState(props.data)
 
   const { questionId, questionCatalogId } = router.query
 
@@ -84,14 +84,6 @@ const QuestionTable = () => {
   useEffect(() => {
     getAllQuestionTypes()
   }, [])
-
-  useEffect(() => {
-    if (!questionId || questionId == '0') return
-    new QuestionApi().get(questionId).then(response => {
-      dispatch(selectQuestion(response.data))
-      setData(response.data.children)
-    })
-  }, [questionId])
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
@@ -169,7 +161,7 @@ const QuestionTable = () => {
         <Typography sx={{ flex: '1 1 50%' }} variant='h5' id='tableTitle' component='div'>
           {totalItems} Câu hỏi
         </Typography>
-        &nbsp; &nbsp;
+        {/* &nbsp; &nbsp;
         <Tooltip title='Import'>
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:upload' />
@@ -180,7 +172,7 @@ const QuestionTable = () => {
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:download' />
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
         &nbsp; &nbsp;
         <Tooltip title='Xóa câu hỏi'>
           <span>
@@ -252,8 +244,8 @@ const QuestionTable = () => {
           <Divider />
         </Grid>
         <Grid item md={12}>
-          <TableContainer component={Paper} style={{ marginTop: 5 }}>
-            <LoadingSpinner active={loading}>
+          {data && (
+            <TableContainer component={Paper} style={{ marginTop: 5 }}>
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
@@ -271,77 +263,87 @@ const QuestionTable = () => {
                     <TableCell style={{ width: 160 }}>Mã</TableCell>
                     <TableCell>Nội dung</TableCell>
                     <TableCell style={{ width: 280 }}>Danh mục</TableCell>
-                    <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
-                    <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
+                    <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {data &&
-                    data.map((row, index) => {
-                      const isItemSelected = isSelected(row.id)
-                      const labelId = `enhanced-table-checkbox-${index}`
+                  {data.map((row, index) => {
+                    const isItemSelected = isSelected(row.id)
+                    const labelId = `enhanced-table-checkbox-${index}`
 
-                      return (
-                        <TableRow
-                          hover
-                          tabIndex={-1}
-                          role='checkbox'
-                          key={row.id}
-                          selected={isItemSelected}
-                          aria-checked={isItemSelected}
-                          sx={{
-                            '&:last-of-type td, &:last-of-type th': {
-                              border: 0
-                            }
-                          }}
-                        >
-                          <TableCell padding='checkbox'>
-                            <Checkbox
-                              checked={isItemSelected}
-                              inputProps={{ 'aria-labelledby': labelId }}
-                              onClick={event => handleSelectClick(event, row.id)}
+                    return (
+                      <TableRow
+                        hover
+                        tabIndex={-1}
+                        role='checkbox'
+                        key={row.id}
+                        selected={isItemSelected}
+                        aria-checked={isItemSelected}
+                        sx={{
+                          '&:last-of-type td, &:last-of-type th': {
+                            border: 0
+                          }
+                        }}
+                      >
+                        <TableCell padding='checkbox'>
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{ 'aria-labelledby': labelId }}
+                            onClick={event => handleSelectClick(event, row.id)}
+                          />
+                        </TableCell>
+                        <TableCell component='th' scope='row'>
+                          <IconButton
+                            aria-label='filter'
+                            component={Link}
+                            href={`/apps/question-catalog/${questionCatalogId}/questions/${row.id}`}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                        </TableCell>
+                        <TableCell component='th' scope='row'>
+                          <Typography variant='body2'>{row.id}</Typography>
+                        </TableCell>
+                        <TableCell component='th' scope='row'>
+                          {row.shortContent}
+                        </TableCell>
+                        <TableCell>
+                          <Chip
+                            icon={<IconReact path={mdilInformation} title='Bộ Câu hỏi' size={1} />}
+                            label={row.questionTypeName}
+                            style={{ marginBottom: 2 }}
+                            color='secondary'
+                            variant='outlined'
+                          />
+
+                          {row.catalog ? (
+                            <Chip
+                              icon={<IconReact path={mdilTag} title='Bộ Câu hỏi' size={1} />}
+                              label={row.catalog.name}
+                              style={{ marginBottom: 2 }}
+                              color='secondary'
+                              variant='outlined'
                             />
-                          </TableCell>
-                          <TableCell component='th' scope='row'>
-                            <IconButton
-                              aria-label='filter'
-                              component={Link}
-                              href={`/apps/question-catalog/${questionCatalogId}/questions/${row.id}`}
-                            >
-                              <EditIcon />
-                            </IconButton>
-                          </TableCell>
-                          <TableCell component='th' scope='row'>
-                            <Typography variant='body1'>{row.id}</Typography>
-                          </TableCell>
-                          <TableCell component='th' scope='row'>
-                            {row.shortContent}
-                          </TableCell>
-                          <TableCell>
-                            {row.categoryName ? (
-                              <Chip
-                                icon={<Icon icon='mdi:tag' />}
-                                label={row.categoryName}
-                                color='secondary'
-                                variant='outlined'
-                              />
-                            ) : null}
-                          </TableCell>
-                          <TableCell>
-                            <Typography variant='body1'>{row.questionTypeName}</Typography>
-                          </TableCell>
-                          <TableCell>
-                            <Typography variant='body1'>
-                              {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
-                            </Typography>
-                          </TableCell>
-                        </TableRow>
-                      )
-                    })}
+                          ) : null}
+                          {row.category ? (
+                            <Chip
+                              icon={<IconReact path={mdilTag} title='Danh mục Câu hỏi' size={1} />}
+                              label={row.category.name}
+                              color='secondary'
+                              variant='outlined'
+                            />
+                          ) : null}
+                        </TableCell>
+                        <TableCell>
+                          <Typography variant='body2'>{moment(row.createdTime).format('DD-MM-YYYY HH:mm')}</Typography>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
                 </TableBody>
               </Table>
-            </LoadingSpinner>
-          </TableContainer>
+            </TableContainer>
+          )}
         </Grid>
       </Grid>
       <TablePagination

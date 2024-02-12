@@ -11,7 +11,7 @@ import TextField from '@mui/material/TextField'
 
 class TextQuestion extends Component {
   static defaultProps = {
-    eventHandler: value => {},
+    eventHandler: value => { },
     value: ''
   }
   render() {
@@ -28,7 +28,7 @@ class TextQuestion extends Component {
 
 class SelectQuestion extends Component {
   static defaultProps = {
-    eventHandler: value => {},
+    eventHandler: value => { },
     value: ''
   }
 
@@ -65,6 +65,7 @@ const FbQuestion = ({ question, onChanged, userAnswer }) => {
   return (
     <>
       <JsxParser
+        autoCloseVoidElements
         bindings={{
           foo: 'bar',
           onChanged: (name, value) => {
@@ -73,11 +74,6 @@ const FbQuestion = ({ question, onChanged, userAnswer }) => {
         }}
         components={{ TextQuestion, SelectQuestion }}
         jsx={question.htmlContent}
-        // jsx={`
-        //  <div> Điền từ vào chỗ trống
-        //  Text field:<TextQuestion name='0' value={'abc'} eventHandler={onChanged} truthyProp />
-        //  <SelectQuestion  name='1' value={'1'} eventHandler={onChanged} truthyProp /> </div>
-        // `}
       />
     </>
   )

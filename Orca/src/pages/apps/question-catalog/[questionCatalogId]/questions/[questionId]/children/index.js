@@ -1,13 +1,16 @@
+import {
+  useEffect,
+  useState
+} from 'react'
+
+import QuestionApi from 'api/question-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
-import { selectedQuestionCatalog } from 'store/slices/questionCatalogSlice'
+import EntityInfoModal from 'pages/shared/entity-info-modal'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
 
 import TopNav from '../../_layout/_breadcrums'
 import Nav from '../../_layout/_tabs'
@@ -15,8 +18,18 @@ import QuestionTable from './_list'
 
 const ChildrenQuestionList = () => {
   const router = useRouter()
-  const currentQuestionCatalog = useSelector(selectedQuestionCatalog)
-  const { questionCatalogId } = router.query
+  const { questionCatalogId, questionId } = router.query
+  const [currentQuestion, setCurrentQuestion] = useState(null)
+
+  useEffect(() => {
+    if (!questionId || questionId == 0) {
+      return
+    }
+
+    new QuestionApi().get(questionId).then(response => {
+      setCurrentQuestion(response.data)
+    })
+  }, [questionId])
 
   return (
     <>
@@ -29,15 +42,13 @@ const ChildrenQuestionList = () => {
                 <div className='title-bar' id='EntityHeadingTitleBar'>
                   <h3 className='title left'>
                     <span className='title__label'>
-                      {currentQuestionCatalog && currentQuestionCatalog.id > 0 && (
-                        <span>{currentQuestionCatalog.name}</span>
+                      {currentQuestion && currentQuestion.id > 0 && (
+                        <span>
+                          {currentQuestion.id}-{currentQuestion.questionTypeName}
+                        </span>
                       )}
                     </span>
-                    {currentQuestionCatalog && currentQuestionCatalog.id > 0 && (
-                      <IconButton aria-label='delete'>
-                        <HelpOutlineIcon />
-                      </IconButton>
-                    )}
+                    {currentQuestion && currentQuestion.id > 0 && <EntityInfoModal entity={currentQuestion} />}
                   </h3>
                   <span className='right'>
                     <Button variant='outlined' component={Link} href={`/apps/question-catalog/${questionCatalogId}`}>
@@ -50,7 +61,7 @@ const ChildrenQuestionList = () => {
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
                     <div style={{ width: '100%' }}>
-                      <QuestionTable />
+                      {currentQuestion && <QuestionTable data={currentQuestion.children} />}
                     </div>
                   </div>
                 </div>

@@ -14,7 +14,7 @@ const Nav = () => {
         {questionId && questionId != '0' && (
           <Link
             className={`finger-tabs__tab flex-none ${
-              router.asPath.indexOf(`/questions/`) >= 0 ? 'is-active' : 'disabled'
+              router.asPath.indexOf(`/questions/`) >= 0 && router.asPath.indexOf(`/children/`) < 0 ? 'is-active' : ''
             }`}
             title='Chi tiết'
             component={Link}
@@ -51,7 +51,7 @@ const Nav = () => {
             className={`finger-tabs__tab flex-none ${
               router.asPath === `/apps/question-catalog/${questionCatalogId}/questions/${questionId}/children/`
                 ? 'is-active'
-                : 'disabled'
+                : ''
             }`}
             title='Câu hỏi con'
             component={Link}

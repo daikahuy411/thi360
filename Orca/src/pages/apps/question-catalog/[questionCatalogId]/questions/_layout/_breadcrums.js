@@ -7,6 +7,7 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux'
+import { selectedParentQuestion } from 'store/slices/parentQuestionSlice'
 import {
   selectedQuestionCatalog,
   selectQuestionCatalog
@@ -18,8 +19,9 @@ import Breadcrumbs from '@mui/material/Breadcrumbs'
 const TopNav = props => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { questionCatalogId, parentId, questionCategoryId } = router.query
+  const { questionCatalogId, parentId } = router.query
   const currentQuestionCatalog = useSelector(selectedQuestionCatalog)
+  const currentParentQuestion = useSelector(selectedParentQuestion)
 
   useEffect(() => {
     if (questionCatalogId && parseInt(questionCatalogId) > 0) {
@@ -64,7 +66,16 @@ const TopNav = props => {
           Câu hỏi
         </Link>
       )}
-      {parentId && parentId != '0' && <p>Cau hoi cha</p>}
+      {currentParentQuestion && currentParentQuestion.id > 0 && (
+        <Link
+          underline='hover'
+          color='inherit'
+          href={`/apps/question-catalog/${currentQuestionCatalog.id}/questions/${currentParentQuestion.id}`}
+        >
+          {currentParentQuestion.id}
+        </Link>
+      )}
+      {currentParentQuestion && <p>Câu hỏi con</p>}
     </Breadcrumbs>
   )
 }

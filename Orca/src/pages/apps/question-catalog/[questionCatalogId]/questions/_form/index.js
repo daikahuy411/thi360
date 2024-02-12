@@ -22,6 +22,7 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux'
+import { selectParentQuestion } from 'store/slices/parentQuestionSlice'
 import {
   selectedQuestion,
   selectQuestion
@@ -95,10 +96,10 @@ const QuestionEditForm = () => {
   const [openAddQuestionAnswer, setOpenAddQuestionAnswer] = useState(false)
   const [isValidAnswer, setIsValidAnswer] = useState(false)
   const [isloadingQuestion, setIsLoadingQuestion] = useState(false)
-  const [category, setCategory] = useState(null)
   const [answerGroups, setAnswerGroups] = useState([])
   const [catalogSelected, setCatalogSelected] = useState({ id: 0, name: '' })
   const [setting, setSetting] = useState({ controlType: -1, caseSensitive: -1 })
+  const [parentQuestion, setParentQuestion] = useState(null)
 
   let schema = yup.object().shape({
     content: yup.string().required('* bắt buộc'),
@@ -153,6 +154,20 @@ const QuestionEditForm = () => {
       }
     })
   }, [questionCategoryId])
+
+  useEffect(() => {
+    if (!parentId) {
+      dispatch(selectParentQuestion(null))
+      return
+    }
+
+    new QuestionApi().get(parentId).then(response => {
+      setParentQuestion(response.data)
+      dispatch(selectParentQuestion(response.data))
+      setCategorySelected({ id: response.data.categoryId, name: response.data.categoryName })
+      setItem({ ...item, catalogId: response.data.catalogId, categoryId: response.data.categoryId })
+    })
+  }, [parentId])
 
   const fetchData = questionId => {
     if (type === QuestionType.GQ) {
@@ -538,12 +553,18 @@ const QuestionEditForm = () => {
   }
 
   const getBackUrl = () => {
+    var parentQuestionId = currentQuestion && currentQuestion.parentId ? currentQuestion.parentId : 0
     if (questionCategoryId && questionCategoryId != '0') {
-      return `/apps/question-catalog/${questionCatalogId}/categories/${questionCategoryId}/questions/`
+      return parentQuestionId > 0
+        ? `/apps/question-catalog/${questionCatalogId}/categories/${questionCategoryId}/questions/${parentQuestionId}/children`
+        : `/apps/question-catalog/${questionCatalogId}/categories/${questionCategoryId}/questions/`
     }
 
     if (questionCatalogId && questionCatalogId != '0') {
-      return `/apps/question-catalog/${questionCatalogId}/questions/`
+      return
+      parentQuestionId > 0
+        ? `/apps/question-catalog/${questionCatalogId}/questions/${parentQuestionId}/children`
+        : `/apps/question-catalog/${questionCatalogId}/questions/`
     }
 
     return `/apps/question-bank`
@@ -620,24 +641,28 @@ const QuestionEditForm = () => {
                                     }}
                                     value={catalogSelected.name ?? ''}
                                     endAdornment={
-                                      <InputAdornment position='end'>
-                                        <IconButton
-                                          aria-label='toggle password visibility'
-                                          edge='end'
-                                          onClick={cleanCatalog}
-                                        >
-                                          <DeleteOutline />
-                                        </IconButton>
-                                        &nbsp;
-                                        <IconButton
-                                          edge='end'
-                                          onClick={() => {
-                                            setOpenQuestionCatalogDialog(true)
-                                          }}
-                                        >
-                                          <FolderIcon />
-                                        </IconButton>
-                                      </InputAdornment>
+                                      parentQuestion ? (
+                                        <></>
+                                      ) : (
+                                        <InputAdornment position='end'>
+                                          <IconButton
+                                            aria-label='toggle password visibility'
+                                            edge='end'
+                                            onClick={cleanCatalog}
+                                          >
+                                            <DeleteOutline />
+                                          </IconButton>
+                                          &nbsp;
+                                          <IconButton
+                                            edge='end'
+                                            onClick={() => {
+                                              setOpenQuestionCatalogDialog(true)
+                                            }}
+                                          >
+                                            <FolderIcon />
+                                          </IconButton>
+                                        </InputAdornment>
+                                      )
                                     }
                                     label='Bộ Câu hỏi'
                                   />
@@ -648,6 +673,7 @@ const QuestionEditForm = () => {
                                   </FormHelperText>
                                 )}
                               </Grid>
+
                               <Grid item xs={12} md={12}>
                                 <FormControl fullWidth variant='outlined'>
                                   <InputLabel htmlFor='outlined-adornment-parent-category'>Danh mục câu hỏi</InputLabel>
@@ -659,20 +685,24 @@ const QuestionEditForm = () => {
                                     }}
                                     value={categorySelected.name ?? ''}
                                     endAdornment={
-                                      <InputAdornment position='end'>
-                                        <IconButton edge='end' onClick={cleanCategory}>
-                                          <DeleteOutline />
-                                        </IconButton>
-                                        &nbsp;
-                                        <IconButton
-                                          edge='end'
-                                          onClick={() => {
-                                            setOpenQuestionCategoryDialog(true)
-                                          }}
-                                        >
-                                          <FolderIcon />
-                                        </IconButton>
-                                      </InputAdornment>
+                                      parentQuestion ? (
+                                        <></>
+                                      ) : (
+                                        <InputAdornment position='end'>
+                                          <IconButton edge='end' onClick={cleanCategory}>
+                                            <DeleteOutline />
+                                          </IconButton>
+                                          &nbsp;
+                                          <IconButton
+                                            edge='end'
+                                            onClick={() => {
+                                              setOpenQuestionCategoryDialog(true)
+                                            }}
+                                          >
+                                            <FolderIcon />
+                                          </IconButton>
+                                        </InputAdornment>
+                                      )
                                     }
                                     label='Danh mục câu hỏi'
                                   />

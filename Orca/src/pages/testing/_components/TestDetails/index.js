@@ -1335,7 +1335,11 @@ class TestDetails extends React.Component {
                                 {this.state.currentQuestion.questionTypeId === QuestionType.FB && (
                                   <div className='flex flex-column flex-auto  overflow-y-auto-l overflow-unset'>
                                     <span className='mb4 w-100 gray dn du-l'>
-                                      <QuestionContent question={this.state.currentQuestion} />
+                                      <FbQuestion
+                                        onChanged={content => this.saveQuestionAttemptedState(content)}
+                                        question={this.state.currentQuestion}
+                                      />
+                                      {/* <QuestionContent question={this.state.currentQuestion} /> */}
                                     </span>
                                     <div className='relative dn-l mb4'>
                                       <div
@@ -1345,16 +1349,15 @@ class TestDetails extends React.Component {
                                           lineHeight: '1.6rem'
                                         }}
                                       >
-                                        <QuestionContent question={this.state.currentQuestion} />
+                                        {/* <QuestionContent question={this.state.currentQuestion} /> */}
                                       </div>
                                     </div>
-                                    <div className='flex flex-column w-100'>
-                                      <b>Điền từ vào chỗ trống</b>
+                                    {/* <div className='flex flex-column w-100'>
                                       <FbQuestion
                                         onChanged={content => this.saveQuestionAttemptedState(content)}
                                         question={this.state.currentQuestion}
                                       />
-                                    </div>
+                                    </div> */}
                                   </div>
                                 )}
 
