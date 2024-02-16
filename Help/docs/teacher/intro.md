@@ -14,6 +14,8 @@ sidebar_position: -2
 Khi Giáo viên đăng nhập hệ thống, menu chức năng LMS sẽ xuất hiện bên trái phía dưới menu chức năng dành cho Học viên như hình dưới.
 Ở menu LMS sẽ chia thành các Khối chức năng như sau:
 
+![Example banner](/img/lms/leftmenu.png)
+
 
 ### Tổng quan các chức năng
 

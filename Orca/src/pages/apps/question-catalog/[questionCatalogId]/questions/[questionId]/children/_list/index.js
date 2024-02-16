@@ -9,8 +9,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import { selectedQuestion } from 'store/slices/questionSlice'
 
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import {
   mdilInformation,
   mdilTag
@@ -52,18 +55,21 @@ function PaperComponent(props) {
   )
 }
 
-const QuestionTable = props => {
+const QuestionTable = () => {
   const router = useRouter()
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [anchorEl, setAnchorEl] = useState(null)
   const [questionTypes, setQuestionTypes] = useState(null)
-  const [totalItems, setTotalItems] = useState(props.data.length)
   const [keyword, setKeyword] = useState(null)
-  const [data, setData] = useState(props.data)
+  const [data, setData] = useState([])
+  const [totalItems, setTotalItems] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const { questionId, questionCatalogId } = router.query
+
+  const currentQuestion = useSelector(selectedQuestion)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -82,8 +88,33 @@ const QuestionTable = props => {
   }
 
   useEffect(() => {
+    fetchData()
+  }, [questionId, keyword, page, rowsPerPage])
+
+  useEffect(() => {
     getAllQuestionTypes()
   }, [])
+
+  const fetchData = () => {
+    setLoading(true)
+    new QuestionApi()
+      .searches({
+        catalogId: 0,
+        questionType: 0,
+        categoryId: 0,
+        parentId: questionId,
+        keyword: keyword,
+        page: page,
+        limit: rowsPerPage
+      })
+      .then(response => {
+        if (response.data.isSuccess) {
+          setData(response.data.value)
+          setTotalItems(response.data.totalItems)
+          setLoading(false)
+        }
+      })
+  }
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
@@ -159,7 +190,7 @@ const QuestionTable = props => {
     <>
       <Toolbar style={{ padding: 0 }}>
         <Typography sx={{ flex: '1 1 50%' }} variant='h5' id='tableTitle' component='div'>
-          {totalItems} Câu hỏi
+          {totalItems}&nbsp; Câu hỏi
         </Typography>
         {/* &nbsp; &nbsp;
         <Tooltip title='Import'>
@@ -244,7 +275,7 @@ const QuestionTable = props => {
           <Divider />
         </Grid>
         <Grid item md={12}>
-          {data && (
+          <LoadingSpinner active={loading}>
             <TableContainer component={Paper} style={{ marginTop: 5 }}>
               <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                 <TableHead>
@@ -343,7 +374,7 @@ const QuestionTable = props => {
                 </TableBody>
               </Table>
             </TableContainer>
-          )}
+          </LoadingSpinner>
         </Grid>
       </Grid>
       <TablePagination

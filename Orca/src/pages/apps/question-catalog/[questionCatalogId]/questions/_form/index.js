@@ -51,6 +51,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
+import Divider from '@mui/material/Divider'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
 import Grid from '@mui/material/Grid'
@@ -100,6 +101,7 @@ const QuestionEditForm = () => {
   const [catalogSelected, setCatalogSelected] = useState({ id: 0, name: '' })
   const [setting, setSetting] = useState({ controlType: -1, caseSensitive: -1 })
   const [parentQuestion, setParentQuestion] = useState(null)
+  const [subQuestions, setSubQuestions] = useState([])
 
   let schema = yup.object().shape({
     content: yup.string().required('* bắt buộc'),
@@ -190,22 +192,8 @@ const QuestionEditForm = () => {
 
       setAnswers(Object.values(data.answers))
       setSetting(response.data.setting || { controlType: -1, caseSensitive: -1 })
+      setSubQuestions(response.data.subQuestions || [])
       setIsLoadingQuestion(false)
-
-      if (data.questionTypeId === QuestionType.MATCHING) {
-        var ags = []
-        var groupIndex = 0
-        data.answers.forEach((a, index) => {
-          if (index % 2 == 0) {
-            groupIndex++
-            ags.push({ index: groupIndex, answers: [a] })
-          } else {
-            let g = ags.find(x => x.index == groupIndex)
-            g.answers.push(a)
-          }
-        })
-        setAnswerGroups([...ags])
-      }
     })
   }
 
@@ -226,9 +214,34 @@ const QuestionEditForm = () => {
   const initQuestion = type => {
     const item = new QuestionApi().createQuestion({ id: Number(type) })
     item.catalogId = Number(questionCatalogId)
+    item.parentId = parentQuestion ? parentQuestion.id : 0
     setQuestionTypeName(item.questionTypeName)
     dispatch(selectQuestion(item))
     setAnswers(Object.values(item.answers))
+
+    if (type == QuestionType.MATCHING) {
+      let subs = []
+      for (var i = 0; i <= 3; i++) {
+        const questionApi = new QuestionApi()
+        let leftAnswer = questionApi.createAnswer(0, 1, '', false, {
+          isError: false,
+          message: ''
+        })
+
+        let rightAnswer = questionApi.createAnswer(1, 2, '', false, {
+          isError: false,
+          message: ''
+        })
+
+        var subQuestion = questionApi.createQuestion(QuestionType.SUB)
+        subQuestion.answers = [leftAnswer, rightAnswer]
+        subQuestion.order = subs.length + 1
+        subQuestion.id = subs.length
+        subs.push(subQuestion)
+      }
+
+      setSubQuestions([...subs])
+    }
   }
 
   useEffect(() => {
@@ -296,6 +309,7 @@ const QuestionEditForm = () => {
     param.catalogId = parseInt(catalogSelected.id)
     param.catalogName = ''
     param.settingJSON = JSON.stringify(setting)
+    param.subQuestionsJson = JSON.stringify(subQuestions)
 
     if (parentId && parentId != '0' && !isNaN(parentId)) {
       param.parentId = parseInt(parentId)
@@ -399,50 +413,26 @@ const QuestionEditForm = () => {
   }
 
   // Matching Question
-  const addMatchingAnswerGroup = () => {
-    const groupIndex = answerGroups.length
-    let leftAnswer = new QuestionApi().createAnswer(-(groupIndex * 2 + 1), groupIndex + 1, '', false, {
-      isError: false,
-      message: ''
+  const handleChangeQuestionIsInterference = (id, value) => {
+    const newSubs = subQuestions.map((c, i) => {
+      if (c.id === id) {
+        let cloned = { ...c }
+        cloned.isInterference = value
+        return cloned
+      } else {
+        return { ...c }
+      }
     })
 
-    let rightAnswer = new QuestionApi().createAnswer(-(groupIndex * 2 + 2), groupIndex + 1, '', false, {
-      isError: false,
-      message: ''
-    })
-
-    answerGroups.push({ id: groupIndex, order: groupIndex + 1, answers: [leftAnswer, rightAnswer] })
-    setAnswerGroups([...answerGroups])
+    setSubQuestions(newSubs)
   }
 
   const removeMatchingAnswerGroup = id => {
-    let ags = [...answerGroups]
+    let ags = [...subQuestions]
     ags = ags.filter(x => x.id != id)
-    setAnswerGroups([...ags])
+    setSubQuestions([...ags])
   }
 
-  const initAnswerGroup = () => {
-    for (var i = 1; i <= 4; i++) {
-      const groupIndex = answerGroups.length
-      let leftAnswer = new QuestionApi().createAnswer(-(answers.length + 1), 1, '', false, {
-        isError: false,
-        message: ''
-      })
-      leftAnswer.group = groupIndex
-
-      let rightAnswer = new QuestionApi().createAnswer(-(answers.length + 1), 2, '', false, {
-        isError: false,
-        message: ''
-      })
-      rightAnswer.group = groupIndex
-
-      answerGroups.push({ id: groupIndex, order: groupIndex + 1, answers: [leftAnswer, rightAnswer] })
-    }
-
-    setAnswerGroups([...answerGroups])
-  }
-
-  // Matching Question
   const removeAnswer = id => {
     let answers = [...answers]
     answers = answers.filter(x => x.id !== id)
@@ -476,6 +466,28 @@ const QuestionEditForm = () => {
       }
     })
     setAnswers([...anwserArr])
+  }
+
+  const addMatchingSubQuestion = () => {
+    let subs = [...subQuestions]
+    let groupIndex = subQuestions.length
+    const questionApi = new QuestionApi()
+    let leftAnswer = questionApi.createAnswer(0, 1, '', false, {
+      isError: false,
+      message: ''
+    })
+
+    let rightAnswer = questionApi.createAnswer(1, 2, '', false, {
+      isError: false,
+      message: ''
+    })
+
+    var subQuestion = questionApi.createQuestion(QuestionType.SUB)
+    subQuestion.answers = [leftAnswer, rightAnswer]
+    subQuestion.order = groupIndex++
+
+    subs.push(subQuestion)
+    setSubQuestions(subs)
   }
 
   /*
@@ -553,21 +565,24 @@ const QuestionEditForm = () => {
   }
 
   const getBackUrl = () => {
-    var parentQuestionId = currentQuestion && currentQuestion.parentId ? currentQuestion.parentId : 0
+    var url = ''
+    var parentQuestionId = 0
+    if (currentQuestion && currentQuestion.parentId) parentQuestionId = currentQuestion.parentId
     if (questionCategoryId && questionCategoryId != '0') {
-      return parentQuestionId > 0
-        ? `/apps/question-catalog/${questionCatalogId}/categories/${questionCategoryId}/questions/${parentQuestionId}/children`
-        : `/apps/question-catalog/${questionCatalogId}/categories/${questionCategoryId}/questions/`
+      url =
+        parentQuestionId > 0
+          ? `/apps/question-catalog/${questionCatalogId}/categories/${questionCategoryId}/questions/${parentQuestionId}/children`
+          : `/apps/question-catalog/${questionCatalogId}/categories/${questionCategoryId}/questions/`
     }
 
     if (questionCatalogId && questionCatalogId != '0') {
-      return
-      parentQuestionId > 0
-        ? `/apps/question-catalog/${questionCatalogId}/questions/${parentQuestionId}/children`
-        : `/apps/question-catalog/${questionCatalogId}/questions/`
+      url =
+        parentQuestionId > 0
+          ? `/apps/question-catalog/${questionCatalogId}/questions/${parentQuestionId}/children`
+          : `/apps/question-catalog/${questionCatalogId}/questions/`
     }
 
-    return `/apps/question-bank`
+    return url != '' ? url : `/apps/question-bank`
   }
 
   return (
@@ -993,6 +1008,7 @@ const QuestionEditForm = () => {
                           </form>
                           {currentQuestion.questionTypeId === QuestionType.MATCHING && (
                             <div style={{ height: 'auto', width: '100%', paddingTop: 10 }}>
+                              {/* <MatchingQuestion subQuestions={subQuestions} /> */}
                               <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
                                 <Grid item md={12} xs={12}>
                                   <TableContainer component={Paper} style={{ marginTop: 5 }} className=''>
@@ -1003,17 +1019,18 @@ const QuestionEditForm = () => {
                                             #
                                           </TableCell>
                                           <TableCell style={{ width: 60 }}></TableCell>
-                                          <TableCell style={{ width: 110 }}>Thứ tự</TableCell>
+                                          <TableCell style={{ width: 100 }}>Thứ tự</TableCell>
+                                          <TableCell style={{ width: 125 }}>Câu hỏi nhiễu</TableCell>
                                           <TableCell>Nội dung</TableCell>
                                         </TableRow>
                                       </TableHead>
                                       <TableBody>
-                                        {answerGroups &&
-                                          answerGroups.map((group, index) => {
+                                        {subQuestions &&
+                                          subQuestions.map((group, index) => {
                                             return (
                                               <>
                                                 <TableRow
-                                                  key={`group-first-${group.id}`}
+                                                  key={`group-${group.id}`}
                                                   sx={{
                                                     '&:last-of-type td, &:last-of-type th': {
                                                       border: 0
@@ -1021,7 +1038,6 @@ const QuestionEditForm = () => {
                                                   }}
                                                 >
                                                   <TableCell
-                                                    rowSpan={2}
                                                     padding='checkbox'
                                                     scope='row'
                                                     component='th'
@@ -1029,7 +1045,7 @@ const QuestionEditForm = () => {
                                                   >
                                                     {index + 1}
                                                   </TableCell>
-                                                  <TableCell scope='row' component='th' rowSpan={2} align='right'>
+                                                  <TableCell scope='row' component='th' align='right'>
                                                     <Tooltip title='Xóa Cặp Đáp án'>
                                                       <span>
                                                         <IconButton
@@ -1041,12 +1057,7 @@ const QuestionEditForm = () => {
                                                       </span>
                                                     </Tooltip>
                                                   </TableCell>
-                                                  <TableCell
-                                                    scope='row'
-                                                    component='th'
-                                                    rowSpan={2}
-                                                    style={{ textAlign: 'center' }}
-                                                  >
+                                                  <TableCell scope='row' component='th' style={{ textAlign: 'center' }}>
                                                     <TextField
                                                       type='number'
                                                       name={`group-order-${group.id}`}
@@ -1054,6 +1065,19 @@ const QuestionEditForm = () => {
                                                       size={'small'}
                                                       onChange={event => {
                                                         // handleChangeAnwser(group.id, 'position', event.target.value)
+                                                      }}
+                                                    />
+                                                  </TableCell>
+                                                  <TableCell scope='row' component='th' style={{ textAlign: 'center' }}>
+                                                    <Checkbox
+                                                      // value={group.isInterference}
+                                                      checked={group.isInterference}
+                                                      name={`chk-group-isInterference-${group.id}`}
+                                                      onChange={event => {
+                                                        handleChangeQuestionIsInterference(
+                                                          group.id,
+                                                          event.target.checked
+                                                        )
                                                       }}
                                                     />
                                                   </TableCell>
@@ -1072,17 +1096,7 @@ const QuestionEditForm = () => {
                                                         {group.answers[0].errors?.message}
                                                       </FormHelperText>
                                                     </FormControl>
-                                                  </TableCell>
-                                                </TableRow>
-                                                <TableRow
-                                                  key={`group-second-${group.id}`}
-                                                  sx={{
-                                                    '&:last-of-type td, &:last-of-type th': {
-                                                      border: 0
-                                                    }
-                                                  }}
-                                                >
-                                                  <TableCell scope='row' component='th'>
+                                                    <Divider />
                                                     <FormControl fullWidth>
                                                       <LiteContentEditor
                                                         content={group.answers[1].content ?? ''}
@@ -1103,14 +1117,18 @@ const QuestionEditForm = () => {
                                             )
                                           })}
                                         <TableRow key={`add-anwser-for-grouping`}>
-                                          <TableCell padding='checkbox' colSpan={4} style={{ textAlign: 'center' }}>
+                                          <TableCell padding='checkbox' colSpan={5} style={{ textAlign: 'center' }}>
                                             <Button
+                                              key={`add-anwser-for-grouping-btn`}
                                               size='small'
                                               variant='contained'
                                               style={{ width: 250, margin: '20px' }}
                                               color='primary'
                                               startIcon={<Icon icon='mdi:plus' />}
-                                              onClick={() => addMatchingAnswerGroup()}
+                                              onClick={e => {
+                                                e.preventDefault()
+                                                addMatchingSubQuestion()
+                                              }}
                                             >
                                               Thêm cặp Đáp án
                                             </Button>

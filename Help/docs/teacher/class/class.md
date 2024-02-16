@@ -4,6 +4,9 @@ sidebar_position: 1
 
 # Lớp học
 
+
+![Example banner](/img/lms/class/class.png)
+
 Chức năng quản lý lớp học của phần mềm elearning của chúng tôi giúp giáo viên và người quản lý dễ dàng tổ chức và quản lý các khóa học trực tuyến một cách hiệu quả.
 
 Với chức năng quản lý lớp học, bạn có thể tạo ra các lớp học mới và quản lý danh sách học viên. Bạn có thể thêm, chỉnh sửa và xóa thông tin học viên, cũng như gửi thông báo và thông tin quan trọng đến toàn bộ lớp học hoặc từng học viên cụ thể.

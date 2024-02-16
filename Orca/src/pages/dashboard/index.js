@@ -76,6 +76,12 @@ const TeacherDashboard = () => {
   const [data, setData] = useState(false)
   const [plan, setPlan] = useState(null)
 
+  const [domLoaded, setDomLoaded] = useState(false)
+
+  useEffect(() => {
+    setDomLoaded(true)
+  }, [])
+
   useEffect(() => {
     new V1Api().getTenantUsage().then(response => {
       setData(response.data)
@@ -151,7 +157,7 @@ const TeacherDashboard = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} md={4} lg={4}>
-        <AttemptWeeklyOverview />
+        {domLoaded && <AttemptWeeklyOverview />}
         <br />
         {plan && <UserCurrentPlan userPlan={plan} />}
       </Grid>

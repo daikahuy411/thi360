@@ -1,12 +1,17 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect } from 'react'
 
 import QuestionApi from 'api/question-api'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import EntityInfoModal from 'pages/shared/entity-info-modal'
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import {
+  selectedQuestion,
+  selectQuestion
+} from 'store/slices/questionSlice'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { Button } from '@mui/material'
@@ -18,8 +23,10 @@ import QuestionTable from './_list'
 
 const ChildrenQuestionList = () => {
   const router = useRouter()
+  const dispatch = useDispatch()
+
   const { questionCatalogId, questionId } = router.query
-  const [currentQuestion, setCurrentQuestion] = useState(null)
+  const currentQuestion = useSelector(selectedQuestion)
 
   useEffect(() => {
     if (!questionId || questionId == 0) {
@@ -27,7 +34,7 @@ const ChildrenQuestionList = () => {
     }
 
     new QuestionApi().get(questionId).then(response => {
-      setCurrentQuestion(response.data)
+      dispatch(selectQuestion(response.data))
     })
   }, [questionId])
 
@@ -51,7 +58,11 @@ const ChildrenQuestionList = () => {
                     {currentQuestion && currentQuestion.id > 0 && <EntityInfoModal entity={currentQuestion} />}
                   </h3>
                   <span className='right'>
-                    <Button variant='outlined' component={Link} href={`/apps/question-catalog/${questionCatalogId}`}>
+                    <Button
+                      variant='outlined'
+                      component={Link}
+                      href={`/apps/question-catalog/${questionCatalogId}/questions/${questionId}`}
+                    >
                       <ArrowBackIcon />
                       &nbsp;Quay lại
                     </Button>
@@ -60,9 +71,7 @@ const ChildrenQuestionList = () => {
                 <div className='grid-block'>
                   <Nav />
                   <div className='grid-block' style={{ padding: 0, paddingLeft: 10, paddingTop: 10, width: '100%' }}>
-                    <div style={{ width: '100%' }}>
-                      {currentQuestion && <QuestionTable data={currentQuestion.children} />}
-                    </div>
+                    <div style={{ width: '100%' }}>{currentQuestion && <QuestionTable />}</div>
                   </div>
                 </div>
               </div>

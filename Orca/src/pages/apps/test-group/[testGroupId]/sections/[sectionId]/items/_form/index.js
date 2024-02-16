@@ -32,7 +32,10 @@ import CustomRadioBasic from '@core/components/custom-radio/basic'
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { mdilTag } from '@mdi/light-js'
+import {
+  mdilInformation,
+  mdilTag
+} from '@mdi/light-js'
 import IconReact from '@mdi/react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -426,7 +429,7 @@ const ItemEditForm = () => {
                                           <TableCell style={{ width: 160 }}>Mã</TableCell>
                                           <TableCell>Nội dung</TableCell>
                                           <TableCell style={{ width: 210 }}>Bộ câu hỏi- Danh mục</TableCell>
-                                          <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
+                                          <TableCell style={{ width: 180 }}>Ngày tạo</TableCell>
                                         </TableRow>
                                       </TableHead>
                                       <TableBody>
@@ -472,12 +475,21 @@ const ItemEditForm = () => {
                                               </TableCell>
                                               <TableCell component='th' scope='row'>
                                                 <Typography variant='body2'>{row.id}</Typography>
-                                                <Typography variant='body2'>{row.questionTypeName}</Typography>
                                               </TableCell>
                                               <TableCell component='th' scope='row'>
                                                 <Typography variant='body1'>{row.shortContent}</Typography>
                                               </TableCell>
                                               <TableCell component='th' scope='row'>
+                                                <Chip
+                                                  icon={
+                                                    <IconReact path={mdilInformation} title='Bộ Câu hỏi' size={1} />
+                                                  }
+                                                  label={row.questionTypeName}
+                                                  style={{ marginBottom: 2 }}
+                                                  color='secondary'
+                                                  variant='outlined'
+                                                />
+
                                                 {row.catalog ? (
                                                   <Chip
                                                     icon={<IconReact path={mdilTag} title='Bộ Câu hỏi' size={1} />}
@@ -498,7 +510,7 @@ const ItemEditForm = () => {
                                                   />
                                                 ) : null}
                                               </TableCell>
-                                             
+
                                               <TableCell>
                                                 <Typography variant='body2'>
                                                   {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
