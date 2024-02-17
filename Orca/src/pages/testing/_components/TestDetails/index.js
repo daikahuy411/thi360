@@ -1534,11 +1534,11 @@ class TestDetails extends React.Component {
                       <div className='flex-l dn w-20'>
                         <div className='flex flex-column flex-grow-1 content-container overflow-hidden'>
                           <div className='ph3 pv2 flex justify-between bt bb bw1 b--white'>
-                            <span className='f4-5 flex-grow-1 flex darkest-blue items-center'>
-                              {this.state.userProfile && (
-                                <>
-                                  <span>{this.state.userProfile.name}</span>
-                                </>
+                            <span className='flex-grow-1 flex darkest-blue items-center'>
+                              {this.state.examAttempt && this.state.examAttempt.user && (
+                                <span>
+                                  {this.state.examAttempt.user.name} ({this.state.examAttempt.user.userName})
+                                </span>
                               )}
                             </span>
                             <div

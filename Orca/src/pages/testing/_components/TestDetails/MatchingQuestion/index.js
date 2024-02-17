@@ -42,7 +42,6 @@ export default function MatchingQuestion({ question, onChanged, data, readOnly }
   const [leftNodes, setLeftNodes] = useState([])
   const [rightNodes, setRightNodes] = useState([])
   const [connections, setConnections] = useState(null)
-  const [endpoints, setEndpoints] = useState([])
 
   useEffect(() => {
     editorRef.current = {
@@ -54,7 +53,15 @@ export default function MatchingQuestion({ question, onChanged, data, readOnly }
   useEffect(() => {
     if (!connections) return
     if (onChanged) {
-      onChanged(connections)
+      let answers = {}
+
+      Object.keys(connections).map(item => {
+        const key = item.replace(`s-q-${question.id}-a-`, '')
+        const value = connections[item].replace(`t-q-${question.id}-a-`, '')
+        answers[key] = value
+      })
+
+      onChanged(answers)
     }
   }, [connections])
 
@@ -63,8 +70,18 @@ export default function MatchingQuestion({ question, onChanged, data, readOnly }
 
   useEffect(() => {
     if (!question) return
-    setLeftNodes(question.answers.filter(x => x.order % 2 == 0))
-    setRightNodes(question.answers.filter(x => x.order % 2 != 0))
+
+    setLeftNodes(
+      question.subQuestions.map(x => {
+        return x.answers[0]
+      })
+    )
+
+    setRightNodes(
+      question.subQuestions.map(x => {
+        return x.answers[1]
+      })
+    )
   }, [question])
 
   useEffect(() => {
@@ -85,32 +102,29 @@ export default function MatchingQuestion({ question, onChanged, data, readOnly }
 
   const addPoint = () => {
     if (sourceElm && targetElm) {
-      // Delete existed endpoint
-      const sourceEndpoint = endpoints.find(x => x.elementId == sourceElm)
-      if (sourceEndpoint) {
-        jsPlumbInstance.deleteEndpoint(sourceEndpoint)
-      }
+      let newConnections = { ...connections }
 
-      const targetEndpoint = endpoints.find(x => x.elementId == targetElm)
-      if (targetEndpoint) {
-        jsPlumbInstance.deleteEndpoint(targetEndpoint)
-      }
+      Object.keys(newConnections).map(item => {
+        if (newConnections[item] == targetElm) delete newConnections[item]
+      })
 
-      const p1 = jsPlumbInstance.addEndpoint(sourceElm, sourceOption)
-      const p2 = jsPlumbInstance.addEndpoint(targetElm, targetOption)
-      jsPlumbInstance.connect({
-        source: p1,
-        target: p2
+      newConnections[sourceElm] = targetElm
+      setConnections({ ...newConnections })
+
+      jsPlumbInstance.deleteEveryEndpoint()
+      jsPlumbInstance.deleteEveryConnection()
+
+      Object.keys(newConnections).map(item => {
+        const p1 = jsPlumbInstance.addEndpoint(item, sourceOption)
+        const p2 = jsPlumbInstance.addEndpoint(newConnections[item], targetOption)
+        jsPlumbInstance.connect({
+          source: p1,
+          target: p2
+        })
       })
 
       setSourceElm(null)
       setTargetElm(null)
-
-      setEndpoints(prev => [...prev, p1, p2])
-
-      let newConnections = connections || {}
-      newConnections[sourceElm.toString()] = targetElm
-      setConnections({ ...newConnections })
 
       jsPlumbInstance.repaintEverything()
     }
@@ -119,21 +133,15 @@ export default function MatchingQuestion({ question, onChanged, data, readOnly }
   useEffect(() => {
     if (!data || !jsPlumbInstance) return
 
-    let endpoints = []
     Object.keys(data).forEach(s => {
-      const p1 = jsPlumbInstance.addEndpoint(s, sourceOption)
-      const p2 = jsPlumbInstance.addEndpoint(data[s], targetOption)
-
+      const p1 = jsPlumbInstance.addEndpoint(`s-q-${question.id}-a-` + s, sourceOption)
+      const p2 = jsPlumbInstance.addEndpoint(`t-q-${question.id}-a-` + data[s], targetOption)
       jsPlumbInstance.connect({
         source: p1,
         target: p2
       })
-
-      endpoints.push(p1)
-      endpoints.push(p2)
     })
 
-    setEndpoints(endpoints)
     jsPlumbInstance.repaintEverything()
   }, [data, jsPlumbInstance])
 
@@ -143,14 +151,18 @@ export default function MatchingQuestion({ question, onChanged, data, readOnly }
         <table style={{ width: '100%' }}>
           <tr>
             <td style={{ width: '50%' }}>
-              <div id='select_list_lebensbereiche'>
+              <div>
                 <ul className={styles.ul}>
                   {leftNodes.map(item => (
                     <li
-                      className={sourceElm == item.id ? `${styles.active} ${styles.li}` : `${styles.li}`}
-                      id={`${item.id}`}
-                      key={`${item.id}`}
-                      onClick={() => setSourceElm(`${item.id}`)}
+                      className={
+                        sourceElm == `s-q-${question.id}-a-${item.id}`
+                          ? `${styles.active} ${styles.li}`
+                          : `${styles.li}`
+                      }
+                      id={`s-q-${question.id}-a-${item.id}`}
+                      key={`s-q-${question.id}-a-${item.id}`}
+                      onClick={() => setSourceElm(`s-q-${question.id}-a-${item.id}`)}
                     >
                       {ReactHtmlParser(item.content)}
                     </li>
@@ -159,14 +171,18 @@ export default function MatchingQuestion({ question, onChanged, data, readOnly }
               </div>
             </td>
             <td style={{ width: '50%' }}>
-              <div id='select_list_wirkdimensionen'>
+              <div>
                 <ul className={styles.ul}>
                   {rightNodes.map(item => (
                     <li
-                      className={targetElm == item.id ? `${styles.active} ${styles.li}` : `${styles.li}`}
-                      id={`${item.id}`}
-                      key={`${item.id}`}
-                      onClick={() => setTargetElm(`${item.id}`)}
+                      className={
+                        targetElm == `t-q-${question.id}-a-${item.id}`
+                          ? `${styles.active} ${styles.li}`
+                          : `${styles.li}`
+                      }
+                      id={`t-q-${question.id}-a-${item.id}`}
+                      key={`t-q-${question.id}-a-${item.id}`}
+                      onClick={() => setTargetElm(`t-q-${question.id}-a-${item.id}`)}
                     >
                       {ReactHtmlParser(item.content)}
                     </li>

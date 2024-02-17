@@ -10,7 +10,7 @@ const Nav = ({ children }) => {
 
   return (
     <>
-      <div className='grid-block vertical  finger-tabs__tabs' style={{ height: '100vh' }}>
+      <div className='grid-block vertical  finger-tabs__tabs'>
         <Link
           className={`finger-tabs__tab flex-none ${
             router.asPath.indexOf(`/categories/`) < 0 && router.asPath.indexOf(`/questions/`) < 0

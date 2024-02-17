@@ -427,6 +427,28 @@ const QuestionEditForm = () => {
     setSubQuestions(newSubs)
   }
 
+  const handleChangeAnswerContent = (questionId, answerId, value) => {
+    const newSubs = subQuestions.map((c, i) => {
+      if (c.id === questionId) {
+        let cloned = { ...c }
+        cloned.answers = c.answers.map(a => {
+          if (a.id === answerId) {
+            let clonedAnswer = { ...a }
+            clonedAnswer.content = value
+            return clonedAnswer
+          } else {
+            return a
+          }
+        })
+        return cloned
+      } else {
+        return { ...c }
+      }
+    })
+
+    setSubQuestions(newSubs)
+  }
+
   const removeMatchingAnswerGroup = id => {
     let ags = [...subQuestions]
     ags = ags.filter(x => x.id != id)
@@ -1008,7 +1030,6 @@ const QuestionEditForm = () => {
                           </form>
                           {currentQuestion.questionTypeId === QuestionType.MATCHING && (
                             <div style={{ height: 'auto', width: '100%', paddingTop: 10 }}>
-                              {/* <MatchingQuestion subQuestions={subQuestions} /> */}
                               <Grid container spacing={5} style={{ paddingBottom: '20px' }}>
                                 <Grid item md={12} xs={12}>
                                   <TableContainer component={Paper} style={{ marginTop: 5 }} className=''>
@@ -1085,9 +1106,9 @@ const QuestionEditForm = () => {
                                                     <FormControl fullWidth>
                                                       <LiteContentEditor
                                                         content={group.answers[0].content ?? ''}
-                                                        onChange={data => {
-                                                          group.answers[0].content = data
-                                                        }}
+                                                        onChange={data =>
+                                                          handleChangeAnswerContent(group.id, group.answers[0].id, data)
+                                                        }
                                                       />
                                                       <FormHelperText
                                                         sx={{ color: 'error.main' }}
@@ -1100,9 +1121,9 @@ const QuestionEditForm = () => {
                                                     <FormControl fullWidth>
                                                       <LiteContentEditor
                                                         content={group.answers[1].content ?? ''}
-                                                        onChange={data => {
-                                                          group.answers[1].content = data
-                                                        }}
+                                                        onChange={data =>
+                                                          handleChangeAnswerContent(group.id, group.answers[1].id, data)
+                                                        }
                                                       />
                                                       <FormHelperText
                                                         sx={{ color: 'error.main' }}

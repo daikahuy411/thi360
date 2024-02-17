@@ -359,7 +359,7 @@ const QuestionTable = () => {
                                   <Typography variant='body2'>{row.id}</Typography>
                                 </TableCell>
                                 <TableCell component='th' scope='row'>
-                                  <Typography variant='body1'>{row.shortContent}</Typography>
+                                  <Typography variant='body2'>{row.shortContent}</Typography>
                                 </TableCell>
                                 <TableCell>
                                   <Chip

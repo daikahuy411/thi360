@@ -11,14 +11,18 @@ import TextField from '@mui/material/TextField'
 
 class TextQuestion extends Component {
   static defaultProps = {
-    eventHandler: value => { },
-    value: ''
+    eventHandler: value => {},
+    value: '',
+    question: {}
   }
+
   render() {
+    console.log(this.props.question)
     return (
       <>
         <TextField
           value={this.props.value}
+          size='small'
           onChange={e => this.props.eventHandler(`${this.props.name}`, e.target.value)}
         />
       </>
@@ -28,15 +32,19 @@ class TextQuestion extends Component {
 
 class SelectQuestion extends Component {
   static defaultProps = {
-    eventHandler: value => { },
-    value: ''
+    eventHandler: value => {},
+    value: '',
+    question: {}
   }
 
   render() {
+    console.log(this.props.question)
+
     return (
       <>
         <Select
           label=''
+          size='small'
           value={this.props.value}
           onChange={e => this.props.eventHandler(`${this.props.name}`, e.target.value)}
         >
@@ -67,7 +75,7 @@ const FbQuestion = ({ question, onChanged, userAnswer }) => {
       <JsxParser
         autoCloseVoidElements
         bindings={{
-          foo: 'bar',
+          question: question,
           onChanged: (name, value) => {
             onChange(name, value)
           }

@@ -91,7 +91,7 @@ const HomePage = () => {
             )}
           </>
         </LoadingSpinner>
-
+        <br />
         <div className='row'>
           <div className='col-12 text-center'>
             <div className='section-heading'>
@@ -180,7 +180,7 @@ const HomePage = () => {
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   <Typography sx={{ mb: 3, fontWeight: '600' }}>2. Đăng ký tài khoản Giáo viên</Typography>
-                  <Typography>Gửi yêu cầu đăng ký Hồ sơ giáo viên cho chúng tôi.</Typography>
+                  <Typography>Gửi yêu cầu đăng ký Hồ sơ giáo viên<br /> cho chúng tôi.</Typography>
                 </Box>
               </CardContent>
             </Card>
@@ -190,7 +190,7 @@ const HomePage = () => {
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   <Typography sx={{ mb: 3, fontWeight: '600' }}>3. Đăng ký sử dụng gói Miễn phí</Typography>
-                  <Typography>Đăng ký sử dụng gói Miễn phí dành cho Giáo viên.</Typography>
+                  <Typography>Đăng ký sử dụng gói <br />Miễn phí dành cho Giáo viên.</Typography>
                 </Box>
               </CardContent>
             </Card>
