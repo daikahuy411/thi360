@@ -1,7 +1,3 @@
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 const FooterContent = () => {
@@ -9,37 +5,141 @@ const FooterContent = () => {
   const hidden = useMediaQuery(theme => theme.breakpoints.down('md'))
 
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
-      <Typography sx={{ mr: 2 }}>
-        {`© ${new Date().getFullYear()}, Made with `}
-        <Box component='span' sx={{ color: 'error.main' }}>
-          ❤️
-        </Box>
-        {` by `}
-        <Link target='_blank' href='https://mui.com/store/contributors/themeselection/'>
-          Thi360.com
-        </Link>
-      </Typography>
-      {hidden ? null : (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
-          {/* <Link target='_blank' href='https://mui.com/store/license/'>
-            License
-          </Link>
-          <Link target='_blank' href='https://mui.com/store/contributors/themeselection/'>
-            More Themes
-          </Link>
-          <Link
-            target='_blank'
-            href='https://demos.themeselection.com/marketplace/materio-mui-react-nextjs-admin-template/documentation'
-          >
-            Documentation
-          </Link>
-          <Link target='_blank' href='https://themeselection.com/support/'>
-            Support
-          </Link> */}
-        </Box>
-      )}
-    </Box>
+    <footer
+      className=''
+      style={{
+        width: '100%'
+      }}
+    >
+      <div className=''>
+        <div className=''>
+          <img src='/images/layout/footer-logo.png' alt='' />
+          <div className=''>
+            <div className='row'>
+              <div className='col-md-5'>
+                <div className='Footer_left-side__giX8j'>
+                  <h5>CÔNG TY TNHH CÔNG NGHỆ IGNITE</h5>
+                  <p style={{ fontSize: 15 }}>
+                    <svg width='16' height='16' viewBox='0 0 16 16' fill='none'>
+                      <path
+                        d='M7.375 14.6919C6.02083 12.912 3 8.66748 3 6.2577C3 3.35501 5.21354 1 8 1C10.7604 1 13 3.35501 13 6.2577C13 8.66748 9.95312 12.912 8.59896 14.6919C8.28646 15.1027 7.6875 15.1027 7.375 14.6919ZM8 8.01027C8.91146 8.01027 9.66667 7.24352 9.66667 6.2577C9.66667 5.29927 8.91146 4.50513 8 4.50513C7.0625 4.50513 6.33333 5.29927 6.33333 6.2577C6.33333 7.24352 7.0625 8.01027 8 8.01027Z'
+                        fill='#FF6337'
+                      ></path>
+                    </svg>{' '}
+                    &nbsp; Tòa S1.01, khu đô thị Vinhomes Smartcity, Tây Mỗ, Hà nội.
+                  </p>
+                  <p style={{ fontSize: 15 }}>
+                    <svg width='16' height='16' viewBox='0 0 16 16' fill='none'>
+                      <path
+                        d='M14.9828 11.5589L14.326 14.3172C14.244 14.7269 13.9156 15 13.5051 15C6.60953 14.9727 1 9.37411 1 2.49195C1 2.0823 1.24627 1.75457 1.65672 1.67264L4.42044 1.0172C4.80353 0.935269 5.21398 1.15375 5.37817 1.50878L6.66425 4.48559C6.80107 4.84062 6.71898 5.25027 6.41798 5.46876L4.94035 6.6704C5.87071 8.5548 7.40307 10.0842 9.31852 11.0127L10.5225 9.53797C10.7414 9.26487 11.1519 9.15563 11.5076 9.29218L14.4902 10.5758C14.8459 10.7669 15.0649 11.1766 14.9828 11.5589Z'
+                        fill='#FF6337'
+                      ></path>
+                    </svg>
+                    &nbsp; 096.8900.482
+                  </p>
+                  <p style={{ fontSize: 15 }}>
+                    <svg width='16' height='16' viewBox='0 0 16 16' fill='none'>
+                      <path
+                        d='M14.5 2C15.3125 2 16 2.6875 16 3.5C16 4 15.75 4.4375 15.375 4.71875L8.59375 9.8125C8.21875 10.0938 7.75 10.0938 7.375 9.8125L0.59375 4.71875C0.21875 4.4375 0 4 0 3.5C0 2.6875 0.65625 2 1.5 2H14.5ZM6.78125 10.625C7.5 11.1562 8.46875 11.1562 9.1875 10.625L16 5.5V12C16 13.125 15.0938 14 14 14H2C0.875 14 0 13.125 0 12V5.5L6.78125 10.625Z'
+                        fill='#FF6337'
+                      ></path>
+                    </svg>{' '}
+                    &nbsp; admin@thi360.com
+                  </p>
+                  <p style={{ fontSize: 15 }}>
+                    <svg width='16' height='16' viewBox='0 0 16 16' fill='none'>
+                      <path
+                        d='M3 1C1.875 1 1 1.90625 1 3V13C1 14.125 1.875 15 3 15H10V11.5C10 10.6875 10.6562 10 11.5 10H15V3C15 1.90625 14.0938 1 13 1H3ZM15 11H11.5C11.2188 11 11 11.25 11 11.5V15L15 11Z'
+                        fill='#FF6337'
+                      ></path>
+                      <path d='M5.43934 3V3.66051H4.12742V7.93608H3.319V3.66051H2V3H5.43934Z' fill='white'></path>
+                      <path
+                        d='M5.98859 5.96165C5.98859 5.56866 6.06896 5.22064 6.2297 4.91761C6.39516 4.61458 6.61736 4.38021 6.89629 4.21449C7.17994 4.04403 7.49197 3.95881 7.83235 3.95881C8.13965 3.95881 8.40676 4.02036 8.63368 4.14347C8.86534 4.26184 9.04971 4.41099 9.18681 4.59091V4.02273H10.0023V7.93608H9.18681V7.35369C9.04971 7.53835 8.86297 7.69224 8.62659 7.81534C8.39021 7.93845 8.12074 8 7.81817 8C7.48251 8 7.17522 7.91477 6.89629 7.74432C6.61736 7.56913 6.39516 7.32765 6.2297 7.01989C6.06896 6.70739 5.98859 6.35464 5.98859 5.96165ZM9.18681 5.97585C9.18681 5.70597 9.13008 5.47159 9.01662 5.27273C8.90789 5.07386 8.76369 4.92235 8.58404 4.81818C8.4044 4.71402 8.21056 4.66193 8.00255 4.66193C7.79453 4.66193 7.6007 4.71402 7.42105 4.81818C7.2414 4.91761 7.09485 5.06676 6.98138 5.26563C6.87265 5.45975 6.81828 5.69176 6.81828 5.96165C6.81828 6.23153 6.87265 6.46828 6.98138 6.67188C7.09485 6.87547 7.2414 7.03172 7.42105 7.14063C7.60543 7.24479 7.79926 7.29688 8.00255 7.29688C8.21056 7.29688 8.4044 7.24479 8.58404 7.14063C8.76369 7.03646 8.90789 6.88494 9.01662 6.68608C9.13008 6.48248 9.18681 6.24574 9.18681 5.97585Z'
+                        fill='white'
+                      ></path>
+                      <path
+                        d='M12.7377 5.95455L14 7.93608H13.0852L12.2413 6.60795L11.4471 7.93608H10.6032L11.8655 6.01136L10.6032 4.02273H11.518L12.3619 5.35085L13.1561 4.02273H14L12.7377 5.95455Z'
+                        fill='white'
+                      ></path>
+                    </svg>{' '}
+                    &nbsp; MST: 0107908443 do Sở KH và ĐT TP Hà Nội cấp ngày 06/07/2017
+                  </p>
+                </div>
+              </div>
+              <div className='col-md-5'>
+                <div className=''>
+                  <h5>THÔNG TIN HỖ TRỢ</h5>
+                  <p style={{ fontSize: 15 }}>Hướng dẫn mua hàng</p>
+                  <p style={{ fontSize: 15 }}>Chính sách thanh toán</p>
+                  <p style={{ fontSize: 15 }}>Chính sách xử lý khiếu nại</p>
+                  <p style={{ fontSize: 15 }}>Chính sách bảo mật thông tin</p>
+                </div>
+              </div>
+              <div className='col-md-2'>
+                <div className='Footer_right-side__zs5xp'>
+                  <div
+                    className='Footer_icon-wrapper__BCiT7'
+                    style={{
+                      display: 'flex',
+                      columnGap: 20,
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <span
+                      style={{
+                        height: 50,
+                        width: 50,
+                        background: 'white',
+                        display: 'flex',
+                        border: '1px solid #dfdfdf',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: '50%'
+                      }}
+                    >
+                      <svg width='30' height='30' viewBox='0 0 20 21' fill='none'>
+                        <path
+                          d='M19.6875 10.5C19.6875 5.14844 15.3516 0.8125 10 0.8125C4.64844 0.8125 0.3125 5.14844 0.3125 10.5C0.3125 15.3438 3.82812 19.3672 8.47656 20.0703V13.3125H6.01562V10.5H8.47656V8.39062C8.47656 5.96875 9.92188 4.60156 12.1094 4.60156C13.2031 4.60156 14.2969 4.79688 14.2969 4.79688V7.17969H13.0859C11.875 7.17969 11.4844 7.92188 11.4844 8.70312V10.5H14.1797L13.75 13.3125H11.4844V20.0703C16.1328 19.3672 19.6875 15.3438 19.6875 10.5Z'
+                          fill='#5891FF'
+                        ></path>
+                      </svg>
+                    </span>
+                    <span
+                      style={{
+                        height: 50,
+                        width: 50,
+                        background: 'white',
+                        display: 'flex',
+                        border: '1px solid #dfdfdf',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: '50%'
+                      }}
+                    >
+                      <svg width='30' height='30' viewBox='0 0 22 20' fill='none'>
+                        <path
+                          d='M21.1953 5.38281C20.9609 4.44531 20.2188 3.70312 19.3203 3.46875C17.6406 3 11 3 11 3C11 3 4.32031 3 2.64062 3.46875C1.74219 3.70312 1 4.44531 0.765625 5.38281C0.296875 7.02344 0.296875 10.5391 0.296875 10.5391C0.296875 10.5391 0.296875 14.0156 0.765625 15.6953C1 16.6328 1.74219 17.3359 2.64062 17.5703C4.32031 18 11 18 11 18C11 18 17.6406 18 19.3203 17.5703C20.2188 17.3359 20.9609 16.6328 21.1953 15.6953C21.6641 14.0156 21.6641 10.5391 21.6641 10.5391C21.6641 10.5391 21.6641 7.02344 21.1953 5.38281ZM8.8125 13.7031V7.375L14.3594 10.5391L8.8125 13.7031Z'
+                          fill='#FF3333'
+                        ></path>
+                      </svg>
+                    </span>
+                  </div>
+                  <a target='_blank' href=''>
+                    <img
+                      style={{ width: 200, marginTop: 30 }}
+                      src='https://www.i-test.vn/images/layout/bo-cong-thuong.png'
+                      alt=''
+                      className='cursor-pointer'
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
   )
 }
 
