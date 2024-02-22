@@ -51,17 +51,6 @@ export default class UserApi extends ApiBase {
     return response
   }
 
-  requestForgotPassword = (request: any) => {
-    return axios.post(this.baseApiUrl + '/request-forgot-password', request)
-  }
-
-  verifyExpiteTime = (token: any) => {
-    return axios.get(this.baseApiUrl + '/check-expire-time/' + token)
-  }
-
-  resetPassword = (request: any) => {
-    return axios.post(this.baseApiUrl + '/reset-password/', request)
-  }
 
   getUserProfile = (userId: string) => {
     return axios.get(this.baseApiUrl + '/userprofile/' + userId)

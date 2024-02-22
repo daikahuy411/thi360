@@ -1338,6 +1338,7 @@ class TestDetails extends React.Component {
                                       <FbQuestion
                                         onChanged={content => this.saveQuestionAttemptedState(content)}
                                         question={this.state.currentQuestion}
+                                        data={this.getUserAnswerOfCurrentQuestion()}
                                       />
                                       {/* <QuestionContent question={this.state.currentQuestion} /> */}
                                     </span>
@@ -1405,7 +1406,6 @@ class TestDetails extends React.Component {
                                       </div>
                                     </div>
                                     <div className='flex flex-column w-100'>
-                                      <b>Ghép đôi</b>
                                       <MatchingQuestion
                                         onChanged={ids => this.saveQuestionAttemptedState(ids)}
                                         question={this.state.currentQuestion}

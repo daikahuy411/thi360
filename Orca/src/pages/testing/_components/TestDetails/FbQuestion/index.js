@@ -12,16 +12,15 @@ import TextField from '@mui/material/TextField'
 class TextQuestion extends Component {
   static defaultProps = {
     eventHandler: value => {},
-    value: '',
+    data: '',
     question: {}
   }
 
   render() {
-    console.log(this.props.question)
     return (
       <>
         <TextField
-          value={this.props.value}
+          value={this.props.data && this.props.data[this.props.name] ? this.props.data[this.props.name] : ''}
           size='small'
           onChange={e => this.props.eventHandler(`${this.props.name}`, e.target.value)}
         />
@@ -33,38 +32,37 @@ class TextQuestion extends Component {
 class SelectQuestion extends Component {
   static defaultProps = {
     eventHandler: value => {},
-    value: '',
+    data: '',
     question: {}
   }
 
   render() {
-    console.log(this.props.question)
-
     return (
       <>
-        <Select
-          label=''
-          size='small'
-          value={this.props.value}
-          onChange={e => this.props.eventHandler(`${this.props.name}`, e.target.value)}
-        >
-          <MenuItem value={'0'}>Chọn trạng thái</MenuItem>
-          <MenuItem value={'1'}>Chuẩn bị</MenuItem>
-          <MenuItem value={'2'}>Đang diễn ra</MenuItem>
-          <MenuItem value={'3'}>Kết thúc</MenuItem>
-        </Select>
+        {this.props.question && (
+          <Select
+            label=''
+            size='small'
+            value={this.props.data && this.props.data[this.props.name] ? this.props.data[this.props.name] : ''}
+            onChange={e => this.props.eventHandler(`${this.props.name}`, e.target.value)}
+          >
+            {this.props.question.subQuestions[this.props.name].answers.map(item => (
+              <MenuItem value={item.id}>{item.content}</MenuItem>
+            ))}
+          </Select>
+        )}
       </>
     )
   }
 }
 
-const FbQuestion = ({ question, onChanged, userAnswer }) => {
-  const [answer, setAnswer] = useState(userAnswer)
+const FbQuestion = ({ question, onChanged, data }) => {
+  const [answer, setAnswer] = useState(data)
 
   const onChange = (name, value) => {
     let newAnswer = { ...answer }
     newAnswer[name] = value
-    setAnswer(newAnswer)
+    setAnswer({ ...newAnswer })
     if (onChanged) {
       onChanged(newAnswer)
     }
@@ -76,6 +74,7 @@ const FbQuestion = ({ question, onChanged, userAnswer }) => {
         autoCloseVoidElements
         bindings={{
           question: question,
+          data: answer,
           onChanged: (name, value) => {
             onChange(name, value)
           }

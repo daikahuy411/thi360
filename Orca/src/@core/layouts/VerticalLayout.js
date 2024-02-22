@@ -5,7 +5,7 @@ import { useState } from 'react'
 import themeConfig from 'configs/themeConfig'
 import VerticalAppBarContent from 'layouts/components/vertical/AppBarContent'
 
-import Customizer from '@core/components/customizer'
+// import Customizer from '@core/components/customizer'
 // ** Icon Imports
 import Icon from '@core/components/icon'
 import ScrollToTop from '@core/components/scroll-to-top'
@@ -126,7 +126,7 @@ const VerticalLayout = props => {
         </MainContentWrapper>
       </VerticalLayoutWrapper>
 
-      {disableCustomizer || hidden ? null : <Customizer />}
+      {/* {disableCustomizer || hidden ? null : <Customizer />} */}
       {/* {themeConfig.disableCustomizer || hidden ? null : <Customizer />} */}
 
       {scrollToTop ? (

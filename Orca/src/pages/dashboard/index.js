@@ -17,7 +17,7 @@ import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
-import AttemptWeeklyOverview from './attempt-weekly-overview'
+// import AttemptWeeklyOverview from './attempt-weekly-overview'
 import RencentUserExamAttempt from './recent-user-exam-atempt'
 import UserCurrentPlan from './user-curent-plan'
 
@@ -159,7 +159,7 @@ const TeacherDashboard = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} md={4} lg={4}>
-        {domLoaded && <AttemptWeeklyOverview />}
+        {/* {domLoaded && <AttemptWeeklyOverview />} */}
         <br />
         {plan && <UserCurrentPlan userPlan={plan} />}
       </Grid>

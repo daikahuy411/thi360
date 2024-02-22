@@ -167,6 +167,18 @@ class V1Api extends ApiBase {
     return axios.post(this.baseApiUrl + '/SendActiveCodeEmail')
   }
 
+  verifyExpiteTime = (token: any) => {
+    return axios.get(this.baseApiUrl + '/check-expire-time/' + token)
+  }
+
+  requestForgotPassword = (request: any) => {
+    return axios.post(this.baseApiUrl + '/request-forgot-password', request)
+  }
+  
+  resetPassword = (request: any) => {
+    return axios.post(this.baseApiUrl + '/reset-password/', request)
+  }
+
   updateTenant = (tenant: any) => {
     return axios.post(this.baseApiUrl + '/UpdateTenant', tenant)
   }
@@ -190,6 +202,7 @@ class V1Api extends ApiBase {
   getRecentUserExamAttempt = () => {
     return axios.get(this.baseApiUrl + '/GetRecentUserExamAttempt')
   }
+
 }
 
 export default V1Api

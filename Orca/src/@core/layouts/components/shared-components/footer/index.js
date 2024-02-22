@@ -45,6 +45,8 @@ const Footer = props => {
         className='footer-content-container'
         sx={{
           width: '100%',
+          boxShadow: 6,
+          backgroundColor: 'white',
           py: theme.spacing(footer === 'fixed' && skin === 'bordered' ? 3.875 : 4),
           ...(contentWidth === 'boxed' && { '@media (min-width:1440px)': { maxWidth: 1440 } }),
           ...(layout === 'vertical' && {

@@ -1,13 +1,19 @@
 // ** React Imports
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 
-import UserApi from 'api/user-api'
+import V1Api from 'api/v1-api'
 // ** Configs
 import themeConfig from 'configs/themeConfig'
 // ** Next Imports
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 import toast from 'react-hot-toast'
 // ** Demo Imports
 import FooterIllustrationsV1 from 'views/pages/auth/FooterIllustrationsV1'
@@ -31,7 +37,10 @@ import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
+import {
+  styled,
+  useTheme
+} from '@mui/material/styles'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
@@ -89,7 +98,7 @@ const ResetPasswordV1 = () => {
   }, [resetPasswordToken])
 
   const verifyExpiteTime = () => {
-    new UserApi()
+    new V1Api()
       .verifyExpiteTime(resetPasswordToken)
       .then(response => {
         const data = response.data
@@ -99,7 +108,6 @@ const ResetPasswordV1 = () => {
         }
       })
       .catch(e => {
-        console.log(e)
         toast.error('Xảy ra lỗi trong quá trình xử lý dữ liệu. Bạn vui lòng quay lại sau!')
         router.replace('/forgot-password')
       })
@@ -113,7 +121,7 @@ const ResetPasswordV1 = () => {
       securityStamp: resetPasswordToken
     }
 
-    new UserApi()
+    new V1Api()
       .resetPassword(param)
       .then(response => {
         const data = response.data
@@ -126,7 +134,6 @@ const ResetPasswordV1 = () => {
         }
       })
       .catch(e => {
-        console.log(e)
         toast.error('Xảy ra lỗi trong quá trình xử lý dữ liệu. Bạn vui lòng quay lại sau!')
         router.replace('/forgot-password')
         setLoading(false)

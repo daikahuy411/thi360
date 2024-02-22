@@ -8,16 +8,17 @@ const FooterContent = () => {
     <footer
       className=''
       style={{
-        width: '100%'
+        width: '100%',
       }}
     >
+      {/* <hr style={{ borderBottomWidth: 'thin', borderColor: '#E5EAF2' }} /> */}
       <div className=''>
         <div className=''>
           <img src='/images/layout/footer-logo.png' alt='' />
           <div className=''>
             <div className='row'>
               <div className='col-md-5'>
-                <div className='Footer_left-side__giX8j'>
+                <div className=''>
                   <h5>CÔNG TY TNHH CÔNG NGHỆ IGNITE</h5>
                   <p style={{ fontSize: 15 }}>
                     <svg width='16' height='16' viewBox='0 0 16 16' fill='none'>
@@ -26,7 +27,7 @@ const FooterContent = () => {
                         fill='#FF6337'
                       ></path>
                     </svg>{' '}
-                    &nbsp; Tòa S1.01, khu đô thị Vinhomes Smartcity, Tây Mỗ, Hà nội.
+                    &nbsp; Số 8, ngách 87/7, phố Yên Lộ, Phường Yên Nghĩa, Quận Hà Đông, Hà Nội.
                   </p>
                   <p style={{ fontSize: 15 }}>
                     <svg width='16' height='16' viewBox='0 0 16 16' fill='none'>
@@ -62,7 +63,7 @@ const FooterContent = () => {
                         fill='white'
                       ></path>
                     </svg>{' '}
-                    &nbsp; MST: 0107908443 do Sở KH và ĐT TP Hà Nội cấp ngày 06/07/2017
+                    &nbsp; MST: 0107908443 do Sở KH và ĐT TP Hà Nội cấp ngày 06/07/2017.
                   </p>
                 </div>
               </div>
@@ -125,14 +126,14 @@ const FooterContent = () => {
                       </svg>
                     </span>
                   </div>
-                  <a target='_blank' href=''>
+                  {/* <a target='_blank' href=''>
                     <img
                       style={{ width: 200, marginTop: 30 }}
                       src='https://www.i-test.vn/images/layout/bo-cong-thuong.png'
                       alt=''
                       className='cursor-pointer'
                     />
-                  </a>
+                  </a> */}
                 </div>
               </div>
             </div>
