@@ -42,104 +42,13 @@ const Header = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.default
 }))
 
-const banks = [
-  {
-    id: 'NL',
-    name: 'Ví Ngân Lượng'
+const Root = styled('div')(({ theme }) => ({
+  width: '100%',
+  ...theme.typography.body2,
+  '& > :not(style) ~ :not(style)': {
+    marginTop: theme.spacing(2),
   },
-  {
-    id: 'VCB',
-    name: 'Ngân hàng TMCP Ngoại Thương Việt Nam'
-  },
-  {
-    id: 'DAB',
-    name: 'Ngân hàng Đông Á'
-  },
-  {
-    id: 'TCB',
-    name: 'Ngân hàng Kỹ Thương'
-  },
-  {
-    id: 'MB',
-    name: 'Ngân hàng Quân Đội'
-  },
-  {
-    id: 'SHB',
-    name: 'Ngân hàng Sài Gòn - Hà Nội'
-  },
-  {
-    id: 'VIB',
-    name: 'Ngân hàng Quốc tế'
-  },
-  {
-    id: 'ICB',
-    name: 'Ngân hàng Công Thương Việt Nam'
-  },
-  {
-    id: 'EXB',
-    name: 'Ngân hàng Xuất Nhập Khẩu'
-  },
-  {
-    id: 'ACB',
-    name: 'Ngân hàng Á Châu'
-  },
-  {
-    id: 'HDB',
-    name: 'Ngân hàng Phát triển Nhà TPHCM'
-  },
-  {
-    id: 'MSB',
-    name: 'Ngân hàng Hàng Hải'
-  },
-  {
-    id: 'NVB',
-    name: 'Ngân hàng Nam Việt'
-  },
-  {
-    id: 'VAB',
-    name: 'Ngân hàng Việt Á'
-  },
-  {
-    id: 'VPB',
-    name: 'Ngân Hàng Việt Nam Thịnh Vượng'
-  },
-  {
-    id: 'SCB',
-    name: 'Ngân hàng Sài Gòn Thương tín'
-  },
-  {
-    id: 'OJB',
-    name: 'Ngân hàng Đại Dương'
-  },
-  {
-    id: 'PGB',
-    name: 'Ngân hàng Xăng dầu Petrolimex'
-  },
-  {
-    id: 'GPB',
-    name: 'Ngân hàng TMCP Dầu khí Toàn Cầu'
-  },
-  {
-    id: 'AGB',
-    name: 'Ngân hàng Nông nghiệp & Phát triển nông thôn'
-  },
-  {
-    id: 'SGB',
-    name: 'Ngân hàng Sài Gòn Công Thương'
-  },
-  {
-    id: 'NAB',
-    name: 'Ngân hàng Nam Á'
-  },
-  {
-    id: 'BAB',
-    name: 'Ngân hàng Bắc Á'
-  },
-  {
-    id: 'Visa',
-    name: 'Thanh toán bằng thẻ Visa hoặc MasterCard'
-  }
-]
+}))
 
 const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
   const router = useRouter()
@@ -154,10 +63,8 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
 
   const [loadingApply, setLoadingApply] = useState(false)
   const [truthPromotionCode, setTruthPromotionCode] = useState('')
-  const [settingMsgPromotionCode, setSettingMsgPromotionCode] = useState({ isOpen: false, type: 'info', content: '' })
-  const [inputCodeValue, setInputCodeValue] = useState('')
-
-  const [paymentCode, setPaymentCode] = useState('')
+  const [settingMsgPromotionCode, setSettingMsgPromotionCode] = useState({ isOpen: false, type: 'info', content: '' });
+  const [inputCodeValue, setInputCodeValue] = useState("")
 
   const [orderDetailPromotion, setOrderDetailPromotion] = useState([])
   const closeButton = useRef(null)
@@ -168,16 +75,16 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
     const amount = plan.price * parseInt(value)
     setAmount(amount)
     // handleApplyCode()
-    const itemDiscount = orderDetailPromotion.filter(x => x.promotionType == PromotionType.DISCOUNT)
+    const itemDiscount = orderDetailPromotion.filter((x) => x.promotionType == PromotionType.DISCOUNT)
     if (itemDiscount.length > 0)
-      itemDiscount.map(item => {
-        item.amount = (amount * item.percent) / 100
+      itemDiscount.map((item) => {
+        item.amount = (amount * item.percent / 100)
       })
 
     setTotalAmount(amount)
 
     const orderDetailPromotionType2 = []
-    const promotionType2 = promotions.filter(x => x.type == 2)
+    const promotionType2 = promotions.filter((x) => x.type == 2)
     if (promotionType2) {
       if (parseInt(value) === parseInt(promotionType2[0].condition)) {
         let item = {
@@ -192,7 +99,7 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
         orderDetailPromotionType2.push(item)
         setOrderDetailPromotion([...orderDetailPromotion, item])
       } else {
-        const itemFilter = orderDetailPromotion.filter(x => x.promotionType != promotionType2[0].type)
+        const itemFilter = orderDetailPromotion.filter((x) => x.promotionType != promotionType2[0].type)
         setOrderDetailPromotion(itemFilter)
       }
     }
@@ -217,23 +124,21 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
           months: 0,
           percentage: data.value.amount,
           price: 0,
-          amount: (amount * data.value.amount) / 100,
-          paymentCode: paymentCode
+          amount: (amount * data.value.amount / 100)
         }
-        const itemFilter = orderDetailPromotion.filter(x => x.promotionType == PromotionType.DISCOUNT)
+        const itemFilter = orderDetailPromotion.filter((x) => x.promotionType == PromotionType.DISCOUNT)
         if (itemFilter.length == 0) {
           setOrderDetailPromotion([...orderDetailPromotion, item])
           setSettingMsgPromotionCode({ isOpen: true, type: 'success', content: 'Kích hoạt mã thành công!' })
-        } else setSettingMsgPromotionCode({ isOpen: true, type: 'success', content: 'Mã đã được kích hoạt!' })
+        }
+        else
+          setSettingMsgPromotionCode({ isOpen: true, type: 'success', content: 'Mã đã được kích hoạt!' })
+
       } else {
-        const itemFilter = orderDetailPromotion.filter(x => x.promotionType != PromotionType.DISCOUNT)
+        const itemFilter = orderDetailPromotion.filter((x) => x.promotionType != PromotionType.DISCOUNT)
         setOrderDetailPromotion([...itemFilter])
 
-        setSettingMsgPromotionCode({
-          isOpen: true,
-          type: 'error',
-          content: 'Mã khuyến mãi không đúng hoặc không tồn tại!'
-        })
+        setSettingMsgPromotionCode({ isOpen: true, type: 'error', content: 'Mã khuyến mãi không đúng hoặc không tồn tại!' })
         setTruthPromotionCode('')
       }
 
@@ -243,14 +148,14 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
   }
 
   const calTotal = () => {
-    const itemMonth = orderDetailPromotion.filter(x => x.promotionType == PromotionType.ADDMONTH)
+    const itemMonth = orderDetailPromotion.filter((x) => x.promotionType == PromotionType.ADDMONTH)
     if (itemMonth.length > 0) {
       setTotalMonth(month + itemMonth[0].months)
     } else {
       setTotalMonth(month)
     }
 
-    const itemDiscount = orderDetailPromotion.filter(x => x.promotionType == PromotionType.DISCOUNT)
+    const itemDiscount = orderDetailPromotion.filter((x) => x.promotionType == PromotionType.DISCOUNT)
     if (itemDiscount.length > 0) {
       setTotalAmount(amount - itemDiscount[0].amount)
     } else {
@@ -269,11 +174,6 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
   }, [month, orderDetailPromotion])
 
   const createOrder = () => {
-    if (plan.price > 0 && paymentCode === '0') {
-      toast.error('Vui lòng chọn hình thức thanh toán.')
-      return
-    }
-
     setLoading(true)
     let detailTemp = []
     let itemDetail = {
@@ -283,8 +183,7 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
       promotionType: 0,
       months: month,
       price: plan.price,
-      amount: plan.price * month,
-      paymentCode: paymentCode
+      amount: plan.price * month
     }
 
     detailTemp.push(itemDetail)
@@ -294,7 +193,6 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
       pricingPlanId: plan.id,
       totalMonth: month,
       totalAmount: amount,
-      paymentCode: paymentCode,
       note: '',
       orderDetail: [...detailTemp, ...orderDetailPromotion]
     }
@@ -311,9 +209,8 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
           router.reload('/pricing/')
         }
       } else {
-        // closeButton.current.click()
-        setLoading(false)
-        toast.error(data.message)
+        closeButton.current.click()
+        toast.error('Xảy ra lỗi trong quá trình cập nhật dữ liệu')
       }
     })
   }
@@ -321,14 +218,17 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
   if (plan == null) return null
 
   const handleClose = (event, reason) => {
-    if (reason === 'backdropClick') {
+    if (reason === "backdropClick") {
       return
-    } else if (reason === 'escapeKeyDown') {
+    }
+    else if (reason === 'escapeKeyDown') {
       closeButton.current.click()
     }
   }
 
-  const cleanForm = () => { }
+  const cleanForm = () => {
+
+  }
 
   return (
     <Drawer
@@ -398,6 +298,21 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
           <>
             <Box sx={{ mb: 6 }}>
               <FormControl fullWidth>
+                <InputLabel htmlFor='payment-method'>Phương thức thanh toán</InputLabel>
+                <Select
+                  label='Phương thức thanh toán'
+                  labelId='payment-method'
+                  id='payment-method-select'
+                  defaultValue='VNPay'
+                >
+                  <MenuItem key={'VNPay'} value='VNPay'>
+                    VNPay
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            <Box sx={{ mb: 6 }}>
+              <FormControl fullWidth>
                 <InputLabel htmlFor='payment-method'>Số tháng</InputLabel>
                 <Select
                   label='Số tháng'
@@ -414,63 +329,23 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
                 </Select>
               </FormControl>
             </Box>
-            <Box sx={{ mb: 6 }}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='payment-method'>Thanh toán trực tuyến</InputLabel>
-                <Select
-                  label='Thanh toán trực tuyến'
-                  labelId='payment-method'
-                  id='payment-method-select'
-                  required
-                  defaultValue='0'
-                  value={paymentCode}
-                  onChange={e => setPaymentCode(e.target.value)}
-                >
-                  <MenuItem key={'0'} value={'0'}>
-                    Chọn hình thức thanh toán
-                  </MenuItem>
-                  {banks.map(item => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.id}-{item.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {/* {paymentCode === '0' && (
-                  <FormHelperText sx={{ color: 'error.main' }}>Vui lòng chọn hình thức thanh toán.</FormHelperText>
-                )} */}
-              </FormControl>
-            </Box>
             <Box sx={{ mb: 4, borderRadius: 1, border: theme => `1px solid ${theme.palette.divider}` }}>
               <CardContent>
                 <Typography sx={{ mb: 4, fontWeight: 600 }}>Mã giảm giá</Typography>
                 <Box sx={{ mb: 4, display: 'flex', alignItems: 'center' }}>
-                  <TextField
-                    fullWidth
-                    sx={{ mr: 4 }}
-                    size='small'
-                    value={inputCodeValue}
-                    onChange={e => setInputCodeValue(e.target.value)}
-                    placeholder='Nhập mã...'
-                  />
+                  <TextField fullWidth sx={{ mr: 4 }} size='small' value={inputCodeValue} onChange={(e) => setInputCodeValue(e.target.value)} placeholder='Nhập mã...' />
                   <LoadingButton
                     variant='outlined'
                     onClick={handleApplyCode}
                     loading={loadingApply}
-                    loadingIndicator='Loading…'
-                    style={{ width: 180 }}
+                    loadingIndicator="Loading…"
+                    style={{width: 180}}
                   >
                     Sử dụng
                   </LoadingButton>
                 </Box>
                 <Collapse in={settingMsgPromotionCode.isOpen}>
-                  <Alert
-                    severity={settingMsgPromotionCode.type}
-                    onClose={() => {
-                      setSettingMsgPromotionCode({ isOpen: false, type: 'info', content: '' })
-                    }}
-                  >
-                    {settingMsgPromotionCode.content}
-                  </Alert>
+                  <Alert severity={settingMsgPromotionCode.type} onClose={() => { setSettingMsgPromotionCode({ isOpen: false, type: 'info', content: '' }) }}>{settingMsgPromotionCode.content}</Alert>
                 </Collapse>
               </CardContent>
               <Divider sx={{ my: '0 !important' }} />
@@ -492,7 +367,6 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
                     </Typography>
                     <Typography variant='body2'>{formatNumber.add0(month)}</Typography>
                   </Box>
-
                   <Box
                     sx={{
                       mb: 2,
@@ -525,42 +399,37 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
                     </Box>
                   )}
 
-                  {orderDetailPromotion.length > 0 &&
-                    orderDetailPromotion.map((item, index) => {
-                      return (
-                        <Box
-                          key={index}
-                          sx={{
-                            mb: 2,
-                            gap: 2,
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            alignItems: 'center',
-                            justifyContent: 'space-between'
-                          }}
+                  {orderDetailPromotion.length > 0 && orderDetailPromotion.map((item, index) => {
+                    return (
+                      <Box
+                        key={index}
+                        sx={{
+                          mb: 2,
+                          gap: 2,
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          alignItems: 'center',
+                          justifyContent: 'space-between'
+                        }}
+                      >
+                        <Typography variant='body2' sx={{ color: 'text.info' }}>
+                          {item.name}
+                        </Typography>
+                        <Typography
+                          variant='body2'
+                          sx={{ display: 'block', fontWeight: 600, color: 'primary.main', textDecoration: 'none' }}
                         >
-                          <Typography variant='body2' sx={{ color: 'text.info' }}>
-                            {item.name}
-                          </Typography>
-                          <Typography
-                            variant='body2'
-                            sx={{ display: 'block', fontWeight: 600, color: 'primary.main', textDecoration: 'none' }}
-                          >
-                            {item.promotionType === PromotionType.ADDMONTH && <span>{item.months} tháng</span>}
-                            {item.promotionType === PromotionType.DISCOUNT && (
-                              <>
-                                <span>(- {item.percentage} %)</span> <span>{formatCurrency(item.amount, 0)} đ</span>
-                              </>
-                            )}
-                          </Typography>
-                        </Box>
-                      )
-                    })}
+                          {item.promotionType === PromotionType.ADDMONTH && (<span>{item.months} tháng</span>)}
+                          {item.promotionType === PromotionType.DISCOUNT && (<><span>(- {item.percentage} %)</span> <span>{formatCurrency(item.amount, 0)} đ</span></>)}
+                        </Typography>
+                      </Box>
+                    )
+                  })}
                 </Box>
               </CardContent>
               <Divider sx={{ my: '0 !important' }} />
               <CardContent sx={{ py: theme => `${theme.spacing(3.5)} !important` }}>
-                {/* <Box
+                <Box
                   sx={{
                     gap: 2,
                     display: 'flex',
@@ -570,10 +439,8 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
                   }}
                 >
                   <Typography sx={{ fontWeight: 600 }}>Tổng số tháng sử dụng</Typography>
-                  <Typography sx={{ fontWeight: 600 }} color={'green'}>
-                    {formatNumber.add0(totalMonth)} tháng
-                  </Typography>
-                </Box> */}
+                  <Typography sx={{ fontWeight: 600 }} color={'green'}>{formatNumber.add0(totalMonth)} tháng</Typography>
+                </Box>
                 <Box
                   sx={{
                     gap: 2,
@@ -584,16 +451,13 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
                   }}
                 >
                   <Typography sx={{ fontWeight: 600 }}>Tổng tiền</Typography>
-                  <Typography sx={{ fontWeight: 600 }} color={'green'}>
-                    {formatCurrency(totalAmount, 0)} đ
-                  </Typography>
+                  <Typography sx={{ fontWeight: 600 }} color={'green'}>{formatCurrency(totalAmount, 0)} đ</Typography>
                 </Box>
               </CardContent>
             </Box>
             {/* <Box sx={{ mb: 6 }}>
               <TextField rows={3} multiline fullWidth label='Ghi chú' placeholder='Ghi chú' />
             </Box> */}
-
             <div>
               <Button
                 size='large'
