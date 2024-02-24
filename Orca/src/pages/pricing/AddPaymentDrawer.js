@@ -11,6 +11,7 @@ import toast from 'react-hot-toast'
 import { PromotionType } from 'types/OrderType'
 
 import Icon from '@core/components/icon'
+import LoadingSpinner from '@core/components/loading-spinner'
 import CustomChip from '@core/components/mui/chip'
 import {
   formatCurrency,
@@ -26,6 +27,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import FormControl from '@mui/material/FormControl'
+import FormHelperText from '@mui/material/FormHelperText'
 import IconButton from '@mui/material/IconButton'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -157,7 +159,11 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
   const [settingMsgPromotionCode, setSettingMsgPromotionCode] = useState({ isOpen: false, type: 'info', content: '' })
   const [inputCodeValue, setInputCodeValue] = useState('')
 
-  const [paymentCode, setPaymentCode] = useState('')
+  const [paymentCode, setPaymentCode] = useState('0')
+
+  const [error, setError] = useState(false)
+  const [message, setMessage] = useState('')
+  const [paymentCodeError, setPaymentCodeError] = useState(false)
 
   const [orderDetailPromotion, setOrderDetailPromotion] = useState([])
   const closeButton = useRef(null)
@@ -270,10 +276,12 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
 
   const createOrder = () => {
     if (plan.price > 0 && paymentCode === '0') {
-      toast.error('Vui lòng chọn hình thức thanh toán.')
+      // toast.error('Vui lòng chọn hình thức thanh toán.')
+      setPaymentCodeError(true)
       return
     }
 
+    setPaymentCodeError(false)
     setLoading(true)
     let detailTemp = []
     let itemDetail = {
@@ -302,7 +310,6 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
     new V1Api().createOrder(orderInfo).then(response => {
       const data = response.data
       if (data.isSuccess) {
-        setLoading(false)
         toast.success('Đăng ký gói dịch vụ thành công!')
         if (plan.price != 0) {
           window.location.href = response.data.value.checkoutUrl
@@ -310,10 +317,12 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
           closeButton.current.click()
           router.reload('/pricing/')
         }
+        setError(false)
+        setMessage('')
       } else {
-        // closeButton.current.click()
         setLoading(false)
-        toast.error(data.message)
+        setError(true)
+        setMessage(data.message)
       }
     })
   }
@@ -328,7 +337,7 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
     }
   }
 
-  const cleanForm = () => { }
+  const cleanForm = () => {}
 
   return (
     <Drawer
@@ -345,170 +354,142 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
           <Icon icon='mdi:close' fontSize={20} />
         </IconButton>
       </Header>
-      <Box sx={{ p: 5 }}>
-        <Box sx={{ mb: 4, borderRadius: 1, border: theme => `1px solid ${theme.palette.divider}` }}>
-          <CardContent>
-            <Typography sx={{ mb: 4, fontWeight: 600 }}>Thông tin gói</Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Box
-                sx={{
-                  mb: 2,
-                  gap: 2,
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <Typography variant='body2' sx={{ color: 'text.primary' }}>
-                  Gói
-                </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  <Typography variant='body2'>{plan?.name}</Typography>&nbsp;
-                  <CustomChip
-                    size='small'
-                    skin='light'
-                    color='success'
-                    label={`${plan.type == 1 ? 'Giáo viên' : 'Học viên'}`}
-                  />
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  gap: 2,
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <Typography variant='body2' sx={{ color: 'text.primary' }}>
-                  Giá
-                </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  <Typography variant='body2' sx={{ mr: 2, color: 'text.disabled' }}>
-                    {plan?.totalVN} đ
+      <LoadingSpinner active={loading}>
+        <Box sx={{ p: 5 }}>
+          {error && <Alert severity='error'>{message}</Alert>}
+          <Box sx={{ mb: 4, borderRadius: 1, border: theme => `1px solid ${theme.palette.divider}` }}>
+            <CardContent>
+              <Typography sx={{ mb: 4, fontWeight: 600 }}>Thông tin gói</Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Box
+                  sx={{
+                    mb: 2,
+                    gap: 2,
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography variant='body2' sx={{ color: 'text.primary' }}>
+                    Gói
                   </Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Typography variant='body2'>{plan?.name}</Typography>&nbsp;
+                    <CustomChip
+                      size='small'
+                      skin='light'
+                      color='success'
+                      label={`${plan.type == 1 ? 'Giáo viên' : 'Học viên'}`}
+                    />
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    gap: 2,
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography variant='body2' sx={{ color: 'text.primary' }}>
+                    Giá
+                  </Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Typography variant='body2' sx={{ mr: 2, color: 'text.disabled' }}>
+                      {plan?.totalVN} đ
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          </CardContent>
-        </Box>
-        {plan && plan.price > 0 && (
-          <>
-            <Box sx={{ mb: 6 }}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='payment-method'>Số tháng</InputLabel>
-                <Select
-                  label='Số tháng'
-                  labelId='payment-method'
-                  onChange={e => handleChangeMonth(e.target.value)}
-                  id='payment-method-select'
-                  defaultValue={1}
-                >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(item => (
-                    <MenuItem key={item} value={item}>
-                      {item}
+            </CardContent>
+          </Box>
+          {plan && plan.price > 0 && (
+            <>
+              <Box sx={{ mb: 6 }}>
+                <FormControl fullWidth>
+                  <InputLabel htmlFor='payment-method'>Số tháng</InputLabel>
+                  <Select
+                    label='Số tháng'
+                    labelId='payment-method'
+                    onChange={e => handleChangeMonth(e.target.value)}
+                    id='payment-method-select'
+                    defaultValue={1}
+                  >
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(item => (
+                      <MenuItem key={item} value={item}>
+                        {item}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box sx={{ mb: 6 }}>
+                <FormControl fullWidth required>
+                  <InputLabel htmlFor='payment-method' required>
+                    Thanh toán trực tuyến
+                  </InputLabel>
+                  <Select
+                    label='Thanh toán trực tuyến'
+                    labelId='payment-method'
+                    id='payment-method-select'
+                    required
+                    defaultValue='0'
+                    value={paymentCode}
+                    onChange={e => setPaymentCode(e.target.value)}
+                  >
+                    <MenuItem key={'0'} value={'0'}>
+                      Chọn hình thức thanh toán
                     </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
-            <Box sx={{ mb: 6 }}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor='payment-method'>Thanh toán trực tuyến</InputLabel>
-                <Select
-                  label='Thanh toán trực tuyến'
-                  labelId='payment-method'
-                  id='payment-method-select'
-                  required
-                  defaultValue='0'
-                  value={paymentCode}
-                  onChange={e => setPaymentCode(e.target.value)}
-                >
-                  <MenuItem key={'0'} value={'0'}>
-                    Chọn hình thức thanh toán
-                  </MenuItem>
-                  {banks.map(item => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.id}-{item.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {/* {paymentCode === '0' && (
-                  <FormHelperText sx={{ color: 'error.main' }}>Vui lòng chọn hình thức thanh toán.</FormHelperText>
-                )} */}
-              </FormControl>
-            </Box>
-            <Box sx={{ mb: 4, borderRadius: 1, border: theme => `1px solid ${theme.palette.divider}` }}>
-              <CardContent>
-                <Typography sx={{ mb: 4, fontWeight: 600 }}>Mã giảm giá</Typography>
-                <Box sx={{ mb: 4, display: 'flex', alignItems: 'center' }}>
-                  <TextField
-                    fullWidth
-                    sx={{ mr: 4 }}
-                    size='small'
-                    value={inputCodeValue}
-                    onChange={e => setInputCodeValue(e.target.value)}
-                    placeholder='Nhập mã...'
-                  />
-                  <LoadingButton
-                    variant='outlined'
-                    onClick={handleApplyCode}
-                    loading={loadingApply}
-                    loadingIndicator='Loading…'
-                    style={{ width: 180 }}
-                  >
-                    Sử dụng
-                  </LoadingButton>
-                </Box>
-                <Collapse in={settingMsgPromotionCode.isOpen}>
-                  <Alert
-                    severity={settingMsgPromotionCode.type}
-                    onClose={() => {
-                      setSettingMsgPromotionCode({ isOpen: false, type: 'info', content: '' })
-                    }}
-                  >
-                    {settingMsgPromotionCode.content}
-                  </Alert>
-                </Collapse>
-              </CardContent>
-              <Divider sx={{ my: '0 !important' }} />
-              <CardContent>
-                <Typography sx={{ mb: 4, fontWeight: 600 }}>Chi tiết đơn hàng</Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                  <Box
-                    sx={{
-                      mb: 2,
-                      gap: 2,
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      alignItems: 'center',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant='body2' sx={{ color: 'text.primary' }}>
-                      Số tháng
-                    </Typography>
-                    <Typography variant='body2'>{formatNumber.add0(month)}</Typography>
+                    {banks.map(item => (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.id}-{item.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {paymentCode === '0' && paymentCodeError && (
+                    <FormHelperText sx={{ color: 'error.main' }}>Vui lòng chọn hình thức thanh toán.</FormHelperText>
+                  )}
+                </FormControl>
+              </Box>
+              <Box sx={{ mb: 4, borderRadius: 1, border: theme => `1px solid ${theme.palette.divider}` }}>
+                <CardContent>
+                  <Typography sx={{ mb: 4, fontWeight: 600 }}>Mã giảm giá</Typography>
+                  <Box sx={{ mb: 4, display: 'flex', alignItems: 'center' }}>
+                    <TextField
+                      fullWidth
+                      sx={{ mr: 4 }}
+                      size='small'
+                      value={inputCodeValue}
+                      onChange={e => setInputCodeValue(e.target.value)}
+                      placeholder='Nhập mã...'
+                    />
+                    <LoadingButton
+                      variant='outlined'
+                      onClick={handleApplyCode}
+                      loading={loadingApply}
+                      loadingIndicator='Loading…'
+                      style={{ width: 180 }}
+                    >
+                      Sử dụng
+                    </LoadingButton>
                   </Box>
-
-                  <Box
-                    sx={{
-                      mb: 2,
-                      gap: 2,
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      alignItems: 'center',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant='body2' sx={{ color: 'text.primary' }}>
-                      Thành tiền
-                    </Typography>
-                    <Typography variant='body2'>{formatCurrency(amount, 0)} đ</Typography>
-                  </Box>
-                  {orderDetailPromotion.length > 0 && (
+                  <Collapse in={settingMsgPromotionCode.isOpen}>
+                    <Alert
+                      severity={settingMsgPromotionCode.type}
+                      onClose={() => {
+                        setSettingMsgPromotionCode({ isOpen: false, type: 'info', content: '' })
+                      }}
+                    >
+                      {settingMsgPromotionCode.content}
+                    </Alert>
+                  </Collapse>
+                </CardContent>
+                <Divider sx={{ my: '0 !important' }} />
+                <CardContent>
+                  <Typography sx={{ mb: 4, fontWeight: 600 }}>Chi tiết đơn hàng</Typography>
+                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Box
                       sx={{
                         mb: 2,
@@ -520,47 +501,79 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
                       }}
                     >
                       <Typography variant='body2' sx={{ color: 'text.primary' }}>
-                        Khuyến mãi:
+                        Số tháng
                       </Typography>
+                      <Typography variant='body2'>{formatNumber.add0(month)}</Typography>
                     </Box>
-                  )}
 
-                  {orderDetailPromotion.length > 0 &&
-                    orderDetailPromotion.map((item, index) => {
-                      return (
-                        <Box
-                          key={index}
-                          sx={{
-                            mb: 2,
-                            gap: 2,
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            alignItems: 'center',
-                            justifyContent: 'space-between'
-                          }}
-                        >
-                          <Typography variant='body2' sx={{ color: 'text.info' }}>
-                            {item.name}
-                          </Typography>
-                          <Typography
-                            variant='body2'
-                            sx={{ display: 'block', fontWeight: 600, color: 'primary.main', textDecoration: 'none' }}
+                    <Box
+                      sx={{
+                        mb: 2,
+                        gap: 2,
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      <Typography variant='body2' sx={{ color: 'text.primary' }}>
+                        Thành tiền
+                      </Typography>
+                      <Typography variant='body2'>{formatCurrency(amount, 0)} đ</Typography>
+                    </Box>
+                    {orderDetailPromotion.length > 0 && (
+                      <Box
+                        sx={{
+                          mb: 2,
+                          gap: 2,
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          alignItems: 'center',
+                          justifyContent: 'space-between'
+                        }}
+                      >
+                        <Typography variant='body2' sx={{ color: 'text.primary' }}>
+                          Khuyến mãi:
+                        </Typography>
+                      </Box>
+                    )}
+
+                    {orderDetailPromotion.length > 0 &&
+                      orderDetailPromotion.map((item, index) => {
+                        return (
+                          <Box
+                            key={index}
+                            sx={{
+                              mb: 2,
+                              gap: 2,
+                              display: 'flex',
+                              flexWrap: 'wrap',
+                              alignItems: 'center',
+                              justifyContent: 'space-between'
+                            }}
                           >
-                            {item.promotionType === PromotionType.ADDMONTH && <span>{item.months} tháng</span>}
-                            {item.promotionType === PromotionType.DISCOUNT && (
-                              <>
-                                <span>(- {item.percentage} %)</span> <span>{formatCurrency(item.amount, 0)} đ</span>
-                              </>
-                            )}
-                          </Typography>
-                        </Box>
-                      )
-                    })}
-                </Box>
-              </CardContent>
-              <Divider sx={{ my: '0 !important' }} />
-              <CardContent sx={{ py: theme => `${theme.spacing(3.5)} !important` }}>
-                {/* <Box
+                            <Typography variant='body2' sx={{ color: 'text.info' }}>
+                              {item.name}
+                            </Typography>
+                            <Typography
+                              variant='body2'
+                              sx={{ display: 'block', fontWeight: 600, color: 'primary.main', textDecoration: 'none' }}
+                            >
+                              {item.promotionType === PromotionType.ADDMONTH && <span>{item.months} tháng</span>}
+                              {item.promotionType === PromotionType.DISCOUNT && (
+                                <>
+                                  <span>(- {item.percentage} %)</span> <span>{formatCurrency(item.amount, 0)} đ</span>
+                                </>
+                              )}
+                            </Typography>
+                          </Box>
+                        )
+                      })}
+                  </Box>
+                </CardContent>
+                <Divider sx={{ my: '0 !important' }} />
+                <CardContent sx={{ py: theme => `${theme.spacing(3.5)} !important` }}>
+                  {/* <Box
                   sx={{
                     gap: 2,
                     display: 'flex',
@@ -574,41 +587,41 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
                     {formatNumber.add0(totalMonth)} tháng
                   </Typography>
                 </Box> */}
-                <Box
-                  sx={{
-                    gap: 2,
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography sx={{ fontWeight: 600 }}>Tổng tiền</Typography>
-                  <Typography sx={{ fontWeight: 600 }} color={'green'}>
-                    {formatCurrency(totalAmount, 0)} đ
-                  </Typography>
-                </Box>
-              </CardContent>
-            </Box>
-            {/* <Box sx={{ mb: 6 }}>
+                  <Box
+                    sx={{
+                      gap: 2,
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      alignItems: 'center',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography sx={{ fontWeight: 600 }}>Tổng tiền</Typography>
+                    <Typography sx={{ fontWeight: 600 }} color={'green'}>
+                      {formatCurrency(totalAmount, 0)} đ
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Box>
+              {/* <Box sx={{ mb: 6 }}>
               <TextField rows={3} multiline fullWidth label='Ghi chú' placeholder='Ghi chú' />
             </Box> */}
 
-            <div>
-              <Button
-                size='large'
-                disabled={loading}
-                fullWidth
-                variant='contained'
-                onClick={createOrder}
-                sx={{ mr: 4 }}
-              >
-                {loading && <CircularProgress size={20} />}
-                Thanh toán
-              </Button>
-            </div>
-            <div>
-              {/* <Box sx={{ p: 4, borderRadius: 1, backgroundColor: 'action.hover' }}>
+              <div>
+                <Button
+                  size='large'
+                  disabled={loading}
+                  fullWidth
+                  variant='contained'
+                  onClick={createOrder}
+                  sx={{ mr: 4 }}
+                >
+                  {loading && <CircularProgress size={20} />}
+                  Thanh toán
+                </Button>
+              </div>
+              <div>
+                {/* <Box sx={{ p: 4, borderRadius: 1, backgroundColor: 'action.hover' }}>
                 <Typography sx={{ mb: 2, fontWeight: 600 }}>Buying gift for a loved one?</Typography>
                 <Typography sx={{ mb: 2, color: 'text.secondary' }}>
                   Gift wrap and personalized message on card, Only for $2.
@@ -623,32 +636,33 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
                   Add a gift wrap
                 </Typography>
               </Box> */}
-              <br />
-              <Alert severity='success'>
-                Gói sẽ được kích hoạt tự động ngay lập tức sau khi thanh toán thành công.
-              </Alert>
-            </div>
-          </>
-        )}
+                <br />
+                <Alert severity='success'>
+                  Gói sẽ được kích hoạt tự động ngay lập tức sau khi thanh toán thành công.
+                </Alert>
+              </div>
+            </>
+          )}
 
-        {plan && plan.price === 0 && (
-          <>
-            <div>
-              <Button
-                size='large'
-                fullWidth
-                variant='contained'
-                disabled={loading}
-                onClick={createOrder}
-                sx={{ mr: 4 }}
-              >
-                {loading && <CircularProgress size={20} />}
-                Đăng ký
-              </Button>
-            </div>
-          </>
-        )}
-      </Box>
+          {plan && plan.price === 0 && (
+            <>
+              <div>
+                <Button
+                  size='large'
+                  fullWidth
+                  variant='contained'
+                  disabled={loading}
+                  onClick={createOrder}
+                  sx={{ mr: 4 }}
+                >
+                  {loading && <CircularProgress size={20} />}
+                  Đăng ký
+                </Button>
+              </div>
+            </>
+          )}
+        </Box>
+      </LoadingSpinner>
     </Drawer>
   )
 }

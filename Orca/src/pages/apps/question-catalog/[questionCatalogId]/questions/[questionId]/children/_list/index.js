@@ -102,7 +102,7 @@ const QuestionTable = () => {
         catalogId: 0,
         questionType: 0,
         categoryId: 0,
-        parentId: questionId,
+        parentId: parseInt(questionId),
         keyword: keyword,
         page: page,
         limit: rowsPerPage

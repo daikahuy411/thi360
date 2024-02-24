@@ -40,11 +40,10 @@ const Nav = () => {
             Chi tiết
           </span>
         )}
-
         {type === '9' && (!currentQuestion || currentQuestion.id == 0) && (
-          <Link className={`finger-tabs__tab flex-none disabled`} title='Câu hỏi con' href={'#'}>
+          <span className={`finger-tabs__tab flex-none disabled`} title='Câu hỏi con'>
             Câu hỏi con
-          </Link>
+          </span>
         )}
         {currentQuestion && currentQuestion.id > 0 && currentQuestion.questionTypeId == 9 && (
           <Link
