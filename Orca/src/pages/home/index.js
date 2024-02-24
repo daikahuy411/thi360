@@ -642,7 +642,7 @@ const HomePage = () => {
             <div className='phone-vr'>
               <div className='phone-vr-circle-fill'></div>
               <div className='phone-vr-img-circle'>
-                <a target='_blank' href='https://zalo.me/0968900482' rel="noreferrer">
+                <a target='_blank' href='https://zalo.me/g/nygeoz072' rel="noreferrer">
                   <img src='http://v8.mystudy.vn/wp-content/plugins/button-contact-vr/img/zalo.png' />
                 </a>
               </div>

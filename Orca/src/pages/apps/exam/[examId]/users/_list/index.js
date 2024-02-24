@@ -1,17 +1,11 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import ExamUserApi from 'api/exam-user-api'
 import { useRouter } from 'next/router'
 import UserExamAttemptHistoryDialog from 'pages/shared/user-exam-attempt-history-dialog'
 import UserModal from 'pages/shared/user-modal'
 import Draggable from 'react-draggable'
-import {
-  Helmet,
-  HelmetProvider
-} from 'react-helmet-async'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import toast from 'react-hot-toast'
 
 import Icon from '@core/components/icon'
@@ -250,7 +244,9 @@ const UserTable = () => {
                     inputProps={{ 'aria-label': 'select all desserts' }}
                   />
                 </TableCell>
-                <TableCell style={{ width: 50 }}>Xem</TableCell>
+                <TableCell align='center' style={{ width: 30 }}>
+                  Xem
+                </TableCell>
                 <TableCell style={{}}>Tên đăng nhập</TableCell>
                 <TableCell style={{ width: 280 }}>Tên đầy đủ </TableCell>
                 <TableCell style={{ width: 120 }}>Giới tính</TableCell>

@@ -201,7 +201,7 @@ export default function TestsDialog({ testGroupId, examId, itemId, onClose, open
                     <TableCell style={{ width: 120 }}>Số câu hỏi</TableCell>
                     <TableCell style={{ width: 120 }}>Số trả lời</TableCell>
                     <TableCell style={{ width: 180 }}>Hình thức</TableCell>
-                    <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
+                    <TableCell style={{ width: 200}}>Ngày tạo</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

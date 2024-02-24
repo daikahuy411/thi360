@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 
 import ExamItemApi from 'api/exam-item-api'
 import moment from 'moment'
@@ -11,14 +8,8 @@ import EntityInfoModal from 'pages/shared/entity-info-modal'
 import TestsDialog from 'pages/shared/tests-dialog'
 import Draggable from 'react-draggable'
 import toast from 'react-hot-toast'
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
-import {
-  selectedExamItem,
-  selectExamItem
-} from 'store/slices/examItemSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectedExamItem, selectExamItem } from 'store/slices/examItemSlice'
 
 import Icon from '@core/components/icon'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -262,7 +253,11 @@ const TestsList = () => {
                                 </TableCell>
                                 <TableCell style={{ width: 30, textAlign: 'center' }}>XEM</TableCell>
                                 <TableCell>Tên</TableCell>
-                                <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
+                                <TableCell>Số phần</TableCell>
+                                <TableCell>Số câu hỏi</TableCell>
+                                <TableCell>Số trả lời</TableCell>
+                                <TableCell>Hình thức</TableCell>
+                                <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -297,6 +292,18 @@ const TestsList = () => {
                                       </TableCell>
                                       <TableCell component='th' scope='row'>
                                         <Typography variant='body1'> {row.name}</Typography>
+                                      </TableCell>
+                                      <TableCell component='th' scope='row'>
+                                        <Typography variant='body1'> {row.totalSection}</Typography>
+                                      </TableCell>
+                                      <TableCell component='th' scope='row'>
+                                        <Typography variant='body1'> {row.totalQuestion}</Typography>
+                                      </TableCell>
+                                      <TableCell component='th' scope='row'>
+                                        <Typography variant='body1'> {row.totalAnswer}</Typography>
+                                      </TableCell>
+                                      <TableCell component='th' scope='row'>
+                                        <Typography variant='body1'> {row.testTypeName}</Typography>
                                       </TableCell>
                                       <TableCell>
                                         <Typography variant='body1'>

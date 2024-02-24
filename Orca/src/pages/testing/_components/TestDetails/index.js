@@ -1536,7 +1536,7 @@ class TestDetails extends React.Component {
                           <div className='ph3 pv2 flex justify-between bt bb bw1 b--white'>
                             <span className='flex-grow-1 flex darkest-blue items-center'>
                               {this.state.examAttempt && this.state.examAttempt.user && (
-                                <span>
+                                <span style={{fontSize: '0.9rem', textOverflow: 'ellipsis'}}>
                                   {this.state.examAttempt.user.name} ({this.state.examAttempt.user.userName})
                                 </span>
                               )}

@@ -251,12 +251,11 @@ const UserTable = () => {
                           inputProps={{ 'aria-label': 'select all desserts' }}
                         />
                       </TableCell>
-                      <TableCell style={{ width: 30 }}>Sửa</TableCell>
+                      <TableCell align='center' style={{ width: 30 }}>Sửa</TableCell>
                       <TableCell style={{ width: 210 }}>Tên đăng nhập</TableCell>
                       <TableCell>Tên đầy đủ </TableCell>
-                      <TableCell style={{ width: 120 }}>Giới tính</TableCell>
                       <TableCell style={{ width: 180 }}>Lớp</TableCell>
-                      <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
+                      <TableCell style={{ width: 200}}>Ngày tạo</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -294,8 +293,6 @@ const UserTable = () => {
                             </TableCell>
                             <TableCell>
                               <Typography variant='body1'>{row.fullName}</Typography>
-                            </TableCell>
-                            <TableCell>
                               <Typography variant='body1'>{row.genderName}</Typography>
                             </TableCell>
                             <TableCell>

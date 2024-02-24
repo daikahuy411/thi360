@@ -189,7 +189,7 @@ const ItemsTable = ({ data }) => {
               <TableCell>Tên</TableCell>
               <TableCell>Loại cấu hình</TableCell>
               <TableCell>Số câu hỏi</TableCell>
-              <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
+              <TableCell style={{ width: 200}}>Ngày tạo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

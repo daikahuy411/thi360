@@ -274,13 +274,13 @@ const ExamTable = () => {
                       inputProps={{ 'aria-label': 'select all desserts' }}
                     />
                   </TableCell>
-                  <TableCell style={{ width: 30 }}>Sửa</TableCell>
+                  <TableCell align='center' style={{ width: 30 }}>Sửa</TableCell>
                   <TableCell>Tên</TableCell>
                   <TableCell style={{ width: 120 }}>Hình thức</TableCell>
                   <TableCell align='right'>Lượt thi</TableCell>
                   <TableCell align='right'>Học viên</TableCell>
                   <TableCell>Trạng thái</TableCell>
-                  <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
+                  <TableCell style={{ width: 200}}>Ngày tạo</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

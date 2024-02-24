@@ -1,9 +1,5 @@
 'use client'
-import React, {
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import ReactHtmlParser from 'react-html-parser'
 
@@ -145,9 +141,16 @@ export default function MatchingQuestion({ question, onChanged, data, readOnly }
     jsPlumbInstance.repaintEverything()
   }, [data, jsPlumbInstance])
 
+  const handleScroll = () => {
+    console.log('scroll')
+    if (jsPlumbInstance) {
+      jsPlumbInstance.repaintEverything()
+    }
+  }
+
   return (
     <>
-      <div ref={container}>
+      <div ref={container} onScroll={handleScroll}>
         <table style={{ width: '100%' }}>
           <tr>
             <td style={{ width: '50%' }}>

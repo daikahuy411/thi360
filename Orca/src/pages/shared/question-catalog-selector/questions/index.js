@@ -9,7 +9,10 @@ import Link from 'next/link'
 
 import Icon from '@core/components/icon'
 import LoadingSpinner from '@core/components/loading-spinner'
-import { mdilTag } from '@mdi/light-js'
+import {
+  mdilInformation,
+  mdilTag
+} from '@mdi/light-js'
 import IconReact from '@mdi/react'
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import Button from '@mui/material/Button'
@@ -189,8 +192,7 @@ const Questions = props => {
                           <TableCell style={{ width: 160 }}>Mã</TableCell>
                           <TableCell>Nội dung</TableCell>
                           <TableCell style={{ width: 180 }}>Danh mục</TableCell>
-                          <TableCell style={{ width: 180 }}>Loại câu hỏi</TableCell>
-                          <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
+                          <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -232,9 +234,16 @@ const Questions = props => {
                                   <Typography variant='body1'>{row.id}</Typography>
                                 </TableCell>
                                 <TableCell component='th' scope='row'>
-                                  {row.shortContent}
+                                  <Typography variant='body1'>{row.shortContent}</Typography>
                                 </TableCell>
                                 <TableCell>
+                                  <Chip
+                                    icon={<IconReact path={mdilInformation} title='Bộ Câu hỏi' size={1} />}
+                                    label={row.questionTypeName}
+                                    style={{ marginBottom: 2 }}
+                                    color='secondary'
+                                    variant='outlined'
+                                  />
                                   {row.catalog ? (
                                     <Chip
                                       icon={<IconReact path={mdilTag} title='Bộ Câu hỏi' size={1} />}
@@ -253,7 +262,6 @@ const Questions = props => {
                                     />
                                   ) : null}
                                 </TableCell>
-                                <TableCell>{row.questionTypeName}</TableCell>
                                 <TableCell>
                                   <Typography variant='body1'>
                                     {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}

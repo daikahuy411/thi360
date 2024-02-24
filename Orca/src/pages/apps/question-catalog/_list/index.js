@@ -260,11 +260,11 @@ const QuestionCatalogTable = () => {
                     inputProps={{ 'aria-label': 'select all desserts' }}
                   />
                 </TableCell>
-                <TableCell style={{ width: 30 }}>Sửa</TableCell>
+                <TableCell align='center' style={{ width: 30 }}>Sửa</TableCell>
                 <TableCell>Tên</TableCell>
                 <TableCell style={{ width: 130, textAlign: 'right' }}>Danh mục</TableCell>
                 <TableCell style={{ width: 130, textAlign: 'right' }}>Câu hỏi</TableCell>
-                <TableCell style={{ width: 180}}>Ngày tạo</TableCell>
+                <TableCell style={{ width: 200}}>Ngày tạo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
