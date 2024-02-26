@@ -62,7 +62,7 @@ const HomePage = () => {
                 <div className='row'>
                   <div className='col-12 text-center'>
                     <div className='section-heading'>
-                      <h2>Kỳ thi xem gần đây </h2>
+                      <h6 style={{fontSize: '1.4rem'}}>Kỳ thi xem gần đây </h6>
                     </div>
                     <p>Top 6 Kỳ thi tham gia gần nhất </p>
                   </div>
@@ -95,7 +95,7 @@ const HomePage = () => {
         <div className='row'>
           <div className='col-12 text-center'>
             <div className='section-heading'>
-              <h2>Chuẩn bị cho Kỳ thi của bạn</h2>
+              <h6 style={{fontSize: '1.4rem'}}>Chuẩn bị cho Kỳ thi của bạn</h6>
             </div>
             <p>Hãy trải nghiệm hệ thống thi online ngay hôm nay và khám phá sự tiến bộ trong học tập của bạn</p>
           </div>
@@ -156,10 +156,10 @@ const HomePage = () => {
         <div className='row'>
           <div className='col-12 text-center'>
             <div className='section-heading'>
-              <h2>
+              <h6 style={{fontSize: '1.4rem'}}>
                 3 bước để trải nghiệm LMS <br />
                 miễn phí với đầy đủ tính năng
-              </h2>
+              </h6>
             </div>
           </div>
         </div>
@@ -201,7 +201,7 @@ const HomePage = () => {
         <div className='row'>
           <div className='col-12 text-center'>
             <div className='section-heading'>
-              <h2>Tổ chức Thi online dễ dàng với Thi360 LMS</h2>
+              <h6 style={{fontSize: '1.4rem'}}>Tổ chức Thi online dễ dàng với Thi360 LMS</h6>
             </div>
             <p>
               Hãy để phần mềm dễ dàng vận hành của chúng tôi giúp bạn tiết kiệm thời gian và nỗ lực trong quá trình quản
@@ -228,7 +228,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>Đầy đủ nghiệp vụ</h5>
+                    <h6 style={{fontSize: '1.2rem'}}>Đầy đủ nghiệp vụ</h6>
                     <p className='text-sm'>
                       Giải pháp hoàn hảo cho nhu cầu nghiệp vụ của bạn. Với cam kết cung cấp nghiệp vụ đầy đủ và tiện
                       lợi, chúng tôi đảm bảo rằng bạn sẽ tiết kiệm thời gian và nỗ lực trong quá trình làm việc.
@@ -259,7 +259,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>Hướng dẫn chi tiết</h5>
+                    <h6 style={{fontSize: '1.2rem'}}>Hướng dẫn chi tiết</h6>
                     <p className='text-sm'>
                       Tài liệu hướng dẫn cung cấp cho bạn một hướng dẫn chi tiết và dễ hiểu về cách sử dụng hệ thống.
                       Hãy khám phá chức năng thông qua tài liệu hướng dẫn đầy đủ và chi tiết.
@@ -283,7 +283,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>Hỗ trợ 24/7</h5>
+                    <h6 style={{fontSize: '1.2rem'}}>Hỗ trợ 24/7</h6>
                     <p className='text-sm'>
                       Với cam kết sẵn sàng phục vụ bạn mọi lúc, mọi nơi, chúng tôi đảm bảo rằng bạn sẽ luôn có sự hỗ trợ
                       khi cần thiết.
@@ -307,7 +307,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>8 dạng câu hỏi phổ biến</h5>
+                    <h6 style={{fontSize: '1.2rem'}}>8 dạng câu hỏi phổ biến</h6>
                     <p className='text-sm'>
                       Hệ thống cung cấp 8 dạng câu hỏi Trắc nghiệm và Tự luận phổ biến đáp ứng hầu hết các dạng thi thực
                       tế.
@@ -331,7 +331,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>2 chế độ Kỳ thi</h5>
+                    <h6 style={{fontSize: '1.2rem'}}>2 chế độ Kỳ thi</h6>
                     <p className='text-sm'>
                       Chế độ Ôn luyện cho phép Học viên dễ dàng Ôn thi đạt hiệu quả tốt nhất. Chế độ Kiểm tra mô phỏng
                       bài thư như thật với nhiều tùy chọn hiển thị đáp án sau khi nộp bài.
@@ -362,7 +362,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>Chấm điểm tự luận</h5>
+                    <h6 style={{fontSize: '1.2rem'}}>Chấm điểm tự luận</h6>
                     <p className='text-sm'>
                       Hệ thống cung cấp chức năng Chấm điểm tự luận cho Giáo viên chấm bài thi có câu hỏi Tự luận một
                       cách dễ dàng.
@@ -386,7 +386,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>Tùy biến Cấu trúc đề thi</h5>
+                    <h6 style={{fontSize: '1.2rem'}}>Tùy biến Cấu trúc đề thi</h6>
                     <p className='text-sm'>
                       Tùy biến cấu trúc đề thi theo các phần thi. Mỗi phần thi có thể lấy câu hỏi trực tiếp hoặc ngẫu
                       nhiên linh hoạt. Ngoài ra, Giáo viên có thể định nghĩa điểm cho từng phần thi.
@@ -410,7 +410,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>Báo cáo chi tiết</h5>
+                    <h6 style={{fontSize: '1.2rem'}}>Báo cáo chi tiết</h6>
                     <p className='text-sm'>
                       Cung cấp báo cáo chi tiết kết quả thi của Học viên trong Kỳ thi. Báo cáo chi tiết tỷ lệ đúng/sai
                       trên câu hỏi trong đề thi.
@@ -434,7 +434,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>Xuất đề thi offline</h5>
+                    <h6 style={{fontSize: '1.2rem'}}>Xuất đề thi offline</h6>
                     <p className='text-sm'>Giáo viên có thể xuất Đề thi dưới dạng word để thi offline.</p>
                   </div>
                 </div>
@@ -455,7 +455,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>Giao diện thân thiện</h5>
+                    <h6 style={{fontSize: '1.2rem'}}>Giao diện thân thiện</h6>
                     <p className='text-sm'>
                       Với giao diện người dùng thân thiện và dễ sử dụng, bạn sẽ có thể nhanh chóng làm quen và bắt đầu
                       sử dụng phần mềm một cách dễ dàng. .
@@ -480,7 +480,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>Điều hướng thông minh</h5>
+                    <h6 style={{fontSize: '1.2rem'}}>Điều hướng thông minh</h6>
                     <p className='text-sm'>
                       Không chỉ cung cấp các tính năng đầy đủ, phần mềm của chúng tôi còn mang lại sự tiện lợi tuyệt
                       đối, giúp bạn dễ dàng điều hướng và tận dụng tối đa các tính năng.
@@ -505,7 +505,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div className='col-lg-9 col-12'>
-                    <h5>&amp; nhiều tính năng khác</h5>
+                    <h6 style={{fontSize: '1.2rem'}}>&amp; nhiều tính năng khác</h6>
                     <p className='text-sm'>
                       Truy cập trang Hướng dẫn để khám phá các tính năng khác mà Thi360 cung cấp giúp Giáo viên dễ dàng
                       tổ chức Kỳ thi online.
@@ -521,7 +521,7 @@ const HomePage = () => {
         <div className='row'>
           <div className='col-12 text-center'>
             <div className='section-heading'>
-              <h2>Bạn cần trợ giúp</h2>
+              <h6 style={{fontSize: '1.4rem'}}>Bạn cần trợ giúp</h2>
             </div>
             <p>Chúng tôi luôn sẵn sàng trợ giúp.</p>
           </div>
@@ -564,7 +564,7 @@ const HomePage = () => {
         <div className='row'>
           <div className='col-12 text-center'>
             <div className='section-heading'>
-              <h2> Số #1 về Thi trực tuyến</h2>
+              <h6 style={{fontSize: '1.4rem'}}> Số #1 về Thi trực tuyến</h2>
             </div>
           </div>
         </div>

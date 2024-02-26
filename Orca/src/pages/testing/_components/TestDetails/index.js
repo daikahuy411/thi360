@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createRef } from 'react'
 
 import TestingApi from 'api/testing-api'
 import authConfig from 'configs/auth'
@@ -73,6 +73,8 @@ class TestDetails extends React.Component {
     super(props)
     this.state.mode = props.mode
   }
+
+  userAnswers = createRef({})
 
   loadExamAttempt(token) {
     this.setState({ loading: true })
@@ -241,6 +243,28 @@ class TestDetails extends React.Component {
   }
 
   saveAndNext() {
+    // Đối với câu hỏi dạng: FB, ORDER, MATCHING cần phải update state.userAnswers từ ref userAnswers
+    // Do các dạng câu hỏi này, hệ thống sử dụng ref userAnswers để lưu tạm thời và ko re-render child component
+    // để tránh event.
+    if (this.state.currentQuestion.questionTypeId == QuestionType.FB) {
+      let userAnswers = this.state.userAnswers
+      userAnswers[this.state.currentQuestionId] = this.userAnswers.current[this.state.currentQuestionId]
+
+      this.setState(
+        prevState => ({
+          ...prevState,
+          userAnswers: userAnswers
+        }),
+        () => {
+          this.doSave()
+        }
+      )
+    } else {
+      doSave()
+    }
+  }
+
+  doSave() {
     let currentQuestionIndex = 0
     currentQuestionIndex = _.findIndex(this.state.examAttempt.testGroup.questionMaps, {
       id: this.state.currentQuestionId
@@ -508,32 +532,35 @@ class TestDetails extends React.Component {
   /// Cập nhật câu trả lời vào State
   saveQuestionAttemptedState = function (content) {
     const questionId = this.state.currentQuestion.id
+    let currentUserAnswers = this.userAnswers.current ?? {}
+    currentUserAnswers[questionId] = content
+    this.userAnswers.current = { ...currentUserAnswers }
 
-    // //Nếu câu hỏi đã submit câu trả lời thì không cho phép thay đổi
-    const questionAttempteds = [...this.state.userExamAttemptTracking.questionAttempteds]
-    const questionVisiteds = [...this.state.userExamAttemptTracking.questionVisiteds]
+    // // //Nếu câu hỏi đã submit câu trả lời thì không cho phép thay đổi
+    // const questionAttempteds = [...this.state.userExamAttemptTracking.questionAttempteds]
+    // const questionVisiteds = [...this.state.userExamAttemptTracking.questionVisiteds]
 
-    if (this.state.mode !== 2 && questionVisiteds.indexOf(questionId) < 0) {
-      questionVisiteds.push(questionId)
-    }
+    // if (this.state.mode !== 2 && questionVisiteds.indexOf(questionId) < 0) {
+    //   questionVisiteds.push(questionId)
+    // }
 
-    if (questionAttempteds.indexOf(questionId) < 0) {
-      questionAttempteds.push(questionId)
-    }
+    // if (questionAttempteds.indexOf(questionId) < 0) {
+    //   questionAttempteds.push(questionId)
+    // }
 
-    let userAnswers = this.state.userAnswers
-    userAnswers[questionId] = content
+    // let userAnswers = this.state.userAnswers
+    // userAnswers[questionId] = content
 
-    this.setState(prevState => ({
-      ...prevState,
-      userAnswers: userAnswers,
+    // this.setState(prevState => ({
+    //   ...prevState,
+    //   userAnswers: userAnswers,
 
-      userExamAttemptTracking: {
-        ...prevState.userExamAttemptTracking,
-        questionAttempteds: questionAttempteds,
-        questionVisiteds: questionVisiteds
-      }
-    }))
+    //   userExamAttemptTracking: {
+    //     ...prevState.userExamAttemptTracking,
+    //     questionAttempteds: questionAttempteds,
+    //     questionVisiteds: questionVisiteds
+    //   }
+    // }))
   }
 
   viewQuestion(questionId, parentQuestionId, sectionItemId, sectionId) {
@@ -703,8 +730,8 @@ class TestDetails extends React.Component {
     }
   }
 
-  getUserAnswerOfCurrentQuestion = function () {
-    return this.state.userAnswers[this.state.currentQuestionId] ?? null
+  getUserAnswerOfCurrentQuestion = function (questionId) {
+    return this.state.userAnswers[questionId] ?? {}
   }
 
   render() {
@@ -1338,9 +1365,8 @@ class TestDetails extends React.Component {
                                       <FbQuestion
                                         onChanged={content => this.saveQuestionAttemptedState(content)}
                                         question={this.state.currentQuestion}
-                                        data={this.getUserAnswerOfCurrentQuestion()}
+                                        data={this.state.userAnswers}
                                       />
-                                      {/* <QuestionContent question={this.state.currentQuestion} /> */}
                                     </span>
                                     <div className='relative dn-l mb4'>
                                       <div
@@ -1349,9 +1375,7 @@ class TestDetails extends React.Component {
                                           maxHeight: '6.4rem',
                                           lineHeight: '1.6rem'
                                         }}
-                                      >
-                                        {/* <QuestionContent question={this.state.currentQuestion} /> */}
-                                      </div>
+                                      ></div>
                                     </div>
                                     {/* <div className='flex flex-column w-100'>
                                       <FbQuestion
@@ -1409,7 +1433,7 @@ class TestDetails extends React.Component {
                                       <MatchingQuestion
                                         onChanged={ids => this.saveQuestionAttemptedState(ids)}
                                         question={this.state.currentQuestion}
-                                        data={this.getUserAnswerOfCurrentQuestion()}
+                                        data={this.state.userAnswers}
                                       />
                                     </div>
                                   </div>
@@ -1536,7 +1560,7 @@ class TestDetails extends React.Component {
                           <div className='ph3 pv2 flex justify-between bt bb bw1 b--white'>
                             <span className='flex-grow-1 flex darkest-blue items-center'>
                               {this.state.examAttempt && this.state.examAttempt.user && (
-                                <span style={{fontSize: '0.9rem', textOverflow: 'ellipsis'}}>
+                                <span style={{ fontSize: '0.9rem', textOverflow: 'ellipsis' }}>
                                   {this.state.examAttempt.user.name} ({this.state.examAttempt.user.userName})
                                 </span>
                               )}

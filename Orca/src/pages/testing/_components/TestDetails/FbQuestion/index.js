@@ -1,6 +1,6 @@
 import React, {
   Component,
-  useState
+  useRef
 } from 'react'
 
 import JsxParser from 'react-jsx-parser'
@@ -16,14 +16,19 @@ class TextQuestion extends Component {
     question: {}
   }
 
+  state = {
+    value: this.props.data && this.props.data[this.props.name] ? this.props.data[this.props.name] : ''
+  }
+
+  onChange = value => {
+    this.setState({ value: value })
+    this.props.eventHandler(`${this.props.name}`, value)
+  }
+
   render() {
     return (
       <>
-        <TextField
-          value={this.props.data && this.props.data[this.props.name] ? this.props.data[this.props.name] : ''}
-          size='small'
-          onChange={e => this.props.eventHandler(`${this.props.name}`, e.target.value)}
-        />
+        <TextField value={this.state.value} size='small' onChange={e => this.onChange(e.target.value)} />
       </>
     )
   }
@@ -36,16 +41,20 @@ class SelectQuestion extends Component {
     question: {}
   }
 
+  state = {
+    value: this.props.data && this.props.data[this.props.name] ? this.props.data[this.props.name] : ''
+  }
+
+  onChange = value => {
+    this.setState({ value: value })
+    this.props.eventHandler(`${this.props.name}`, value)
+  }
+
   render() {
     return (
       <>
         {this.props.question && (
-          <Select
-            label=''
-            size='small'
-            value={this.props.data && this.props.data[this.props.name] ? this.props.data[this.props.name] : ''}
-            onChange={e => this.props.eventHandler(`${this.props.name}`, e.target.value)}
-          >
+          <Select label='' value={this.state.value} size='small' onChange={e => this.onChange(e.target.value)}>
             {this.props.question.subQuestions[this.props.name].answers.map(item => (
               <MenuItem value={item.id}>{item.content}</MenuItem>
             ))}
@@ -57,14 +66,12 @@ class SelectQuestion extends Component {
 }
 
 const FbQuestion = ({ question, onChanged, data }) => {
-  const [answer, setAnswer] = useState(data)
+  let answer = useRef({})
 
   const onChange = (name, value) => {
-    let newAnswer = { ...answer }
-    newAnswer[name] = value
-    setAnswer({ ...newAnswer })
+    answer.current[name] = value
     if (onChanged) {
-      onChanged(newAnswer)
+      onChanged({ ...answer.current })
     }
   }
 
@@ -74,7 +81,7 @@ const FbQuestion = ({ question, onChanged, data }) => {
         autoCloseVoidElements
         bindings={{
           question: question,
-          data: answer,
+          data: data[question.id],
           onChanged: (name, value) => {
             onChange(name, value)
           }

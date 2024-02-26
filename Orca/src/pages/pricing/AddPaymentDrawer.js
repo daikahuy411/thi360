@@ -437,7 +437,14 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
                     required
                     defaultValue='0'
                     value={paymentCode}
-                    onChange={e => setPaymentCode(e.target.value)}
+                    onChange={e => {
+                      setPaymentCode(e.target.value)
+                      if (e.target.value !== '0') {
+                        setPaymentCodeError(false)
+                      } else {
+                        setPaymentCodeError(true)
+                      }
+                    }}
                   >
                     <MenuItem key={'0'} value={'0'}>
                       Chọn hình thức thanh toán
@@ -610,7 +617,7 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
               <div>
                 <Button
                   size='large'
-                  disabled={loading}
+                  disabled={loading || paymentCodeError}
                   fullWidth
                   variant='contained'
                   onClick={createOrder}

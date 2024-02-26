@@ -14,12 +14,12 @@ const PricingHeader = props => {
       <Typography variant='h5' >
         Bảng Giá Dịch Vụ
       </Typography>
-      <Box sx={{ mt: 2.5, mb: 2 }}>
+      {/* <Box sx={{ mt: 2.5, mb: 2 }}>
         <Typography variant='body2'>
           Tất cả các gói dịch vụ được phân loại tính năng để phù hợp với từng đối tượng người dùng.
         </Typography>
         <Typography variant='body2'>Chọn gói tốt nhất và phù hợp nhất với nhu cầu của bạn.</Typography>
-      </Box>
+      </Box> */}
     </Box>
   )
 }

@@ -650,7 +650,7 @@ const EditAccountPage = () => {
                             />
                           </FormControl>
                         </Grid>
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                           <FormControl fullWidth variant='outlined'>
                             <Controller
                               name='organizationId'
@@ -692,7 +692,7 @@ const EditAccountPage = () => {
                               )}
                             />
                           </FormControl>
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={12}>
                           <FormControl>
                             <FormLabel>Phân quyền</FormLabel>

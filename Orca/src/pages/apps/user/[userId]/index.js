@@ -71,7 +71,7 @@ const schema = yup.object().shape(
       otherwise: yup.string().nullable().notRequired()
     }),
     gender: yup.number().required('* bắt buộc').moreThan(-1, '* bắt buộc'),
-    organizationId: yup.number().required('* bắt buộc').moreThan(0, '* bắt buộc'),
+    // organizationId: yup.number().required('* bắt buộc').moreThan(0, '* bắt buộc'),
     phoneNumber: yup
       .string()
       .nullable()
@@ -494,11 +494,11 @@ const EditUserPage = () => {
                           </Grid>
                         )}
                         <Grid item xs={12}>
-                          <FormControl required fullWidth variant='outlined'>
+                          <FormControl fullWidth variant='outlined'>
                             <Controller
                               name='organizationId'
                               control={control}
-                              rules={{ required: true }}
+                              // rules={{ required: true }}
                               render={({ field: { value, onChange } }) => (
                                 <>
                                   <InputLabel htmlFor='outlined-adornment-parent-class'>Lớp học</InputLabel>
@@ -508,7 +508,7 @@ const EditUserPage = () => {
                                       readOnly: true,
                                       className: 'Mui-disabled'
                                     }}
-                                    value={organizationSelected.name ?? 0}
+                                    value={organizationSelected.name ?? ''}
                                     endAdornment={
                                       <InputAdornment position='end'>
                                         <IconButton edge='end' onClick={() => cleanOrganization()}>
@@ -530,11 +530,11 @@ const EditUserPage = () => {
                                 </>
                               )}
                             />
-                            {errors.organizationId && (
+                            {/* {errors.organizationId && (
                               <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-organizationId'>
                                 {errors.organizationId.message}
                               </FormHelperText>
-                            )}
+                            )} */}
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -612,22 +612,6 @@ const EditUserPage = () => {
                             )}
                           </FormControl>
                         </Grid>
-                        {/* <Grid item xs={12} md={6}>
-                          <FormControlLabel
-                            name='isDayBoarding'
-                            control={
-                              <Controller
-                                name='isDayBoarding'
-                                control={control}
-                                rules={{ required: false }}
-                                render={({ field: { value, onChange } }) => (
-                                  <Checkbox checked={value ?? false} onChange={onChange} />
-                                )}
-                              />
-                            }
-                            label='Bán trú'
-                          />
-                        </Grid> */}
                         <Grid item xs={12}>
                           <FormControl fullWidth>
                             <Controller

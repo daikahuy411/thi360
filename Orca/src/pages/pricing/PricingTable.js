@@ -16,19 +16,13 @@ const data = {
       pro: true,
       starter: true,
       enterprise: true,
-      feature: 'Quản lý ngân hàng câu hỏi với 7 loại định dạng'
+      feature: 'Quản lý ngân hàng câu hỏi với 8 loại định dạng phổ biến.'
     },
     {
       pro: false,
       starter: false,
       enterprise: true,
-      feature: 'Quản lý Lớp học, Học viên'
-    },
-    {
-      pro: true,
-      starter: false,
-      enterprise: true,
-      feature: 'Import Ngân hàng câu hỏi bằng Excel'
+      feature: 'Quản lý Lớp học, Học viên.'
     },
     {
       starter: false,
@@ -46,20 +40,8 @@ const data = {
       starter: false,
       enterprise: true,
       pro: 'Add-On Available',
-      feature: 'Removal of Front branding'
+      feature: 'Chấm điểm tự luận'
     },
-    {
-      pro: false,
-      starter: false,
-      enterprise: true,
-      feature: 'Active maintenance & support'
-    },
-    {
-      pro: false,
-      starter: false,
-      enterprise: true,
-      feature: 'Data storage for 365 days'
-    }
   ],
   portal: [
     {
@@ -122,7 +104,7 @@ const PricingTable = ({ type }) => {
             <Typography variant='h5' sx={{ mb: 2.5 }}>
               Tính năng của LMS
             </Typography>
-            <Typography variant='body2'>Stay cool, we have a 48-hour money back guarantee!</Typography>
+            <Typography variant='body2'>Chúng tôi hoàn tiền nếu bạn không hài lòng.</Typography>
           </Box>
           <Box
             sx={{
@@ -176,7 +158,7 @@ const PricingTable = ({ type }) => {
           </Box>
         </div>
       )}
-      {(type == 'student') && (
+      {/* {(type == 'student') && (
         <div>
           <Box sx={{ mb: 12, textAlign: 'center' }}>
             <Typography variant='h5' sx={{ mb: 2.5 }}>
@@ -235,7 +217,7 @@ const PricingTable = ({ type }) => {
             </TableContainer>
           </Box>
         </div>
-      )}
+      )} */}
     </>
   )
 }
