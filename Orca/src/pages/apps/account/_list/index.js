@@ -149,7 +149,7 @@ const UserTable = () => {
         <Typography sx={{ flex: '1 1 100%' }} variant='h5' id='tableTitle' component='div'>
           {totalItem} Người dùng
         </Typography>
-        &nbsp; &nbsp;
+        {/* &nbsp; &nbsp;
         <Tooltip title='Import'>
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:upload' />
@@ -160,7 +160,7 @@ const UserTable = () => {
           <IconButton sx={{ color: 'text.secondary' }}>
             <Icon icon='mdi:download' />
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
         &nbsp; &nbsp;
         {selected.length > 0 ? (
           <Tooltip title='Xóa lớp học'>

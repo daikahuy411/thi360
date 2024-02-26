@@ -336,13 +336,17 @@ const QuestionEditForm = () => {
     new QuestionApi()
       .save(param)
       .then(response => {
-        toast.success('Cập nhật thành công')
-        if (code == 1) {
-          router.push(`/apps/question-catalog/${response.data.value.catalogId}/questions/${response.data.value.id}`)
+        if (response.data.isSuccess) {
+          toast.success('Cập nhật thành công')
+          if (code == 1) {
+            router.push(`/apps/question-catalog/${response.data.value.catalogId}/questions/${response.data.value.id}`)
+          } else {
+            reset()
+            // cleanCategory()
+            initQuestion(type)
+          }
         } else {
-          reset()
-          // cleanCategory()
-          initQuestion(type)
+          toast.error(response.data.message)
         }
       })
       .catch(e => {

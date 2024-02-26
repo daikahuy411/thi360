@@ -356,7 +356,12 @@ const AddPaymentDrawer = ({ open, toggle, plan, promotions }) => {
       </Header>
       <LoadingSpinner active={loading}>
         <Box sx={{ p: 5 }}>
-          {error && <Alert severity='error'>{message}</Alert>}
+          {error && (
+            <>
+              <Alert severity='error'>{message}</Alert>
+              <br />
+            </>
+          )}
           <Box sx={{ mb: 4, borderRadius: 1, border: theme => `1px solid ${theme.palette.divider}` }}>
             <CardContent>
               <Typography sx={{ mb: 4, fontWeight: 600 }}>Thông tin gói</Typography>

@@ -356,10 +356,10 @@ const QuestionTable = () => {
                                   </IconButton>
                                 </TableCell>
                                 <TableCell component='th' scope='row'>
-                                  <Typography variant='body2'>{row.id}</Typography>
+                                  <Typography variant='body1'>{row.id}</Typography>
                                 </TableCell>
                                 <TableCell component='th' scope='row'>
-                                  <Typography variant='body2'>{row.shortContent}</Typography>
+                                  <Typography variant='body1'>{row.shortContent}</Typography>
                                 </TableCell>
                                 <TableCell>
                                   <Chip
@@ -388,7 +388,7 @@ const QuestionTable = () => {
                                   ) : null}
                                 </TableCell>
                                 <TableCell>
-                                  <Typography variant='body2'>
+                                  <Typography variant='body1'>
                                     {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
                                   </Typography>
                                 </TableCell>
