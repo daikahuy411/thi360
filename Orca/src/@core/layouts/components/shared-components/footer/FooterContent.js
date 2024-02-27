@@ -94,8 +94,7 @@ const FooterContent = () => {
                   borderRadius: '50%'
                 }}
               >
-                <a href='https://zalo.me/g/nygeoz072' target='_blank'>
-
+                <a href='https://zalo.me/g/nygeoz072' target='_blank' rel='noreferrer'>
                   <svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='30' height='30' viewBox='0 0 48 48'>
                     <path
                       fill='#2962ff'
@@ -160,14 +159,6 @@ const FooterContent = () => {
                 </svg>
               </span>
             </div>
-            {/* <a target='_blank' href=''>
-                    <img
-                      style={{ width: 200, marginTop: 30 }}
-                      src='https://www.i-test.vn/images/layout/bo-cong-thuong.png'
-                      alt=''
-                      className='cursor-pointer'
-                    />
-                  </a> */}
           </div>
         </div>
       </div>

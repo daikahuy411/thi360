@@ -56,7 +56,7 @@ class SelectQuestion extends Component {
         {this.props.question && (
           <Select label='' value={this.state.value} size='small' onChange={e => this.onChange(e.target.value)}>
             {this.props.question.subQuestions[this.props.name].answers.map(item => (
-              <MenuItem value={item.id}>{item.content}</MenuItem>
+              <MenuItem value={item.id} key={`menu-item-${item.id}`}>{item.content}</MenuItem>
             ))}
           </Select>
         )}
