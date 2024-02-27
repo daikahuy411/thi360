@@ -29,6 +29,7 @@ import Divider from '@mui/material/Divider'
 import FormControl from '@mui/material/FormControl'
 import MuiFormControlLabel from '@mui/material/FormControlLabel'
 import FormHelperText from '@mui/material/FormHelperText'
+import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
@@ -169,13 +170,18 @@ const LoginPage = () => {
       </Head>
       <Box className='content-right'>
         {!hidden ? (
-          <Box sx={{
-            flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center',
-            backgroundImage: "url('/images/pages/misc-coming-soon.png')",
-            backgroundSize: 'cover'
-          }}>
-            <LoginIllustrationWrapper>
-            </LoginIllustrationWrapper>
+          <Box
+            sx={{
+              flex: 1,
+              display: 'flex',
+              position: 'relative',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundImage: "url('/images/pages/misc-coming-soon.png')",
+              backgroundSize: 'cover'
+            }}
+          >
+            <LoginIllustrationWrapper></LoginIllustrationWrapper>
           </Box>
         ) : null}
         <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
@@ -186,8 +192,7 @@ const LoginPage = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: 'background.paper',
-
+              backgroundColor: 'background.paper'
             }}
           >
             <BoxWrapper>
@@ -236,7 +241,7 @@ const LoginPage = () => {
                   </div>
                 </Link>
                 <br />
-                <TypographyStyled variant='h5'>Chào mừng bạn tới Thi360 👋🏻</TypographyStyled>
+                <TypographyStyled variant='h5'>Đăng nhập Thi360 👋🏻</TypographyStyled>
                 <Typography variant='body2'>Đăng nhập vào hệ thống để tiếp tục</Typography>
               </Box>
               <LoadingSpinner active={loading}>
@@ -328,20 +333,39 @@ const LoginPage = () => {
                     </Box>
                     <Divider sx={{ my: theme => `${theme.spacing(5)} !important` }}>hoặc đăng nhập bằng</Divider>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
-                        <Icon icon='mdi:facebook' />
-                      </IconButton>
-                      <IconButton
-                        href='/'
-                        component={Link}
-                        sx={{ color: '#db4437' }}
-                        onClick={e => {
-                          loginWithGoogle()
-                          e.preventDefault()
-                        }}
-                      >
-                        <Icon icon='mdi:google' />
-                      </IconButton>
+                      <Grid container>
+                        <Grid item xs={12} md={12}>
+                          <Button
+                            fullWidth
+                            size='large'
+                            onClick={e => {
+                              loginWithGoogle()
+                              e.preventDefault()
+                            }}
+                            variant='outlined'
+                            sx={{ mb: 7, color: '#db4437' }}
+                          >
+                            <Icon icon='mdi:google' />
+                            &nbsp; Google
+                          </Button>
+                        </Grid>
+
+                        <Grid item xs={12} md={12}>
+                          <Button
+                            fullWidth
+                            size='large'
+                            onClick={e => {
+                              loginWithGoogle()
+                              e.preventDefault()
+                            }}
+                            variant='outlined'
+                            sx={{ mb: 7, color: '#497ce2' }}
+                          >
+                            <Icon icon='mdi:facebook' />
+                            &nbsp; facebook
+                          </Button>
+                        </Grid>
+                      </Grid>
                     </Box>
                   </form>
                 </Box>

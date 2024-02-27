@@ -50,7 +50,7 @@ const HomePage = () => {
             Hệ thống Thi và tổ chức Thi trực tuyến toàn diện cho Học viên và Giáo viên, Trung tâm, Nhà trường.
           </h2>
           {/* <p>Thực hiện các bài kiểm tra thử của chúng tôi bao nhiêu tùy thích MIỄN PHÍ!</p> */}
-          {/* <button type='button' className='btn btn-outline-primary btn-sm waves-effect text-white'>
+          {/* <button type='button' className='btn btn-outline-success btn-sm waves-effect text-white'>
             Thi thử
           </button> */}
         </section>
@@ -108,7 +108,7 @@ const HomePage = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   <CustomAvatar
                     skin='light'
-                    color='primary'
+                    color='success'
                     sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                   >
                     <Icon icon='mdi:star-outline' />
@@ -124,7 +124,7 @@ const HomePage = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   <CustomAvatar
                     skin='light'
-                    color='primary'
+                    color='success'
                     sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                   >
                     <Icon icon='mdi:progress-check' />
@@ -139,7 +139,7 @@ const HomePage = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   <CustomAvatar
                     skin='light'
-                    color='primary'
+                    color='success'
                     sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                   >
                     <Icon icon='mdi:medal' />
@@ -220,7 +220,7 @@ const HomePage = () => {
                     <span className='ti-map-alt text-medium'>
                       <CustomAvatar
                         skin='light'
-                        color='primary'
+                        color='success'
                         sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:rocket-launch' />
@@ -245,7 +245,7 @@ const HomePage = () => {
                       <span className='ti-map-alt text-medium'>
                         <CustomAvatar
                           skin='light'
-                          color='primary'
+                          color='success'
                           sx={{
                             mb: 3,
                             width: [70, 80],
@@ -275,7 +275,7 @@ const HomePage = () => {
                     <span className='ti-layout text-medium'>
                       <CustomAvatar
                         skin='light'
-                        color='primary'
+                        color='success'
                         sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:chat-processing-outline' />
@@ -299,7 +299,7 @@ const HomePage = () => {
                     <span className='ti-search text-medium'>
                       <CustomAvatar
                         skin='light'
-                        color='primary'
+                        color='success'
                         sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:help-circle-outline' />
@@ -323,7 +323,7 @@ const HomePage = () => {
                     <span className='ti-split-h text-medium'>
                       <CustomAvatar
                         skin='light'
-                        color='primary'
+                        color='success'
                         sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:tune-vertical-variant' />
@@ -348,7 +348,7 @@ const HomePage = () => {
                       <span className='ti-split-h text-medium'>
                         <CustomAvatar
                           skin='light'
-                          color='primary'
+                          color='success'
                           sx={{
                             mb: 3,
                             width: [70, 80],
@@ -378,7 +378,7 @@ const HomePage = () => {
                     <span className='ti-check-box text-medium'>
                       <CustomAvatar
                         skin='light'
-                        color='primary'
+                        color='success'
                         sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:flash-outline' />
@@ -402,7 +402,7 @@ const HomePage = () => {
                     <span className='ti-cloud-up text-medium'>
                       <CustomAvatar
                         skin='light'
-                        color='primary'
+                        color='success'
                         sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:database-outline' />
@@ -426,7 +426,7 @@ const HomePage = () => {
                     <span className='ti-headphone-alt text-medium'>
                       <CustomAvatar
                         skin='light'
-                        color='primary'
+                        color='success'
                         sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:file-word-outline' />
@@ -447,7 +447,7 @@ const HomePage = () => {
                     <span className='ti-paint-bucket text-medium'>
                       <CustomAvatar
                         skin='light'
-                        color='primary'
+                        color='success'
                         sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:thumb-up' />
@@ -472,7 +472,7 @@ const HomePage = () => {
                     <span className='ti-thumb-up ti-settings text-medium'>
                       <CustomAvatar
                         skin='light'
-                        color='primary'
+                        color='success'
                         sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:navigation' />
@@ -497,7 +497,7 @@ const HomePage = () => {
                     <span className='ti-plus text-medium'>
                       <CustomAvatar
                         skin='light'
-                        color='primary'
+                        color='success'
                         sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                       >
                         <Icon icon='mdi:more' />
@@ -534,7 +534,7 @@ const HomePage = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   <CustomAvatar
                     skin='light'
-                    color='primary'
+                    color='success'
                     sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                   >
                     <Icon icon='mdi:star-outline' />
@@ -547,7 +547,7 @@ const HomePage = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   <CustomAvatar
                     skin='light'
-                    color='primary'
+                    color='success'
                     sx={{ mb: 3, width: [70, 80], height: [70, 80], '& svg': { fontSize: ['2.2rem', '2.5rem'] } }}
                   >
                     <Icon icon='mdi:facebook' />
