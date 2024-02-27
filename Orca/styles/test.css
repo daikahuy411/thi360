@@ -114,7 +114,7 @@ thead,
 th,
 tbody,
 textarea {
-  font-family: 'Inter';
+  font-family: 'Open Sans';
 }
 
 .mainContainer {
@@ -132,7 +132,7 @@ textarea {
 
 .instructionSection #header > h1,
 .afterTestFinishedSection #header > h1 {
-  font-family: arial, verdana, helvetica, sans-serif;
+  font-family: 'Open Sans', verdana, helvetica, sans-serif;
   font-size: 18px;
   margin-top: 12px;
   color: white;

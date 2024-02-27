@@ -11,7 +11,7 @@ const UserThemeOptions = () => {
   // const palette = corePalette(mode, skin, themeColor)
   return {
     typography: {
-      fontFamily: '"Inter", sans-serif'
+      fontFamily: '"Open Sans", sans-serif'
     },
     // palette: {
     //   primary: {
