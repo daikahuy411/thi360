@@ -250,12 +250,14 @@ const ExamPage = () => {
                                   {exam &&
                                     exam.examItems &&
                                     exam.examItems.map(item => {
-                                      return (                                        
+                                      return (
                                         <React.Fragment key={item.id}>
                                           {item.tests.map(row => {
                                             return (
                                               <tr key={row.id}>
-                                                <td style={{ textAlign: 'center' }}>{order++}</td>
+                                                <td style={{ textAlign: 'center' }}>
+                                                  <div style={{ fontSize: '15px' }}>{order++}</div>
+                                                </td>
                                                 <td>
                                                   {row.userTestAttemptTracking && (
                                                     <>
@@ -277,7 +279,7 @@ const ExamPage = () => {
                                                   )}
                                                 </td>
                                                 <td>
-                                                  <div>{row.name}</div>
+                                                  <div style={{ fontSize: '15px' }}>{row.name}</div>
                                                   {row.link && (
                                                     <div>
                                                       <a href={row.link} rel='noreferrer' target={'_blank'}>
@@ -286,8 +288,12 @@ const ExamPage = () => {
                                                     </div>
                                                   )}
                                                 </td>
-                                                <td>{row.totalQuestion}</td>
-                                                <td>{row.testTypeName}</td>
+                                                <td>
+                                                  <div style={{ fontSize: '15px' }}>{row.totalQuestion}</div>
+                                                </td>
+                                                <td>
+                                                  <div style={{ fontSize: '15px' }}>{row.testTypeName}</div>
+                                                </td>
                                                 <td>
                                                   {row.userTestAttemptTracking && (
                                                     <p>
@@ -350,7 +356,7 @@ const ExamPage = () => {
                                               </tr>
                                             )
                                           })}
-                                        </React.Fragment>                                        
+                                        </React.Fragment>
                                       )
                                     })}
                                 </tbody>
