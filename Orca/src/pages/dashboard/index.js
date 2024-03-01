@@ -160,13 +160,9 @@ const TeacherDashboard = () => {
       </Grid>
       <Grid item xs={12} md={4} lg={4}>
         {/* {domLoaded && <AttemptWeeklyOverview />} */}
-        <br />
         {plan && <UserCurrentPlan userPlan={plan} />}
       </Grid>
       <Grid item xs={12} md={8} lg={8}>
-        <span className='title__label'>
-          <span>Lượt Thi gần nhất</span>
-        </span>
         <RencentUserExamAttempt />
         {/* <UserActivityTimeline /> */}
       </Grid>
