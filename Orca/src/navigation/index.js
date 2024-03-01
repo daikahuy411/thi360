@@ -1,3 +1,54 @@
+export const standAloneStudentLinks = [
+  {
+    icon: 'mdi:home-outline',
+    title: 'Trang chủ',
+    path: '/home'
+  },
+  {
+    icon: 'bi:book',
+    title: 'Chương trình',
+    // path: '/program',
+    children: [
+      {
+        title: 'Lớp 6',
+        path: '/program/6'
+      },
+      {
+        title: 'Lớp 7',
+        path: '/program/7'
+      },
+      {
+        title: 'Lớp 8',
+        path: '/program/8'
+      },
+      {
+        title: 'Lớp 9',
+        path: '/program/9'
+      },
+      {
+        title: 'Lớp 10',
+        path: '/program/10'
+      },
+      {
+        title: 'Lớp 11',
+        path: '/program/11'
+      },
+      {
+        title: 'Lớp 12',
+        path: '/program/12'
+      },
+      {
+        title: 'Thi thử THPT quốc gia',
+        path: '/program/15'
+      },
+      {
+        title: 'Luyện thi TOEIC',
+        path: '/program/35'
+      }
+    ]
+  }
+]
+
 export const studentLinks = [
   {
     icon: 'mdi:home-outline',

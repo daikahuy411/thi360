@@ -1,32 +1,25 @@
-// ** Navigation Imports
 import { useAuth } from 'hooks/useAuth'
 import {
   helpLink,
+  standAloneStudentLinks,
   studentLinks,
   systemLinks,
   teacherLinks
 } from 'navigation'
 import HorizontalNavItems from 'navigation/horizontal'
 
-// ** Hook Import
 import { useSettings } from '@core/hooks/useSettings'
-// ** Layout Imports
-// !Do not remove this Layout import
 import Layout from '@core/layouts/Layout'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 import HorizontalAppBarContent from './components/horizontal/AppBarContent'
-// ** Component Import
-// Uncomment the below line (according to the layout type) when using server-side menu
-// import ServerSideVerticalNavItems from './components/vertical/ServerSideNavItems'
-// import ServerSideHorizontalNavItems from './components/horizontal/ServerSideNavItems'
 import VerticalAppBarContent from './components/vertical/AppBarContent'
 
 const UserLayout = ({ children, contentHeightFixed }) => {
   // ** Hooks
   const { settings, saveSettings } = useSettings()
   const auth = useAuth()
-  var links = studentLinks
+  var links = auth.user && auth.user.tenantId != 0 ? studentLinks : standAloneStudentLinks
 
   if (auth.user && auth.user.roles.includes('Host')) {
     links = links.concat(teacherLinks)
@@ -36,8 +29,8 @@ const UserLayout = ({ children, contentHeightFixed }) => {
     if (auth.user && auth.user.roles.includes('Teacher')) {
       // teacherLinks.push(helpLink)
       links = links.concat([...teacherLinks, helpLink])
-    }else{
-      links =  [...links, helpLink]
+    } else {
+      links = [...links, helpLink]
     }
   }
 
