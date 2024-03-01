@@ -212,7 +212,7 @@ const HomePage = () => {
         </div>
         <br />
         <Card>
-          <div className='row bg-white border-radius-15 py-4'>
+          <div className='row bg-white border-radius-15'>
             <div className='col-sm-12 col-md-6 col-lg-4 p-0'>
               <div className='single-feature p-4'>
                 <div className='row'>
