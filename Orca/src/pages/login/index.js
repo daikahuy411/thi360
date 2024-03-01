@@ -133,8 +133,11 @@ const LoginPage = () => {
   }, [])
 
   const loginWithGoogle = () => {
-    //window.open(`${authConfig.baseApiUrl}${authConfig.googleLoginEndpoint}`, "Google Login", "width=800,height=800");
     window.location = `${authConfig.baseApiUrl}${authConfig.googleLoginEndpoint}`
+  }
+
+  const loginWithFacebook = () => {
+    window.location = `${authConfig.baseApiUrl}${authConfig.facebookLoginEndpoint}`
   }
 
   // ** Vars
@@ -349,13 +352,12 @@ const LoginPage = () => {
                             &nbsp; Google
                           </Button>
                         </Grid>
-
                         <Grid item xs={12} md={12}>
                           <Button
                             fullWidth
                             size='large'
                             onClick={e => {
-                              loginWithGoogle()
+                              loginWithFacebook()
                               e.preventDefault()
                             }}
                             variant='outlined'
