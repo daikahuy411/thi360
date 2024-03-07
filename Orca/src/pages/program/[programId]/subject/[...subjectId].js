@@ -30,7 +30,7 @@ const SubjectPage = () => {
   const [exams, setExams] = useState([])
   const [totalItems, setTotalItems] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(20)
   const [loading, setLoading] = useState(false)
   const [curriculum, setCurriculum] = useState(null)
@@ -73,7 +73,7 @@ const SubjectPage = () => {
     setCurriculumId(childCurriculumId)
     setLoading(true)
     new V1Api()
-      .searchExams({ subjectId: subjectId[0], curriculumId: childCurriculumId, programId: programId })
+      .searchExams({ subjectId: subjectId[0], curriculumId: childCurriculumId, programId: programId, page: page - 1 })
       .then(response => {
         setExams(response.data.value)
         setTotalItems(response.data.totalItems)
@@ -202,16 +202,10 @@ const SubjectPage = () => {
                               exams.map((item, index) => (
                                 <div key={`exam-${item.id}`}>
                                   <NavLink href={`/program/${programId}/exam/${item.id}`} className='TC-detail'>
-                                    <article style={{ width: '100%' }}>
-                                      <label>
+                                    <article style={{ width: '100%', cursor: 'pointer' }}>
+                                      <label style={{ cursor: 'pointer' }}>
                                         {(page - 1) * rowsPerPage + index + 1}.&nbsp;{item.name}
                                       </label>
-                                      {item.curriculum && (
-                                        <div style={{ padding: 5, paddingLeft: 0 }} className='text-muted'>
-                                          <Typography variant='body1'>{item.curriculum.name}</Typography>
-                                        </div>
-                                      )}
-
                                       {item.userExamAttemptTracking && (
                                         <>
                                           <p>

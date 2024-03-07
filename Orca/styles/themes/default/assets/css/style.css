@@ -212,7 +212,6 @@ padding: 10px; */
   border: 0;
   /* border-bottom: 1px solid #dadada; */
   border-radius: 5px !important;
-  max-height: 63px;
   overflow-y: hidden;
   font-size: 16px;
   line-height: 19px;
@@ -265,10 +264,12 @@ padding: 10px; */
 }
 
 .TC-detail article label {
-  font-size: 16px;
+  font-size: 15px;
   color: #333;
   margin-bottom: 10px;
 }
+
+
 
 .TC-detail article p {
   margin-bottom: 0;
@@ -2306,4 +2307,8 @@ div#popup-form-contact-vr.active {
   max-width: 45%;
   border-radius: 10px 0 0 10px;
   overflow: hidden;
+}
+
+.list-group .list-group-item {
+  font-size: 15px;
 }

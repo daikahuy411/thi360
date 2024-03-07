@@ -6,6 +6,7 @@ import {
 } from 'react'
 
 import UserApi from 'api/user-api'
+import V1Api from 'api/v1-api'
 import Cleave from 'cleave.js/react'
 import { useAuth } from 'hooks/useAuth'
 import Link from 'next/link'
@@ -102,7 +103,7 @@ const VerifyAccount = () => {
 
   const fetchData = () => {
     setLoading(true)
-    new UserApi()
+    new V1Api()
       .getEmail(token)
       .then(response => {
         const data = response.data

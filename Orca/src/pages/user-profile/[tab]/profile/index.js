@@ -78,8 +78,22 @@ const ProfileTab = ({ data }) => {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey='totalPassed' label='' barSize={50} stackId='a' fill='#4caf50' />
-                        <Bar dataKey='totalFailed' label='' barSize={50} stackId='a' fill='#f44336' />
+                        <Bar
+                          dataKey='totalPassed'
+                          name='Số lượt đạt'
+                          label=''
+                          barSize={50}
+                          stackId='a'
+                          fill='#4caf50'
+                        />
+                        <Bar
+                          name='Số lượt không đạt'
+                          dataKey='totalFailed'
+                          label=''
+                          barSize={50}
+                          stackId='a'
+                          fill='#f44336'
+                        />
                       </BarChart>
                     </ResponsiveContainer>
                     <br />
@@ -106,6 +120,7 @@ const ProfileTab = ({ data }) => {
                           dataKey='totalCorrectQuestion'
                           barSize={50}
                           label='Trả lời Đúng'
+                          name='Trả lời Đúng'
                           stackId='a'
                           fill='#4caf50'
                         />
@@ -113,6 +128,7 @@ const ProfileTab = ({ data }) => {
                           dataKey='totalIncorrectQuestion'
                           barSize={50}
                           label='Trả lời Sai'
+                          name='Trả lời Sai'
                           stackId='a'
                           fill='#f44336'
                         />
@@ -120,6 +136,7 @@ const ProfileTab = ({ data }) => {
                           dataKey='totalNoAnswerQuestion'
                           barSize={50}
                           label='Chưa trả lời'
+                          name='Chưa trả lời'
                           stackId='a'
                           fill='#aab8c2'
                         />
@@ -145,7 +162,14 @@ const ProfileTab = ({ data }) => {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey='total' barSize={50} label='Số lượt thi' stackId='a' fill='#4caf50' />
+                        <Bar
+                          dataKey='total'
+                          barSize={50}
+                          name='Số lượt thi'
+                          label='Số lượt thi'
+                          stackId='a'
+                          fill='#4caf50'
+                        />
                       </BarChart>
                     </ResponsiveContainer>
                   </CardContent>

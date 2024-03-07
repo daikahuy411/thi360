@@ -10,8 +10,8 @@ import Head from 'next/head'
 
 import LoadingSpinner from '@core/components/loading-spinner'
 import CustomChip from '@core/components/mui/chip'
-import Alert from '@mui/material/Alert'
-import AlertTitle from '@mui/material/AlertTitle'
+// import Alert from '@mui/material/Alert'
+// import AlertTitle from '@mui/material/AlertTitle'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -54,20 +54,13 @@ const MyPricingPage = () => {
       <Head>
         <title>{`Thông tin gói dịch vụ`}</title>
       </Head>
-      <Grid container spacing={8} justifyContent='center'>
+      <Grid container spacing={2} justifyContent='center'>
         <Grid item md={12} lg={10} xl={10}>
           <Card>
             <CardContent>
-              <br />
-              <Box sx={{ mb: [8, 9], textAlign: 'center' }}>
-                <Typography variant='h5'>Thông tin gói dịch vụ đang sử dụng</Typography>
-                <Box sx={{ mt: 2.5, mb: 2 }}>
-                  <Typography variant='body2'>
-                    Tất cả các gói dịch vụ được phân loại tính năng để phù hợp với từng đối tượng người dùng.
-                  </Typography>
-                  <Typography variant='body2'>Chọn gói tốt nhất và phù hợp nhất với nhu cầu của bạn.</Typography>
-                </Box>
-              </Box>
+              <Typography variant='caption' sx={{ mb: 1, display: 'block', textTransform: 'uppercase' }}>
+                Thông tin gói dịch vụ đang sử dụng
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -108,12 +101,12 @@ const MyPricingPage = () => {
                               </Box>
                             </Grid>
                             <Grid item xs={12} md={6} sx={{ mt: [4, 4, 0] }}>
-                              <Alert icon={false} severity='warning' sx={{ mb: 4 }}>
+                              {/* <Alert icon={false} severity='warning' sx={{ mb: 4 }}>
                                 <AlertTitle sx={{ fontWeight: 600, mb: theme => `${theme.spacing(1)} !important` }}>
                                   We need your attention!
                                 </AlertTitle>
                                 Your plan requires updates
-                              </Alert>
+                              </Alert> */}
                               <Box sx={{ mb: 4 }}>
                                 <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary' }}>
                                   Ngày bắt đầu:
@@ -166,7 +159,7 @@ const MyPricingPage = () => {
                 <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                   <TableHead>
                     <TableRow>
-                      <TableCell style={{ width: 200}}>Ngày tạo</TableCell>
+                      <TableCell style={{ width: 200 }}>Ngày tạo</TableCell>
                       <TableCell>Gói dịch vụ</TableCell>
                       <TableCell style={{ width: 120 }}>Giá</TableCell>
                       <TableCell style={{ width: 280 }}>Loại gói</TableCell>

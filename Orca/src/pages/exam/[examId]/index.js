@@ -12,6 +12,7 @@ import Head from 'next/head'
 import NavLink from 'next/link'
 import { useRouter } from 'next/router'
 import LoginRequiredDialog from 'pages/shared/login-required-dialog'
+import ResourceWarningtDialog from 'pages/shared/resource-warning-dialog'
 import TestAttemptHistoryDialog from 'pages/shared/test-attempt-history-dialog'
 import toast from 'react-hot-toast'
 
@@ -33,6 +34,7 @@ const ExamPage = () => {
   const [selectedTest, setSelectedTest] = useState(null)
   const [loading, setLoading] = useState(null)
   const [showLogin, setShowLogin] = useState(false)
+  const [showResourceLimitDialog, setShowResourceLimitDialog] = useState(false)
   const [anchorEls, setAnchorEls] = useState([])
   const [openTestAttemptHistory, setOpenTestAttemptHistory] = useState(false)
   const auth = useAuth()
@@ -49,7 +51,11 @@ const ExamPage = () => {
       if (response.data.isSuccess) {
         router.push(`/testing/${response.data.value.token}`)
       } else {
-        toast.error(response.data.message)
+        if (response.data.status === 99) {
+          setShowResourceLimitDialog(true)
+        } else {
+          toast.error(response.data.message)
+        }
         setLoading(false)
       }
     })
@@ -193,11 +199,11 @@ const ExamPage = () => {
                               Đề thi
                             </button>
                           </li>
-                          <li className='nav-item'>
+                          {/* <li className='nav-item'>
                             <button type='button' className='nav-link ' data-bs-toggle='tab' data-bs-target='#tab2'>
                               Nhận xét
                             </button>
-                          </li>
+                          </li> */}
                           {/* <li className="nav-item">
                           <button type="button" className="nav-link" data-bs-toggle="tab" data-bs-target="#tab3">Thống kê</button>
                         </li>
@@ -210,7 +216,8 @@ const ExamPage = () => {
                             <div className='d-flex align-items-center justify-content-between mb-4'>
                               {exam && (
                                 <p className='mb-0 text-black'>
-                                  <img src='/themes/default/assets/img/icon-dethi.svg' alt='' /> <b> 10 đề thi</b>
+                                  <img src='/themes/default/assets/img/icon-dethi.svg' alt='' />{' '}
+                                  <b> {exam.totalTest} đề thi</b>
                                 </p>
                               )}
                               <div className='d-flex align-items-center justify-content-end'>
@@ -220,7 +227,7 @@ const ExamPage = () => {
                                   placeholder='Từ khóa ...'
                                   style={{ width: 300 }}
                                 /> */}
-                                <select className='form-select' style={{ width: 170 }}>
+                                {/* <select className='form-select' style={{ width: 170 }}>
                                   <option key='exam-status-1' value='1'>
                                     Tất cả
                                   </option>
@@ -230,7 +237,7 @@ const ExamPage = () => {
                                   <option key='exam-status-3' value='3'>
                                     Trắc nghiệm
                                   </option>
-                                </select>
+                                </select> */}
                               </div>
                             </div>
                             <div className='table-responsive table-border'>
@@ -242,7 +249,7 @@ const ExamPage = () => {
                                     <th>Đề thi</th>
                                     <th style={{ width: 200 }}>Số câu hỏi</th>
                                     <th style={{ width: 200 }}>Loại đề thi</th>
-                                    <th style={{ width: 160 }}>Số lượt thi</th>
+                                    <th style={{ width: 170 }}>Số lượt thi</th>
                                     <th style={{ textAlign: 'left', width: 280 }}>Thao tác</th>
                                   </tr>
                                 </thead>
@@ -526,6 +533,7 @@ const ExamPage = () => {
           setOpenTestAttemptHistory(false)
         }}
       />
+      {showResourceLimitDialog && <ResourceWarningtDialog onClose={() => setShowResourceLimitDialog(false)} />}
     </>
   )
 }

@@ -50,9 +50,11 @@ const TestResultPage = () => {
 
   const createExamAttempt = () => {
     setLoading(true)
-    new TestingApi().CreateExamAttempt(attempt.examId, attempt.examItemId, attempt.testId).then(response => {
-      router.push(`/testing/${response.data.value.token}`)
-    })
+    new TestingApi()
+      .CreateExamAttempt(attempt.examId, attempt.examItemId, attempt.testId, attempt.testingMode)
+      .then(response => {
+        router.push(`/testing/${response.data.value.token}`)
+      })
   }
 
   useEffect(() => {

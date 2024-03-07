@@ -52,9 +52,15 @@ const AppBarContent = props => {
     if (router.asPath.indexOf('/pricing') > -1) {
       currentPage = 'Bảng giá'
     }
+
+    if (router.asPath.indexOf('/user-profile/pricing') > -1) {
+      currentPage = 'Thông tin Gói dịch vụ'
+    }
+
     if (router.asPath.indexOf('/post/') > -1) {
       currentPage = 'Tin bài'
     }
+    
     if (router.asPath.indexOf('/apps/class') > -1) {
       currentPage = 'Quản lý Lớp học'
     }

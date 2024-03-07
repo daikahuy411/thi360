@@ -41,9 +41,13 @@ export const standAloneStudentLinks = [
         title: 'Thi thử THPT quốc gia',
         path: '/program/15'
       },
+      // {
+      //   title: 'Luyện thi TOEIC',
+      //   path: '/program/35'
+      // },
       {
-        title: 'Luyện thi TOEIC',
-        path: '/program/35'
+        title: 'Tiếng Anh cơ bản',
+        path: '/program/37'
       }
     ]
   }
@@ -106,9 +110,13 @@ export const studentLinks = [
         title: 'Thi thử THPT quốc gia',
         path: '/program/15'
       },
+      // {
+      //   title: 'Luyện thi TOEIC',
+      //   path: '/program/35'
+      // },
       {
-        title: 'Luyện thi TOEIC',
-        path: '/program/35'
+        title: 'Tiếng Anh cơ bản',
+        path: '/program/37'
       }
     ]
   }
@@ -249,10 +257,10 @@ export const programLinks = [
     title: 'Thi thử THPT quốc gia',
     path: '/program/15/'
   },
-  {
-    title: 'Luyện thi TOEIC',
-    path: '/program/35/'
-  },
+  // {
+  //   title: 'Luyện thi TOEIC',
+  //   path: '/program/35/'
+  // },
   {
     title: 'Tiếng Anh cơ bản',
     path: '/program/37/'
@@ -265,20 +273,8 @@ export const systemLinks = [
     icon: 'mdi:cog-outline',
     children: [
       {
-        title: 'Tin bài',
-        path: '/apps/post'
-      },
-      {
-        title: 'Danh mục Tin bài',
-        path: '/apps/post-category'
-      },
-      {
-        title: 'Block',
-        path: '/apps/block'
-      },
-      {
-        title: 'Tổ chức, Đơn vị',
-        path: '/apps/organization'
+        title: 'Tenant',
+        path: '/apps/tenant'
       },
       {
         title: 'Người dùng',
@@ -288,9 +284,21 @@ export const systemLinks = [
         title: 'Duyệt Hồ sơ GV',
         path: '/apps/teacher-request'
       },
+      // {
+      //   title: 'Tin bài',
+      //   path: '/apps/post'
+      // },
+      // {
+      //   title: 'Danh mục Tin bài',
+      //   path: '/apps/post-category'
+      // },
+      // {
+      //   title: 'Block',
+      //   path: '/apps/block'
+      // },
       {
-        title: 'Tenant',
-        path: '/apps/tenant'
+        title: 'Tổ chức, Đơn vị',
+        path: '/apps/organization'
       },
       {
         title: 'Cấu hình',

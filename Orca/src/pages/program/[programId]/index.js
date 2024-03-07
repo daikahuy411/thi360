@@ -172,7 +172,7 @@ const Program = () => {
                                   }}
                                   variant='body2'
                                 >
-                                  {item.totalTest} đề thi
+                                  {item.totalTest} đề
                                 </Typography>
                               </Box>
                             </Grid>

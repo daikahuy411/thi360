@@ -203,6 +203,9 @@ class V1Api extends ApiBase {
     return axios.get(this.baseApiUrl + '/GetRecentUserExamAttempt')
   }
 
+  getEmail = (token: string) => {
+    return axios.get(this.baseApiUrl + '/fetch-email/' + token)
+  }
 }
 
 export default V1Api

@@ -24,7 +24,7 @@ import Typography from '@mui/material/Typography'
 
 import AddPaymentDrawer from './AddPaymentDrawer'
 import PricingCTA from './PricingCTA'
-import PricingFooter from './PricingFooter'
+// import PricingFooter from './PricingFooter'
 import PricingHeader from './PricingHeader'
 import PricingTable from './PricingTable'
 
@@ -146,9 +146,9 @@ const PricingPage = () => {
               <br />
               <PricingTable type={tab} />
             </CardContent>
-            <CardContent sx={{ backgroundColor: 'action.hover' }}>
+            {/* <CardContent sx={{ backgroundColor: 'action.hover' }}>
               <PricingFooter />
-            </CardContent>
+            </CardContent> */}
           </Card>
         </Grid>
       </Grid>

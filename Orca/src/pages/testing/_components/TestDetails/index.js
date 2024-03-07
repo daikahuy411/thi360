@@ -20,6 +20,7 @@ import FbQuestion from './FbQuestion'
 import MatchingQuestion from './MatchingQuestion'
 import OrderQuestion from './OrderQuestion'
 import QuestionExplain from './QuestionExplain'
+import Timer from './Timer'
 
 // MODE
 // 0: Practice: hiển thị đáp án sau khi trả lời.
@@ -66,12 +67,13 @@ class TestDetails extends React.Component {
     },
     disableNextButton: false,
     fullScreen: false,
-    timeLeftInSeconds: 0
+    timeLeftInSeconds: 0,
+    now: null
   }
 
   constructor(props) {
     super(props)
-    this.state.mode = props.mode
+    // this.state.mode = props.mode
   }
 
   userAnswers = createRef({})
@@ -82,7 +84,7 @@ class TestDetails extends React.Component {
     testingApi.GetExamAttempt(token).then(response => {
       let examAttempt = response.data.value
       this.initialize(examAttempt)
-      this.setState({ loading: false })
+      this.setState({ loading: false, now: Date.now(), mode: examAttempt.testingMode })
       // if (examAttempt.Status == -1) {
       //   testingApi
       //     .StartExamAttempt(token, examAttempt.UpdateTimeToken)
@@ -260,7 +262,7 @@ class TestDetails extends React.Component {
         }
       )
     } else {
-      doSave()
+      this.doSave()
     }
   }
 
@@ -734,6 +736,12 @@ class TestDetails extends React.Component {
     return this.state.userAnswers[questionId] ?? {}
   }
 
+  getOffsetTimestamp() {
+    let stopwatchOffset = new Date()
+    stopwatchOffset.setSeconds(stopwatchOffset.getSeconds() + this.state.examAttempt.timeLeftInSeconds)
+    return stopwatchOffset
+  }
+
   render() {
     return (
       <>
@@ -784,19 +792,31 @@ class TestDetails extends React.Component {
                       <>
                         {this.state.mode !== 2 && (
                           <div className='flex items-center pa3 flex-grow-1'>
-                            <span className='darkest-blue flex-l dn'>Thời gian còn lại:</span>
-                            <span className='f4 fw7 flex-grow-1 justify-center flex darkest-blue'>
-                              <Countdown
-                                onComplete={() => {
-                                  this.finishExamAttempt()
-                                }}
-                                onTick={() => {
-                                  // this.onTick()
-                                }}
-                                date={Date.now() + this.state.timeLeftInSeconds * 1000}
-                                renderer={Clock}
-                              />
-                            </span>
+                            {this.state.now && this.state.mode == 0 && (
+                              <>
+                                <span className='darkest-blue flex-l dn'>Thời gian:</span>
+                                <span className='f4 fw7 flex-grow-1 justify-center flex darkest-blue'>
+                                  <Timer offsetTimestamp={this.getOffsetTimestamp()} />
+                                </span>
+                              </>
+                            )}
+                            {this.state.now && this.state.mode != 0 && (
+                              <>
+                                <span className='darkest-blue flex-l dn'>Thời gian còn lại:</span>
+                                <span className='f4 fw7 flex-grow-1 justify-center flex darkest-blue'>
+                                  <Countdown
+                                    onComplete={() => {
+                                      this.finishExamAttempt()
+                                    }}
+                                    // onTick={() => {
+                                    //   this.onTick()
+                                    // }}
+                                    date={this.state.now + this.state.timeLeftInSeconds * 1000}
+                                    renderer={Clock}
+                                  />
+                                </span>
+                              </>
+                            )}
                             <svg className='pointer' viewBox='0 0 36 36' version='1.1' width='28' height='28'>
                               <g fill='none' fillRule='evenodd'>
                                 <circle cx='18' cy='18' r='17.5' fill='#F8C346' opacity='.297'></circle>
@@ -965,7 +985,7 @@ class TestDetails extends React.Component {
                                       <span className='overflow-y-auto-l overflow-unset mb4 mb0-l mr0 mr3-l pr0 pr3-l w-50-l w-100 bn br-l b--moon-gray gray dn du-l'>
                                         <QuestionContent question={this.state.currentQuestion} />
                                       </span>
-                                      <div className='relative dn-l mb4'>
+                                      {/* <div className='relative dn-l mb4'>
                                         <div
                                           className='overflow-hidden '
                                           style={{
@@ -975,7 +995,7 @@ class TestDetails extends React.Component {
                                         >
                                           <QuestionContent question={this.state.currentQuestion} />
                                         </div>
-                                      </div>
+                                      </div> */}
                                       <div className='flex flex-column overflow-y-auto-l overflow-unset w-50-l w-100'>
                                         {this.state.currentQuestion.children.map(question => (
                                           <div key={`q1-${question.id}`} id={`question-${question.id}`}>
@@ -1189,7 +1209,7 @@ class TestDetails extends React.Component {
                                       <span className='mb4 w-100 gray dn du-l'>
                                         <QuestionContent question={this.state.currentQuestion} />
                                       </span>
-                                      <div className='relative dn-l mb4'>
+                                      {/* <div className='relative dn-l mb4'>
                                         <div
                                           className='overflow-hidden '
                                           style={{
@@ -1199,7 +1219,7 @@ class TestDetails extends React.Component {
                                         >
                                           <QuestionContent question={this.state.currentQuestion} />
                                         </div>
-                                      </div>
+                                      </div> */}
                                       <div className='flex flex-column w-100'>
                                         {this.state.userExamAttemptTracking.questionSubmitteds.indexOf(
                                           this.state.currentQuestion.id
@@ -1392,7 +1412,7 @@ class TestDetails extends React.Component {
                                     <span className='mb4 w-100 gray dn du-l'>
                                       <QuestionContent question={this.state.currentQuestion} />
                                     </span>
-                                    <div className='relative dn-l mb4'>
+                                    {/* <div className='relative dn-l mb4'>
                                       <div
                                         className='overflow-hidden '
                                         style={{
@@ -1402,7 +1422,7 @@ class TestDetails extends React.Component {
                                       >
                                         <QuestionContent question={this.state.currentQuestion} />
                                       </div>
-                                    </div>
+                                    </div> */}
                                     <div className='flex flex-column w-100'>
                                       <OrderQuestion
                                         onChanged={ids => this.saveQuestionAttemptedState(ids)}
@@ -1418,7 +1438,7 @@ class TestDetails extends React.Component {
                                     <span className='mb4 w-100 gray dn du-l'>
                                       <QuestionContent question={this.state.currentQuestion} />
                                     </span>
-                                    <div className='relative dn-l mb4'>
+                                    {/* <div className='relative dn-l mb4'>
                                       <div
                                         className='overflow-hidden '
                                         style={{
@@ -1428,7 +1448,7 @@ class TestDetails extends React.Component {
                                       >
                                         <QuestionContent question={this.state.currentQuestion} />
                                       </div>
-                                    </div>
+                                    </div> */}
                                     <div className='flex flex-column w-100'>
                                       <MatchingQuestion
                                         onChanged={ids => this.saveQuestionAttemptedState(ids)}
@@ -1445,7 +1465,7 @@ class TestDetails extends React.Component {
                                     <span className='mb4 w-100 gray dn du-l'>
                                       <QuestionContent question={this.state.currentQuestion} />
                                     </span>
-                                    <div className='relative dn-l mb4'>
+                                    {/* <div className='relative dn-l mb4'>
                                       <div
                                         className='overflow-hidden '
                                         style={{
@@ -1455,7 +1475,7 @@ class TestDetails extends React.Component {
                                       >
                                         <QuestionContent question={this.state.currentQuestion} />
                                       </div>
-                                    </div>
+                                    </div> */}
                                     <div className='flex flex-column w-100'>
                                       <textarea
                                         value={this.state.userAnswers[this.state.currentQuestion.id] ?? ''}

@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 
 import V1Api from 'api/v1-api'
 import NavLink from 'next/link'
+
 import Icon from '@core/components/icon'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
@@ -93,7 +94,7 @@ const ProgamPage = () => {
                       sx={{ display: 'flex', alignItems: 'center', '& svg': { color: 'primary.secondary', mr: 2.75 } }}
                     >
                       <Icon icon='mdi:circle-small' fontSize={20} />
-                      <Typography variant='body2'>{item.totalTest} đề thi</Typography>
+                      <Typography variant='body2'>{item.totalTest} đề</Typography>
                     </Box>
                   </Grid>
                 </Grid>
