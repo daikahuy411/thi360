@@ -6,6 +6,7 @@ import {
 
 import V1Api from 'api/v1-api'
 
+import LoadingSpinner from '@core/components/loading-spinner'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
@@ -33,17 +34,21 @@ const NLPayCompleted = () => {
       token: token
     }
 
+    setLoading(true)
+
     if (parseInt(errorCode) === 24) {
-      new V1Api().cancelOrder(params).then((response) => {
+      new V1Api().cancelOrder(params).then(response => {
         const data = response.data
         if (data.isSuccess) {
           setIsSuccess(false)
           setStatus(24)
+          setLoading(false)
         }
       })
-
     } else if (parseInt(errorCode) === 0) {
       new V1Api().completeOrder(params).then(response => {
+        setLoading(false)
+
         const data = response.data
         setIsSuccess(data.isSuccess)
         setStatus(data.status)
@@ -66,18 +71,20 @@ const NLPayCompleted = () => {
 
   return (
     <>
-      <Grid container spacing={8}>
-        <Grid item md={2}></Grid>
-        <Grid item md={8}>
-          <Card>
-            <CardContent>
-              <br />
-              <br />
-              <Confirmation orderInfo={data} isSuccess={isSuccess} status={status} />
-            </CardContent>
-          </Card>
+      <LoadingSpinner active={loading}>
+        <Grid container spacing={8}>
+          <Grid item md={2}></Grid>
+          <Grid item md={8}>
+            <Card>
+              <CardContent>
+                <br />
+                <br />
+                <Confirmation orderInfo={data} isSuccess={isSuccess} status={status} />
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
+      </LoadingSpinner>
     </>
   )
 }

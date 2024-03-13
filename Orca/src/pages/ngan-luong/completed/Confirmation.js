@@ -17,7 +17,6 @@ import {
 import {
   Alert,
   AlertTitle,
-  Button,
   Collapse
 } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -74,7 +73,7 @@ const Confirmation = props => {
 
   const [orderDetailMain, setOrderDetailMain] = useState()
   const [orderDetailPromotion, setOrderDetailPromotion] = useState([])
-
+  const [loading, setLoading] = useState(false)
   const [countDownValue, setCountDownValue] = useState()
 
   useEffect(() => {
@@ -88,21 +87,21 @@ const Confirmation = props => {
     handleStatusAlert()
   }, [props])
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (countDownValue > 0) setCountDownValue(countDownValue - 1)
-  //     if (countDownValue == 0) handleRedirect('/')
-  //   }, 1000)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (countDownValue > 0) setCountDownValue(countDownValue - 1)
+      if (countDownValue == 0) handleRedirect('/')
+    }, 1000)
 
-  //   return () => clearInterval(interval)
-  // }, [countDownValue])
+    return () => clearInterval(interval)
+  }, [countDownValue])
 
   const handleStatusAlert = () => {
     if (isSuccess) {
-      setCountDownValue(50000)
+      setCountDownValue(5)
     } else {
       if (!isSuccess && status == 1) {
-        setCountDownValue(50000)
+        setCountDownValue(5)
       } else if (!isSuccess && status == 404) {
         setCountDownValue(5)
       }
@@ -145,24 +144,25 @@ const Confirmation = props => {
                 <strong>{moment(orderInfo?.fromDate).format('DD-MM-YYYY hh:mm:ss')}</strong> đến ngày{' '}
                 <strong>{moment(orderInfo?.toDate).format('DD-MM-YYYY hh:mm:ss')}</strong>.
               </Typography>
+
+              <Typography sx={{ color: 'text.secondary' }}>
+                Chúng tôi đã gửi email chi tiết đơn hàng.
+                <Box
+                  href='/'
+                  component={Link}
+                  onClick={e => e.preventDefault()}
+                  sx={{ color: 'primary.main', textDecoration: 'none' }}
+                >
+                  john.doe@example.com
+                </Box>{' '}
+                with your order confirmation and receipt.
+              </Typography>
+              <Typography sx={{ mb: 4, color: 'text.secondary' }}>
+                If the email hasn't arrived within two minutes, please check your spam folder to see if the email was
+                routed there.
+              </Typography>
             </>
           )}
-          <Typography sx={{ color: 'text.secondary' }}>
-            We sent an email to{' '}
-            <Box
-              href='/'
-              component={Link}
-              onClick={e => e.preventDefault()}
-              sx={{ color: 'primary.main', textDecoration: 'none' }}
-            >
-              john.doe@example.com
-            </Box>{' '}
-            with your order confirmation and receipt.
-          </Typography>
-          <Typography sx={{ mb: 4, color: 'text.secondary' }}>
-            If the email hasn't arrived within two minutes, please check your spam folder to see if the email was routed
-            there.
-          </Typography>
         </Box>
 
         <Collapse in={true}>
@@ -189,9 +189,9 @@ const Confirmation = props => {
             <Alert severity='error'>
               <AlertTitle>Xảy ra lỗi</AlertTitle>
               Xảy ra lỗi trong quá trình xử lý —{' '}
-              <strong onClick={handleRedirect} style={{ cursor: 'pointer' }}>
-                Về trang chủ!
-              </strong>
+              {/* <strong onClick={handleRedirect} style={{ cursor: 'pointer' }}>
+                  Về trang chủ!
+                </strong> */}
             </Alert>
           )}
 
@@ -200,9 +200,9 @@ const Confirmation = props => {
               <AlertTitle>Xảy ra lỗi</AlertTitle>
               Giao dịch của bạn không tồn tại, Bạn sẽ được chuyển hướng sau{' '}
               <strong>{formatNumber.add0(countDownValue)}</strong> giây — hoặc bạn có thể{' '}
-              <strong onClick={handleRedirect} style={{ cursor: 'pointer' }}>
-                Về trang chủ!
-              </strong>{' '}
+              {/* <strong onClick={handleRedirect} style={{ cursor: 'pointer' }}>
+                  Về trang chủ!
+                </strong>{' '} */}
               ngay
             </Alert>
           )}
@@ -218,9 +218,9 @@ const Confirmation = props => {
             <Alert severity='warning'>
               <AlertTitle>Thông báo</AlertTitle>
               Giao dịch không thành công do: Khách hàng đã hủy giao dịch -{' '}
-              <strong onClick={handleRedirect} style={{ cursor: 'pointer' }}>
-                Về trang chủ
-              </strong>
+              {/* <strong onClick={handleRedirect} style={{ cursor: 'pointer' }}>
+                  Về trang chủ
+                </strong> */}
             </Alert>
           )}
         </Collapse>
@@ -260,7 +260,11 @@ const Confirmation = props => {
                     item
                     sm={4}
                     xs={12}
-                    sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'flex-start', sm: 'flex-end' } }}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: { xs: 'flex-start', sm: 'flex-end' }
+                    }}
                   >
                     <Typography sx={{ color: 'primary.main' }}>
                       {orderInfo?.pricingPlan?.price ? formatCurrency(orderInfo?.pricingPlan?.price, 0) : '0'} đ/1 tháng
@@ -280,12 +284,12 @@ const Confirmation = props => {
                 gap: '5px'
               }}
             >
-              <Button variant='contained' onClick={() => handleRedirect('/')}>
-                Về trang chủ
-              </Button>
-              <Button variant='contained' color='success' onClick={() => handleRedirect('/')}>
-                Lịch sử giao dịch
-              </Button>
+              {/* <Button variant='contained' onClick={() => handleRedirect('/')}>
+                  Về trang chủ
+                </Button>
+                <Button variant='contained' color='success' onClick={() => handleRedirect('/')}>
+                  Lịch sử giao dịch
+                </Button> */}
               {/* <Button variant='contained' color='info' onClick={() => handleRedirect('/program')}>
                 Luyện đề ngay
               </Button> */}
