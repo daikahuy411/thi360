@@ -163,7 +163,9 @@ const MyPricingPage = () => {
                       <TableCell>Gói dịch vụ</TableCell>
                       <TableCell style={{ width: 120 }}>Giá</TableCell>
                       <TableCell style={{ width: 280 }}>Loại gói</TableCell>
-                      <TableCell style={{ width: 180 }}>Trạng thái</TableCell>
+                      <TableCell style={{ width: 120 }}>Từ ngày</TableCell>
+                      <TableCell style={{ width: 120 }}>Tới ngày</TableCell>
+                      <TableCell style={{ width: 140 }}>Trạng thái</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -182,21 +184,33 @@ const MyPricingPage = () => {
                             }}
                           >
                             <TableCell>
-                              <Typography variant='body1'>
+                              <Typography variant='body2'>
                                 {moment(row.createdTime).format('DD-MM-YYYY HH:mm')}
                               </Typography>
                             </TableCell>
                             <TableCell component='th' scope='row'>
-                              {row.pricingPlan && <Typography variant='body1'>{row.pricingPlan.name}</Typography>}
+                              {row.pricingPlan && <Typography variant='body2'>{row.pricingPlan.name}</Typography>}
                             </TableCell>
                             <TableCell component='th' scope='row'>
-                              {row.pricingPlan && <Typography variant='body1'>{row.pricingPlan.totalVN}</Typography>}
+                              {row.pricingPlan && <Typography variant='body2'>{row.pricingPlan.totalVN}</Typography>}
                             </TableCell>
                             <TableCell component='th' scope='row'>
-                              {row.pricingPlan && <Typography variant='body1'>{row.pricingPlan.typeName}</Typography>}
+                              {row.pricingPlan && <Typography variant='body2'>{row.pricingPlan.typeName}</Typography>}
                             </TableCell>
                             <TableCell>
-                              <Typography variant='body1'>{row.statusName}</Typography>
+                              {row.fromDate && (
+                                <Typography variant='body2'>
+                                  {moment(row.fromDate).format('DD-MM-YYYY')}
+                                </Typography>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {row.toDate && (
+                                <Typography variant='body2'>{moment(row.toDate).format('DD-MM-YYYY')}</Typography>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              <Typography variant='body2'>{row.statusName}</Typography>
                             </TableCell>
                           </TableRow>
                         )

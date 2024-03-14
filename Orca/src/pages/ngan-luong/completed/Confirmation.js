@@ -147,19 +147,18 @@ const Confirmation = props => {
 
               <Typography sx={{ color: 'text.secondary' }}>
                 Chúng tôi đã gửi email chi tiết đơn hàng.
-                <Box
+                {/* <Box
                   href='/'
                   component={Link}
                   onClick={e => e.preventDefault()}
                   sx={{ color: 'primary.main', textDecoration: 'none' }}
                 >
                   john.doe@example.com
-                </Box>{' '}
-                with your order confirmation and receipt.
+                </Box>{' '} */}
+                {/* with your order confirmation and receipt. */}
               </Typography>
               <Typography sx={{ mb: 4, color: 'text.secondary' }}>
-                If the email hasn't arrived within two minutes, please check your spam folder to see if the email was
-                routed there.
+                {/* Nếu bạn không thấy email, vui lòng kiểm tra mục Thư rác */}
               </Typography>
             </>
           )}

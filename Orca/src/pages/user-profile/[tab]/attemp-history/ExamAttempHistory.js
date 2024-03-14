@@ -104,6 +104,7 @@ const ExamAttempHistory = () => {
                   <TableCell style={{ textAlign: 'center', width: 50 }}>STT</TableCell>
                   <TableCell style={{ textAlign: 'center', width: 50 }}>Xem</TableCell>
                   <TableCell>Tên</TableCell>
+                  <TableCell style={{ width: 140 }}>Hình thức</TableCell>
                   <TableCell style={{ width: 120 }}>Chưa trả lời</TableCell>
                   <TableCell style={{ width: 110 }}>Câu sai</TableCell>
                   <TableCell style={{ width: 110 }}>Câu đúng</TableCell>
@@ -138,6 +139,7 @@ const ExamAttempHistory = () => {
                           <Typography variant='body1'>
                             [{row.id}]-{row.name}
                           </Typography>
+
                           <Typography variant='body1'>
                             {moment(row.startDate).format('DD-MM-YYYY hh:mm')}
                             &nbsp;&gt;&nbsp;
@@ -146,6 +148,10 @@ const ExamAttempHistory = () => {
                           <Link href={`/exam/${row.examId}`} style={{ fontSize: 15 }}>
                             {row.examName}
                           </Link>
+                        </TableCell>
+                        <TableCell component='th' scope='row'>
+                          {row.testingMode == 0 && <Typography variant='body2'>Luyện tập</Typography>}
+                          {row.testingMode == 1 && <Typography variant='body2'>Thi-Kiểm tra</Typography>}
                         </TableCell>
                         <TableCell component='td' scope='row'>
                           {row.totalNoAnswerQuestion}

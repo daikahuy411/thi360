@@ -141,7 +141,7 @@ const TestResultPage = () => {
                             underline='hover'
                             key={item.id}
                             style={{ color: 'rgba(58, 53, 65, 0.6)' }}
-                            href={`/program/${exam.program.id}/subject/${exam.subject.id}/${item.id}`}
+                            href={`/program/${exam.program.id}/subject/${exam.subject.id}/${exam.curriculum.id}/${item.id}`}
                             component={NavLink}
                           >
                             {item.name}

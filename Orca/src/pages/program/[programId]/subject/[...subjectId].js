@@ -203,7 +203,7 @@ const SubjectPage = () => {
                                 <div key={`exam-${item.id}`}>
                                   <NavLink href={`/program/${programId}/exam/${item.id}`} className='TC-detail'>
                                     <article style={{ width: '100%', cursor: 'pointer' }}>
-                                      <label style={{ cursor: 'pointer' }}>
+                                      <label style={{ cursor: 'pointer', }}>
                                         {(page - 1) * rowsPerPage + index + 1}.&nbsp;{item.name}
                                       </label>
                                       {item.userExamAttemptTracking && (

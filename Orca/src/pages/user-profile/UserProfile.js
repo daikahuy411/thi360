@@ -26,6 +26,8 @@ import Tab from '@mui/material/Tab'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
+import OrderHistoryTab from './[tab]/order-history'
+
 const TabList = styled(MuiTabList)(({ theme }) => ({
   '& .MuiTabs-indicator': {
     display: 'none'
@@ -93,7 +95,8 @@ const UserProfile = ({ tab }) => {
   const tabContentList = {
     profile: <Profile data={data} />,
     // teams: <Teams data={data} />,
-    'attemp-history': <AttemHistory data={data} />
+    'attemp-history': <AttemHistory data={data} />,
+    'order-history': <OrderHistoryTab />
   }
 
   return (
@@ -140,7 +143,7 @@ const UserProfile = ({ tab }) => {
                     }
                   />
                   <Tab
-                    value='orders'
+                    value='order-history'
                     label={
                       <Box sx={{ display: 'flex', alignItems: 'center', ...(!hideText && { '& svg': { mr: 2 } }) }}>
                         <Icon fontSize={20} icon='mdi:currency-usd' />

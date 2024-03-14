@@ -32,6 +32,7 @@ class TestDetails extends React.Component {
   state = {
     loading: false,
     mode: 0,
+    testingMode: 0,
     userProfile: null,
     token: '',
     lastUpdated: null,
@@ -84,7 +85,7 @@ class TestDetails extends React.Component {
     testingApi.GetExamAttempt(token).then(response => {
       let examAttempt = response.data.value
       this.initialize(examAttempt)
-      this.setState({ loading: false, now: Date.now(), mode: examAttempt.testingMode })
+      this.setState({ loading: false, now: Date.now(), testingMode: examAttempt.testingMode, mode: this.props.mode })
       // if (examAttempt.Status == -1) {
       //   testingApi
       //     .StartExamAttempt(token, examAttempt.UpdateTimeToken)
@@ -460,7 +461,7 @@ class TestDetails extends React.Component {
 
   /// Trả lời câu hỏi, chia thành 2 nhóm:  (MC, SC, TF) , (MATCHING, ORDER, SA, FB)
   /// answerIdOrContent: id hoặc của câu trả lời.
-  onQuestionAttempted = function (question, answerIdOrContent) {
+  onQuestionAttempted = function (question, answerIdOrContent, skipSave = false) {
     let answerType = 'id' // 'content'
     if (
       question.questionTypeId === QuestionType.MC ||
@@ -526,7 +527,9 @@ class TestDetails extends React.Component {
       }),
       () => {
         this.markQuestion(question, answerIdOrContent)
-        this.updateExamAttempt()
+        if (!skipSave) {
+          this.updateExamAttempt()
+        }
       }
     )
   }
@@ -792,7 +795,7 @@ class TestDetails extends React.Component {
                       <>
                         {this.state.mode !== 2 && (
                           <div className='flex items-center pa3 flex-grow-1'>
-                            {this.state.now && this.state.mode == 0 && (
+                            {this.state.now && this.state.testingMode == 0 && (
                               <>
                                 <span className='darkest-blue flex-l dn'>Thời gian:</span>
                                 <span className='f4 fw7 flex-grow-1 justify-center flex darkest-blue'>
@@ -800,7 +803,7 @@ class TestDetails extends React.Component {
                                 </span>
                               </>
                             )}
-                            {this.state.now && this.state.mode != 0 && (
+                            {this.state.now && this.state.testingMode != 0 && (
                               <>
                                 <span className='darkest-blue flex-l dn'>Thời gian còn lại:</span>
                                 <span className='f4 fw7 flex-grow-1 justify-center flex darkest-blue'>
@@ -832,7 +835,7 @@ class TestDetails extends React.Component {
                         {this.state.mode === 2 && (
                           <div className='flex items-center pa3 flex-grow-1'>
                             <span className='darkest-blue flex-l dn'>Thời gian làm bài:</span>
-                            <span className='f4 fw7 flex-grow-1 justify-center flex darkest-blue'>30:20</span>
+                            <span className='f4 fw7 flex-grow-1 justify-center flex darkest-blue'>{this.state.examAttempt.totalTime}</span>
                             <svg className='pointer' viewBox='0 0 36 36' version='1.1' width='28' height='28'>
                               <g fill='none' fillRule='evenodd'>
                                 <circle cx='18' cy='18' r='17.5' fill='#F8C346' opacity='.297'></circle>
@@ -1478,23 +1481,26 @@ class TestDetails extends React.Component {
                                     </div> */}
                                     <div className='flex flex-column w-100'>
                                       <textarea
+                                        disabled={this.state.mode === 2}
                                         value={this.state.userAnswers[this.state.currentQuestion.id] ?? ''}
                                         onChange={e => {
-                                          this.saveQuestionAttemptedState(e.target.value)
+                                          this.onQuestionAttempted(this.state.currentQuestion, e.target.value, true)
                                         }}
                                         rows={6}
                                         className='form-control'
                                         placeholder='Phần trả lời của thí sinh'
                                       />
                                       <br />
-                                      <button
-                                        onClick={() => {
-                                          this.updateExamAttempt()
-                                        }}
-                                        className='form-control white bg-sky-blue'
-                                      >
-                                        Cập nhật
-                                      </button>
+                                      {(this.state.mode === 0 || this.state.mode === 1) && (
+                                        <button
+                                          onClick={() => {
+                                            this.updateExamAttempt()
+                                          }}
+                                          className='form-control white bg-sky-blue'
+                                        >
+                                          Cập nhật
+                                        </button>
+                                      )}
                                     </div>
                                   </div>
                                 )}
@@ -1626,24 +1632,47 @@ class TestDetails extends React.Component {
                                               {this.state.userExamAttemptTracking.questionBookmarkeds.indexOf(
                                                 question.id
                                               ) >= 0 && (
+                                                <>
+                                                  <span
+                                                    className='ba bw1 b--white w1 h1 br-100 bg-white absolute flex items-center justify-center'
+                                                    style={{
+                                                      top: '-8px',
+                                                      right: '-8px'
+                                                    }}
+                                                  >
+                                                    <svg
+                                                      className='db svg-f-gold'
+                                                      viewBox='0 0 32 32'
+                                                      version='1.1'
+                                                      width='14'
+                                                      height='14'
+                                                    >
+                                                      <path
+                                                        fillRule='evenodd'
+                                                        d='M15.702 24.058L6.79 28.724l1.702-9.884-7.21-7 9.963-1.441 4.456-8.993 4.455 8.993 9.963 1.442-7.209 7 1.702 9.883z'
+                                                      ></path>
+                                                    </svg>
+                                                  </span>
+                                                </>
+                                              )}
+                                              {question.questionTypeId === QuestionType.SA && (
                                                 <span
                                                   className='ba bw1 b--white w1 h1 br-100 bg-white absolute flex items-center justify-center'
                                                   style={{
-                                                    top: '-8px',
+                                                    bottom: '-8px',
                                                     right: '-8px'
                                                   }}
                                                 >
                                                   <svg
-                                                    className='db svg-f-gold'
-                                                    viewBox='0 0 32 32'
-                                                    version='1.1'
-                                                    width='14'
-                                                    height='14'
+                                                    fill='#ff0000'
+                                                    width='24px'
+                                                    height='24px'
+                                                    className='db svg-f-red'
+                                                    viewBox='0 0 2.88 2.88'
+                                                    xmlns='http://www.w3.org/2000/svg'
                                                   >
-                                                    <path
-                                                      fillRule='evenodd'
-                                                      d='M15.702 24.058L6.79 28.724l1.702-9.884-7.21-7 9.963-1.441 4.456-8.993 4.455 8.993 9.963 1.442-7.209 7 1.702 9.883z'
-                                                    ></path>
+                                                    <title />
+                                                    <path d='m1.875 0.9 0.593 -0.593A0.18 0.18 0 0 0 2.34 0H0.54a0.18 0.18 0 0 0 -0.18 0.18v2.52a0.18 0.18 0 0 0 0.36 0V1.8h1.62a0.18 0.18 0 0 0 0.127 -0.307ZM0.72 1.44V0.36h1.186L1.493 0.773a0.18 0.18 0 0 0 0 0.255L1.906 1.44Z' />
                                                   </svg>
                                                 </span>
                                               )}
@@ -1679,7 +1708,11 @@ class TestDetails extends React.Component {
                                 <span className='w1 h1 br-100 bg-red'></span>
                                 <span className='ml2 silver f6'>Chưa trả lời</span>
                               </div>
-                              <div className='flex w-50 items-center'>
+                              <div className='flex w-50 items-center mb3'>
+                                <span className='w1 h1 br-100 ba b--very-light-gray'></span>
+                                <span className='ml2 silver f6'>Chưa xem</span>
+                              </div>
+                              <div className='flex w-50 items-center mb3'>
                                 <span className='w1 h1 br-100'>
                                   <svg
                                     className='db svg-f-gold'
@@ -1697,8 +1730,20 @@ class TestDetails extends React.Component {
                                 <span className='ml2 silver f6'>Đánh dấu để xem</span>
                               </div>
                               <div className='flex w-50 items-center'>
-                                <span className='w1 h1 br-100 ba b--very-light-gray'></span>
-                                <span className='ml2 silver f6'>Chưa xem</span>
+                                <span className='w1 h1 br-100'>
+                                  <svg
+                                    fill='#ff0000'
+                                    width='14'
+                                    height='14'
+                                    className='db svg-f-red'
+                                    viewBox='0 0 2.88 2.88'
+                                    xmlns='http://www.w3.org/2000/svg'
+                                  >
+                                    <title />
+                                    <path d='m1.875 0.9 0.593 -0.593A0.18 0.18 0 0 0 2.34 0H0.54a0.18 0.18 0 0 0 -0.18 0.18v2.52a0.18 0.18 0 0 0 0.36 0V1.8h1.62a0.18 0.18 0 0 0 0.127 -0.307ZM0.72 1.44V0.36h1.186L1.493 0.773a0.18 0.18 0 0 0 0 0.255L1.906 1.44Z' />
+                                  </svg>
+                                </span>
+                                <span className='ml2 silver f6'>Câu hỏi tự luận</span>
                               </div>
                             </div>
                           )}
